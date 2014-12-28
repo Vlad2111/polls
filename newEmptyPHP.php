@@ -19,8 +19,7 @@
                             var_dump($admin->all_users());
                             echo "<br>";
                             $admin->edit_user(4, 'first_name', 'new');
-                            
-                            
+                           $admin->add_user('ВА', 'ВА', 'ВА', 'ВА', 'ВА');
                          
                             
                          

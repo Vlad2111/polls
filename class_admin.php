@@ -32,6 +32,15 @@
         $edit_user= new BD();
         $edit_user->query_db($qu);
     }
+    public function add_user($last_name, $first_name, $patronymic, $type=null, $email=null){
+        if(isset($last_name) && isset($first_name) && isset($patronymic)){
+            $qu="insert into alluser values ('".$last_name."', '".$first_name."', '".$patronymic."', '".$type."', '".$email."');";
+            $add_user=new BD();
+            $add_user->query_db($qu);
+            
+        }
+        else return false;
+    }
                                     
                                     
 }       
