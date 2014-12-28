@@ -7,9 +7,13 @@
                             include_once 'class_create_conf.php';
                             include_once 'class_work_with_conf.php';
                                 
-                                class admin{                                    
-                                    public function users (){
-                                        
+                                class admin{
+                                    public $id_admin;
+                                    public function __construct($id_admin){
+                                        $this->id_admin= $id_admin;
+                                    }
+                                    public function all_users(){
+                                      $qu="select id_";  
                                     }
                                     
                                 }                                
