@@ -1,13 +1,15 @@
 <?php
  class admin{
     public $id_admin;
+    public $BD;
     
     public function __construct($id_admin){//Получаем на вход ид админа
         $this->id_admin= $id_admin;
+        $this->BD= new BD();
     }
     
     public function all_users(){ //Выводим всех пользователей кроме админа в виде массива                                   
-        $query_admin= new BD();
+        $query_admin= $this->BD;
         $array_users = $query_admin->result_array("alluser");
         $key=0;
         for($i=0;$i<count($array_users);$i++){
@@ -23,13 +25,13 @@
     
      public function delete_user($id_user){
         $qu="delete from alluser where id_user=".$id_user;
-        $delete_user=new BD();                                       
+        $delete_user=$this->BD;                                       
         return $delete_user->query_db($qu);                                       
     }
                                     
     public function edit_user($id_user, $cell, $value){
         $qu="update alluser set ".$cell."='" .$value."' where id_user=".$id_user;
-        $edit_user= new BD();
+        $edit_user= $this->BD;
         $edit_user->query_db($qu);
     }
     public function add_user($last_name, $first_name, $patronymic, $type=null, $email=null){
