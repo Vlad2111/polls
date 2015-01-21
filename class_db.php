@@ -11,14 +11,14 @@
         }
         
         private function __construct() { //Вставляем данные из конфиг. файла            
-            $this->db= $this->connect_db();
+            $this->db= self::connect_db();
         }
     	public function __get($name){ // Отображаем значение атрибутов
             return $this->$name;
     	}            
               
-    	public function connect_db() { // Установка соединения с базой данных. 
-            $array_ini=$this->getConfig ();
+    	public static function connect_db() { // Установка соединения с базой данных. 
+            $array_ini=  self::getConfig ();
             $host = $array_ini['host'];
             $port = $array_ini['port'];
             $dbname = $array_ini['dbname'];
@@ -42,10 +42,10 @@
             
         }
 
-	public static function getCheck_query($query){ // Проверка запроса, возвращает bool значение
-            return pg_num_rows($query);
-            
-        }
+//	public static function getCheck_query($query){ // Проверка запроса, возвращает значение
+//            return pg_num_rows($query);
+//            
+//        }
         
         public static function getFetch_result($query, $row=0, $field=0){ //Возращает одиночные данные
             $tamp_var_featch_result=@pg_fetch_result($query, $row, $field);
@@ -55,7 +55,7 @@
                 { throw new Exception('Ошибка в возращении записи из результата запроса');}
         }
                         
-        public function getConfig ($section='PostgreSQL', $path="config_dike.ini"){
+        public static function getConfig ($section='PostgreSQL', $path="config_dike.ini"){
         $array= parse_ini_file($path, true);
         return $array[$section];
         }        
