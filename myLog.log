@@ -21,3 +21,30 @@
 2015-01-14T16:02:50+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 85:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
 2015-01-14T16:03:06+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 85:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
 2015-01-14T16:17:19+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 85:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-15T13:04:32+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 85:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-20T10:53:21+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 85:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-20T10:54:24+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 85:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-20T10:54:35+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 85:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-20T10:55:10+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 85:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:13:03+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 56:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:14:18+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 56:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:17:48+04:00 [myLogger] Ошибка в запросе к бд. Строка 42:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:18:12+04:00 [myLogger] Ошибка в запросе к бд. Строка 42:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:18:40+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 56:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:24:58+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 56:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:38:16+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 56:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:38:31+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 55:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:40:44+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 55:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:42:01+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 55:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:42:54+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 55:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:42:55+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 55:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:42:55+04:00 [myLogger] Ошибка в возращении записи из результата запроса. Строка 55:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
+2015-01-21T01:43:11+04:00 [myLogger] Успешно введены логин и пароль пользователем Иван
+2015-01-21T01:44:20+04:00 [myLogger] Успешно введены логин и пароль пользователем Иван
+2015-01-21T02:21:28+04:00 [myLogger] Успешно введены логин и пароль пользователем Иван
+2015-01-21T02:21:29+04:00 [myLogger] Успешно введены логин и пароль пользователем Иван
+2015-01-21T02:21:29+04:00 [myLogger] Успешно введены логин и пароль пользователем Иван
+2015-01-21T02:21:29+04:00 [myLogger] Успешно введены логин и пароль пользователем Иван
+2015-01-21T02:21:29+04:00 [myLogger] Успешно введены логин и пароль пользователем Иван
+2015-01-21T02:21:29+04:00 [myLogger] Успешно введены логин и пароль пользователем Иван
+2015-01-21T02:21:30+04:00 [myLogger] Успешно введены логин и пароль пользователем Иван

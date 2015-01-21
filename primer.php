@@ -2,14 +2,22 @@
 	<head><title>Таблица</title><meta charset="utf-8"></head>
 		<body>
 <?php
-include 'class_db.php';
  try{ 
-    $a= new DB();
-    $db=$a->connect_db();
-    echo $query=DB::query_db($db, '*', 'alluser', array('id_user', '2'));
+include 'class_db.php';
+include 'class_auth.php';
+echo "<pre>";
+$array=DB::getInstance();
+var_dump($array); echo "</pre>";
 
-    echo "<hr>";
-    echo DB::fetch_result($query);
+
+$query= DB::getQuery_db('last_name, first_name', 'alluser', 'id_user = $1', array(1));
+$query=DB::getQuery_db('id_user', 'alluser', "login=$1 and password=$2", array('Иван', 1));
+echo DB::getFetch_result($query);
+echo "<hr>";
+$q= new Auth('Иван', 1);
+echo $q->getAuthUser();
+
+    
       }
                             catch (Exception $e){
                                 $error= $e->getMessage().'. Строка '.$e->getLine().': '. ' ('. $e->getFile().')';
