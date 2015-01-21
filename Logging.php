@@ -3,11 +3,11 @@
 class AddLog
     {        
         private $log;
-        public function __construct() {
+        public function __construct($a) {
         include_once 'Log4php/Logger.php';
         Logger::configure('config.xml');
         LoggerNDC::push("Some Context");
-            $this->log = Logger::getLogger('myLogger');
+            $this->log = Logger::getLogger($a);;
         }
         public function Fatal($name){
             $this->log->fatal($name);
@@ -24,9 +24,9 @@ class AddLog
         public function Debug($name){
             $this->log->debug($name);
         }
-         public static function Logging($name){
-            $foo= new AddLog();
-        $foo->info($name);
+       public static function Logging($a,$name){
+        $foo= new AddLog($a);
+        $foo->info($name); 
         }
     }
         ?>

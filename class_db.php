@@ -30,7 +30,8 @@
                  pg_set_client_encoding($temp, "UTF-8");
                  return $temp;
              }
-                else   { throw new Exception('Ошибка соединения с БД');}
+                else   {Error::Add(__CLASS__, 'Ошибка соединения с БД');
+                }
         }
         public static function getQuery_db($name_colums, $name_table, $query, $array_params){    // Запрос к БД                             
             $select="SELECT ".$name_colums." FROM ".$name_table." where ".$query;
@@ -38,7 +39,7 @@
             if ($query) 
                 {return $query;}
             else 
-                { throw new Exception('Ошибка в запросе к бд'); }
+                { Error::Add(__CLASS__, 'Ошибка в запросе к бд'); }
             
         }
 
@@ -52,7 +53,7 @@
             if($tamp_var_featch_result)
                 { return $tamp_var_featch_result;}
             else
-                { throw new Exception('Ошибка в возращении записи из результата запроса');}
+                {Error::Add(__CLASS__, 'Ошибка в возращении записи из результата запроса');}
         }
                         
         public static function getConfig ($section='PostgreSQL', $path="config_dike.ini"){

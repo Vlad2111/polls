@@ -1,6 +1,7 @@
 <?php
 //require "PHPUnit/Autoload.php";
 require "class_db.php";
+require "for_class.php";
 class class_dbTest extends PHPUnit_Framework_TestCase
 {
     public function testGetConfig (){

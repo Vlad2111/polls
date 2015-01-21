@@ -21,8 +21,7 @@ echo $q->getAuthUser();
       }
                             catch (Exception $e){
                                 $error= $e->getMessage().'. Строка '.$e->getLine().': '. ' ('. $e->getFile().')';
-                                echo $error;
-                            AddLog::Logging($error);
+                                echo $error;                            
                             }
 ?>
 

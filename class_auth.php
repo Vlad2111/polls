@@ -1,5 +1,6 @@
 <?php
 include_once 'class_db.php';
+include_once 'for_class.php';
 class auth {
     public $login;
     public $pass;
@@ -21,7 +22,8 @@ class auth {
                                     
     public function getAuthUser(){ //Возращает значение пользователя или 
         if ($this->getIdUser()){
-            self::Logging('Успешно введены логин и пароль пользователем '.$this->login);  
+            $a=__CLASS__;
+            AddLog::Logging($a,'Успешно введены логин и пароль пользователем '.$this->login);  
              return $this->getIdUser ();
         }
         else{ 
@@ -29,9 +31,6 @@ class auth {
             throw new Exception('Неправильно введены логин и пароль');              
         }
     }
-    public static function Logging($name){
-        $foo= new AddLog();
-        $foo->info($name);        
-    }
+   
 }
 ?>
