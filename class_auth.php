@@ -1,36 +1,38 @@
 <?php
-include_once 'class_db.php';
-include_once 'for_class.php';
-class auth {
-    public $login;
-    public $pass;
-    public $db;
-    public function __construct($login, $pass) {
-        $this->login= $this->correct($login);
-        $this->pass=  $this->correct($pass);
-    }
-    
-    public function correct ($value){
-        return pg_escape_string($value); //Экранирование спецсимволов в строке
-    }
-    public function getIdUser(){ //Возращаем id пользователя
-        $array_params[0]=$this->login;
-        $array_params[1]=$this->pass;
-        $query=DB::getQuery_db('id_user', 'alluser', "login=$1 and password=$2", $array_params);
-        return  DB::getFetch_result($query);                                                                              
-    }
+    include_once 'class_db.php';
+    include_once 'Log4php/Logger.php';
+        Logger::configure('config.xml');
+        LoggerNDC::push("Some Context");
+    class Auth {
+        public $login;
+        public $pass;
+        public $db;
+        public $log;
+        public function __construct($login, $pass) {
+            $this->db=DB::getInstance();
+            $this->log= Logger::getLogger(__CLASS__);
+            $this->login= pg_escape_string($login);
+            $this->pass=  md5($pass);
+        }    
+       
+        public function getIdUser(){ //Возращаем id пользователя
+            $array_params[0]=$this->login;
+            $array_params[1]=$this->pass;
+            $query=$this->db->getQueryDb('id_user', 'alluser', "login=$1 and password=$2", $array_params);
+            return  $this->db->getFetchResult($query);                                                                              
+        }
                                     
-    public function getAuthUser(){ //Возращает значение пользователя или 
-        if ($this->getIdUser()){
-            $a=__CLASS__;
-            AddLog::Logging($a,'Успешно введены логин и пароль пользователем '.$this->login);  
-             return $this->getIdUser ();
+        public function getAuthUser(){ //Возращает значение пользователя или 
+            if ($this->getIdUser())
+            {
+                $this->log->info('Успешно введены логин и пароль пользователем '.$this->login);
+                return $this->getIdUser ();
+            }
+            else{ 
+                $this->log->info('Неправильно введены логин и пароль');
+                throw new Exception('Неправильно введены логин и пароль');              
+            }
         }
-        else{ 
-            self::Logging('Успешно введены логин и пароль');    
-            throw new Exception('Неправильно введены логин и пароль');              
-        }
-    }
    
-}
+    }
 ?>

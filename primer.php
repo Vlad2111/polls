@@ -5,17 +5,13 @@
  try{ 
 include 'class_db.php';
 include 'class_auth.php';
-echo "<pre>";
-$array=DB::getInstance();
-var_dump($array); echo "</pre>";
-
-
-$query= DB::getQuery_db('last_name, first_name', 'alluser', 'id_user = $1', array(1));
-$query=DB::getQuery_db('id_user', 'alluser', "login=$1 and password=$2", array('Иван', 1));
-echo DB::getFetch_result($query);
+$db=DB::getInstance();
+$query= $db->getQueryDb('last_name, first_name', 'alluser', 'id_user = $1', array(1));
+echo $db->getFetchResult($query);
 echo "<hr>";
 $q= new Auth('Иван', 1);
 echo $q->getAuthUser();
+
 
     
       }

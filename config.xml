@@ -1,7 +1,7 @@
 <configuration xmlns="http://logging.apache.org/log4php/">
     <appender name="default" class="LoggerAppenderFile">
        <layout class="LoggerLayoutPattern">
-           <param name="conversionPattern" value="%date{l jS \of F Y h:i:s A}  Класс [%logger] Линия %line: %message. [%file]  %newline" />
+           <param name="conversionPattern" value="%date %level [%logger] %file: %line: %message.  %newline" />
        </layout>
         <param name="file" value="myLog.log" />
         <param name="append" value="true" />

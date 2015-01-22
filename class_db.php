@@ -1,8 +1,11 @@
 <?php   
-    include_once 'for_class.php';
+    include_once 'Log4php/Logger.php';
+        Logger::configure('config.xml');
+        LoggerNDC::push("Some Context");
     class DB {
         protected static $_instance;  
         public  $db;
+        public $log;
         public static function getInstance() { // получить экземпляр данного класса 
             if (self::$_instance === null) { // если экземпляр данного класса  не создан
                 self::$_instance = new self;  // создаем экземпляр данного класса 
@@ -11,14 +14,15 @@
         }
         
         private function __construct() { //Вставляем данные из конфиг. файла            
-            $this->db= self::connect_db();
+            $this->db= $this->getConnectDb();
+            $this->log= Logger::getLogger(__CLASS__);
         }
     	public function __get($name){ // Отображаем значение атрибутов
             return $this->$name;
     	}            
               
-    	public static function connect_db() { // Установка соединения с базой данных. 
-            $array_ini=  self::getConfig ();
+    	public function getConnectDb() { // Установка соединения с базой данных. 
+            $array_ini= $this->getConfig ();
             $host = $array_ini['host'];
             $port = $array_ini['port'];
             $dbname = $array_ini['dbname'];
@@ -26,20 +30,29 @@
             $password_db = $array_ini['password_db'];
             $connect="host=".$host." port=".$port." dbname=".$dbname." user=".$user." password=".$password_bd; 
             $temp= pg_connect($connect);
-             if($temp) {
+            if($temp) 
+                {
                  pg_set_client_encoding($temp, "UTF-8");
                  return $temp;
-             }
-                else   {Error::Add(__CLASS__, 'Ошибка соединения с БД');
+                } 
+            else   
+                {   
+                    $this->log->info('Ошибка соединения с БД');
+                    throw new Exception('Ошибка соединения с БД');
                 }
         }
-        public static function getQuery_db($name_colums, $name_table, $query, $array_params){    // Запрос к БД                             
+        public function getQueryDb($name_colums, $name_table, $query, $array_params){    // Запрос к БД                             
             $select="SELECT ".$name_colums." FROM ".$name_table." where ".$query;
-            $query= pg_query_params($select, $array_params);
+            $query= @pg_query_params($select, $array_params);
             if ($query) 
-                {return $query;}
+                {
+                return $query;                
+                }
             else 
-                { Error::Add(__CLASS__, 'Ошибка в запросе к бд'); }
+                { 
+                    $this->log->info('Ошибка в запросе к бд'); 
+                    throw new Exception('Ошибка в запросе к бд');                     
+                }
             
         }
 
@@ -48,15 +61,20 @@
 //            
 //        }
         
-        public static function getFetch_result($query, $row=0, $field=0){ //Возращает одиночные данные
+        public function getFetchResult($query, $row=0, $field=0){ //Возращает одиночные данные
             $tamp_var_featch_result=@pg_fetch_result($query, $row, $field);
             if($tamp_var_featch_result)
-                { return $tamp_var_featch_result;}
+                { 
+                return $tamp_var_featch_result;                
+                }
             else
-                {Error::Add(__CLASS__, 'Ошибка в возращении записи из результата запроса');}
+                {
+                $this->log->info('Ошибка в возращении записи из результата запроса'); 
+                throw new Exception('Ошибка в возращении записи из результата запроса'); 
+                }
         }
                         
-        public static function getConfig ($section='PostgreSQL', $path="config_dike.ini"){
+        public function getConfig ($section='PostgreSQL', $path="config_dike.ini"){
         $array= parse_ini_file($path, true);
         return $array[$section];
         }        
@@ -65,5 +83,3 @@
     
                             
 ?>
-</body>
-</html>

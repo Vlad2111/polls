@@ -1,41 +1,10 @@
-
-2015-01-21T12:56:27+04:00 [Успешно введены логин и пароль пользователем Иван] 
-2015-01-21T12:57:03+04:00 [__CLASS___] Успешно введены логин и пароль пользователем Иван
-2015-01-21T12:57:09+04:00 [__CLASS___] Успешно введены логин и пароль пользователем Иван
-2015-01-21T12:57:40+04:00 [auth] Успешно введены логин и пароль пользователем Иван
-2015-01-21T12:57:41+04:00 [auth] Успешно введены логин и пароль пользователем Иван
-2015-01-21T12:57:59+04:00 [] Ошибка в запросе к бд. Строка 41:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
-2015-01-21T12:59:47+04:00 [] Ошибка в запросе к бд. Строка 41:  (Z:\home\localhost\www\NetBeans\Primer\class_db.php)
-2015-01-21T13:00:15+04:00 [auth] Успешно введены логин и пароль пользователем Иван
-2015-01-21T13:04:49+04:00 [auth] Успешно введены логин и пароль пользователем Иван
-2015-01-21T13:06:02+04:00 [auth] Успешно введены логин и пароль пользователем Иван
-2015-01-21T13:06:13+04:00 [DB] Ошибка в запросе к бд
-2015-01-21T13:07:32+04:00 [auth] Успешно введены логин и пароль пользователем Иван
-2015-01-21T13:07:57+04:00 [DB] Ошибка в возращении записи из результата запроса
-2015-01-21T13:08:21+04:00 [auth] Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:10:59 PM Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:11:21 PM [auth] Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:12:12 PM [auth] Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:12:27 PM [КлассDB] Ошибка в запросе к бд
-Wednesday 21st of January 2015 01:12:38 PM [Класс: DB] Ошибка в запросе к бд
-Wednesday 21st of January 2015 01:14:08 PM [Класс: DB] Ошибка в запросе к бд
-Wednesday 21st of January 2015 01:14:18 PM [Класс: auth] Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:15:40 PM [Класс: auth] 22 Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:15:59 PM [Класс: auth]Линия 22 Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:16:26 PM Класс [Класс: auth] Линия 22 Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:16:57 PM Класс [auth] Линия 22 Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:24:17 PM  Класс [auth] Линия 22 Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:25:00 PM auth Класс [auth] Линия 22 Успешно введены логин и пароль пользователем Иван
-Wednesday 21st of January 2015 01:27:47 PM  Класс [auth] Линия 22 Успешно введены логин и пароль пользователем Иван AddLog 
-Wednesday 21st of January 2015 01:28:07 PM  Класс [auth] Линия 22 Успешно введены логин и пароль пользователем Иван  
-Wednesday 21st of January 2015 01:28:31 PM  Класс [auth] Линия 22 Успешно введены логин и пароль пользователем Иван Z:\home\localhost\www\NetBeans\Primer\Logging.php 
-Wednesday 21st of January 2015 01:29:04 PM  Класс [auth] Линия 22 Успешно введены логин и пароль пользователем Иван Расположение: [Z:\home\localhost\www\NetBeans\Primer\Logging.php] 
-Wednesday 21st of January 2015 01:29:32 PM  Класс [auth] Линия 22 Успешно введены логин и пароль пользователем Иван. Расположение: [Z:\home\localhost\www\NetBeans\Primer\Logging.php] 
-Wednesday 21st of January 2015 01:29:47 PM  Класс [auth] Линия 22 Успешно введены логин и пароль пользователем Иван. [Z:\home\localhost\www\NetBeans\Primer\Logging.php] 
-Wednesday 21st of January 2015 01:30:08 PM  Класс [auth] Линия 22: Успешно введены логин и пароль пользователем Иван. [Z:\home\localhost\www\NetBeans\Primer\Logging.php] 
-Wednesday 21st of January 2015 01:31:11 PM  Класс [auth] Линия 22: Успешно введены логин и пароль пользователем Иван. [Z:\home\localhost\www\NetBeans\Primer\Logging.php] INFO 
-Wednesday 21st of January 2015 01:31:30 PM  Класс [auth] Линия 22: Успешно введены логин и пароль пользователем Иван. [Z:\home\localhost\www\NetBeans\Primer\Logging.php]  
-Wednesday 21st of January 2015 01:31:55 PM  Класс [auth] Линия 22: Успешно введены логин и пароль пользователем Иван. [Z:\home\localhost\www\NetBeans\Primer\Logging.php] 0.0000 
-Wednesday 21st of January 2015 01:32:39 PM  Класс [auth] Линия 22: Успешно введены логин и пароль пользователем Иван. [Z:\home\localhost\www\NetBeans\Primer\Logging.php] AddLog.Info(Z:\home\localhost\www\NetBeans\Primer\Logging.php:22) 
-Wednesday 21st of January 2015 01:33:09 PM  Класс [auth] Линия 22: Успешно введены логин и пароль пользователем Иван. [Z:\home\localhost\www\NetBeans\Primer\Logging.php]  
-Wednesday 21st of January 2015 01:33:22 PM  Класс [auth] Линия 22: Успешно введены логин и пароль пользователем Иван. [Z:\home\localhost\www\NetBeans\Primer\Logging.php]  
+2015-01-22T18:26:22+04:00 INFO [DB] Z:\home\localhost\www\NetBeans\Primer\class_db.php: 53: Ошибка в запросе к бд.  
+2015-01-22T18:38:13+04:00 INFO [DB] Z:\home\localhost\www\NetBeans\Primer\class_db.php: 53: Ошибка в запросе к бд.  
+2015-01-22T18:39:22+04:00 INFO [auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 31: Успешно введены логин и пароль пользователем Иван.  
+2015-01-22T18:43:02+04:00 INFO [DB] Z:\home\localhost\www\NetBeans\Primer\class_db.php: 53: Ошибка в запросе к бд.  
+2015-01-22T18:43:21+04:00 INFO [DB] Z:\home\localhost\www\NetBeans\Primer\class_db.php: 53: Ошибка в запросе к бд.  
+2015-01-22T18:43:21+04:00 INFO [DB] Z:\home\localhost\www\NetBeans\Primer\class_db.php: 53: Ошибка в запросе к бд.  
+2015-01-22T18:51:22+04:00 INFO [auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 31: Успешно введены логин и пароль пользователем Иван.  
+2015-01-22T18:51:34+04:00 INFO [auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 31: Успешно введены логин и пароль пользователем Иван.  
+2015-01-22T18:58:08+04:00 INFO [Auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 28: Успешно введены логин и пароль пользователем Иван.  
+2015-01-22T19:00:20+04:00 INFO [Auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 28: Успешно введены логин и пароль пользователем Иван.  
