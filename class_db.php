@@ -4,8 +4,8 @@
         LoggerNDC::push("Some Context");
     class DB {
         protected static $_instance;  
-        public  $db;
-        public $log;
+        private  $db;
+        private $log;
         public static function getInstance() { // получить экземпляр данного класса 
             if (self::$_instance === null) { // если экземпляр данного класса  не создан
                 self::$_instance = new self;  // создаем экземпляр данного класса 
@@ -14,14 +14,14 @@
         }
         
         private function __construct() { //Вставляем данные из конфиг. файла            
-            $this->db= $this->getConnectDb();
+            $this->db= $this->setConnectDb();
             $this->log= Logger::getLogger(__CLASS__);
         }
     	public function __get($name){ // Отображаем значение атрибутов
             return $this->$name;
     	}            
               
-    	public function getConnectDb() { // Установка соединения с базой данных. 
+    	private function setConnectDb() { // Установка соединения с базой данных. 
             $array_ini= $this->getConfig ();
             $host = $array_ini['host'];
             $port = $array_ini['port'];
