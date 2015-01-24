@@ -5,7 +5,7 @@ require "for_class.php";
 class class_dbTest extends PHPUnit_Framework_TestCase
 {
     public function testGetConfig (){
-		$this->assertCount(4, DB::getConfig());	                
+	$this->assertCount(4, DB::getConfig());	                
     }
     /**
      * @depends testGetConfig
@@ -22,10 +22,8 @@ class class_dbTest extends PHPUnit_Framework_TestCase
     }
 
     public function providerQuery(){
-	return array(
-            array('id_user', 'alluser', "login=$1 and password=$2", array('Иван', 1)),
-            array('role', 'role_user', "id_role=$1", array(1))
-	);
+	return array(array('id_user', 'alluser', "login=$1 and password=$2",array('Иван', 1)),
+                    array('role', 'role_user', "id_role=$1", array(1)));
     }
     /**
      * @depends testGetConfig
