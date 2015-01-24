@@ -4,10 +4,10 @@
         Logger::configure('config.xml');
         LoggerNDC::push("Some Context");
     class Auth {
-        public $login;
-        public $pass;
-        public $db;
-        public $log;
+        private $login;
+        private $pass;
+        private $db;
+        private $log;
         public function __construct($login, $pass) {
             $this->db=DB::getInstance();
             $this->log= Logger::getLogger(__CLASS__);
