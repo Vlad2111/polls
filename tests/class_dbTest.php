@@ -1,7 +1,7 @@
 <?php
 //require "PHPUnit/Autoload.php";
-require "class_db.php";
-require "for_class.php";
+require "Z:\home\localhost\www\NetBeans\Primer\class_db.php";
+require "Z:\home\localhost\www\NetBeans\Primer\for_class.php";
 class class_dbTest extends PHPUnit_Framework_TestCase
 {
     public function testGetConfig (){

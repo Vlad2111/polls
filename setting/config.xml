@@ -3,7 +3,7 @@
        <layout class="LoggerLayoutPattern">
            <param name="conversionPattern" value="%date %level [%logger] [%file]: %line: %message.  %newline" />
        </layout>
-        <param name="file" value="myLog.log" />
+        <param name="file" value="setting/myLog.log" />
         <param name="append" value="true" />
     </appender>
     <root>
