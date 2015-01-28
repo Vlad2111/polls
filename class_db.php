@@ -1,6 +1,6 @@
 <?php   
     include_once 'Log4php/Logger.php';
-        Logger::configure('config.xml');
+        Logger::configure('setting/config.xml');
         LoggerNDC::push("Some Context");
     class DB {
         protected static $_instance;  
@@ -52,15 +52,35 @@
                 { 
                     $this->log->info('Ошибка в запросе к бд'); 
                     throw new Exception('Ошибка в запросе к бд');                     
-                }
-            
+                }            
         }
-
-//	public static function getCheck_query($query){ // Проверка запроса, возвращает значение
-//            return pg_num_rows($query);
-//            
-//        }
+        public function InsertDb($name_table, $str, $name_colums=null){            
+            if ($name_colums==null){
+                $select="INSERT INTO ".$name_table." VALUES (".$str.");";                
+            }
+            else{
+                $select="INSERT INTO ".$name_table." (".$name_colums.") VALUES (".$str.");";
+            }
+           if(!@pg_query($select)){
+                $this->log->info('Ошибка добавления строки в таблицу: '.$name_table); 
+                throw new Exception('Ошибка добавления строки в таблицу: '.$name_table);
+           }    
+        }
         
+        public function updateDb($name_table, $query){
+            $select="UPDATE ".$name_table." SET ".$query;
+             if(!@pg_query($select)){
+                 $this->log->info('Ошибка обновления строки в таблице: '.$name_table); 
+                throw new Exception('Ошибка обновления строки в таблице: '.$name_table);  
+            }            
+        }
+        public function deleteDb($name_table, $query){
+            $select="DELETE FROM ".$name_table." WHERE ".$query.";";
+             if(!@pg_query($select)){
+                 $this->log->info('Ошибка удаления строки в таблице: '.$name_table); 
+                throw new Exception('Ошибка удаления строки в таблице: '.$name_table);  
+            }            
+        }
         public function getFetchResult($query, $row=0, $field=0){ //Возращает одиночные данные
             $tamp_var_featch_result=@pg_fetch_result($query, $row, $field);
             if($tamp_var_featch_result)
@@ -74,7 +94,7 @@
                 }
         }
                         
-        public function getConfig ($section='PostgreSQL', $path="config_dike.ini"){
+        public function getConfig ($section='PostgreSQL', $path="setting/config_dike.ini"){
         $array= parse_ini_file($path, true);
         return $array[$section];
         }        
