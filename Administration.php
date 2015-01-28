@@ -1,9 +1,9 @@
 <?php
-include_once 'class_db.php';
+include_once 'DB.php';
 include_once 'Log4php/Logger.php';
     Logger::configure('setting/config.xml');
     LoggerNDC::push("Some Context");
-class Admin{
+class Administration{
     public $id_admin;
     public $db;
     public $log;

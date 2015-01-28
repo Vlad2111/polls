@@ -1,12 +1,13 @@
 <?php
-    include_once 'class_db.php';
+    include_once 'DB.php';
     include_once 'Log4php/Logger.php';
-        Logger::configure('config.xml');
+        Logger::configure('setting/config.xml');
         LoggerNDC::push("Some Context");
-    class Auth {
+    class Authorization {
         private $login;
         private $pass;
         private $db;
+        private $name;
         private $log;
         public function __construct($login, $pass) {
             $this->db=DB::getInstance();
@@ -22,9 +23,10 @@
             return  $this->db->getFetchResult($query);                                                                              
         }
                                     
-        public function getAuthUser(){ //Возращает значение пользователя или 
+        public function getAuthUser(){ //Возращает значение пользователя
             if ($this->getIdUser())
             {
+                 
                 $this->log->info('Успешно введены логин и пароль пользователем '.$this->login);
                 return $this->getIdUser ();
             }

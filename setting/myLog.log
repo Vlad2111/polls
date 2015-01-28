@@ -1,49 +1,25 @@
-2015-01-22T18:26:22+04:00 INFO [DB] Z:\home\localhost\www\NetBeans\Primer\class_db.php: 53: Ошибка в запросе к бд.  
-2015-01-22T18:38:13+04:00 INFO [DB] Z:\home\localhost\www\NetBeans\Primer\class_db.php: 53: Ошибка в запросе к бд.  
-2015-01-22T18:39:22+04:00 INFO [auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 31: Успешно введены логин и пароль пользователем Иван.  
-2015-01-22T18:43:02+04:00 INFO [DB] Z:\home\localhost\www\NetBeans\Primer\class_db.php: 53: Ошибка в запросе к бд.  
-2015-01-22T18:43:21+04:00 INFO [DB] Z:\home\localhost\www\NetBeans\Primer\class_db.php: 53: Ошибка в запросе к бд.  
-2015-01-22T18:43:21+04:00 INFO [DB] Z:\home\localhost\www\NetBeans\Primer\class_db.php: 53: Ошибка в запросе к бд.  
-2015-01-22T18:51:22+04:00 INFO [auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 31: Успешно введены логин и пароль пользователем Иван.  
-2015-01-22T18:51:34+04:00 INFO [auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 31: Успешно введены логин и пароль пользователем Иван.  
-2015-01-22T18:58:08+04:00 INFO [Auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-22T19:00:20+04:00 INFO [Auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-22T19:03:31+04:00 INFO [Auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T11:19:08+04:00 INFO [Auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T11:19:09+04:00 INFO [Auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T11:19:55+04:00 INFO [Auth] Z:\home\localhost\www\NetBeans\Primer\class_auth.php: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T11:21:21+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T12:41:58+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 72: Ошибка в возращении записи из результата запроса.  
-2015-01-24T12:46:45+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 72: Ошибка в возращении записи из результата запроса.  
-2015-01-24T12:48:42+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 72: Ошибка в возращении записи из результата запроса.  
-2015-01-24T12:49:48+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 25: Пользователь 2пытался зайти как администратор.  
-2015-01-24T12:50:10+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 25: Пользователь c id=2пытался зайти как администратор.  
-2015-01-24T12:50:15+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 25: Пользователь c id=2пытался зайти как администратор.  
-2015-01-24T12:50:21+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 25: Пользователь c id=2 пытался зайти как администратор.  
-2015-01-24T12:56:30+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T12:56:30+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 26: Пользователь c id=2 пытался зайти как администратор.  
-2015-01-24T12:56:45+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T12:57:19+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 32: Неправильно введены логин и пароль.  
-2015-01-24T12:58:02+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T12:58:19+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T12:58:22+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T12:58:51+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 28: Успешно введены логин и пароль пользователем Иван.  
-2015-01-24T12:59:15+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 32: Неправильно введены логин и пароль.  
-2015-01-24T12:59:37+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 28: Успешно введены логин и пароль пользователем Михаил.  
-2015-01-24T12:59:37+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 26: Пользователь c id=2 пытался зайти как администратор.  
-2015-01-24T13:05:12+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 53: Ошибка в запросе к бд.  
-2015-01-24T13:06:07+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 33: Успешно введены логин и пароль пользователем Михаил.  
-2015-01-24T13:06:07+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 26: Пользователь c id=2 пытался зайти как администратор.  
-2015-01-24T13:06:30+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 33: Успешно введены логин и пароль пользователем Тюбиков                                            Михаил                                             Иваныч                                            .  
-2015-01-24T13:06:30+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 26: Пользователь c id=2 пытался зайти как администратор.  
-2015-01-24T13:07:21+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 33: Успешно введены логин и пароль пользователем Тюбиков                                           -Михаил                                            -Иваныч                                            .  
-2015-01-24T13:07:21+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 26: Пользователь c id=2 пытался зайти как администратор.  
-2015-01-24T13:08:23+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 33: Успешно введены логин и пароль пользователем 0.  
-2015-01-24T13:08:23+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 26: Пользователь c id=2 пытался зайти как администратор.  
-2015-01-24T13:08:23+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 33: Успешно введены логин и пароль пользователем 0.  
-2015-01-24T13:08:23+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 26: Пользователь c id=2 пытался зайти как администратор.  
-2015-01-24T13:08:53+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 33: Успешно введены логин и пароль пользователем Тюбиков                                           Михаил                                            Иваныч                                            .  
-2015-01-24T13:08:53+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 26: Пользователь c id=2 пытался зайти как администратор.  
-2015-01-26T21:57:36+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 30: Успешно введены логин и пароль пользователем Михаил.  
-2015-01-26T22:03:26+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 30: Успешно введены логин и пароль пользователем Михаил.  
-2015-01-26T22:04:34+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 30: Успешно введены логин и пароль пользователем Михаил.  
+2015-01-27T18:33:51+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 27: Добавлен новый пользователь Горчица.  
+2015-01-27T18:34:45+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 27: Добавлен новый пользователь Горчица.  
+2015-01-27T18:39:27+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 30: Успешно введены логин и пароль пользователем Михаил.  
+2015-01-27T18:39:27+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 27: Добавлен новый пользователь Горчица.  
+2015-01-27T18:38:50+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 30: Успешно введены логин и пароль пользователем Михаил.  
+2015-01-27T18:38:50+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 64: Ошибка добавления строки в таблицу: alluser.  
+2015-01-27T18:39:46+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 30: Успешно введены логин и пароль пользователем Михаил.  
+2015-01-27T18:39:46+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 27: Добавлен новый пользователь Горчица.  
+2015-01-27T18:42:22+04:00 INFO [Auth] [Z:\home\localhost\www\NetBeans\Primer\class_auth.php]: 30: Успешно введены логин и пароль пользователем Михаил.  
+2015-01-27T18:42:22+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 27: Добавлен новый пользователь Горчица.  
+2015-01-27T19:51:26+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 41: Добавлен новый пользователь Горчица.  
+2015-01-27T19:52:18+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 70: Ошибка добавления строки в таблицу: alluser.  
+2015-01-27T19:52:52+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 70: Ошибка добавления строки в таблицу: alluser.  
+2015-01-28T00:09:32+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 70: Ошибка добавления строки в таблицу: alluser.  
+2015-01-28T00:10:07+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 71: Ошибка добавления строки в таблицу: alluser.  
+2015-01-28T00:10:07+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 71: Ошибка добавления строки в таблицу: alluser.  
+2015-01-28T00:11:01+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 71: Ошибка добавления строки в таблицу: alluser.  
+2015-01-28T00:11:35+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 41: Добавлен новый пользователь Горчица.  
+2015-01-28T00:12:31+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 34: Добавлен новый пользователь Горчица.  
+2015-01-28T00:26:30+04:00 INFO [Admin] [Z:\home\localhost\www\NetBeans\Primer\class_admin.php]: 27: Добавлен новый пользователь Горчица.  
+2015-01-28T10:07:39+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 77: Ошибка обновления строки в таблице: alluser.  
+2015-01-28T10:10:31+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 77: Ошибка обновления строки в таблице: alluser.  
+2015-01-28T10:24:53+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 65: Ошибка добавления строки в таблицу: role_user.  
+2015-01-28T10:25:24+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\class_db.php]: 65: Ошибка добавления строки в таблицу: role_user.  
+2015-01-28T12:40:39+04:00 INFO [Authorization] [Z:\home\localhost\www\NetBeans\Primer\Authorization.php]: 30: Успешно введены логин и пароль пользователем Иван.  
