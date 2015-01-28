@@ -24,9 +24,7 @@
         }
                                     
         public function getAuthUser(){ //Возращает значение пользователя
-            if ($this->getIdUser())
-            {
-                 
+            if ($this->getIdUser()){                 
                 $this->log->info('Успешно введены логин и пароль пользователем '.$this->login);
                 return $this->getIdUser ();
             }

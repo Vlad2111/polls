@@ -4,14 +4,12 @@ include_once 'Log4php/Logger.php';
     Logger::configure('setting/config.xml');
     LoggerNDC::push("Some Context");
 class Administration{
-    public $id_admin;
     public $db;
     public $log;
     
     public function __construct(){
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger(__CLASS__);
-        $this->id_admin=$id_admin;
     }
     
     public function addUser($array_values){ 
@@ -53,5 +51,10 @@ class Administration{
         $query="id_user=$id_user";
         $this->db->deleteDb('role_user', $query);         
     }    
+    public function resetPassword($id_user, $new_password){
+        $hash_password=  md5($new_password);
+        $query="password='$hash_password' where id_user=$id_user;";
+        $this->db->updateDb('alluser', $query);
+    }
 }       
 ?>

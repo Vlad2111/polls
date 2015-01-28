@@ -30,29 +30,25 @@
             $password_db = $array_ini['password_db'];
             $connect="host=".$host." port=".$port." dbname=".$dbname." user=".$user." password=".$password_bd; 
             $temp= pg_connect($connect);
-            if($temp) 
-                {
-                 pg_set_client_encoding($temp, "UTF-8");
-                 return $temp;
-                } 
-            else   
-                {   
-                    $this->log->info('Ошибка соединения с БД');
-                    throw new Exception('Ошибка соединения с БД');
-                }
+            if($temp){
+                pg_set_client_encoding($temp, "UTF-8");
+                return $temp;
+            } 
+            else{   
+                $this->log->info('Ошибка соединения с БД');
+                throw new Exception('Ошибка соединения с БД');
+            }
         }
         public function getQueryDb($name_colums, $name_table, $query, $array_params){    // Запрос к БД                             
             $select="SELECT ".$name_colums." FROM ".$name_table." where ".$query;
             $query= @pg_query_params($select, $array_params);
-            if ($query) 
-                {
+            if ($query){
                 return $query;                
-                }
-            else 
-                { 
-                    $this->log->info('Ошибка в запросе к бд'); 
-                    throw new Exception('Ошибка в запросе к бд');                     
-                }            
+            }
+            else{ 
+                $this->log->info('Ошибка в запросе к бд'); 
+                throw new Exception('Ошибка в запросе к бд');                     
+            }            
         }
         public function insertDb($name_table, $str, $name_colums=null){            
             if ($name_colums==null){
@@ -83,15 +79,13 @@
         }
         public function getFetchResult($query, $row=0, $field=0){ //Возращает одиночные данные
             $tamp_var_featch_result=@pg_fetch_result($query, $row, $field);
-            if($tamp_var_featch_result)
-                { 
+            if($tamp_var_featch_result){ 
                 return $tamp_var_featch_result;                
-                }
-            else
-                {
+            }
+            else{
                 $this->log->info('Ошибка в возращении записи из результата запроса'); 
                 throw new Exception('Ошибка в возращении записи из результата запроса'); 
-                }
+            }
         }
                         
         public function getConfig ($section='PostgreSQL', $path="setting/config_dike.ini"){
