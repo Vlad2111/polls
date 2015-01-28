@@ -4,47 +4,69 @@ include_once 'Log4php/Logger.php';
     Logger::configure('setting/config.xml');
     LoggerNDC::push("Some Context");
 class Quiz {
+    private $db;
+    private $log;
     public function __construct(){
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger(__CLASS__);
     }
-    public function createTest($array_values){
-        $str_values="nextval('id'),";
-        for($i=0; $i<count($array_values);$i++){//составляем строку из значений для запроса
-            if($i==count($array_values)-1){
+    public function createQuiz($array){
+        foreach ($array as $key => $value) {
+            $array_names_colums[]=$key;
+            $array_values[]=$value;
+        }
+        $str_values="";
+        $str_names_colums="";
+        for($i=0; $i<count($array);$i++){
+            if($i==count($array)-1){
                 $str_values.="'$array_values[$i]'";
+                $str_names_colums.="$array_names_colums[$i]";
                 break;                
             }
-            $str_values.="'$array_values[$i]', ";    
+            $str_values.="'$array_values[$i]', ";
+            $str_names_colums.="$array_names_colums[$i], "; 
         }
-        $this->db->insertDb("test", $str_values);        
-        $this->log->info('Добавлен новый тест: '.$array_values[0]);
+        $this->db->insertDb('test',$str_values, $str_names_colums);    
     }
-    public function editTest(){
+    public function editQuiz($id_test,$array){
+        foreach ($array as $key => $value) {
+            $array_names_colums[]=$key;
+            $array_values[]=$value;
+        }
+        $quest="";
+        for($i=0; $i<count($array);$i++){
+            if($i==count($array)-1){
+                $quest.="$array_names_colums[$i]='$array_values[$i]' ";
+                break;                
+            }
+            $quest.="$array_names_colums[$i]='$array_values[$i]', "; 
+        }
+        $quest.="where id_test=$id_test";
+        $this->db->updateDb('test',$quest);
+    }
+    public function deleteQuiz($id_test){
+        $query="id_test=$id_test";
+        $this->db->deleteDb('test', $query);
+    }
+    public function addQuestion($id_test){
         
     }
-    public function deleteTest(){
+    public function editQuestion($id_test){
         
     }
-    public function addQuestion(){
+    public function deleteQuestion($id_test){
         
     }
-    public function editQuestion(){
+    public function addLimitTime($id_test){
         
     }
-    public function deleteQuestion(){
+    public function editLimitTime($id_test){
         
     }
-    public function addLimitTime(){
+    public function deleteLimitTime($id_test){
         
     }
-    public function editLimitTime(){
-        
-    }
-    public function deleteLimitTime(){
-        
-    }
-    public function assignUsers(){
+    public function assignUsers($id_test){
         
     }
 }

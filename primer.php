@@ -3,15 +3,18 @@
 		<body>
 <?php
  try{ 
-    include 'DB.php';
-    include 'Authorization.php';
-    include 'Administration.php';  
-    include 'Test.php';
-    
-// (nextval('id'), 'Пробный тест', null, null, 'Y', 'Y', null);
-    $array=array('Массив', '360', 'для теста', 'Y', 'Y', 'только создан');
-$test= new Test();
-$test->createTest($array);
+    include_once 'DB.php';
+    include_once 'Authorization.php';
+    include_once 'Administration.php';  
+    include_once 'Quiz.php';    
+    $array=array(
+                    'topic'=>'Tests',
+                    'comment'=>'this is test',
+                    'see_the_result'=>'Y',
+                    'see_details'=>'Y'
+    );
+$test= new Quiz();
+$test->deleteQuiz(5);
 }
 catch (Exception $e){
     $error= $e->getMessage().'. Строка '.$e->getLine().': '. ' ('. $e->getFile().')';
