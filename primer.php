@@ -5,12 +5,11 @@
  try{ 
     include 'class_db.php';
     include 'class_auth.php';
-    $db=DB::getInstance();
-    $query= $db->getQueryDb('last_name, first_name', 'alluser', 'id_user = $1', array(1));
-    echo $db->getFetchResult($query);
-    echo "<hr>";
-    $q= new Auth('Иван', 1);
-    echo $q->getAuthUser();
+    include 'class_admin.php';
+        $array_name=array('last_name', 'first_name','patronymic', 'type','email','login','password');
+        $admin= new Admin();
+        $admin->deleteRole(24);
+        
 }
 catch (Exception $e){
     $error= $e->getMessage().'. Строка '.$e->getLine().': '. ' ('. $e->getFile().')';
