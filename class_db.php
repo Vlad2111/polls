@@ -54,7 +54,7 @@
                     throw new Exception('Ошибка в запросе к бд');                     
                 }            
         }
-        public function InsertDb($name_table, $str, $name_colums=null){            
+        public function insertDb($name_table, $str, $name_colums=null){            
             if ($name_colums==null){
                 $select="INSERT INTO ".$name_table." VALUES (".$str.");";                
             }
