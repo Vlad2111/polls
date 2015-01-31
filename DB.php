@@ -35,7 +35,7 @@
                 return $temp;
             } 
             else{   
-                $this->log->info('Ошибка соединения с БД');
+                $this->log->ERROR('Ошибка соединения с БД');
                 throw new Exception('Ошибка соединения с БД');
             }
         }
@@ -46,7 +46,7 @@
                 return $query;                
             }
             else{ 
-                $this->log->info('Ошибка в запросе к бд'); 
+                $this->log->ERROR('Ошибка в запросе к бд'); 
                 throw new Exception('Ошибка в запросе к бд');                     
             }            
         }
@@ -58,7 +58,7 @@
                 $select="INSERT INTO ".$name_table." (".$name_colums.") VALUES (".$str.");";
             }
            if(!@pg_query($select)){
-                $this->log->info('Ошибка добавления строки в таблицу: '.$name_table); 
+                $this->log->ERROR('Ошибка добавления строки в таблицу: '.$name_table); 
                 throw new Exception('Ошибка добавления строки в таблицу: '.$name_table);
            }    
         }
@@ -66,14 +66,14 @@
         public function updateDb($name_table, $query){
             $select="UPDATE ".$name_table." SET ".$query;
              if(!@pg_query($select)){
-                 $this->log->info('Ошибка обновления строки в таблице: '.$name_table); 
+                 $this->log->ERROR('Ошибка обновления строки в таблице: '.$name_table); 
                 throw new Exception('Ошибка обновления строки в таблице: '.$name_table);  
             }            
         }
         public function deleteDb($name_table, $query){
             $select="DELETE FROM ".$name_table." WHERE ".$query.";";
              if(!@pg_query($select)){
-                 $this->log->info('Ошибка удаления строки в таблице: '.$name_table); 
+                 $this->log->ERROR('Ошибка удаления строки в таблице: '.$name_table); 
                 throw new Exception('Ошибка удаления строки в таблице: '.$name_table);  
             }            
         }
@@ -83,7 +83,7 @@
                 return $tamp_var_featch_result;                
             }
             else{
-                $this->log->info('Ошибка в возращении записи из результата запроса'); 
+                $this->log->ERROR('Ошибка в возращении записи из результата запроса'); 
                 throw new Exception('Ошибка в возращении записи из результата запроса'); 
             }
         }

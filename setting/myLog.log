@@ -28,3 +28,17 @@
 2015-01-28T13:58:19+04:00 INFO [Test] [Z:\home\localhost\www\NetBeans\Primer\Test.php]: 21: Добавлен новый тест: Массив.  
 2015-01-28T14:00:55+04:00 INFO [Test] [Z:\home\localhost\www\NetBeans\Primer\Test.php]: 21: Добавлен новый тест: Массив.  
 2015-01-28T14:01:11+04:00 INFO [Test] [Z:\home\localhost\www\NetBeans\Primer\Test.php]: 21: Добавлен новый тест: Массив.  
+2015-01-31T20:25:49+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
+2015-01-31T20:27:18+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
+2015-01-31T20:27:44+04:00 INFO [Administration] [Z:\home\localhost\www\NetBeans\Primer\Administration.php]: 25: Добавлен новый пользователь Иван.  
+2015-01-31T20:28:27+04:00 INFO [Administration] [Z:\home\localhost\www\NetBeans\Primer\Administration.php]: 25: Добавлен новый пользователь Иванs.  
+2015-01-31T20:29:02+04:00 INFO [Administration] [Z:\home\localhost\www\NetBeans\Primer\Administration.php]: 25: Добавлен новый пользователь Иванs.  
+2015-01-31T20:29:02+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
+2015-01-31T20:29:03+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
+2015-01-31T20:29:03+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
+2015-01-31T23:14:10+04:00 INFO [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
+2015-01-31T23:16:01+04:00 ERROR [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
+2015-01-31T23:16:15+04:00 ERROR [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
+2015-01-31T23:16:16+04:00 ERROR [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
+2015-01-31T23:16:16+04:00 ERROR [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
+2015-01-31T23:16:16+04:00 ERROR [DB] [Z:\home\localhost\www\NetBeans\Primer\DB.php]: 61: Ошибка добавления строки в таблицу: alluser.  
