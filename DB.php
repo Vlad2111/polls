@@ -50,32 +50,35 @@
                 throw new Exception('Ошибка в запросе к бд');                     
             }            
         }
-        public function insertDb($name_table, $str, $name_colums=null){            
-            if ($name_colums==null){
-                $select="INSERT INTO ".$name_table." VALUES (".$str.");";                
-            }
-            else{
-                $select="INSERT INTO ".$name_table." (".$name_colums.") VALUES (".$str.");";
-            }
-           if(!@pg_query($select)){
-                $this->log->ERROR('Ошибка добавления строки в таблицу: '.$name_table); 
-                throw new Exception('Ошибка добавления строки в таблицу: '.$name_table);
-           }    
-        }
-        
-        public function updateDb($name_table, $query){
-            $select="UPDATE ".$name_table." SET ".$query;
-             if(!@pg_query($select)){
-                 $this->log->ERROR('Ошибка обновления строки в таблице: '.$name_table); 
-                throw new Exception('Ошибка обновления строки в таблице: '.$name_table);  
-            }            
-        }
-        public function deleteDb($name_table, $query){
-            $select="DELETE FROM ".$name_table." WHERE ".$query.";";
-             if(!@pg_query($select)){
-                 $this->log->ERROR('Ошибка удаления строки в таблице: '.$name_table); 
-                throw new Exception('Ошибка удаления строки в таблице: '.$name_table);  
-            }            
+//        public function insertDb($name_table, $str, $name_colums=null){            
+//            if ($name_colums==null){
+//                $select="INSERT INTO ".$name_table." VALUES (".$str.");";                
+//            }
+//            else{
+//                $select="INSERT INTO ".$name_table." (".$name_colums.") VALUES (".$str.");";
+//            }
+//           if(!@pg_query($select)){
+//                $this->log->ERROR('Ошибка добавления строки в таблицу: '.$name_table); 
+//                throw new Exception('Ошибка добавления строки в таблицу: '.$name_table);
+//           }    
+//        }
+//        
+//        public function updateDb($name_table, $query){
+//            $select="UPDATE ".$name_table." SET ".$query;
+//             if(!@pg_query($select)){
+//                 $this->log->ERROR('Ошибка обновления строки в таблице: '.$name_table); 
+//                throw new Exception('Ошибка обновления строки в таблице: '.$name_table);  
+//            }            
+//        }
+//        public function deleteDb($name_table, $query){
+//            $select="DELETE FROM ".$name_table." WHERE ".$query.";";
+//             if(!@pg_query($select)){
+//                 $this->log->ERROR('Ошибка удаления строки в таблице: '.$name_table); 
+//                throw new Exception('Ошибка удаления строки в таблице: '.$name_table);  
+//            }            
+//        }
+        public function execute($query){
+            pg_query($query);
         }
         public function getFetchResult($query, $row=0, $field=0){ //Возращает одиночные данные
             $tamp_var_featch_result=@pg_fetch_result($query, $row, $field);
