@@ -10,10 +10,10 @@ class QuizDAO {
         $this->log= Logger::getLogger(__CLASS__);
     }
     public function createQuize($quiz){
-        $query="INSERT INTO test(id_test, topic, time_limit, comment, see_the_result, see_details, status)
+        $query="INSERT INTO test(topic, time_limit, comment, see_the_result, see_details, status)
                 VALUES ($1, '$2', '$3', '$4', '$5', '$6', '$7');"; 
-        $array_params= array('$quiz->id_quize','$quiz->topic', '$quiz->time_limit', '$quiz->comment_test',
-                '$quiz->see_the_result', '$quiz->see_the_details', '$quiz->status');
+        $array_params= array($quiz->topic, $quiz->time_limit, $quiz->comment_test,
+                $quiz->see_the_result, $quiz->see_the_details, $quiz->status);
         if(!$this->db->execute($query,$array_params)){
             $this->log->ERROR('Ошибка добавления строки в таблицу: test'); 
             throw new Exception('Ошибка добавления строки в таблицу: test'); 
@@ -24,8 +24,8 @@ class QuizDAO {
                 . " comment='$3', see_the_result='$4',"
                 . " see_details='$5', status='$6'"
                 . " where id_test='$7';";
-        $array_params=array('$quiz->topic','$quiz->time_limit','$quiz->comment','$quiz->see_the_result',
-                    '$quiz->see_details','$quiz->status','$quiz->id_quiz');
+        $array_params=array($quiz->topic,$quiz->time_limit,$quiz->comment,$quiz->see_the_result,
+                    $quiz->see_details,$quiz->status,$quiz->id_quiz);
         if(!$this->db->execute($query,$array_params)){
             $this->log->ERROR('Ошибка обновления строки в таблице: test'); 
             throw new Exception('Ошибка обновления строки в таблице: test'); 
@@ -39,20 +39,22 @@ class QuizDAO {
         }          
     }
     public function createQuestion($quiz){
-        $query="INSERT INTO questions(id_question, texts, type, answer, comment)
-                VALUES ($quiz->id_question, '$quiz->texts', '$quiz->type', '$quiz->answer', '$quiz->comment_question');";
-        $this->db->execute($query);
-//        $array_params=array($quiz->id_question, $quiz->texts, $quiz->type, $quiz->answer, $quiz->comment_question);       
-//        if(!$this->db->executeParams($query,$array_params)){
-//            $this->log->ERROR('Ошибка добавления строки в таблицу: questions'); 
-//            throw new Exception('Ошибка добавления строки в таблицу: questions'); 
-//        }  
+        $array_params[]="'$quiz->texts'";
+        $array_params[]="$quiz->type";
+        $array_params[]="'$quiz->answer'";
+        $array_params[]="'$quiz->comment_question'";
+        $query="INSERT INTO questions(texts, type, answer, comment_questions)
+                VALUES ($1, $2, $3, $4);"; 
+        if($this->db->execute($query,$array_params)==false){
+            $this->log->ERROR('Ошибка добавления строки в таблицу: questions'); 
+            throw new Exception('Ошибка добавления строки в таблицу: questions'); 
+        }  
     }
     public function updateQuestion($quiz){
         $query="UPDATE questions SET texts='$2', type='$3',"
                 . " answer='$4', comment='$5',"
                 . " where id_question='$1';";
-        $array_params=array('$quiz->$id_question', '$quiz->texts', '$quiz->type', '$quiz->answer', '$quiz->comment_question');
+        $array_params=array($quiz->$id_question, $quiz->texts, $quiz->type, $quiz->answer, $quiz->comment_question);
         if(!$this->db->execute($query,$array_params)){
             $this->log->ERROR('Ошибка обновления строки в таблице: questions'); 
             throw new Exception('Ошибка обновления строки в таблице: questions'); 
@@ -67,7 +69,7 @@ class QuizDAO {
     } 
     public function addQuestion($quiz){
          $query="insert into questtest values($1, $2);";
-          $array_params=array('$quiz->id_question','$quiz->id_quize');
+          $array_params=array($quiz->id_question,$quiz->id_quize);
         if(!$this->db->execute($query,$array_params)){
             $this->log->ERROR('Ошибка добавления строки в таблицу: questtest'); 
             throw new Exception('Ошибка добавления строки в таблицу: questtest'); 

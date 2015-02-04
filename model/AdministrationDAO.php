@@ -11,9 +11,16 @@ class AdministrationDAO {
     }
     public function createUser($admin){
         $query="INSERT INTO alluser(id_user, last_name, first_name, patronymic, type, email, login, password)
-                VALUES ($1, '$2', '$3', '$4', '$5', '$6', '$7', $8);"; 
-        $array_params= array('$admin->id_user', '$admin->last_name', '$admin->first_name', '$admin->patronymic', 
-                '$admin->type', '$admin->email', '$admin->login', '$admin->password');
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8);"; 
+        $array_params[]="'$admin->id_user'";
+        $array_params[]="'$admin->last_name'";
+        $array_params[]="'$admin->first_name'";
+        $array_params[]="'$admin->patronymic'";
+        $array_params[]="'$admin->type'";
+        $array_params[]="'$admin->email'";
+        $array_params[]="'$admin->login'";
+        $array_params[]="'$admin->password'";       
+        
         if(!$this->db->execute($query,$array_params)){
             $this->log->ERROR('Ошибка добавления строки в таблицу: alluser'); 
             throw new Exception('Ошибка добавления строки в таблицу: alluser'); 
