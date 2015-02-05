@@ -50,13 +50,9 @@
                 throw new Exception('Ошибка в запросе к бд');                     
             }            
         }       
-        public function execute($query, $array_params=null){            
-                if($array_params===null){ 
-                   pg_query($query);                   
-                }
-                else{
-                    pg_query_params($this->db, $query, $array_params);
-                }
+        public function execute($query, $array_params){ 
+               return pg_query_params($this->db, $query, $array_params);
+                
         }        
         public function getFetchResult($query, $row=0, $field=0){ //Возращает одиночные данные
             $tamp_var_featch_result=@pg_fetch_result($query, $row, $field);

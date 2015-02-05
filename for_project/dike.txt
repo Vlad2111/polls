@@ -3,11 +3,6 @@ CREATE SEQUENCE id_role INCREMENT BY 1;
 CREATE SEQUENCE id_test INCREMENT BY 1;
 CREATE SEQUENCE id_question INCREMENT BY 1;
 
-CREATE SEQUENCE id_user INCREMENT BY 1;
-CREATE SEQUENCE id_role INCREMENT BY 1;
-CREATE SEQUENCE id_test INCREMENT BY 1;
-CREATE SEQUENCE id_question INCREMENT BY 1;
-
 create table alluser(
 id_user integer null DEFAULT NEXTVAL('id_user'),
 last_name character(50),
@@ -34,7 +29,7 @@ id_role integer not null,
 CREATE TYPE yorn AS enum('N', 'Y');
 create table test (
 	id_test integer  null DEFAULT NEXTVAL('id_test'),
-	topic character(50) not null CONSTRAINT must_be_different_topic_test UNIQUE,
+	topic character(50) not null,
     time_limit int,
     comment_test character(50),
     see_the_result yorn not null,
@@ -119,15 +114,15 @@ create table rezultanswers (
 );
 
 insert into alluser values 
-(1, 'Иван', 'Иванов','Михайлович', 'admin', 'admin@mail.ru', 'Иван', 'c4ca4238a0b923820dcc509a6f75849b'),
-(2, 'Михаил', 'Тюбиков','Иваныч', 'compiler', 'compiler@mail.ru', 'Михаил', 'c81e728d9d4c2f636f067f89cc14862c'),
-(3, 'Сергей', 'Иванов', 'Николаевич','test', 'test@mail.ru', 'Сергей', 'eccbc87e4b5ce2fe28308fd9f2a7baf3');
+(1, 'РРІР°РЅ', 'РРІР°РЅРѕРІ','РњРёС…Р°Р№Р»РѕРІРёС‡', 'admin', 'admin@mail.ru', 'РРІР°РЅ', 'c4ca4238a0b923820dcc509a6f75849b'),
+(2, 'РњРёС…Р°РёР»', 'РўСЋР±РёРєРѕРІ','РРІР°РЅС‹С‡', 'compiler', 'compiler@mail.ru', 'РњРёС…Р°РёР»', 'c81e728d9d4c2f636f067f89cc14862c'),
+(3, 'РЎРµСЂРіРµР№', 'РРІР°РЅРѕРІ', 'РќРёРєРѕР»Р°РµРІРёС‡','test', 'test@mail.ru', 'РЎРµСЂРіРµР№', 'eccbc87e4b5ce2fe28308fd9f2a7baf3');
 
 
 insert into role values
-	(1, 'Полный доступ'),
-	(2, 'Создание'),
-	(3, 'Выполнение теста');
+	(1, 'РџРѕР»РЅС‹Р№ РґРѕСЃС‚СѓРї'),
+	(2, 'РЎРѕР·РґР°РЅРёРµ'),
+	(3, 'Р’С‹РїРѕР»РЅРµРЅРёРµ С‚РµСЃС‚Р°');
 
 insert into role_user values
 	(1, 1),
@@ -139,5 +134,5 @@ insert into alluser values
 
 
  insert into test values
- (nextval('id_test'), 'Пробный тест', null, null, 'Y', 'Y', null);
+ (nextval('id_test'), 'РџСЂРѕР±РЅС‹Р№ С‚РµСЃС‚', null, null, 'Y', 'Y', null);
 
