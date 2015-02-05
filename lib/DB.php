@@ -35,21 +35,21 @@
                 return $temp;
             } 
             else{   
-                $this->log->ERROR('Ошибка соединения с БД');
-                throw new Exception('Ошибка соединения с БД');
+                $this->log->ERROR('Ошибка соединения с БД( '.pg_last_error().')');
+                throw new Exception('Ошибка соединения с БД( '.pg_last_error().')');
             }
         }
-        public function getQueryDb($name_colums, $name_table, $query, $array_params){    // Запрос к БД                             
-            $select="SELECT ".$name_colums." FROM ".$name_table." where ".$query;
-            $query= @pg_query_params($select, $array_params);
-            if ($query){
-                return $query;                
-            }
-            else{ 
-                $this->log->ERROR('Ошибка в запросе к бд'); 
-                throw new Exception('Ошибка в запросе к бд');                     
-            }            
-        }       
+//        public function getQueryDb($name_colums, $name_table, $query, $array_params){    // Запрос к БД                             
+//            $select="SELECT ".$name_colums." FROM ".$name_table." where ".$query;
+//            $query= @pg_query_params($select, $array_params);
+//            if ($query){
+//                return $query;                
+//            }
+//            else{ 
+//                $this->log->ERROR('Ошибка в запросе к бд'); 
+//                throw new Exception('Ошибка в запросе к бд');                     
+//            }            
+//        }       
         public function execute($query, $array_params){ 
                return pg_query_params($this->db, $query, $array_params);
                 

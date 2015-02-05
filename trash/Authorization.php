@@ -7,7 +7,6 @@
         private $login;
         private $pass;
         private $db;
-        private $name;
         private $log;
         public function __construct($login, $pass) {
             $this->db=DB::getInstance();

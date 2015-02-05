@@ -3,7 +3,7 @@ include_once 'lib/DB.php';
 include_once 'model/ValuesAdministration.php';
 include_once 'Log4php/Logger.php';
 class AdministrationDAO {
-    private $db;
+   private $db;
     private $log;
     public function __construct(){
         $this->db=DB::getInstance();
