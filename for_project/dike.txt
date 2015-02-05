@@ -52,67 +52,6 @@ create table questtest(
     	constraint quest_fkey foreign key (id_question) references questions(id_question),
     	constraint test_fkey foreign key (id_test) references test (id_test)
 );
-
-
-
-
-
-create table usertest (
-	id_user integer not null,
-	id_test integer not null,
-    	constraint usertest_fkey foreign key (id_user) references alluser(id_user),
-    	constraint testuser_fkey foreign key (id_test) references test(id_test)
-);
-
-create table status (
-id_status integer not null,
-	last_quest integer,
-    time_start time,
-    time_end time,
-    elapsed_time time,
-    id_user integer not null,
-    id_test integer not null,
-    	constraint status_pkey primary key (id_status),
-    	constraint userstatus_fkey foreign key (id_user) references alluser (id_user),
-    	constraint teststatus_fkey foreign key (id_test) references test (id_test)
-);
-
-create table answers (
-	id_answers integer not null,
-    answer_user integer not null,
-    id_test integer not null,
-    id_question integer not null,
-    	constraint answers_pkey primary key (id_answers),
-    	constraint answerstest_fkey foreign key (id_test) references test (id_test),
-    	constraint answersquest_fkey foreign key (id_question) references questions(id_question)
-);
-
-create table statusanswer (
-	id_status integer not null,
-	id_answers integer not null,
-    	constraint statusanswers_fkey foreign key (id_status) references status (id_status),
-    	constraint answersstatus_fkey foreign key (id_answers) references answers (id_answers)
-);
-
-
-create table result (
-	id_result integer not null,
-    time_start time not null,
-    time_end time not null,
-    id_user integer not null,
-    id_test integer not null,
-    	constraint result_pkey primary key (id_result),
-    	constraint resultuser_fkey foreign key (id_user) references alluser (id_user),
-    	constraint resulttest_fkey foreign key (id_test) references test (id_test)
-);
-
-create table rezultanswers (
-	id_result integer not null,
-	id_answers integer not null,
-    	constraint rezultsanswers_fkey foreign key (id_result) references result (id_result),
-    	constraint answersrezults_fkey foreign key (id_answers) references answers (id_answers)
-);
-
 insert into alluser values 
 (1, 'Иван', 'Иванов','Михайлович', 'admin', 'admin@mail.ru', 'Иван', 'c4ca4238a0b923820dcc509a6f75849b'),
 (2, 'Михаил', 'Тюбиков','Иваныч', 'compiler', 'compiler@mail.ru', 'Михаил', 'c81e728d9d4c2f636f067f89cc14862c'),
