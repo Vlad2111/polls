@@ -1,7 +1,6 @@
 <?php   
     include_once 'Log4php/Logger.php';
         Logger::configure('setting/config.xml');
-        LoggerNDC::push("Some Context");
     class DB {
         protected static $_instance;  
         private  $db;
@@ -54,15 +53,9 @@
                return pg_query_params($this->db, $query, $array_params);
                 
         }        
-        public function getFetchResult($query, $row=0, $field=0){ //Возращает одиночные данные
-            $tamp_var_featch_result=@pg_fetch_result($query, $row, $field);
-            if($tamp_var_featch_result){ 
-                return $tamp_var_featch_result;                
-            }
-            else{
-                $this->log->ERROR('Ошибка в возращении записи из результата запроса'); 
-                throw new Exception('Ошибка в возращении записи из результата запроса'); 
-            }
+        public function getFetchObject($result){ //Возращает одиночные данные
+            $featch_object=@pg_fetch_object($result); 
+            return $featch_object;   
         }
                         
         public function getConfig ($section='PostgreSQL', $path="setting/config_dike.ini"){

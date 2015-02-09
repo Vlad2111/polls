@@ -2,6 +2,7 @@
 include_once 'lib/DB.php';
 include_once 'model/ValuesAdministration.php';
 include_once 'Log4php/Logger.php';
+    Logger::configure('setting/config.xml');
 class AdministrationDAO {
    private $db;
     private $log;

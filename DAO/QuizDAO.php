@@ -2,6 +2,7 @@
 include_once 'lib/DB.php';
 include_once 'model/ValuesQuiz.php';
 include_once 'Log4php/Logger.php';
+Logger::configure('setting/config.xml');
 class QuizDAO {
     private $db;
     private $log;
