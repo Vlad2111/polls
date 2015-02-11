@@ -1,3 +1,18 @@
+CREATE DATABASE dike
+  
+WITH OWNER = postgres
+       
+ENCODING = 'UTF8'
+       
+TABLESPACE = pg_default
+       
+LC_COLLATE = 'Russian_Russia.1251'
+       
+LC_CTYPE = 'Russian_Russia.1251'
+       
+CONNECTION LIMIT = -1;
+
+
 CREATE SEQUENCE id_user INCREMENT BY 1;
 CREATE SEQUENCE id_role INCREMENT BY 1;
 CREATE SEQUENCE id_test INCREMENT BY 1;
@@ -30,20 +45,22 @@ CREATE TYPE yorn AS enum('N', 'Y');
 create table test (
 	id_test integer  null DEFAULT NEXTVAL('id_test'),
 	topic character(50) not null,
-    time_limit int,
-    comment_test character(50),
-    see_the_result yorn not null,
-    see_details yorn not null,
-    status character(50),
-    constraint test_pkey primary key(id_test)
+    	time_limit int,
+    	comment_test character(50),
+    	see_the_result yorn not null,
+    	see_details yorn not null,
+    	status character(50),
+    	CONSTRAINT must_be_different_test UNIQUE(topic, time_limit, comment_test, see_the_result, see_details, status),
+    	constraint test_pkey primary key(id_test)
 );
 
 create table questions (
 	id_question integer null DEFAULT NEXTVAL('id_question'),
-    texts text not null,
-    type int not null,
-    answer character(50),
-    comment_questions character(100),
+    	texts text not null,
+    	type int not null,
+   	answer character(50),
+    	comment_questions character(100),
+	CONSTRAINT must_be_different_questions UNIQUE(texts, type, answer, comment_questions),
     	constraint quest_pkey primary key (id_question)
 );
 create table questtest(
@@ -52,12 +69,6 @@ create table questtest(
     	constraint quest_fkey foreign key (id_question) references questions(id_question),
     	constraint test_fkey foreign key (id_test) references test (id_test)
 );
-insert into alluser values 
-(1, 'Иван', 'Иванов','Михайлович', 'admin', 'admin@mail.ru', 'Иван', 'c4ca4238a0b923820dcc509a6f75849b'),
-(2, 'Михаил', 'Тюбиков','Иваныч', 'compiler', 'compiler@mail.ru', 'Михаил', 'c81e728d9d4c2f636f067f89cc14862c'),
-(3, 'Сергей', 'Иванов', 'Николаевич','test', 'test@mail.ru', 'Сергей', 'eccbc87e4b5ce2fe28308fd9f2a7baf3');
-
-
 insert into role values
 	(1, 'Полный доступ'),
 	(2, 'Создание'),
@@ -67,11 +78,3 @@ insert into role_user values
 	(1, 1),
 	(2, 2),
 	(3, 3);
-
-insert into alluser values 
-(nextval('id_user'), 'f','f','f','f','f','f','eccbc87e4b5ce2fe28308fd9f2a7baf3');
-
-
- insert into test values
- (nextval('id_test'), 'Пробный тест', null, null, 'Y', 'Y', null);
-
