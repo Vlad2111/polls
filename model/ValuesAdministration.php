@@ -14,7 +14,7 @@ class ValuesAdministration {
     public function getIdUser(){
 	return $this->id_user;
     }
-    public function setIsUser($id_user){
+    public function setIdUser($id_user){
 	$this->last_name=$id_user;
     }
     public function getLastName(){

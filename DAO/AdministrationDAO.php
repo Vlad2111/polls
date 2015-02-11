@@ -44,7 +44,7 @@ class AdministrationDAO {
         $array_params[]=$admin->getLogin();
         $array_params[]=$admin->getPassword();       
         $array_params[]=$admin->getIdUser();
-        $result=@$this->db->execute($query,$array_params);
+        $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            
         }

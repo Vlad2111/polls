@@ -32,12 +32,12 @@ class ValuesQuiz {
         return $this->time_limit;
     }
     public function setTimeLimit($time_limit){
-        $this->time_limit;
+        $this->time_limit=$time_limit;
     }
-    public function getCommentTest(){
+    public function getCommentQuiz(){
         return $this->comment_test;
     }
-    public function setCommentTest($comment_test){
+    public function setCommentQuiz($comment_test){
         $this->comment_test=$comment_test;
     }
     public function getSeeTheResult(){

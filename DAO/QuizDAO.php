@@ -16,13 +16,13 @@ class QuizDAO {
         $array_params=array();
         $array_params[]=$quiz->getTopic();
         $array_params[]=$quiz->getTimeLimit();
-        $array_params[]=$quiz->getCommentTest();
+        $array_params[]=$quiz->getCommentQuiz();
         $array_params[]=$quiz->getSeeTheResult();
         $array_params[]=$quiz->getSeeDetails();
         $array_params[]=$quiz->getStatus();
         $result=@$this->db->execute($query,$array_params);
         if($result){
-            return $result;            
+            return $result;       //resourse    
         }        
         else{
             $this->log->ERROR('Ошибка добавления строки в таблицу: test('.pg_last_error().')'); 
@@ -31,7 +31,7 @@ class QuizDAO {
     }
     public function updateQuiz($quiz){
         $query="UPDATE test SET topic='$1', time_limit='$2',"
-                . " comment='$3', see_the_result='$4',"
+                . " comment_test='$3', see_the_result='$4',"
                 . " see_details='$5', status='$6'"
                 . " where id_test='$7';";
         $array_params=array();
@@ -125,6 +125,20 @@ class QuizDAO {
         else{
             $this->log->ERROR('Ошибка добавления строки в таблицу: questtest('.pg_last_error().')'); 
             throw new Exception('Ошибка добавления строки в таблицу: questtest('.pg_last_error().')'); 
+        }          
+    }
+    public function deleteQuizQuestion(){
+        $query="DELETE FROM questtest WHERE id_test=$1 and id_question=$2);";
+        $array_params=array();        
+        $array_params[]=$quiz->getIdQuiz();
+        $array_params[]=$quiz->getIdQuestion();
+        $result=$this->db->execute($query,$array_params);
+        if($result){
+            return $result;            
+        } 
+        else{
+            $this->log->ERROR('Ошибка удаления строки из таблицы: questtest('.pg_last_error().')'); 
+            throw new Exception('Ошибка удаления строки из таблицы: questtest('.pg_last_error().')'); 
         }          
     }
     
