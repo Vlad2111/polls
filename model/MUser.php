@@ -1,5 +1,5 @@
 <?php
-class ValuesAdministration {
+class MUser {
     private $id_user;
     private $last_name;
     private $first_name;

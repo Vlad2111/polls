@@ -14,67 +14,102 @@ CONNECTION LIMIT = -1;
 
 
 CREATE SEQUENCE id_user INCREMENT BY 1;
-CREATE SEQUENCE id_role INCREMENT BY 1;
 CREATE SEQUENCE id_test INCREMENT BY 1;
 CREATE SEQUENCE id_question INCREMENT BY 1;
+CREATE SEQUENCE id_answer_the_questions INCREMENT BY 1;
+CREATE SEQUENCE question_number INCREMENT BY 1;
+CREATE SEQUENCE id_testing INCREMENT BY 1;
 
 create table alluser(
-id_user integer null DEFAULT NEXTVAL('id_user'),
-last_name character(50),
-first_name character(50),
-patronymic character(50),
-type character(50),
-email character(50),
-login character(50) NOT NULL CONSTRAINT must_be_different_login UNIQUE,
-password character(50)  NOT NULL,
-CONSTRAINT must_be_different_fio UNIQUE(last_name, first_name, patronymic),
-constraint user_pkeys primary key (id_user));
+	id_user integer DEFAULT NEXTVAL('id_user'),
+	last_name character(50),
+	first_name character(50),
+	patronymic character(50),
+	type character(50),
+	email character(50),
+	login character(50) NOT NULL CONSTRAINT must_be_different_login UNIQUE,
+	password character(50)  NOT NULL,
+	CONSTRAINT must_be_different_fio UNIQUE(last_name, first_name, patronymic),
+	constraint user_pkeys primary key (id_user));
 
 create table role (
-id_role integer DEFAULT NEXTVAL('id_role'),
-description character (50),
-constraint role_pkey primary key (id_role));
+	id_role integer not null,
+	description_role character (50),
+	constraint role_pkey primary key (id_role));
 
-create table role_user (
-id_user integer not null,
-id_role integer not null,
-    constraint user_role_fkey foreign key (id_user) references alluser(id_user),
-    constraint role_user_fkey foreign key (id_role) references role(id_role));
+
+create table status_quiz(
+	id_status_quiz integer not null,
+	description_status_quiz character(50) not null, 
+	constraint status_quiz_pkey primary key (id_status_quiz));
 
 CREATE TYPE yorn AS enum('N', 'Y');
 create table test (
-	id_test integer  null DEFAULT NEXTVAL('id_test'),
+	id_test integer DEFAULT NEXTVAL('id_test'),
 	topic character(50) not null,
     	time_limit int,
     	comment_test character(50),
     	see_the_result yorn not null,
     	see_details yorn not null,
-    	status character(50),
-    	CONSTRAINT must_be_different_test UNIQUE(topic, time_limit, comment_test, see_the_result, see_details, status),
+    	id_status_quiz integer not null,
+	author_test integer not null,
+    	CONSTRAINT must_be_different_test UNIQUE(topic, time_limit, comment_test, see_the_result, see_details, id_status_quiz, author_test),
+	constraint author_test_fkey foreign key (author_test) references alluser(id_user),
+	constraint status_quiz_fkey foreign key (id_status_quiz) references status_quiz(id_status_quiz),
     	constraint test_pkey primary key(id_test)
 );
 
-create table questions (
-	id_question integer null DEFAULT NEXTVAL('id_question'),
-    	texts text not null,
-    	type int not null,
-   	answer character(50),
-    	comment_questions character(100),
-	CONSTRAINT must_be_different_questions UNIQUE(texts, type, answer, comment_questions),
-    	constraint quest_pkey primary key (id_question)
-);
-create table questtest(
-	id_question integer not null,
-	id_test integer not null,
-    	constraint quest_fkey foreign key (id_question) references questions(id_question),
-    	constraint test_fkey foreign key (id_test) references test (id_test)
-);
-insert into role values
-	(1, 'Полный доступ'),
-	(2, 'Создание'),
-	(3, 'Выполнение теста');
+CREATE TYPE mark_for_test AS enum('available', 'unfinished', 'not available');
 
-insert into role_user values
-	(1, 1),
-	(2, 2),
-	(3, 3);
+create table testing (
+	id_testing integer DEFAULT NEXTVAL('id_testing'),
+	id_user integer not null,
+	id_role integer not null,
+	id_test integer not null,
+	mark_test mark_for_test not null,
+	datetime_start_test character(50) null,
+	datetime_end_test character(50) null,
+    	constraint user_role_fkey foreign key (id_user) references alluser(id_user),
+	constraint test_role_fkey foreign key (id_test) references test (id_test),
+    	constraint role_user_fkey foreign key (id_role) references role(id_role),
+    	constraint testing_pkeys primary key (id_testing));
+
+CREATE TYPE markerAU AS enum('latest');
+create table answer_users (
+	id_testing integer not null,
+	id_question integer not null,
+	answer_user character(1000) not null,
+	marker_quiz markerAU null
+);
+
+create table type_the_questions (
+	id_answer_type integer not null,
+	description_answer_type character(100) NOT NULL  CONSTRAINT must_be_different_answer_type UNIQUE,
+	constraint answer_type_pkey primary key (id_answer_type));
+
+create table answer_the_questions (
+	id_answer_the_questions integer DEFAULT NEXTVAL('id_answer_the_questions'),
+	answer_the_questions character(1000) NOT NULL,
+	constraint answer_the_questions_pkey primary key (id_answer_the_questions));
+
+create table questions (
+	id_question integer DEFAULT NEXTVAL('id_question'),
+    	texts text not null,
+	id_answer_type integer not null,
+   	id_answer_the_questions integer not null,
+    	comment_questions character(100),
+    	question_number integer DEFAULT NEXTVAL('question_number'),
+    	id_test integer not null,
+    	constraint test_questions_fkey foreign key (id_test) references test (id_test),
+	CONSTRAINT must_be_different_questions UNIQUE(texts, id_answer_type, id_answer_the_questions, comment_questions),
+    	constraint question_pkey primary key (id_question),    	
+	constraint answer_type_fkey foreign key (id_answer_type) references type_the_questions(id_answer_type),
+    	constraint answer_the_questions_fkey foreign key (id_answer_the_questions) references answer_the_questions(id_answer_the_questions));
+
+create table usertest (
+	id_user integer not null,
+	id_test integer not null,
+    	constraint usertest_fkey foreign key (id_user) references alluser(id_user),
+    	constraint testuser_fkey foreign key (id_test) references test(id_test)
+);
+

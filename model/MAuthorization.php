@@ -1,6 +1,6 @@
 <?php
 
-class ValuesAuthorization {
+class MAuthorization {
     private $login;
     private $password;
     

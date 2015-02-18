@@ -16,10 +16,7 @@
             $this->db= $this->setConnectDb();
             $this->log= Logger::getLogger(__CLASS__);
         }
-    	public function __get($name){ // Отображаем значение атрибутов
-            return $this->$name;
-    	}            
-              
+    	    
     	private function setConnectDb() { // Установка соединения с базой данных. 
             $array_ini= $this->getConfig ();
             $host = $array_ini['host'];
@@ -37,25 +34,21 @@
                 $this->log->ERROR('Ошибка соединения с БД( '.pg_last_error().')');
                 throw new Exception('Ошибка соединения с БД( '.pg_last_error().')');
             }
-        }
-//        public function getQueryDb($name_colums, $name_table, $query, $array_params){    // Запрос к БД                             
-//            $select="SELECT ".$name_colums." FROM ".$name_table." where ".$query;
-//            $query= @pg_query_params($select, $array_params);
-//            if ($query){
-//                return $query;                
-//            }
-//            else{ 
-//                $this->log->ERROR('Ошибка в запросе к бд'); 
-//                throw new Exception('Ошибка в запросе к бд');                     
-//            }            
-//        }       
+        }      
         public function execute($query, $array_params){ 
-               return pg_query_params($this->db, $query, $array_params);
-                
+            return @pg_query_params($this->db, $query, $array_params);
+            //@-блокируем системные ошибки, чтобы срабатывали мои исключения      
         }        
-        public function getFetchObject($result){ //Возращает одиночные данные
-            $featch_object=@pg_fetch_object($result); 
+        public function getFetchObject($result, $row=0, $field=0){
+            $featch_object=@pg_fetch_object($result, $row); 
             return $featch_object;   
+        }
+        public function getArrayData($result, $field=0){
+            $array=array();
+            for ($i=0; $i<pg_num_rows($result); $i++){
+                $array[]=pg_fetch_result($result, $i, $field);
+            }
+            print_r($array);
         }
                         
         public function getConfig ($section='PostgreSQL', $path="setting/config_dike.ini"){

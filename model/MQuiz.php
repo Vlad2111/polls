@@ -1,6 +1,6 @@
 <?php
 
-class ValuesQuiz {
+class MQuiz {
     // table test
     private $id_quiz;
     private $topic; //тема теста
@@ -9,12 +9,7 @@ class ValuesQuiz {
     private $see_the_result='Y'; //просматривание результатов
     private $see_details='Y'; //просматривание детального отчёта
     private $status; //статус теста
-    // table questions
-    private $id_question;
-    private $texts;
-    private $type;
-    private $answer;
-    private $comment_question;
+    private $author_test;
     
     public function getIdQuiz(){
         return $this->id_quiz;
@@ -58,34 +53,10 @@ class ValuesQuiz {
     public function setStatus($status){
         $this->status=$status;
     }
-    public function getIdQuestion(){
-        return $this->id_question;
+    public function getAuthorTest(){
+        return $this->$author_test;
     }
-    public function setIdQuestion($id_question){
-        $this->id_question=$id_question;
-    }
-    public function getTexts(){
-        return $this->texts;
-    }
-    public function setTexts($texts){
-        $this->texts=$texts;
-    }
-    public function getType(){
-        return $this->type;
-    }
-    public function setType($type){
-        $this->type=$type;
-    }
-    public function getAnswer(){
-        return $this->answer;
-    }
-    public function setAnswer($answer){
-        $this->answer=$answer;
-    }
-    public function getCommentQuestion(){
-        return $this->comment_question;
-    }
-    public function setCommentQuestion($comment_question){
-        $this->comment_question=$comment_question;
+    public function setAuthorTest($author_test){
+        $this->author_test->$author_test;
     }
 }
