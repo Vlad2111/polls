@@ -6,10 +6,12 @@ include_once 'DAO/QuizDAO.php';
 include_once 'model/MQuiz.php';
     Logger::configure('setting/config.xml');
 class AdministrationDAO extends UserDAO{
-    public function __construct(){
-        $this->db=DB::getInstance();
-        $this->log= Logger::getLogger(__CLASS__);
-    }
+//    private $db;
+//    private $log;
+//    public function __construct(){
+//        $this->db=DB::getInstance();
+//        $this->log= Logger::getLogger(__CLASS__);
+//    }
     public function getListQuiz(){
         $query="select id_test from test;";
         $array_params=array();
@@ -35,10 +37,10 @@ class AdministrationDAO extends UserDAO{
         }  
     }
     public function deleteQuiz($id_quiz){
-        $quiz_data=new MQuiz();
-        $quiz_data->setIdQuiz($id_quiz);
+        $admin= new MQuiz();
+        $admin->setIdQuiz($id_quiz);
         $quiz=new QuizDAO();
-        $quiz->deleteQuiz($quiz);
+        $quiz->deleteQuiz($admin);
     }
     
 }

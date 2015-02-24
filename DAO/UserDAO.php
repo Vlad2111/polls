@@ -26,7 +26,7 @@ class UserDAO {
         }
         else{
             $this->log->ERROR('Ошибка добавления строки в таблицу: alluser( '.pg_last_error().')'); 
-            throw new Exception('Ошибка добавления строки в таблицу: alluser( '.pg_last_error().')');  
+            //throw new Exception('Ошибка добавления строки в таблицу: alluser( '.pg_last_error().')');  
         }   
     }
     public function updateUser(MUser $user){
@@ -49,48 +49,48 @@ class UserDAO {
         }
         else{
             $this->log->ERROR('Ошибка обновления строки в таблице: alluser( '.pg_last_error().')'); 
-            throw new Exception('Ошибка обновления строки в таблице: alluser( '.pg_last_error().')');  
+            //throw new Exception('Ошибка обновления строки в таблице: alluser( '.pg_last_error().')');  
         }          
     }
     public function deleteUser(MUser $user){
         $query="DELETE FROM alluser WHERE id_user=$1;";
         $array_params=array();
         $array_params[]=$user->getIdUser();
-        $result=@$this->db->execute($query,$array_params);
+        $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            
         }
         else{
             $this->log->ERROR('Ошибка удаления строки в таблице: alluser( '.pg_last_error().')');  
-            throw new Exception('Ошибка удаления строки в таблице: alluser( '.pg_last_error().')'); 
+            //throw new Exception('Ошибка удаления строки в таблице: alluser( '.pg_last_error().')'); 
         }  
     }
     public function addRole(MUser $user){
         $query="insert into role_user values($1, $2);";
         $array_params=array();
+        $array_params[]=$user->getIdRole();        
         $array_params[]=$user->getIdUser();
-        $array_params[]=$user->getIdRole();
-        $result=@$this->db->execute($query,$array_params);
+        $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            
         }
         else{
             $this->log->ERROR('Ошибка добавления строки в таблицу: role_user( '.pg_last_error().')');  
-            throw new Exception('Ошибка добавления строки в таблицу: role_user( '.pg_last_error().')');  
+            //throw new Exception('Ошибка добавления строки в таблицу: role_user( '.pg_last_error().')');  
         }          
     }
     public function deleteRole(MUser $user){
-        $query="DELETE FROM role_user WHERE id_user=$1 and id_role=$2);";
-        $array_params=array();
-        $array_params[]=$user->getIdUser();
+        $query="DELETE FROM role_user WHERE id_role=$2 and id_user=$1);";
+        $array_params=array();        
         $array_params[]=$user->getIdRole();
-        $result=@$this->db->execute($query,$array_params);
+        $array_params[]=$user->getIdUser();
+        $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            
         }
         else{
             $this->log->ERROR('Ошибка удаления строки в таблицу: role_user( '.pg_last_error().')');  
-            throw new Exception('Ошибка удаления строки в таблицу: role_user( '.pg_last_error().')');  
+            //throw new Exception('Ошибка удаления строки в таблицу: role_user( '.pg_last_error().')');  
         }  
     }
     public function resetPassword(MUser $user){
@@ -98,7 +98,7 @@ class UserDAO {
         $array_params=array();
         $array_params[]=$user->getPassword();
         $array_params[]=$user->getIdUser();
-        $result=@$this->db->execute($query,$array_params);
+        $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            
         }

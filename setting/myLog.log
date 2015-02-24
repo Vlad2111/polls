@@ -58,3 +58,126 @@ DETAIL:  Ключ "(topic)=(New topic                                         )"
 2015-02-09T18:01:51+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Иван.  
 2015-02-09T18:01:54+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Иван.  
 2015-02-09T18:01:57+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-02-11T11:27:05+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем .  
+2015-02-11T12:12:17+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем .  
+2015-02-11T12:59:55+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 28: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-11T12:59:55+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 28: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-11T12:59:55+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 28: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-11T13:00:17+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 28: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-11T13:17:40+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 28: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-11T13:57:46+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 28: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-15T15:37:02+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 28: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-15T15:37:02+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 28: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-15T15:37:44+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 27: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-15T15:38:34+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:38:36+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:41:30+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:45:45+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:46:28+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:47:38+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:47:39+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:47:39+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:48:07+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:48:08+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:48:09+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:48:09+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:48:38+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:48:39+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:48:50+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:49:49+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:55:13+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:55:15+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:55:16+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:55:16+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:58:40+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:58:40+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:58:41+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:58:52+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:58:52+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:59:01+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:59:02+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:59:42+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T15:59:56+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T16:00:44+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T16:00:54+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T16:01:01+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T16:01:19+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test.  
+2015-02-15T16:02:10+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  неверное значение для целого числа: "$7"
+LINE 1: ...sult='$4', see_details='$5', status='$6' where id_test='$7';
+                                                                  ^).  
+2015-02-15T16:02:40+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  неверное значение для целого числа: "$2"
+LINE 1: UPDATE test SET topic='$1', time_limit='$2', comment_test='$...
+                                               ^).  
+2015-02-15T16:03:34+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 27: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Tesdt                                             , 24, tesst                                             , Y, Y, for_test                                          )" уже существует.).  
+2015-02-15T16:08:31+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 27: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-15T16:10:17+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  неверное значение для целого числа: "$2"
+LINE 1: UPDATE test SET topic='$1', time_limit='$2', comment_test='$...
+                                               ^).  
+2015-02-15T16:10:35+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  неверное значение для перечисления yorn: "$4"
+LINE 1: ... time_limit=$2, comment_test='$3', see_the_result='$4', see_...
+                                                             ^).  
+2015-02-15T16:10:51+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  не удалось определить тип данных параметра $1).  
+2015-02-15T16:11:07+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  не удалось определить тип данных параметра $3).  
+2015-02-15T16:11:07+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  не удалось определить тип данных параметра $3).  
+2015-02-15T16:15:28+04:00 ERROR [DB] [Z:\home\localhost\www\NetBeans\Primer\lib\DB.php]: 47: Ошибка выполнения запроса( ОШИБКА:  неверное значение для целого числа: "ук").  
+2015-02-15T16:16:09+04:00 ERROR [DB] [Z:\home\localhost\www\NetBeans\Primer\lib\DB.php]: 47: Ошибка выполнения запроса( ОШИБКА:  неверное значение для целого числа: "па").  
+2015-02-15T16:17:42+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  неверное значение для целого числа: "ап").  
+2015-02-15T16:18:01+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  неверное значение для целого числа: "ап").  
+2015-02-15T16:51:06+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  неверное значение для целого числа: "f").  
+2015-02-15T16:51:19+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 49: Ошибка обновления строки в таблице: test(ОШИБКА:  неверное значение для целого числа: "f").  
+2015-02-15T17:07:34+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 50: Ошибка обновления строки в таблице: test(ОШИБКА:  неверное значение для целого числа: "f").  
+2015-02-15T17:07:45+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 51: Ошибка обновления строки в таблице: test(ОШИБКА:  неверное значение для целого числа: "f").  
+2015-02-15T17:08:39+04:00 ERROR [QuizDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuizDAO.php]: 28: Ошибка добавления строки в таблицу: test(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_test"
+DETAIL:  Ключ "(topic, time_limit, comment_test, see_the_result, see_details, status)=(Test                                              , 24, test                                              , Y, Y, for_test                                          )" уже существует.).  
+2015-02-16T13:38:19+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  нулевое значение в колонке "texts" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (1, null, null, null, null).).  
+2015-02-16T13:41:01+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "quest_pkey"
+DETAIL:  Ключ "(id_question)=(2)" уже существует.).  
+2015-02-16T13:41:06+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  неверное значение для целого числа: "").  
+2015-02-16T13:41:15+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  неверное значение для целого числа: "").  
+2015-02-16T13:48:35+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_questions"
+DETAIL:  Ключ "(texts, type, answer, comment_questions)=(Ты кто, 1,                                                   ,                                                                                                     )" уже существует.).  
+2015-02-16T13:48:39+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_questions"
+DETAIL:  Ключ "(texts, type, answer, comment_questions)=(Ты кто, 1,                                                   ,                                                                                                     )" уже существует.).  
+2015-02-16T13:49:09+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_questions"
+DETAIL:  Ключ "(texts, type, answer, comment_questions)=(Привет, 1,                                                   ,                                                                                                     )" уже существует.).  
+2015-02-16T13:53:27+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем ав.  
+2015-02-16T13:54:16+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем ав.  
+2015-02-16T13:54:37+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 23: Успешно введены логин и пароль пользователем Иван.  
+2015-02-16T13:54:40+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-16T13:55:04+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-16T13:55:05+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-16T13:56:07+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-16T13:56:08+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-16T13:56:16+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-16T13:57:17+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-16T13:58:05+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-16T13:58:06+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-16T13:58:42+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 23: Успешно введены логин и пароль пользователем Иван.  
+2015-02-16T13:59:07+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 23: Успешно введены логин и пароль пользователем Иван.  
+2015-02-16T13:59:10+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем а.  
+2015-02-16T13:59:15+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем а.  
+2015-02-16T13:59:24+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 23: Успешно введены логин и пароль пользователем Иван.  
+2015-02-16T14:00:36+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 23: Успешно введены логин и пароль пользователем Иван.  
+2015-02-16T14:00:38+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 27: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-16T14:09:44+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  неверное значение для целого числа: "").  
+2015-02-16T14:11:19+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  неверное значение для целого числа: "").  
+2015-02-16T14:11:54+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  неверное значение для целого числа: "").  
+2015-02-16T14:18:16+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  нулевое значение в колонке "texts" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (9, null, null, null, null).).  
+2015-02-16T14:18:31+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  неверное значение для целого числа: "").  
+2015-02-16T17:18:00+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  нулевое значение в колонке "texts" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (13, null, null, null, null).).  
+2015-02-16T17:58:28+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  нулевое значение в колонке "texts" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (14, null, null, null, null).).  

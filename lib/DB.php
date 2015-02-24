@@ -35,9 +35,9 @@
                 throw new Exception('Ошибка соединения с БД( '.pg_last_error().')');
             }
         }      
-        public function execute($query, $array_params){ 
+        public function execute($query, $array_params=null){
             return @pg_query_params($this->db, $query, $array_params);
-            //@-блокируем системные ошибки, чтобы срабатывали мои исключения      
+            //@-блокируем системные ошибки, чтобы срабатывали мои исключения            
         }        
         public function getFetchObject($result, $row=0, $field=0){
             $featch_object=@pg_fetch_object($result, $row); 

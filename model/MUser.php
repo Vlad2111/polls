@@ -15,7 +15,7 @@ class MUser {
 	return $this->id_user;
     }
     public function setIdUser($id_user){
-	$this->last_name=$id_user;
+	$this->id_user=$id_user;
     }
     public function getLastName(){
 	return $this->last_name;
