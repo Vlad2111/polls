@@ -3,11 +3,12 @@ include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
     Logger::configure('setting/config.xml');
 class UserDAO {
-    private $db;
-    private $log;
+    protected $db;
+    protected $log;
+    protected $nameclass=__CLASS__;
     public function __construct(){
         $this->db=DB::getInstance();
-        $this->log= Logger::getLogger(__CLASS__);
+        $this->log= Logger::getLogger($this->nameclass);
     }
     public function createUser(MUser $user){
         $query="INSERT INTO alluser(last_name, first_name, patronymic, type, email, login, password)
@@ -20,7 +21,7 @@ class UserDAO {
         $array_params[]=$user->getEmail();
         $array_params[]=$user->getLogin();
         $array_params[]=$user->getPassword();       
-        $result=@$this->db->execute($query,$array_params);
+        $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            
         }

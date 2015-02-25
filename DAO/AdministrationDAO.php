@@ -4,15 +4,10 @@ include_once 'Log4php/Logger.php';
 include_once 'DAO/UserDAO.php';
 include_once 'DAO/QuizDAO.php';
 include_once 'model/MQuiz.php';
-    Logger::configure('setting/config.xml');
+    Logger::configure('setting/config.xml');    
 class AdministrationDAO extends UserDAO{
-//    private $db;
-//    private $log;
-//    public function __construct(){
-//        $this->db=DB::getInstance();
-//        $this->log= Logger::getLogger(__CLASS__);
-//    }
-    public function getListQuiz(){
+    protected $nameclass=__CLASS__;
+    public function getListIdQuiz(){
         $query="select id_test from test;";
         $array_params=array();
         $result=$this->db->execute($query,$array_params);
@@ -24,7 +19,7 @@ class AdministrationDAO extends UserDAO{
             throw new Exception('Ошибка запроса к таблице: test('.pg_last_error().')'); 
         }    
     }
-    public function getListUsers(){
+    public function getListIdUsers(){
         $query="select id_user from alluser;";
         $array_params=array();
         $result=$this->db->execute($query,$array_params);

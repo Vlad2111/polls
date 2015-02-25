@@ -4,10 +4,7 @@ include_once 'Log4php/Logger.php';
 include_once 'DAO/QuizDAO.php';
     Logger::configure('setting/config.xml');
 class AuthorQuizDAO  extends QuizDAO{
-    public function __construct(){
-        $this->db=DB::getInstance();
-        $this->log= Logger::getLogger(__CLASS__);
-    }
+    protected $nameclass=__CLASS__;
     public function getListUsers(){
         $query="select id_user from alluser";
         $array_params=array();
@@ -23,7 +20,7 @@ class AuthorQuizDAO  extends QuizDAO{
     public function getListQuiz(MAuthorQuiz $author){
         $query="select id_test from test where author_test=$1;";
         $array_params=array();
-        $array_params[]=$quiz->getIdUser();
+        $array_params[]=$author->getIdUser();
         $result=$this->db->execute($query,$array_params);
         if($result){
              return $this->db->getArrayData($result);            
@@ -34,12 +31,12 @@ class AuthorQuizDAO  extends QuizDAO{
         }    
     }
     public function addInterviewee(MAuthorQuiz $author){
-        $query="INSERT INTO user_role_test(id_user, id_role, id_test)
+        $query="INSERT INTO testing(id_user, id_test, mark_test)
                 VALUES ($1, $2, $3);"; 
         $array_params=array();
-        $array_params[]=$quiz->getIdUser();
-        $array_params[]=$quiz->getIdRole();
-        $array_params[]=$quiz->getIdTest();
+        $array_params[]=$author->getIdUser();
+        $array_params[]=$author->getIdTest();
+        $array_params[]=$author->getMarkTest();
         $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;
@@ -50,11 +47,10 @@ class AuthorQuizDAO  extends QuizDAO{
         }
     }
     public function deleteInterviewee(MAuthorQuiz $author){
-        $query="DELETE FROM user_role_test WHERE id_user=$1 and id_role=$2 and id_test=$3);";
+        $query="DELETE FROM testing WHERE id_user=$1 and id_test=$3);";
         $array_params=array();        
-        $array_params[]=$quiz->getIdUser();
-        $array_params[]=$quiz->getIdRole();
-        $array_params[]=$quiz->getIdTest();
+        $array_params[]=$author->getIdUser();
+        $array_params[]=$author->getIdTest();
         $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            
@@ -68,8 +64,8 @@ class AuthorQuizDAO  extends QuizDAO{
         $query="UPDATE questions SET question_number=$1,"
         . " where id_question=$2;";
         $array_params=array();
-        $array_params[]=$quiz->getQuestionNumber();
-        $array_params[]=$quiz->getIdQuestion();
+        $array_params[]=$author->getQuestionNumber();
+        $array_params[]=$author->getIdQuestion();
         $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            

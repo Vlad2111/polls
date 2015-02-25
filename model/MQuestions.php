@@ -2,10 +2,13 @@
 class MQuestions {
     private $id_question;
     private $texts;
-    private $id_answer_type;
+    private $id_questions_type;
     private $id_answer_the_questions;
     private $comment_question;
-    private $answer_the_questions;
+    private $question_number;
+    private $id_test;
+    private $answer_the_question;
+    
     public function getIdQuestion(){
         return $this->id_question;
     }
@@ -18,11 +21,11 @@ class MQuestions {
     public function setTexts($texts){
         $this->texts=$texts;
     }
-    public function getIdAnswerType(){
-        return $this->$id_answer_type;
+    public function getIdQuestionsType(){
+        return $this->$id_questions_type;
     }
-    public function setIdAnswerType($id_answer_type){
-        $this->id_answer_type=$id_answer_type;
+    public function setIdQuestionsType($id_questions_type){
+        $this->id_questions_type=$id_questions_type;
     }
     public function getIdAnswerTheQuestions(){
         return $this->id_answer_the_questions;
@@ -36,11 +39,23 @@ class MQuestions {
     public function setCommentQuestion($comment_question){
         $this->comment_question=$comment_question;
     }
-    public function getAnswerTheQuestions(){
-        return $this->answer_the_questions;
+    public function getQuestionNumber(){
+        return $this->question_number;
     }
-    public function setAnswerTheQuestions($answer_the_questions){
-        $this->answer_the_questions=$answer_the_questions;
+    public function setQuestionNumber($question_number){
+        $this->question_number=$question_number;
+    }
+    public function getIdTest(){
+        return $this->id_test;
+    }
+    public function setIdTest($id_test){
+        $this->id_test=$id_test;
+    }
+    public function getAnswerTheQuestion(){
+        return $this->answer_the_question;
+    }
+    public function setAnswerTheQuestion($answer_the_question){
+        $this->answer_the_question=$answer_the_question;
     }
 }
 ?>

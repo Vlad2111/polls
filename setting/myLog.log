@@ -181,3 +181,15 @@ DETAIL:  Ошибочная строка содержит (9, null, null, null, 
 DETAIL:  Ошибочная строка содержит (13, null, null, null, null).).  
 2015-02-16T17:58:28+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\QuestionDAO.php]: 25: Ошибка добавления строки в таблицу: questions(ОШИБКА:  нулевое значение в колонке "texts" нарушает ограничение NOT NULL
 DETAIL:  Ошибочная строка содержит (14, null, null, null, null).).  
+2015-02-24T16:59:12+04:00 ERROR [UserDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ОШИБКА:  нулевое значение в колонке "login" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (7, null, null, null, null, null, null, null).).  
+2015-02-24T16:59:23+04:00 ERROR [UserDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ОШИБКА:  нулевое значение в колонке "login" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (8, null, null, null, null, null, null, null).).  
+2015-02-24T17:00:32+04:00 ERROR [AdministrationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\UserDAO.php]: 29: Ошибка добавления строки в таблицу: alluser( ОШИБКА:  нулевое значение в колонке "login" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (9, null, null, null, null, null, null, null).).  
+2015-02-24T23:44:03+04:00 ERROR [AdministrationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\UserDAO.php]: 29: Ошибка добавления строки в таблицу: alluser( ОШИБКА:  нулевое значение в колонке "login" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (34, null, null, null, null, null, null, null).).  
+2015-02-24T23:44:03+04:00 ERROR [AdministrationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\UserDAO.php]: 29: Ошибка добавления строки в таблицу: alluser( ОШИБКА:  нулевое значение в колонке "login" нарушает ограничение NOT NULL
+DETAIL:  Ошибочная строка содержит (35, null, null, null, null, null, null, null).).  
+2015-02-25T00:06:43+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем postgres.  
+2015-02-25T00:06:48+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  

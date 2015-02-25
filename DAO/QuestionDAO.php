@@ -3,21 +3,23 @@ include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
 Logger::configure('setting/config.xml');
 class QuestionDAO {
-    private $db;
-    private $log;
+    protected $db;
+    protected $log;
+    protected $nameclass=__CLASS__;
     public function __construct(){
         $this->db=DB::getInstance();
-        $this->log= Logger::getLogger(__CLASS__);
+        $this->log= Logger::getLogger($this->nameclass);
     }
     public function createQuestion(MQuestions $questions){
+        $query="INSERT INTO questions(texts, id_answer_type, id_answer_the_questions, comment_question)
+        VALUES ($1, $2, $3, $4);"; 
         $array_params=array();
         $array_params[]=$questions->getTexts();
         $array_params[]=$questions->getIdAnswerType();
         $array_params[]=$questions->getIdAnswerTheQuestions();
         $array_params[]=$questions->getCommentQuestion();
-        $query="INSERT INTO questions(texts, id_answer_type, id_answer_the_questions, comment_questions)
-                VALUES ($1, $2, $3, $4);"; 
-        $result=@$this->db->execute($query,$array_params);
+
+        $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            
         } 
@@ -61,7 +63,7 @@ class QuestionDAO {
     public function addAnswer(MQuestions $questions){
         $query="insert into answer_the_questions(answer_the_questions) values ($1);";
         $array_params=array();
-        $array_params[]=$questions->getAnswerTheQuestions();
+        $array_params[]=$questions->getAnswerTheQuestion();
         $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            

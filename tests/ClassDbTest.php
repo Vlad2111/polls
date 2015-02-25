@@ -1,5 +1,5 @@
 <?php
-require "lib\DB.php";
+require "lib/DB.php";
 class class_dbTest extends PHPUnit_Framework_TestCase
 {
     public function testGetConfig (){

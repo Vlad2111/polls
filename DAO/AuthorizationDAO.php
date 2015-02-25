@@ -3,11 +3,12 @@ include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
     Logger::configure('setting/config.xml');
 class AuthorizationDAO {
-    private $db;
-    private $log;
+    protected $db;
+    protected $log;
+    protected $nameclass=__CLASS__;
     public function __construct(){
         $this->db=DB::getInstance();
-        $this->log= Logger::getLogger(__CLASS__);
+        $this->log= Logger::getLogger($this->nameclass);
     }
     public function getIdUser(MAuthorization $auth){
         $query="SELECT id_user FROM alluser WHERE login=$1 and password=$2;"; 

@@ -2,7 +2,9 @@
 class MAuthorQuiz {
     private $id_user;
     private $id_test;
-    private $id_role;
+    private $mark_test='available'; //Статус теста: окрытый, незаконченный, закрытый
+    private $datetime_start_test;
+    private $datetime_end_test;
     private $id_question;
     private $question_number;
     
@@ -18,11 +20,23 @@ class MAuthorQuiz {
     public function setIdTest($id_test){
         $this->id_test=$id_test;
     }
-    public function getIdRole(){
-        return $this->id_role;
+    public function getMarkTest(){
+        return $this->mark_test;
     }
-    public function setIdRole($id_role){
-        $this->id_role=$id_role;
+    public function setMarkTest($mark_test){
+        $this->mark_test=$mark_test;
+    }
+    public function getDatetimeStartTest(){
+        return $this->datetime_start_test;
+    }
+    public function setDatetimeStartTest($datetime_start_test){
+        $this->datetime_start_test=$datetime_start_test;
+    }
+    public function getDatetimeEndTest(){
+        return $this->datetime_end_test;
+    }
+    public function setDatetimeEndTest($datetime_end_test){
+        $this->datetime_end_test=$datetime_end_test;
     }
     public function getIdQuestion(){
         return $this->id_question;

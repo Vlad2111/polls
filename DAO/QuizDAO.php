@@ -3,22 +3,24 @@ include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
 Logger::configure('setting/config.xml');
 class QuizDAO {
-    private $db;
-    private $log;
+    protected $db;
+    protected $log;
+    protected $nameclass=__CLASS__;
     public function __construct(){
         $this->db=DB::getInstance();
-        $this->log= Logger::getLogger(__CLASS__);
+        $this->log= Logger::getLogger($this->nameclass);
     }
     public function createQuiz($quiz){
-        $query="INSERT INTO test(topic, time_limit, comment_test, see_the_result, see_details, status)
-                VALUES ($1, $2, $3, $4, $5, $6);"; 
+        $query="INSERT INTO test(topic, time_limit, comment_test, see_the_result, see_details, id_status_quiz, author_test)
+                VALUES ($1, $2, $3, $4, $5, $6, $7);"; 
         $array_params=array();
         $array_params[]=$quiz->getTopic();
         $array_params[]=$quiz->getTimeLimit();
         $array_params[]=$quiz->getCommentQuiz();
         $array_params[]=$quiz->getSeeTheResult();
         $array_params[]=$quiz->getSeeDetails();
-        $array_params[]=$quiz->getStatus();
+        $array_params[]=$quiz->getIdStatusQuiz();
+        $array_params[]=$quiz->getAuthorTest();
         $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;       //resourse    
@@ -31,15 +33,16 @@ class QuizDAO {
     public function updateQuiz($quiz){
         $query="UPDATE test SET topic=$1, time_limit=$2,"
                 . " comment_test=$3, see_the_result=$4,"
-                . " see_details=$5, id_status=$6"
-                . " where id_test=$7;";
+                . " see_details=$5, id_status_quiz=$6, author_test=$7"
+                . " where id_test=$8;";
         $array_params=array();
         $array_params[]=$quiz->getTopic();
         $array_params[]=$quiz->getTimeLimit();
         $array_params[]=$quiz->getCommentQuiz();
         $array_params[]=$quiz->getSeeTheResult();
         $array_params[]=$quiz->getSeeDetails();
-        $array_params[]=$quiz->getStatus();
+        $array_params[]=$quiz->getIdStatusQuiz();
+        $array_params[]=$quiz->getAuthorTest();
         $array_params[]=$quiz->getIdQuiz();
         $result=$this->db->execute($query,$array_params);
         if($result){
@@ -47,7 +50,6 @@ class QuizDAO {
         } 
         else{
             $this->log->ERROR('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
-            throw new Exception('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
         }          
     }
     public function deleteQuiz($quiz){
@@ -66,9 +68,14 @@ class QuizDAO {
         }          
     }    
     public function addQuestion($quiz, $questions){
-        $query="insert into questtest values($1, $2);";
+        $query="insert into questions values($1, $2, $3, $4, $5, $6, $7);";
         $array_params=array();
-        $array_params[]=$quiz->getIdQuestion();
+        $array_params[]=$questions->getIdQuestion;
+        $array_params[]=$questions->getTexts();
+        $array_params[]=$questions->getIdQuestionsType();
+        $array_params[]=$questions->getIdAnswerTheQuestions();
+        $array_params[]=$questions->getCommentQuestion();
+        $array_params[]=$questions->getQuestionNumber();
         $array_params[]=$quiz->getIdQuiz();
         $result=$this->db->execute($query,$array_params);
         if($result){
@@ -76,25 +83,25 @@ class QuizDAO {
         } 
         else{
             $this->log->ERROR('Ошибка добавления строки в таблицу: questtest('.pg_last_error().')'); 
-            throw new Exception('Ошибка добавления строки в таблицу: questtest('.pg_last_error().')'); 
+            //throw new Exception('Ошибка добавления строки в таблицу: questtest('.pg_last_error().')'); 
         }          
     }
     public function deleteQuizQuestion($quiz, $questions){
-        $query="DELETE FROM questtest WHERE id_test=$1 and id_question=$2);";
+        $query="DELETE FROM questions WHERE id_question=$1 and id_test=$2);";
         $array_params=array();        
+        $array_params[]=$questions->getIdQuestion();
         $array_params[]=$quiz->getIdQuiz();
-        $array_params[]=$quiz->getIdQuestion();
         $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            
         } 
         else{
             $this->log->ERROR('Ошибка удаления строки из таблицы: questtest('.pg_last_error().')'); 
-            throw new Exception('Ошибка удаления строки из таблицы: questtest('.pg_last_error().')'); 
+            //throw new Exception('Ошибка удаления строки из таблицы: questtest('.pg_last_error().')'); 
         }         
     }
     public function getListIdQuestions($quiz){
-        $query="select id_question from questtest where id_test=$1;";
+        $query="select id_question from questions where id_test=$1;";
         $array_params=array();
         $array_params[]=$quiz->getIdQuiz();
         $result=$this->db->execute($query,$array_params);
@@ -152,10 +159,9 @@ class QuizDAO {
         }   
     }
     public function editStatusQuiz($quiz){
-        $query="UPDATE test SET author_test=$1,"
-        . " where id_test=$2;";
+        $query="UPDATE test SET id_status_quiz=$1 where id_test=$2;";
         $array_params=array();
-        $array_params[]=$quiz->getAuthorTest();
+        $array_params[]=$quiz->getIdStatusQuiz();
         $array_params[]=$quiz->getIdQuiz();
         $result=$this->db->execute($query,$array_params);
         if($result){

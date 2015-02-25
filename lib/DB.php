@@ -24,7 +24,7 @@
             $dbname = $array_ini['dbname'];
             $user = $array_ini['user'];
             $password_db = $array_ini['password_db'];
-            $connect="host=".$host." port=".$port." dbname=".$dbname." user=".$user." password=".$password_bd; 
+            $connect="host=".$host." port=".$port." dbname=".$dbname." user=".$user." password=".$password_db; 
             $temp= pg_connect($connect);
             if($temp){
                 pg_set_client_encoding($temp, "UTF-8");
@@ -39,7 +39,7 @@
             return @pg_query_params($this->db, $query, $array_params);
             //@-блокируем системные ошибки, чтобы срабатывали мои исключения            
         }        
-        public function getFetchObject($result, $row=0, $field=0){
+        public function getFetchObject($result, $row=0){
             $featch_object=@pg_fetch_object($result, $row); 
             return $featch_object;   
         }
@@ -48,7 +48,7 @@
             for ($i=0; $i<pg_num_rows($result); $i++){
                 $array[]=pg_fetch_result($result, $i, $field);
             }
-            print_r($array);
+            return $array;
         }
                         
         public function getConfig ($section='PostgreSQL', $path="setting/config_dike.ini"){

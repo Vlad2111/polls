@@ -2,15 +2,15 @@
 	<head><title>Таблица</title><meta charset="utf-8"></head>
 		<body>
 <?php
+include_once 'view/AdministrationView.php';
  try{ 
-include_once 'DAO/AdministrationDAO.php';
-include_once 'DAO/UserDAO.php';
-include_once 'model/MUser.php';
-$user= new MUser();
-$user->setIdUser(1);
-$admin=new AdministrationDAO();
-var_dump($admin->getListQuiz()); //   1) Отоброжение списка тестов (Класс AdministrtionDAO)
-var_dump($admin->deleteUser($user));//2) Удаление пользователя (метод наследуется из UserDAO)
+$admin=new AdministrationView();
+$admin->getDataUsers();
+echo "<pre>";
+var_dump($admin->getDataUsers());
+var_dump($admin->getDataQuiz());
+echo "</pre>";
+
  }
 
 catch (Exception $e){
