@@ -2,7 +2,7 @@
 include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
 include_once 'DAO/QuizDAO.php';
-    Logger::configure('setting/config.xml');
+    Logger::configure('/etc/config_log4php.xml');
 class AuthorQuizDAO  extends QuizDAO{
     protected $nameclass=__CLASS__;
     public function getListUsers(){

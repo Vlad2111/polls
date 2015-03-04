@@ -1,16 +1,18 @@
 CREATE DATABASE dike
-  
+
 WITH OWNER = postgres
-       
+
 ENCODING = 'UTF8'
-       
+
 TABLESPACE = pg_default
-       
+
 LC_COLLATE = 'Russian_Russia.1251'
-       
+
 LC_CTYPE = 'Russian_Russia.1251'
-       
+
 CONNECTION LIMIT = -1;
+
+
 
 
 CREATE SEQUENCE id_user INCREMENT BY 1;
@@ -21,95 +23,135 @@ CREATE SEQUENCE question_number INCREMENT BY 1;
 CREATE SEQUENCE id_testing INCREMENT BY 1;
 
 create table alluser(
-	id_user integer DEFAULT NEXTVAL('id_user'),
-	last_name character(50),
-	first_name character(50),
-	patronymic character(50),
-	type character(50),
-	email character(50),
-	login character(50) NOT NULL CONSTRAINT must_be_different_login UNIQUE,
-	password character(50)  NOT NULL,
-	CONSTRAINT must_be_different_fio UNIQUE(last_name, first_name, patronymic),
-	constraint user_pkeys primary key (id_user));
+id_user integer DEFAULT NEXTVAL('id_user'),
+last_name character(50),
+first_name character(50),
+patronymic character(50),
+email character(50),
+login character(50) NOT NULL CONSTRAINT must_be_different_login UNIQUE,
+password character(50) NOT NULL,
+CONSTRAINT must_be_different_fio UNIQUE(last_name, first_name, patronymic),
+constraint user_pkeys primary key (id_user));
 
 create table role (
-	id_role integer not null,
-	description_role character (50),
-	constraint role_pkey primary key (id_role));
+id_role integer not null,
+description_role character (50),
+constraint role_pkey primary key (id_role));
+
+create table role_user (
+id_role integer not null,
+id_user integer not null,
+CONSTRAINT must_be_different_role_user UNIQUE(id_role, id_user),
+constraint role_user_fkey foreign key (id_role) references role(id_role),
+constraint user_role_fkey foreign key (id_user) references alluser(id_user)
+);
 
 
 create table status_quiz(
-	id_status_quiz integer not null,
-	description_status_quiz character(50) not null, 
-	constraint status_quiz_pkey primary key (id_status_quiz));
+id_status_quiz integer not null,
+description_status_quiz character(50) not null,
+constraint status_quiz_pkey primary key (id_status_quiz));
 
 CREATE TYPE yorn AS enum('N', 'Y');
 create table test (
-	id_test integer DEFAULT NEXTVAL('id_test'),
-	topic character(50) not null,
-    	time_limit int,
-    	comment_test character(50),
-    	see_the_result yorn not null,
-    	see_details yorn not null,
-    	id_status_quiz integer not null,
-	author_test integer not null,
-    	CONSTRAINT must_be_different_test UNIQUE(topic, time_limit, comment_test, see_the_result, see_details, id_status_quiz, author_test),
-	constraint author_test_fkey foreign key (author_test) references alluser(id_user),
-	constraint status_quiz_fkey foreign key (id_status_quiz) references status_quiz(id_status_quiz),
-    	constraint test_pkey primary key(id_test)
+id_test integer DEFAULT NEXTVAL('id_test'),
+topic character(50) not null,
+time_limit integer null,
+comment_test character(50) null,
+see_the_result yorn not null,
+see_details yorn not null,
+id_status_quiz integer not null,
+author_test integer not null,
+CONSTRAINT must_be_different_test UNIQUE(topic, time_limit, comment_test, see_the_result, see_details, id_status_quiz, author_test),
+constraint author_test_fkey foreign key (author_test) references alluser(id_user),
+constraint status_quiz_fkey foreign key (id_status_quiz) references status_quiz(id_status_quiz),
+constraint test_pkey primary key(id_test)
 );
 
 CREATE TYPE mark_for_test AS enum('available', 'unfinished', 'not available');
 
 create table testing (
-	id_testing integer DEFAULT NEXTVAL('id_testing'),
-	id_user integer not null,
-	id_role integer not null,
-	id_test integer not null,
-	mark_test mark_for_test not null,
-	datetime_start_test character(50) null,
-	datetime_end_test character(50) null,
-    	constraint user_role_fkey foreign key (id_user) references alluser(id_user),
-	constraint test_role_fkey foreign key (id_test) references test (id_test),
-    	constraint role_user_fkey foreign key (id_role) references role(id_role),
-    	constraint testing_pkeys primary key (id_testing));
+id_testing integer DEFAULT NEXTVAL('id_testing'),
+id_user integer not null,
+id_test integer not null,
+mark_test mark_for_test not null,
+datetime_start_test character(50) null,
+datetime_end_test character(50) null,
+CONSTRAINT must_be_different_testing UNIQUE(id_user, id_test),
+constraint user_role_fkey foreign key (id_user) references alluser(id_user),
+constraint test_role_fkey foreign key (id_test) references test (id_test),
+constraint testing_pkeys primary key (id_testing));
+
+
+
+create table result_percent(
+id_user integer not null,
+id_test integer not null,
+datetime_end_test character(50) not null,
+result character(50) not null,
+constraint user_result_fkey foreign key (id_user) references alluser(id_user),
+constraint test_result_fkey foreign key (id_test) references test (id_test)
+);
+
+
+create table type_the_questions (
+id_questions_type integer not null,
+description_questions_type character(100) NOT NULL CONSTRAINT must_be_different_answer_type UNIQUE,
+constraint answer_type_pkey primary key (id_questions_type));
+
+create table answer_the_questions (
+id_answer_the_questions integer DEFAULT NEXTVAL('id_answer_the_questions'),
+answer_the_questions character(1000) NULL,
+constraint answer_the_questions_pkey primary key (id_answer_the_questions));
+
+create table questions (
+id_question integer DEFAULT NEXTVAL('id_question'),
+texts text not null,
+id_questions_type integer not null,
+id_answer_the_questions integer not null,
+comment_question character(100),
+question_number integer DEFAULT NEXTVAL('question_number'),
+id_test integer not null,
+constraint test_questions_fkey foreign key (id_test) references test (id_test),
+CONSTRAINT must_be_different_questions UNIQUE(texts, id_questions_type, id_answer_the_questions, comment_question),
+constraint question_pkey primary key (id_question),
+constraint answer_type_fkey foreign key (id_questions_type) references type_the_questions(id_questions_type),
+constraint answer_the_questions_fkey foreign key (id_answer_the_questions) references answer_the_questions(id_answer_the_questions));
 
 CREATE TYPE markerAU AS enum('latest');
 create table answer_users (
-	id_testing integer not null,
-	id_question integer not null,
-	answer_user character(1000) not null,
-	marker_quiz markerAU null
+id_testing integer not null,
+id_question integer not null,
+answer_user character(1000) not null,
+marker_quiz markerAU null,
+CONSTRAINT must_be_different_answer_users UNIQUE(id_testing, id_question, answer_user),
+constraint testing_answer_fkey foreign key (id_testing) references testing (id_testing),
+constraint questions_answer_fkey foreign key (id_question) references questions (id_question)
 );
 
-create table type_the_questions (
-	id_answer_type integer not null,
-	description_answer_type character(100) NOT NULL  CONSTRAINT must_be_different_answer_type UNIQUE,
-	constraint answer_type_pkey primary key (id_answer_type));
+insert into alluser(last_name, first_name, patronymic, email, login, password) values
+('Иван', 'Иванов','Михайлович', 'admin@mail.ru', 'Иван', 'c4ca4238a0b923820dcc509a6f75849b'),
+('Михаил', 'Тюбиков','Иваныч', 'compiler@mail.ru', 'Михаил', 'c81e728d9d4c2f636f067f89cc14862c'),
+('Сергей', 'Иванов', 'Николаевич','test@mail.ru', 'Сергей', 'eccbc87e4b5ce2fe28308fd9f2a7baf3');
 
-create table answer_the_questions (
-	id_answer_the_questions integer DEFAULT NEXTVAL('id_answer_the_questions'),
-	answer_the_questions character(1000) NOT NULL,
-	constraint answer_the_questions_pkey primary key (id_answer_the_questions));
+insert into role values
+(1, 'Опрашиваемый'),
+(2, 'Составитель опросов'),
+(3, 'Администратор');
 
-create table questions (
-	id_question integer DEFAULT NEXTVAL('id_question'),
-    	texts text not null,
-	id_answer_type integer not null,
-   	id_answer_the_questions integer not null,
-    	comment_questions character(100),
-    	question_number integer DEFAULT NEXTVAL('question_number'),
-    	id_test integer not null,
-    	constraint test_questions_fkey foreign key (id_test) references test (id_test),
-	CONSTRAINT must_be_different_questions UNIQUE(texts, id_answer_type, id_answer_the_questions, comment_questions),
-    	constraint question_pkey primary key (id_question),    	
-	constraint answer_type_fkey foreign key (id_answer_type) references type_the_questions(id_answer_type),
-    	constraint answer_the_questions_fkey foreign key (id_answer_the_questions) references answer_the_questions(id_answer_the_questions));
+insert into status_quiz values
+(1, 'Редактируемый'),
+(2, 'Готов к опубликованию'),
+(3, 'Активный'),
+(4, 'Завершённый');
 
-create table usertest (
-	id_user integer not null,
-	id_test integer not null,
-    	constraint usertest_fkey foreign key (id_user) references alluser(id_user),
-    	constraint testuser_fkey foreign key (id_test) references test(id_test)
-);
+insert into type_the_questions values
+(1, 'Вопрос, предлогающий ответ типа Да/Нет/Не знаю'),
+(2, 'Вопрос с возможностью выбора одного ответа из списка'),
+(3, 'Вопрос с возможностью выбора одного или более ответов из списка'),
+(4, 'Вопрос, предполагающий написание ответа в виде произвольного текста длиной до 1000 символов');
+
+insert into test(topic, time_limit, comment_test, see_the_result, see_details, id_status_quiz, author_test) values
+('тест', null, null, 'Y', 'Y', 1, 1),
+('тест', null, null, 'Y', 'Y', 2, 2);
 

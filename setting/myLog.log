@@ -193,3 +193,100 @@ DETAIL:  Ошибочная строка содержит (34, null, null, null,
 DETAIL:  Ошибочная строка содержит (35, null, null, null, null, null, null, null).).  
 2015-02-25T00:06:43+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем postgres.  
 2015-02-25T00:06:48+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\Primer\DAO\AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-02-27T19:34:46+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем .  
+2015-02-27T19:34:47+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем .  
+2015-02-27T19:35:03+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Иваны.  
+2015-02-27T19:35:15+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-02-27T20:04:03+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-02-27T20:04:21+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-02T10:12:58+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем porandusy@mail.ru.  
+2015-03-02T10:13:27+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-02T13:31:45+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-02T13:31:49+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем вп.  
+2015-03-02T13:33:19+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем вп.  
+2015-03-02T13:33:36+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-02T13:35:38+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-02T13:35:46+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем df.  
+2015-03-02T19:30:28+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  INSERT has more expressions than target columns
+LINE 2:                 VALUES ($1, $2, $3, $4, $5, $6, $7);
+                                                        ^).  
+2015-03-02T19:31:41+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем ИванИ.  
+2015-03-02T19:32:38+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(ИванИ                                             ) already exists.).  
+2015-03-02T19:40:07+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(ИванИ                                             ) already exists.).  
+2015-03-02T19:45:46+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 50: Ошибка обновления строки в таблице: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(ИванИ                                             ) already exists.).  
+2015-03-02T19:46:13+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 50: Ошибка обновления строки в таблице: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(ИванИ                                             ) already exists.).  
+2015-03-02T19:46:13+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 50: Ошибка обновления строки в таблице: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(ИванИ                                             ) already exists.).  
+2015-03-02T19:58:01+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем ИванИ.  
+2015-03-02T19:58:13+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем ИванИ.  
+2015-03-02T19:58:17+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-02T20:06:35+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем ИванИ.  
+2015-03-02T20:07:49+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем ИванИ.  
+2015-03-02T20:08:55+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем ИванИ.  
+2015-03-02T20:09:00+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем ИванИ.  
+2015-03-02T20:12:20+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 91: Ошибка удаления строки в таблицу: role_user( ERROR:  syntax error at or near ")"
+LINE 1: DELETE FROM role_user WHERE id_role=$2 and id_user=$1);
+                                                             ^).  
+2015-03-02T20:12:41+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 91: Ошибка удаления строки в таблицу: role_user( ERROR:  syntax error at or near ")"
+LINE 1: DELETE FROM role_user WHERE id_role=$1 and id_user=$2);
+                                                             ^).  
+2015-03-02T20:12:43+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 91: Ошибка удаления строки в таблицу: role_user( ERROR:  syntax error at or near ")"
+LINE 1: DELETE FROM role_user WHERE id_role=$1 and id_user=$2);
+                                                             ^).  
+2015-03-02T20:13:30+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 91: Ошибка удаления строки в таблицу: role_user( ERROR:  syntax error at or near ")"
+LINE 1: DELETE FROM role_user WHERE id_role=$1 and id_user=$2);
+                                                             ^).  
+2015-03-02T20:17:00+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 77: Ошибка добавления строки в таблицу: role_user( ERROR:  duplicate key value violates unique constraint "must_be_different_role_user"
+DETAIL:  Key (id_role, id_user)=(2, 13) already exists.).  
+2015-03-02T20:17:19+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 91: Ошибка удаления строки в таблицу: role_user( ERROR:  syntax error at or near ")"
+LINE 1: DELETE FROM role_user WHERE id_role=$1 and id_user=$2);
+                                                             ^).  
+2015-03-02T21:41:52+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем ИванИ.  
+2015-03-02T21:41:53+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем ИванИ.  
+2015-03-02T21:42:08+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем ИванИ.  
+2015-03-04T03:01:31+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 78: Ошибка добавления строки в таблицу: role_user( ERROR:  null value in column "id_user" violates not-null constraint
+DETAIL:  Failing row contains (1, null).).  
+2015-03-04T03:10:53+03:00 ERROR [AdministrationView] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 77: Ошибка добавления строки в таблицу: role_user( ERROR:  null value in column "id_user" violates not-null constraint
+DETAIL:  Failing row contains (1, null).).  
+2015-03-04T03:12:56+03:00 ERROR [AdministrationView] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(ИванИ                                             ) already exists.).  
+2015-03-04T03:13:54+03:00 ERROR [AdministrationView] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 77: Ошибка добавления строки в таблицу: role_user( ERROR:  duplicate key value violates unique constraint "must_be_different_role_user"
+DETAIL:  Key (id_role, id_user)=(2, 4) already exists.).  
+2015-03-04T03:22:37+03:00 ERROR [AdministrationView] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(Иванка                                            ) already exists.).  
+2015-03-04T03:26:09+03:00 ERROR [AdministrationView] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(                                                  ) already exists.).  
+2015-03-04T03:26:15+03:00 ERROR [AdministrationView] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(                                                  ) already exists.).  
+2015-03-04T03:26:36+03:00 ERROR [AdministrationView] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(                                                  ) already exists.).  
+2015-03-04T03:28:36+03:00 ERROR [AdministrationView] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(                                                  ) already exists.).  
+2015-03-04T03:52:32+03:00 ERROR [AdministrationView] [/var/www/html/netbeans/PhpProject1/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(Иванка                                            ) already exists.).  
+2015-03-04T05:05:04+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T05:06:30+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T05:08:42+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Иван.  
+2015-03-04T05:08:47+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T05:58:58+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:00:15+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Михаиил.  
+2015-03-04T06:00:34+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Михаиил.  
+2015-03-04T06:02:41+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:02:51+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Михаиил.  
+2015-03-04T06:04:14+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:04:27+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Михаиил.  
+2015-03-04T06:04:31+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:04:45+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Михаиил.  
+2015-03-04T06:04:48+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:15:11+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:15:17+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:15:23+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:15:32+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:21:04+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:21:15+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем ИванИ.  
+2015-03-04T06:21:26+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-04T06:22:09+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем test.  

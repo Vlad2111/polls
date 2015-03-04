@@ -1,7 +1,7 @@
 <?php
 include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
-Logger::configure('setting/config.xml');
+Logger::configure('/etc/config_log4php.xml');
 class QuizDAO {
     protected $db;
     protected $log;
@@ -10,7 +10,7 @@ class QuizDAO {
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
     }
-    public function createQuiz($quiz){
+    public function createQuiz(MQuiz $quiz){
         $query="INSERT INTO test(topic, time_limit, comment_test, see_the_result, see_details, id_status_quiz, author_test)
                 VALUES ($1, $2, $3, $4, $5, $6, $7);"; 
         $array_params=array();
@@ -30,7 +30,7 @@ class QuizDAO {
             throw new Exception('Ошибка добавления строки в таблицу: test('.pg_last_error().')');
         }
     }
-    public function updateQuiz($quiz){
+    public function updateQuiz(MQuiz $quiz){
         $query="UPDATE test SET topic=$1, time_limit=$2,"
                 . " comment_test=$3, see_the_result=$4,"
                 . " see_details=$5, id_status_quiz=$6, author_test=$7"
@@ -52,7 +52,7 @@ class QuizDAO {
             $this->log->ERROR('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
         }          
     }
-    public function deleteQuiz($quiz){
+    public function deleteQuiz(MQuiz $quiz){
         $query="DELETE FROM test WHERE id_test=$1;";
         $array_params=array();
         $array_params[]=$quiz->getIdQuiz();
@@ -100,7 +100,7 @@ class QuizDAO {
             //throw new Exception('Ошибка удаления строки из таблицы: questtest('.pg_last_error().')'); 
         }         
     }
-    public function getListIdQuestions($quiz){
+    public function getListIdQuestions(MQuiz $quiz){
         $query="select id_question from questions where id_test=$1;";
         $array_params=array();
         $array_params[]=$quiz->getIdQuiz();
@@ -113,7 +113,7 @@ class QuizDAO {
             throw new Exception('Ошибка запроса к таблице: questtest('.pg_last_error().')'); 
         }    
     }
-    public function editTimeLimit($quiz){
+    public function editTimeLimit(MQuiz $quiz){
         $query="UPDATE test SET time_limit=$1,"
                 . " where id_test=$2;";
         $array_params=array();
@@ -128,7 +128,7 @@ class QuizDAO {
             throw new Exception('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
         } 
     }
-    public function editSeeTheResult($quiz){
+    public function editSeeTheResult(MQuiz $quiz){
         $query="UPDATE test SET see_the_result=$1,"
             . " where id_test=$2;";
         $array_params=array();
@@ -143,7 +143,7 @@ class QuizDAO {
             throw new Exception('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
         }  
     }
-    public function editSeeDetails($quiz){
+    public function editSeeDetails(MQuiz $quiz){
         $query="UPDATE test SET see_details=$1,"
         . " where id_test=$2;";
         $array_params=array();
@@ -158,7 +158,7 @@ class QuizDAO {
             throw new Exception('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
         }   
     }
-    public function editStatusQuiz($quiz){
+    public function editStatusQuiz(MQuiz $quiz){
         $query="UPDATE test SET id_status_quiz=$1 where id_test=$2;";
         $array_params=array();
         $array_params[]=$quiz->getIdStatusQuiz();
@@ -173,7 +173,7 @@ class QuizDAO {
         }        
     }
     
-    public function updateComment($quiz){
+    public function updateComment(MQuiz $quiz){
         $query="UPDATE test SET comment_test=$1,"
         . " where id_test=$2;";
         $array_params=array();
@@ -188,7 +188,7 @@ class QuizDAO {
             throw new Exception('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
         }
     }    
-    public function deleteComment($quiz){
+    public function deleteComment(MQuiz $quiz){
         $query="UPDATE test SET comment_test=null,"
         . " where id_test=$1;";
         $array_params=array();
@@ -202,6 +202,21 @@ class QuizDAO {
             throw new Exception('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
         }
     }
+    public function getStatusQuiz(MQuiz $quiz){
+        $query="Select id_status_quiz from test where id_test=$1;";
+        $array_params=array();
+        $array_params[]=$quiz->getIdQuiz();
+        $result=$this->db->execute($query,$array_params);
+        $obj_status= $this->db->getFetchObject($result);
+        if($result){
+            return $obj_status->id_status_quiz;            
+        } 
+        else{
+            $this->log->ERROR('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
+            throw new Exception('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
+        }        
+    }
+
    
 }
 ?>

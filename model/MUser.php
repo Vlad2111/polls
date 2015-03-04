@@ -4,7 +4,6 @@ class MUser {
     private $last_name;
     private $first_name;
     private $patronymic;
-    private $type;
     private $email;
     private $login;
     private $password;
@@ -27,19 +26,13 @@ class MUser {
 	return $this->first_name;
     }
     public function setFirstName($first_name){
-	$this->last_name=$first_name;
+	$this->first_name=$first_name;
     }
     public function getPatronymic(){
 	return $this->patronymic;
     }
     public function setPatronymic($patronymic){
-	$this->patronymic;
-    }
-    public function getType(){
-	return $this->type; 
-    }
-    public function setType($type){
-	$this->type=$type;
+	$this->patronymic=$patronymic;
     }
     public function getEmail(){
 	return $this->email;

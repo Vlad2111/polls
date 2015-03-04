@@ -1,6 +1,6 @@
 <?php   
     include_once 'Log4php/Logger.php';
-        Logger::configure('setting/config.xml');
+        Logger::configure('/etc/config_log4php.xml');
     class DB {
         protected static $_instance;  
         private  $db;
@@ -25,7 +25,7 @@
             $user = $array_ini['user'];
             $password_db = $array_ini['password_db'];
             $connect="host=".$host." port=".$port." dbname=".$dbname." user=".$user." password=".$password_db; 
-            $temp= pg_connect($connect);
+            $temp= pg_pconnect($connect);
             if($temp){
                 pg_set_client_encoding($temp, "UTF-8");
                 return $temp;
