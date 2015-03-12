@@ -1,7 +1,7 @@
 <?php
 include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
-Logger::configure('/etc/config_log4php.xml');
+Logger::configure('setting/config.xml');
 class QuizDAO {
     protected $db;
     protected $log;
@@ -10,7 +10,8 @@ class QuizDAO {
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
     }
-    public function createQuiz(MQuiz $quiz){
+    
+    public function createQuiz(MQuiz $quiz, MUser $author){
         $query="INSERT INTO test(topic, time_limit, comment_test, see_the_result, see_details, id_status_quiz, author_test)
                 VALUES ($1, $2, $3, $4, $5, $6, $7);"; 
         $array_params=array();
@@ -20,7 +21,7 @@ class QuizDAO {
         $array_params[]=$quiz->getSeeTheResult();
         $array_params[]=$quiz->getSeeDetails();
         $array_params[]=$quiz->getIdStatusQuiz();
-        $array_params[]=$quiz->getAuthorTest();
+        $array_params[]=$author->getIdUser();
         $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;       //resourse    
@@ -30,7 +31,7 @@ class QuizDAO {
             throw new Exception('Ошибка добавления строки в таблицу: test('.pg_last_error().')');
         }
     }
-    public function updateQuiz(MQuiz $quiz){
+    public function updateQuiz(MQuiz $quiz, MUser $author){
         $query="UPDATE test SET topic=$1, time_limit=$2,"
                 . " comment_test=$3, see_the_result=$4,"
                 . " see_details=$5, id_status_quiz=$6, author_test=$7"
@@ -42,7 +43,7 @@ class QuizDAO {
         $array_params[]=$quiz->getSeeTheResult();
         $array_params[]=$quiz->getSeeDetails();
         $array_params[]=$quiz->getIdStatusQuiz();
-        $array_params[]=$quiz->getAuthorTest();
+        $array_params[]=$author->getIdUser();
         $array_params[]=$quiz->getIdQuiz();
         $result=$this->db->execute($query,$array_params);
         if($result){

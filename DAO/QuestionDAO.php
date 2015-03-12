@@ -1,7 +1,7 @@
 <?php
 include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
-Logger::configure('/etc/config_log4php.xml');
+Logger::configure('setting/config.xml');
 class QuestionDAO {
     protected $db;
     protected $log;

@@ -1,6 +1,6 @@
 <?php   
     include_once 'Log4php/Logger.php';
-        Logger::configure('/etc/config_log4php.xml');
+        Logger::configure('setting/config.xml');
     class DB {
         protected static $_instance;  
         private  $db;

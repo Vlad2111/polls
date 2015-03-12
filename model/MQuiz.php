@@ -56,7 +56,7 @@ class MQuiz {
     public function getAuthorTest(){
         return $this->$author_test;
     }
-    public function setAuthorTest( $author_test){
+    public function setAuthorTest(MUser $author_test){
         $this->author_test->$author_test;
     }
 }

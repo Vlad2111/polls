@@ -290,3 +290,49 @@ DETAIL:  Key (login)=(Иванка                                            ) 
 2015-03-04T06:21:15+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем ИванИ.  
 2015-03-04T06:21:26+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
 2015-03-04T06:22:09+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/PhpProject1/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем test.  
+2015-03-08T13:25:21+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Bfg.  
+2015-03-08T13:25:28+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-08T13:25:35+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-11T01:05:16+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-11T01:31:20+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-11T02:25:23+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-11T02:25:31+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Михаил.  
+2015-03-11T02:25:53+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-11T02:27:07+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Михаил.  
+2015-03-11T02:33:55+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Bdfy.  
+2015-03-11T02:34:00+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-11T02:41:16+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-11T02:42:43+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-11T02:43:56+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-11T02:45:07+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Михаиил.  
+2015-03-11T02:45:16+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Михаии.  
+2015-03-11T02:45:26+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Михаил.  
+2015-03-12T01:05:07+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T01:05:38+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T01:05:47+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Михаил.  
+2015-03-12T01:05:53+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Михаил.  
+2015-03-12T01:25:49+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T01:42:36+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T01:45:44+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Михаил.  
+2015-03-12T01:47:34+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T01:48:23+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Емеля.  
+2015-03-12T01:50:24+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T01:50:55+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Емеля.  
+2015-03-12T01:51:03+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Михаил.  
+2015-03-12T01:51:12+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Емеля.  
+2015-03-12T01:57:56+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T02:24:19+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T02:24:27+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 28: Неправильно введены логин и пароль пользователем Bdfy.  
+2015-03-12T02:24:30+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T02:45:29+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T03:06:57+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/Dike/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(qw                                                ) already exists.).  
+2015-03-12T03:08:03+03:00 ERROR [AdministrationDAO] [/var/www/html/netbeans/Dike/DAO/UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_login"
+DETAIL:  Key (login)=(qw                                                ) already exists.).  
+2015-03-12T03:29:07+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Михаил.  
+2015-03-12T03:30:21+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Михаил.  
+2015-03-12T03:30:31+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T11:36:08+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T11:37:47+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Емеля.  
+2015-03-12T11:38:00+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-12T12:14:39+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  

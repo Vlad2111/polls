@@ -1,7 +1,7 @@
 <?php
 include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
-    Logger::configure('/etc/config_log4php.xml');
+    Logger::configure('setting/config.xml');
 class UserDAO {
     protected $db;
     protected $log;
@@ -118,5 +118,12 @@ class UserDAO {
         $obj=$this->db->getFetchObject($result);
         $user->setIdUser($obj->id_user);
         }
+    public function getDataUser(Muser $user){
+        $query="select last_name, first_name, patronymic, email, login "
+                . "from alluser where id_user=$1;";
+        $array_params=array();
+        $array_params[]=$user->getIdUser();
+        
+    }
 }
 ?>

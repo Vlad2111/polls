@@ -15,13 +15,10 @@ if (isset($_REQUEST['login']) && isset($_REQUEST['pass'])){
         $obj_user=$dao_auth->getFIO($values_auth);
         $_SESSION['id_user']=$dao_auth->getIdUser($values_auth);
         $_SESSION['fio_user']=$obj_user->first_name."".$obj_user->last_name." ".$obj_user->patronymic; 
-        if($dao_auth->getRole($values_auth)==3){
+        $_SESSION['role_user']=$dao_auth->getRole($values_auth);
         header('HTTP/1.1 200 OK');
-        header('Location: administration.php');
-        exit();}
-        else {header('HTTP/1.1 200 OK');
-        header('Location: Error.php');
-        exit();}
+        header('Location: quiz.php');
+        exit();
 
     }
     $error="Такой пользователь не найден";

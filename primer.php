@@ -14,10 +14,15 @@ include_once 'DAO/QuizDAO.php';
      $user_data->setPatronymic('Иванывич');
      $user_data->setEmail('ivanixh@ivi');
      $user_data->setLogin('Иванка');     
-     $user_data->setPassword(1);
-     $user_data->setIdRole(3);
+     $user_data->setPassword(6);
+     $user_data->setIdRole(1);
      $admin= new AdministrationView();
-     $admin->createUser($user_data);
+     //$admin->addUser($user_data);
+     
+//     var_dump($admin->getDataQuiz());
+         $mquiz=new MQuiz();
+    $mquiz->setIdQuiz(11);
+    $admin->deleteQuiz($mquiz);
  }
 
 catch (Exception $e){

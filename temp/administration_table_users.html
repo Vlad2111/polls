@@ -1,24 +1,63 @@
-<table  width="100%"  bgcolor="#CDC8B1">
-                        <tr align="center">
-                            <td bgcolor="#8B8378">
-                                <button form="users" type="submit" formaction="administration.php">Выбрать пользователя</button>
+<html>
+    <head>
+        <title>{$title}</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <table width="100%">
+            <tr>
+                <td  width="100%">
+                    <table width="100%"  bgcolor="#708090" >
+                        <tr >
+                            <td width="70%" height="70" align="center">
+                                <h2>Автоматическая система тестирования</h2>
                             </td>
-                            <td bgcolor="#8B8378">
-                                <button form="users" type="reset" value="reset">Reset</button>
+                            <td width="10%" height="70">
+                                <table>
+                                    <tr>
+                                        <td>
+                                        admin
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            author
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td width="15%" height="70">
+                                {$you}
+                            </td>
+                            <td width="5%" height="70">
+                                <a href='administration.php?exit=ok'>Выход</a>
                             </td>
                         </tr>
                     </table>
-                    <table width="100%">
-                        
-                        <tr>
-                            <td width="100%" bgcolor="#CDC8B1">
-                               <form id="users">
-                                   <table>
-                                                                                  
-                               <td><input type="radio" name="user_control" value="{$id_user}"> </td><td>{$first_name}</td><td>{$last_name}</td><td>{$patronymic}</td>
-                                        </tr>
-                                    </table>
-                              </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <table width="30%" >
+                    <tr>                        
+                <td width="30%" valign="top">
+                <table id='menu_quiz'>
+                    <tr bgcolor="#F5F5F5" valign="top">
+                            <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
+                                <a>Пройденные тесты</a>
                             </td>
-                        </tr>
-                    </table>
+                    </tr>
+                    <tr>   
+                            <td width="50%" height="10%" align="left" bgcolor="#8DB6CD">
+                                <a>Незаконченные тесты</a>
+                            </td>
+                    </tr>    
+                </table>
+                </td>
+                    </tr> 
+                </table>
+                </td>  
+            </tr>            
+        </table>
+    </body>
+</html>

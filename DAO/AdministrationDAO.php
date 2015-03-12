@@ -5,7 +5,7 @@ include_once 'DAO/UserDAO.php';
 include_once 'DAO/QuizDAO.php';
 include_once 'model/MQuiz.php';
 include_once 'model/MUser.php';
-    Logger::configure('/etc/config_log4php.xml');    
+    Logger::configure('setting/config.xml');    
 class AdministrationDAO extends UserDAO{
     protected $nameclass=__CLASS__;
     public function getListIdQuiz(){
@@ -102,7 +102,8 @@ class AdministrationDAO extends UserDAO{
         $array_params_role_user[]=$id_Users;
         $result=$this->db->execute($query_return_role_user,$array_params_role_user);
         $obj_users= $this->db->getFetchObject($result);
-        return $obj_users->description_role;
+        $return=$obj_users->description_role;
+        return $return;
     }
     
     public function getDataOneQuiz($id_quiz){

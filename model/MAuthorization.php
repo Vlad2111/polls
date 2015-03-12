@@ -8,7 +8,7 @@ class MAuthorization {
         return $this->login;
     }
     public function setLogin($login){
-        $this->login=$login;
+        $this->login=  trim($login);
     }
     public function getPassword(){
         return $this->password;
