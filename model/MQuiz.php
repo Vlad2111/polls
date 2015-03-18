@@ -39,7 +39,7 @@ class MQuiz {
         return $this->see_the_result;
     }
     public function setSeeTheResult($see_the_result){
-        $this->see_the_result;
+        $this->see_the_result=$see_the_result;
     }
     public function getSeeDetails(){
         return $this->see_details;

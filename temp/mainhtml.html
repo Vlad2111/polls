@@ -6,103 +6,98 @@
     <body>
         <table width="100%">
             <tr>
-                <td  width="100%" height="70" bgcolor="#708090">
-                    <table width="100%">
-                        <tr>
-                            <td width="80%" align="center">
+                <td  width="100%">
+                    <table width="100%"  bgcolor="#708090" >
+                        <tr >
+                            <td width="70%" height="70" align="center">
                                 <h2>Автоматическая система тестирования</h2>
-                                <p>Администратор</p>
                             </td>
-                            <td width="10%">
+                            <td width="10%" height="70">
+                                <table>
+                                        {if $name_page!='quiz'}
+                                        <tr>
+                                            <td>
+                                                <a href='quiz.php'>Стать тестируемым</a>
+                                            </td>
+                                        </tr>
+                                        {/if}
+                                        {if $role_user>=2}
+                                            {if $name_page!='create_test'}
+                                            <tr>
+                                                <td>
+                                                    <a href='create.php'>Стать автором тестов</a>
+                                                </td>
+                                            </tr>
+                                            {/if}
+                                            {if $role_user==3}
+                                                {if $name_page!='administration'}
+                                                <tr>
+                                                    <td>
+                                                        <a href='administration.php'>Стать администратором</a>
+                                                    </td>
+                                                </tr>
+                                                {/if}
+                                            {/if}    
+                                        {/if}
+                                </table>
+                            </td>
+                            <td width="15%" height="70">
                                 {$you}
                             </td>
-                            <td width="10%">
-                                {$exit}
+                            <td width="5%" height="70">
+                                <a href='{$name_page}.php?link_click=exit'>Выход</a>
                             </td>
                         </tr>
-                    </table>
+                    </table>                           
+        
                 </td>
             </tr>
             <tr>
                 <td>
                 <table width="100%" >
                     <tr>                        
-                <td width="20%" valign="top">
-                <table>
-                    <tr bgcolor="#F5F5F5" valign="top">
-                            <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
-                                <a href=administration.php?tab=quiz>Опросы</a>
-                            </td>
-                    </tr>
-                    <tr>   
-                            <td width="50%" height="10%" align="left" bgcolor="#8DB6CD">
-                                <a href=administration.php?tab=users>Пользователи</a>
-                            </td>
-                    </tr>    
-                </table>
-                </td>
-           
-                <td width="80%">
-                    <table  width="100%"  bgcolor="#CDC8B1">
-                        <tr align="center">
-                            <td bgcolor="#8B8378">
-                                <button form="create_user" type="submit" formaction="administration.php">Создать пользователя</button>
-                            </td>
-                            <td bgcolor="#8B8378">
-                                <button form="create_user" type="reset" value="reset">Очистить поля</button>
-                            </td>
-                        </tr>
-                    </table>
-                    <table width="100%">
-                        
-                        <tr>
-                            <td width="100%" bgcolor="#CDC8B1">
-                                <form id="create_user">
-                                    <table width="60%" align="center">                                    
+                        <td width="30%" valign="top">
+                            <table id='menu_quiz'>
+                                <tr bgcolor="#F5F5F5" valign="top">
+                                    <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
+                                        <a>Пройденные тесты</a>
+                                    </td>
+                                </tr>
+                                <tr>   
+                                    <td width="50%" height="10%" align="left" bgcolor="#8DB6CD">
+                                        <a>Незаконченные тесты</a>
+                                    </td>
+                                </tr>    
+                            </table>
+                        </td>
+                        <td width="70%">
+                            <table align="left" width="100%" bgcolor="#CDC8B1">
+                                <tr bgcolor="#8B8378">
+                                    <td>
+                                        Тема теста
+                                    </td>
+                                    <td>
+                                        Статус теста
+                                    </td>
+                                    <td>
+                                        Автор теста
+                                    </td>
+                                    <td>
+                                        Ограничение времени
+                                    </td>
+                                </tr>
+                                {foreach $data_quiz as $data_one_quiz}
                                     <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Фамилия </td>
-                                        <td><input type="text" name="last_name"><td>
+                                        
                                     </tr>
-                                    <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Имя </td>
-                                        <td><input type="text" name="first_name"><td>
-                                    </tr>
-                                    <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Отчество </td>
-                                        <td><input type="text" name="patronymic"><td>
-                                    </tr>
-                                    <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Email</td>
-                                        <td><input type="email" name="email"><td>
-                                    </tr>
-                                    <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Логин</td>
-                                        <td><input type="text" name="login"><td>
-                                    </tr>
-                                    <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Пароль</td>
-                                        <td><input type="text" name="password"><td>
-                                    </tr>
-                                    <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Роль пользователя</td>
-                                        <td>
-                                            <select name="role">
-                                                <option selected value="1">Опрашиваемый</option>
-                                                <option value="2">Составитель опросов</option>
-                                                <option value="3">Администратор</option>                                               
-                                            </select>    
-                                        <td>
-                                    </tr>
-                                    </table>
-                                </form>    
-                            </td>
-                        </tr>
-                    </table>
-                </td>
+                                {/foreach}
+                            </table>
+                        </td>
                     </tr>
                 </table>
                 </td>
             </tr>
+                
         </table>
     </body>
 </html>

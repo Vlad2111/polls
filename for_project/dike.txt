@@ -155,3 +155,5 @@ insert into test(topic, time_limit, comment_test, see_the_result, see_details, i
 ('тест', null, null, 'Y', 'Y', 1, 1),
 ('тест', null, null, 'Y', 'Y', 2, 2);
 
+insert into testing (id_user, id_test, mark_test, datetime_start_test, datetime_end_test) values 
+	(4, 17, 'available', null, null);

@@ -9,7 +9,7 @@ class MInterviewee {
     public function getIdUser(){
         return $this->id_user;
     }
-    public function setIdFunction($id_user){
+    public function setIdUser($id_user){
         $this->id_user=$id_user;
     }
     public function getIdTest(){

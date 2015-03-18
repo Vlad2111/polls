@@ -5,6 +5,7 @@ include_once 'DAO/AuthorizationDAO.php';
 include_once 'model/MAuthorization.php';
 include_once 'lib/smarty_lib/Smarty.class.php';
     $user_login="";
+    $error="";
 if (isset($_REQUEST['login']) && isset($_REQUEST['pass'])){
     $values_auth= new MAuthorization();
     $values_auth->setLogin($_REQUEST['login']);

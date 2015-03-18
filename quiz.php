@@ -6,9 +6,20 @@ include_once 'DAO/QuizDAO.php';
 include_once 'view/AdministrationView.php';
 include_once 'model/MUser.php';
 include_once 'model/MQuiz.php';
+include_once 'model/MInterviewee.php';
+include_once 'DAO/IntervieweeDAO.php';
 include_once 'lib/smarty_lib/Smarty.class.php';
+//Проверяем доступ к странице
+     if(isset($_SESSION['id_user']) || $_SESSION['id_user']==""){
+        header('HTTP/1.1 200 OK');
+        header('Location: authorization.php');
+        exit();}
+$data_quiz=array();
 $link_click=filter_input(INPUT_GET, 'link_click', FILTER_SANITIZE_SPECIAL_CHARS);
-
+     $data_interviewee=new MInterviewee();
+     $data_interviewee->setIdUser($_SESSION['id_user']);     
+     $interviewee= new IntervieweeDAO();
+     
 if ($link_click==='exit'){
         $_SESSION=array();
         session_destroy();
@@ -16,6 +27,8 @@ if ($link_click==='exit'){
         header('Location: authorization.php');
         exit();
 }
+
+
 
 $smarty= new Smarty();
 $title="Меню администратора";
@@ -29,6 +42,8 @@ $role_user=$_SESSION['role_user'];
     $smarty->assign('exit', $exit);
     $smarty->assign('name_page', $name_page);    
     $smarty->assign('role_user',$role_user);
+    $smarty->assign('data_quiz', $data_quiz);
+    $smarty->assign('data_quiz', $interviewee->getDataQuiz($data_interviewee));
     
     $smarty->display('templates/quiz.tpl');
 

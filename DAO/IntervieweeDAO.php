@@ -1,14 +1,18 @@
 <?php
 include_once 'lib/DB.php';
+include_once 'model/MInterviewee.php';
+include_once 'AdministrationDAO.php';
 include_once 'Log4php/Logger.php';
 Logger::configure('setting/config.xml');
 class IntervieweeDAO {
     protected $db;
     protected $log;
     protected $nameclass=__CLASS__;
+    private $data_minterviewee;
     public function __construct(){
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
+        $this->data_minterviewee=new MInterviewee();
     }
     //Отображаем список тестов для данного пользователя
     public function getListQuiz(MInterviewee $interviewee){
@@ -23,7 +27,8 @@ class IntervieweeDAO {
             $this->log->ERROR('Ошибка запроса к таблице: testing('.pg_last_error().')'); 
             throw new Exception('Ошибка запроса к таблице: testing('.pg_last_error().')'); 
         }   
-    }
+    }   
+    
     // Начать тест
     public function startQuiz(MInterviewee $interviewee){
         $query_update="UPDATE testing SET datetime_start_test=$1, "
@@ -156,7 +161,7 @@ class IntervieweeDAO {
             return false;
         }
     }  
-    //Вернуть минимальное порядок вопросов, в данном тесте
+    //Вернуть минимальный порядок вопросов, в данном тесте
     private function getMinNumberQuestion(MInterviewee $interviewee){        
         $query_min_number_query="select min(question_number) from questions;";
         $array_params_min_number_query=array();
@@ -170,6 +175,62 @@ class IntervieweeDAO {
             throw new Exception('Ошибка запроса к таблице: questions('.pg_last_error().')'); 
         }   
         
+    }
+    //return array data
+    public function getDataQuiz(MInterviewee $interviewee){
+        $return=array();
+        $array_testing=$this->getArrayIdTesting($interviewee);
+        $id_user=$interviewee->getIdUser();
+        for($i=0; $i<count($array_testing); $i++){
+            $id_quiz=$this->getObjTesting($array_testing[$i])->id_test;
+            $return[$i]['id_testing']= $array_testing[$i];
+            $return[$i]['mark_test']=$this->getObjTesting($array_testing[$i])->mark_test;
+            $return[$i]['datetime_start_test']=$this->getObjTesting($array_testing[$i])->datetime_start_test;
+            $return[$i]['datetime_end_test']=$this->getObjTesting($array_testing[$i])->datetime_end_test;
+            $return[$i]['topic_test']=$this->getObjTest($id_quiz)->topic;
+            $return[$i]['time_limit']=$this->getObjTest($id_quiz)->time_limit;
+            $return[$i]['comment_test']=$this->getObjTest($id_quiz)->comment_test;
+            $return[$i]['author_quiz']=$this->getAuthorTest($this->getObjTest($id_quiz)->author_test);
+        
+        }
+        
+        return $return;
+    }
+    private function getArrayIdTesting(MInterviewee $interviewee){
+        $query="select id_testing from testing where id_user=$1;";
+        $array_params=array();
+        $array_params[]=$interviewee->getIdUser();
+        $result=$this->db->execute($query, $array_params);
+        return $this->db->getArrayData($result);
+    }
+    private function getObjTesting($id_testing){
+        $query="select * from testing where id_testing=$1;";
+        $array_params=array();
+        $array_params[]=$id_testing;
+        $result=$this->db->execute($query, $array_params);
+        return $this->db->getFetchObject($result);
+    }
+    
+    public function getObjTest($id_quiz){
+        $query="select * from test where id_test=$1;";
+        $array_params=array();
+        $array_params[]=$id_quiz;
+        $result=$this->db->execute($query, $array_params);
+        $obj_data_test=$this->db->getFetchObject($result);
+        return $obj_data_test;
+    }
+    
+    public function getStatusQuiz($id_quiz){
+        $query="select description_status_quiz from status_quiz where id_status_quiz=
+            (select id_status_quiz from test where id_test=$1);";
+        $array_params=array();
+        $array_params[]=$id_quiz;        
+        $result=$this->db->execute($query, $array_params);
+        return $this->db->getFetchObject($result)->description_status_quiz;
+    }
+    public function getAuthorTest($author_test){
+        $admin= new AdministrationDAO();
+        return $admin->getUser($author_test);
     }
     
 }

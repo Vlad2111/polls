@@ -213,8 +213,8 @@ class QuizDAO {
             return $obj_status->id_status_quiz;            
         } 
         else{
-            $this->log->ERROR('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
-            throw new Exception('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
+            $this->log->ERROR('Ошибка запроса в таблице: test('.pg_last_error().')'); 
+            throw new Exception('Ошибка запроса строки в таблице: test('.pg_last_error().')'); 
         }        
     }
 

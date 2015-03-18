@@ -336,3 +336,7 @@ DETAIL:  Key (login)=(qw                                                ) alread
 2015-03-12T11:37:47+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Емеля.  
 2015-03-12T11:38:00+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
 2015-03-12T12:14:39+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-18T06:19:23+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-18T07:24:26+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-18T11:51:31+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
+2015-03-18T12:27:48+03:00 INFO [AuthorizationDAO] [/var/www/html/netbeans/Dike/DAO/AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
