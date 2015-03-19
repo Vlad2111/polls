@@ -1,9 +1,10 @@
 <?php
+include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'model/MInterviewee.php';
 include_once 'AdministrationDAO.php';
 include_once 'Log4php/Logger.php';
-Logger::configure('setting/config.xml');
+Logger::configure(CheckOS::getConfigLogger());
 class IntervieweeDAO {
     protected $db;
     protected $log;

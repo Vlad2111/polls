@@ -1,6 +1,7 @@
 <?php   
+    include_once 'CheckOS.php';
     include_once 'Log4php/Logger.php';
-        Logger::configure('setting/config.xml');
+        Logger::configure(CheckOS::getConfigLogger());
     class DB {
         protected static $_instance;  
         private  $db;
@@ -51,8 +52,8 @@
             return $array;
         }
                         
-        public function getConfig ($section='PostgreSQL', $path="setting/config_dike.ini"){
-        $array= parse_ini_file($path, true);
+        public function getConfig ($section='PostgreSQL'){
+        $array= parse_ini_file(CheckOS::getConfigConnectDb(), true);
         return $array[$section];
         }        
         

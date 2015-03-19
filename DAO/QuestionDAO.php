@@ -1,7 +1,8 @@
 <?php
+include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
-Logger::configure('setting/config.xml');
+Logger::configure(CheckOS::getConfigLogger());
 class QuestionDAO {
     protected $db;
     protected $log;

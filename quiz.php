@@ -1,4 +1,3 @@
-
 <?php
 session_start();
  try{ 
@@ -10,10 +9,10 @@ include_once 'model/MInterviewee.php';
 include_once 'DAO/IntervieweeDAO.php';
 include_once 'lib/smarty_lib/Smarty.class.php';
 //Проверяем доступ к странице
-     if(isset($_SESSION['id_user']) || $_SESSION['id_user']==""){
-        header('HTTP/1.1 200 OK');
-        header('Location: authorization.php');
-        exit();}
+//     if(isset($_SESSION['role_user']) && !empty($_SESSION['role_user'])){
+//        header('HTTP/1.1 200 OK');
+//        header('Location: authorization.php');
+//        exit();}
 $data_quiz=array();
 $link_click=filter_input(INPUT_GET, 'link_click', FILTER_SANITIZE_SPECIAL_CHARS);
      $data_interviewee=new MInterviewee();

@@ -1,11 +1,12 @@
 <?php
+include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
 include_once 'DAO/UserDAO.php';
 include_once 'DAO/QuizDAO.php';
 include_once 'model/MQuiz.php';
 include_once 'model/MUser.php';
-    Logger::configure('setting/config.xml');    
+    Logger::configure(CheckOS::getConfigLogger());    
 class AdministrationDAO extends UserDAO{
     protected $nameclass=__CLASS__;
     public function getListIdQuiz(){
@@ -20,7 +21,7 @@ class AdministrationDAO extends UserDAO{
             throw new Exception('Ошибка запроса к таблице: test('.pg_last_error().')'); 
         }    
     }
-    private function getListIdUsers(){
+   public function getListIdUsers(){
         $query="select id_user from alluser;";
         $array_params=array();
         $result=$this->db->execute($query,$array_params);
