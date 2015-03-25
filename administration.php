@@ -10,14 +10,11 @@ include_once 'view/AdministrationView.php';
 include_once 'model/MUser.php';
 include_once 'model/MQuiz.php';
 include_once 'lib/smarty_lib/Smarty.class.php';
+include_once 'view/Check.php';
 $administration=new AdministrationDAO();
 $administration_view= new AdministrationView();
 
-//Проверяем доступ к странице
-     if($_SESSION['role_user']!=3){
-        header('HTTP/1.1 200 OK');
-        header('Location: quiz.php');
-        exit();}
+
         
 //Объявляем переменные    
 $title="Меню администратора";
@@ -27,6 +24,8 @@ $name_page='administration';
 $role_user=$_SESSION['role_user'];
 $create_user_fio='';
 $view_admin='';
+//Проверяем доступ к странице
+    Check::checkRoleUser($role_user, $name_page);
 $link_click=filter_input(INPUT_GET, 'link_click', FILTER_SANITIZE_SPECIAL_CHARS);
 $button_click=filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);
     $last_name=@$_REQUEST['last_name'];

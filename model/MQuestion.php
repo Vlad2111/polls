@@ -1,13 +1,13 @@
 <?php
-class MQuestions {
+class MQuestion {
     private $id_question;
-    private $texts;
+    private $text_question;
     private $id_questions_type;
-    private $id_answer_the_questions;
+    private $answer_option=array();//array 
     private $comment_question;
     private $question_number;
     private $id_test;
-    private $answer_the_question;
+    
     
     public function getIdQuestion(){
         return $this->id_question;
@@ -15,23 +15,24 @@ class MQuestions {
     public function setIdQuestion($id_question){
         $this->id_question=$id_question;
     }
-    public function getTexts(){
-        return $this->texts;
+    public function getTextQuestion(){
+        return $this->text_question;
     }
-    public function setTexts($texts){
-        $this->texts=$texts;
+    public function setTextQuestion($text_question){
+        $this->text_question=$text_question;
     }
     public function getIdQuestionsType(){
-        return $this->$id_questions_type;
+        return $this->id_questions_type;
     }
     public function setIdQuestionsType($id_questions_type){
         $this->id_questions_type=$id_questions_type;
     }
-    public function getIdAnswerTheQuestions(){
-        return $this->id_answer_the_questions;
+
+    public function getAnswerOption(){
+        return $this->answer_option;
     }
-    public function setIdAnswerTheQuestions($id_answer_the_questions){
-        $this->id_answer_the_questions=$id_answer_the_questions;
+    public function setAnswerOption($list_answer_option){
+        $this->answer_option=$list_answer_option;
     }
     public function getCommentQuestion(){
         return $this->comment_question;
@@ -51,11 +52,6 @@ class MQuestions {
     public function setIdTest($id_test){
         $this->id_test=$id_test;
     }
-    public function getAnswerTheQuestion(){
-        return $this->answer_the_question;
-    }
-    public function setAnswerTheQuestion($answer_the_question){
-        $this->answer_the_question=$answer_the_question;
-    }
+
 }
 ?>

@@ -36,7 +36,7 @@
                                 {$you}
                             </td>
                             <td width="5%" height="70">
-                                <a href='{$name_page}.php?link_click=exit'>Выход</a>
+                                <a href='authorization.php?link_click=exit'>Выход</a>
                             </td>
                         </tr>
                     </table>                           

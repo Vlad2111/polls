@@ -3,6 +3,7 @@
 class MAuthorization {
     private $login;
     private $password;
+    private $user;
     
     public function getLogin(){
         return $this->login;
@@ -15,6 +16,12 @@ class MAuthorization {
     }
     public function setPassword($password){
         $this->password=md5($password);
+    }
+    public function getUser(){
+        return $this->user;
+    }
+    public function setUser(MUser $user){
+        $this->user=$user;
     }
 }
 ?>

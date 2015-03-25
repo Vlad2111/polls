@@ -359,3 +359,41 @@ DETAIL:  Key (login)=(qw                                                ) alread
 2015-03-19T10:32:14+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 24: Успешно введены логин и пароль пользователем Иван.  
 2015-03-19T11:35:12+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 25: Успешно введены логин и пароль пользователем Иван.  
 2015-03-19T11:43:43+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 25: Успешно введены логин и пароль пользователем Иван.  
+2015-03-21T22:31:29+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 25: Успешно введены логин и пароль пользователем Иван.  
+2015-03-22T02:36:26+04:00 ERROR [UserDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ОШИБКА:  INSERT содержит больше выражений, чем целевых колонок
+LINE 2:                 VALUES ($1, $2, $3, $4, $5, $6);
+                                                    ^).  
+2015-03-22T02:36:50+04:00 ERROR [UserDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_login"
+DETAIL:  Ключ "(login)=(test                                              )" уже существует.).  
+2015-03-22T02:37:23+04:00 ERROR [UserDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\UserDAO.php]: 28: Ошибка добавления строки в таблицу: alluser( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_login"
+DETAIL:  Ключ "(login)=(test                                              )" уже существует.).  
+2015-03-22T02:39:31+04:00 ERROR [UserDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\UserDAO.php]: 76: Ошибка добавления строки в таблицу: role_user( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_role_user"
+DETAIL:  Ключ "(id_role, id_user)=(1, 10)" уже существует.).  
+2015-03-22T02:40:05+04:00 ERROR [UserDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\UserDAO.php]: 76: Ошибка добавления строки в таблицу: role_user( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_role_user"
+DETAIL:  Ключ "(id_role, id_user)=(1, 10)" уже существует.).  
+2015-03-23T20:52:13+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\QuestionDAO.php]: 49: Ошибка обновления строки в таблице: questions(ОШИБКА:  колонка "id_question_type" в таблице "questions" не существует
+LINE 1: UPDATE questions SET text_question=$1, id_question_type=$2, ...
+                                               ^).  
+2015-03-24T02:20:00+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 25: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T02:49:19+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T02:52:06+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T02:52:10+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T02:53:59+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T02:54:48+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T02:55:20+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T02:55:34+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T02:56:06+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T02:56:19+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 30: Неправильно введены логин и пароль пользователем Иван1.  
+2015-03-24T02:56:21+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T02:58:54+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 30: Неправильно введены логин и пароль пользователем Иван1.  
+2015-03-24T02:58:56+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T03:00:29+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T03:02:08+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T03:02:14+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-24T03:02:41+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-25T13:27:43+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-25T13:28:27+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-25T13:31:02+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-25T13:43:39+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-25T13:43:47+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  
+2015-03-25T14:08:08+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 26: Успешно введены логин и пароль пользователем Иван.  

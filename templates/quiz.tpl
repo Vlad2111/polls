@@ -42,25 +42,25 @@
                                 {foreach $data_quiz as $data_one_quiz}
                                     <tr>
                                         <td>
-                                            {$data_one_quiz.topic_test}
+                                            {$data_one_quiz->getTest()->getTopic()}
                                         </td>
                                         <td>
                                             
-                                            {if $data_one_quiz.mark_test=='available'}
+                                            {if $data_one_quiz->getMarkTest()=='available'}
                                                 Доступен
-                                              {elseif $data_one_quiz.mark_test=='unfinished'}
+                                              {elseif $data_one_quiz->getMarkTest()=='unfinished'}
                                                   Незаконченный
                                               {else}
                                                   Не доступен
                                             {/if}    
                                         </td>
                                         <td>
-                                            {$data_one_quiz.author_quiz[1]} {$data_one_quiz.author_quiz[2]} {$data_one_quiz.author_quiz[3]}
+                                            {$data_one_quiz->getUser()->getFirstName()} {$data_one_quiz->getUser()->getLastName()}
                                         </td>
                                         <td>
                                             
-                                            {if $data_one_quiz.time_limit}
-                                                {$data_one_quiz.time_limit}
+                                            {if $data_one_quiz->getTest()->getTimeLimit()}
+                                                {$data_one_quiz->getTest()->getTimeLimit()}
                                             {else} Без ограничений    
                                             {/if}   
                                         </td>

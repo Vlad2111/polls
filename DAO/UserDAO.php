@@ -1,5 +1,6 @@
 <?php
 include_once 'lib/CheckOS.php';
+include_once 'IntervieweeDAO.php';
 include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
     Logger::configure(CheckOS::getConfigLogger());
@@ -12,12 +13,11 @@ class UserDAO {
         $this->log= Logger::getLogger($this->nameclass);
     }
     public function createUser(MUser $user){
-        $query="INSERT INTO alluser(last_name, first_name, patronymic, email, login, password)
-                VALUES ($1, $2, $3, $4, $5, $6);"; 
+        $query="INSERT INTO alluser(last_name, first_name, email, login, password)
+                VALUES ($1, $2, $3, $4, $5);"; 
         $array_params=array();
         $array_params[]=$user->getLastName();
         $array_params[]=$user->getFirstName();
-        $array_params[]=$user->getPatronymic();
         $array_params[]=$user->getEmail();
         $array_params[]=$user->getLogin();
         $array_params[]=$user->getPassword();
@@ -32,13 +32,11 @@ class UserDAO {
     }
     public function updateUser(MUser $user){
         $query="UPDATE alluser SET last_name=$1, first_name=$2,"
-                . " patronymic=$3,"
-                . " email=$4, login=$5,  password=$6"
-                . " where id_user=$7;";
+                . " email=$3, login=$4,  password=$5"
+                . " where id_user=$6;";
         $array_params=array();
         $array_params[]=$user->getLastName();
         $array_params[]=$user->getFirstName();
-        $array_params[]=$user->getPatronymic();
         $array_params[]=$user->getEmail();
         $array_params[]=$user->getLogin();
         $array_params[]=$user->getPassword();   
@@ -94,10 +92,11 @@ class UserDAO {
             throw new Exception('Ошибка удаления строки в таблицу: role_user( '.pg_last_error().')');  
         }  
     }
-    public function resetPassword(MUser $user){
+    public function resetPassword(MUser $user, $new_password){
+        $user->setPassword($new_password);
         $query="UPDATE alluser set password=$1 where id_user=$2;";
         $array_params=array();
-        $array_params[]=$user->getPassword();
+        $array_params[]=$user->getPassword($new_password);
         $array_params[]=$user->getIdUser();
         $result=$this->db->execute($query,$array_params);
         if($result){
@@ -110,21 +109,16 @@ class UserDAO {
     }
     public function setIdUser(MUser $user){
         $query="select id_user from alluser where last_name=$1 and"
-                . " first_name=$2 and patronymic=$3;";
+                . " first_name=$2 and email=$3;";
         $array_params=array();
         $array_params[]=$user->getLastName();
         $array_params[]=$user->getFirstName();
-        $array_params[]=$user->getPatronymic();
+        $array_params[]=$user->getEmail();
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
         $user->setIdUser($obj->id_user);
         }
-    public function getDataUser(Muser $user){
-        $query="select last_name, first_name, patronymic, email, login "
-                . "from alluser where id_user=$1;";
-        $array_params=array();
-        $array_params[]=$user->getIdUser();
-        
-    }
+     
+
 }
 ?>

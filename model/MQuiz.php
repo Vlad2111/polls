@@ -9,7 +9,7 @@ class MQuiz {
     private $see_the_result='Y'; //просматривание результатов
     private $see_details='Y'; //просматривание детального отчёта
     private $id_status_quiz; //статус теста
-    private $author_test;
+    private $author_test; //инстанс MUser
     
     public function getIdQuiz(){
         return $this->id_quiz;
@@ -50,13 +50,13 @@ class MQuiz {
     public function getIdStatusQuiz(){
         return $this->id_status_quiz;
     }
-    public function setStatus($id_status_quiz){
+    public function setIdStatusQuiz($id_status_quiz){
         $this->id_status_quiz=$id_status_quiz;
     }
     public function getAuthorTest(){
         return $this->$author_test;
     }
     public function setAuthorTest(MUser $author_test){
-        $this->author_test->$author_test;
+        $this->author_test=$author_test;
     }
 }

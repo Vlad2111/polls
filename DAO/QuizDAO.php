@@ -2,6 +2,8 @@
 include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
+include_once 'model/MQuestion.php';
+include_once 'DAO/QuestionDAO.php';
 Logger::configure(CheckOS::getConfigLogger());
 class QuizDAO {
     protected $db;
@@ -218,6 +220,37 @@ class QuizDAO {
             throw new Exception('Ошибка запроса строки в таблице: test('.pg_last_error().')'); 
         }        
     }
+    //Возращает список всех вопросов для данного теста
+        public function getObjTestQuestion($id_quiz){
+            $query="select id_question from questions where id_test=$1;";
+            $array_params=array();
+            $array_params[]=$id_quiz;
+            $result=$this->db->execute($query, $array_params);
+            $array_id_question=$this->db->getArrayData($result);
+            $result=array();
+            for($i=0; $i<count($array_id_question); $i++){
+                $result[$i]=$this->getObjQuestions($array_id_question[$i]);
+            }
+            return $result;
+        }
+    //Возращает информацию об вопросе типи MQuestion     
+       public function getObjQuestions($id_question){
+           $query="select * from questions where id_question=$1;";
+           $array_params=array();
+            $array_params[]=$id_question;
+            $result=$this->db->execute($query,$array_params);
+            $obj_status= $this->db->getFetchObject($result);
+            $question=new QuestionDAO();
+            $mquestion=new MQuestion();
+            $mquestion->setIdQuestion($obj_status->id_question);
+            $mquestion->setTextQuestion($obj_status->text_question);
+            $mquestion->setIdQuestionsType($obj_status->id_question_type);
+            $mquestion->setAnswerOption($question->getListAnswerOptions($obj_status->id_question));
+            $mquestion->setCommentQuestion($obj_status->comment_question);
+            $mquestion->setQuestionNumber($obj_status->question_number);
+            $mquestion->setIdTest($obj_status->id_test);
+            return $mquestion;
+       }
 
    
 }

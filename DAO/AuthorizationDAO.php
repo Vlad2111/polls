@@ -2,6 +2,7 @@
 include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'Log4php/Logger.php';
+include_once 'model/Muser.php';
     Logger::configure(CheckOS::getConfigLogger());
 class AuthorizationDAO {
     protected $db;
@@ -29,15 +30,23 @@ class AuthorizationDAO {
             $this->log->info('Неправильно введены логин и пароль пользователем '.$auth->getLogin());       
         }
      }
-     public function getFIO(MAuthorization $auth){
-         $query="select first_name, last_name, patronymic from alluser where id_user=$1;";
+     public function getObjUser(MAuthorization $auth){
+         $query="select * from alluser where id_user=$1;";
          $array_params=array();
         $array_params[]=$this->getIdUser($auth);
         $result=$this->db->execute($query,$array_params);
         $data=$this->db->getFetchObject($result);
-        return $data;         
+        $muser=new MUser();
+        $muser->setFirstName($data->first_name);
+        $muser->setEmail($data->email);
+        $muser->setIdRole($data->id_role);
+        $muser->setIdUser($data->id_user);
+        $muser->setLastName($data->last_name);
+        $muser->setLogin($data->login);
+        $muser->setIdRole($this->getRole($auth));
+        return $muser;         
      }
-     public function getRole(MAuthorization $auth){
+     private function getRole(MAuthorization $auth){
          $query="select id_role from role_user where id_user=$1";
          $array_params=array();
         $array_params[]=$this->getIdUser($auth);

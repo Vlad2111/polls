@@ -7,21 +7,28 @@ include_once 'lib/smarty_lib/Smarty.class.php';
     $error="";
 if (isset($_REQUEST['login']) && isset($_REQUEST['pass'])){
     $values_auth= new MAuthorization();
-    $values_auth->setLogin($_REQUEST['login']);
-    $values_auth->setPassword($_REQUEST['pass']);
+    //фильтруем входные данные
+    $login=filter_input(INPUT_POST, 'login', FILTER_SANITIZE_SPECIAL_CHARS); 
+    $password=filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_SPECIAL_CHARS);
+    $values_auth->setLogin($login);
+    $values_auth->setPassword($password);
     $dao_auth=new AuthorizationDAO();
     $user_login=$dao_auth->getAuthUser($values_auth);
     if ($user_login){
-        $obj_user=$dao_auth->getFIO($values_auth);
-        $_SESSION['id_user']=$dao_auth->getIdUser($values_auth);
-        $_SESSION['fio_user']=$obj_user->first_name."".$obj_user->last_name." ".$obj_user->patronymic; 
-        $_SESSION['role_user']=$dao_auth->getRole($values_auth);
+        $obj_user=$dao_auth->getObjUser($values_auth);
+        $_SESSION['id_user']=$dao_auth->getObjUser($values_auth)->getIdUser();
+        $_SESSION['fio_user']=$obj_user->getFirstName()."".$obj_user->getLastName(); 
+        $_SESSION['role_user']=$obj_user->getIdRole();
         header('HTTP/1.1 200 OK');
         header('Location: quiz.php');
         exit();
-
     }
     $error="Такой пользователь не найден";
+    
+    if ($link_click==='exit'){
+        $_SESSION=array();
+        session_destroy();
+        }
 }
 $title="Авторизация";
 $action="authorization.php";

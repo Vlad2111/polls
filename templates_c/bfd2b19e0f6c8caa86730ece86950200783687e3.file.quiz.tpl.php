@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-03-19 10:05:31
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-03-25 14:08:45
          compiled from "templates\quiz.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:18514550a672ba088a8-70035935%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'bfd2b19e0f6c8caa86730ece86950200783687e3' => 
     array (
       0 => 'templates\\quiz.tpl',
-      1 => 1426669333,
+      1 => 1427278081,
       2 => 'file',
     ),
   ),
@@ -15,6 +15,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.21-dev',
+  'unifunc' => 'content_550a672c021f00_09797898',
   'variables' => 
   array (
     'title' => 0,
@@ -22,8 +24,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'data_one_quiz' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_550a672c021f00_09797898',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_550a672c021f00_09797898')) {function content_550a672c021f00_09797898($_smarty_tpl) {?><html>
     <head>
@@ -75,29 +75,28 @@ $_smarty_tpl->tpl_vars['data_one_quiz']->_loop = true;
 ?>
                                     <tr>
                                         <td>
-                                            <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['topic_test'];?>
+                                            <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getTest()->getTopic();?>
 
                                         </td>
                                         <td>
                                             
-                                            <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value['mark_test']=='available') {?>
+                                            <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value->getMarkTest()=='available') {?>
                                                 Доступен
-                                              <?php } elseif ($_smarty_tpl->tpl_vars['data_one_quiz']->value['mark_test']=='unfinished') {?>
+                                              <?php } elseif ($_smarty_tpl->tpl_vars['data_one_quiz']->value->getMarkTest()=='unfinished') {?>
                                                   Незаконченный
                                               <?php } else { ?>
                                                   Не доступен
                                             <?php }?>    
                                         </td>
                                         <td>
-                                            <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['author_quiz'][1];?>
- <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['author_quiz'][2];?>
- <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['author_quiz'][3];?>
+                                            <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getUser()->getFirstName();?>
+ <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getUser()->getLastName();?>
 
                                         </td>
                                         <td>
                                             
-                                            <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value['time_limit']) {?>
-                                                <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['time_limit'];?>
+                                            <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value->getTest()->getTimeLimit()) {?>
+                                                <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getTest()->getTimeLimit();?>
 
                                             <?php } else { ?> Без ограничений    
                                             <?php }?>   

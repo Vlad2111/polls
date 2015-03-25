@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-03-19 10:05:32
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-03-24 03:02:04
          compiled from ".\templates\header.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:30499550a672c0b7aa8-61757215%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '1f93ed950ee79f1e3b3c635831aea1c5483415b4' => 
     array (
       0 => '.\\templates\\header.tpl',
-      1 => 1426116193,
+      1 => 1427151694,
       2 => 'file',
     ),
   ),
@@ -15,6 +15,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.21-dev',
+  'unifunc' => 'content_550a672c29b5d2_03641356',
   'variables' => 
   array (
     'name_page' => 0,
@@ -22,8 +24,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'you' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_550a672c29b5d2_03641356',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_550a672c29b5d2_03641356')) {function content_550a672c29b5d2_03641356($_smarty_tpl) {?><table width="100%"  bgcolor="#708090" >
                         <tr >
@@ -64,8 +64,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 
                             </td>
                             <td width="5%" height="70">
-                                <a href='<?php echo $_smarty_tpl->tpl_vars['name_page']->value;?>
-.php?link_click=exit'>Выход</a>
+                                <a href='authorization.php?link_click=exit'>Выход</a>
                             </td>
                         </tr>
                     </table>                           
