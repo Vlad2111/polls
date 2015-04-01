@@ -1,6 +1,7 @@
 <?php
 include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
+include_once 'lib/PhpLDAP.php';
 include_once 'Log4php/Logger.php';
 include_once 'model/Muser.php';
     Logger::configure(CheckOS::getConfigLogger());
@@ -12,7 +13,7 @@ class AuthorizationDAO {
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
     }
-    public function getIdUser(MAuthorization $auth){
+    public function checkUserDB(MAuthorization $auth){
         $query="SELECT id_user FROM alluser WHERE login=$1 and password=$2;"; 
         $array_params=array();
         $array_params[]=$auth->getLogin();
@@ -21,19 +22,43 @@ class AuthorizationDAO {
         $data=$this->db->getFetchObject($result);
         return $data->id_user;
     }
-    public function getAuthUser(MAuthorization $auth){
-        if ($this->getIdUser($auth)){                 
+    public function checkUserLDAP(MAuthorization $auth){
+        $ldap=new PhpLDAP();
+        $ldap->checkUser($auth);
+        if ($ldap->checkUser($auth)){
+            $query="SELECT id_user FROM alluser WHERE login=$1;"; 
+            $array_params=array();
+            $array_params[]=$auth->getLogin();     
+            $result=$this->db->execute($query,$array_params);
+            $data=$this->db->getFetchObject($result);
+            return $data->id_user;
+        }
+        else {
+                return $ldap->checkUser($auth);                
+        }
+    }
+    public function getIdUser(MAuthorization $auth, $param="database"){
+        if ($param=="database"){
+            return $this->checkUserDB($auth);            
+        }
+        elseif ($param=="LDAP") {
+            return $this->checkUserLDAP($auth);
+        }
+    }
+    
+    public function getAuthUser(MAuthorization $auth, $param="database"){
+        if ($this->getIdUser($auth, $param)){                 
             $this->log->info('Успешно введены логин и пароль пользователем '.$auth->getLogin());
             return $auth->getLogin();
         }
         else{ 
             $this->log->info('Неправильно введены логин и пароль пользователем '.$auth->getLogin());       
         }
-     }
-     public function getObjUser(MAuthorization $auth){
+     }     
+     public function getObjUser(MAuthorization $auth, $param="database"){
          $query="select * from alluser where id_user=$1;";
          $array_params=array();
-        $array_params[]=$this->getIdUser($auth);
+        $array_params[]=$this->getIdUser($auth, $param);
         $result=$this->db->execute($query,$array_params);
         $data=$this->db->getFetchObject($result);
         $muser=new MUser();
@@ -43,7 +68,7 @@ class AuthorizationDAO {
         $muser->setIdUser($data->id_user);
         $muser->setLastName($data->last_name);
         $muser->setLogin($data->login);
-        $muser->setIdRole($this->getRole($auth));
+//        $muser->setIdRole($this->getRole($auth));
         return $muser;         
      }
      private function getRole(MAuthorization $auth){
