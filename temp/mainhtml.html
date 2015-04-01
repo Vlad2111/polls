@@ -4,100 +4,39 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <table width="100%">
-            <tr>
-                <td  width="100%">
-                    <table width="100%"  bgcolor="#708090" >
-                        <tr >
-                            <td width="70%" height="70" align="center">
-                                <h2>Автоматическая система тестирования</h2>
-                            </td>
-                            <td width="10%" height="70">
-                                <table>
-                                        {if $name_page!='quiz'}
-                                        <tr>
-                                            <td>
-                                                <a href='quiz.php'>Стать тестируемым</a>
-                                            </td>
-                                        </tr>
-                                        {/if}
-                                        {if $role_user>=2}
-                                            {if $name_page!='create_test'}
-                                            <tr>
-                                                <td>
-                                                    <a href='create.php'>Стать автором тестов</a>
-                                                </td>
-                                            </tr>
-                                            {/if}
-                                            {if $role_user==3}
-                                                {if $name_page!='administration'}
-                                                <tr>
-                                                    <td>
-                                                        <a href='administration.php'>Стать администратором</a>
-                                                    </td>
-                                                </tr>
-                                                {/if}
-                                            {/if}    
-                                        {/if}
-                                </table>
-                            </td>
-                            <td width="15%" height="70">
-                                {$you}
-                            </td>
-                            <td width="5%" height="70">
-                                <a href='{$name_page}.php?link_click=exit'>Выход</a>
-                            </td>
-                        </tr>
-                    </table>                           
-        
-                </td>
-            </tr>
-            <tr>
+        <table width="100%" align="center">
+            <tr align="center">
                 <td>
-                <table width="100%" >
-                    <tr>                        
-                        <td width="30%" valign="top">
-                            <table id='menu_quiz'>
-                                <tr bgcolor="#F5F5F5" valign="top">
-                                    <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
-                                        <a>Пройденные тесты</a>
-                                    </td>
-                                </tr>
-                                <tr>   
-                                    <td width="50%" height="10%" align="left" bgcolor="#8DB6CD">
-                                        <a>Незаконченные тесты</a>
-                                    </td>
-                                </tr>    
-                            </table>
-                        </td>
-                        <td width="70%">
-                            <table align="left" width="100%" bgcolor="#CDC8B1">
-                                <tr bgcolor="#8B8378">
-                                    <td>
-                                        Тема теста
-                                    </td>
-                                    <td>
-                                        Статус теста
-                                    </td>
-                                    <td>
-                                        Автор теста
-                                    </td>
-                                    <td>
-                                        Ограничение времени
-                                    </td>
-                                </tr>
-                                {foreach $data_quiz as $data_one_quiz}
-                                    <tr>
-                                        
-                                    </tr>
-                                {/foreach}
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+                    Вопрос №1
+                </td>
+            </tr> 
+            <tr align="center">
+                <td>                
+                    Сам вопрос
+                </td>
+            </tr> 
+            <tr align="center">
+                <td>                
+                    Какие-то ответы
+                </td>
+            </tr>  
+            <tr align="center">
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="mainhtml.html?prev">Следующий вопрос</a>
+                            </td>
+                            <td>
+                                <a href="mainhtml.html?end">Закончить тест</a>
+                            </td>    
+                            <td>
+                                <a href="mainhtml.html?next">Следующий вопрос</a>
+                            </td> 
+                        </tr>    
+                    </table>    
                 </td>
             </tr>
-                
-        </table>
+        </table>    
     </body>
 </html>

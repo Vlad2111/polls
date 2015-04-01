@@ -38,6 +38,9 @@
                                     <td>
                                         Ограничение времени
                                     </td>
+                                    <td>
+                                        Статус
+                                    </td>
                                 </tr>
                                 {foreach $data_quiz as $data_one_quiz}
                                     <tr>
@@ -63,6 +66,9 @@
                                                 {$data_one_quiz->getTest()->getTimeLimit()}
                                             {else} Без ограничений    
                                             {/if}   
+                                        </td>
+                                        <td>
+                                            <a href="test_passing.php?testing={$data_one_quiz->getIdTesting()}">Пройти тест</a>
                                         </td>
                                         </tr>
                                 {/foreach}

@@ -68,12 +68,24 @@ class QuestionDAO {
         }  
     }
     //Возращает список вариантов ответа для вопроса
-    public function getListAnswerOptions($id_question){
+    public function getArrayIdOptions($id_question){
         $query="select id_answer_option from question_answer_options where id_question=$1;";
         $array_params=array();
         $array_params[]=$id_question;
         $result=$this->db->execute($query,$array_params);
         return $this->db->getArrayData($result);   
+    }
+    public function getListAnswerOptions($id_question){
+        $array_data=array();
+        $id_answer_option=$this->getArrayIdOptions($id_question);        
+        $query="select answer_the_questions from answer_options where id_answer_option=$1;";
+        for ($i=0; $i<count($id_answer_option); $i++){
+        $array_params=array();
+        $array_params[]=$id_answer_option[$i];
+        $result=$this->db->execute($query,$array_params);
+        $array_data[]=$this->db->getArrayData($result);        
+        }
+        return $array_data;        
     }
        
 }

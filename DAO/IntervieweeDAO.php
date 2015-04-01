@@ -33,11 +33,10 @@ class IntervieweeDAO {
     // Начать тест
     public function startQuiz(MInterviewee $interviewee){
         $query_update="UPDATE testing SET datetime_start_test=$1, "
-                . "mark_test='unfinished' where id_test=$2 and id_user=$3 and mark_test='available' or mark_test='unfinished';";
+                . "mark_test='unfinished' where id_testing=$2 and mark_test='available' or mark_test='unfinished';";
         $array_params=array();
         $array_params[]=date("Y-m-d H:i:s");
-        $array_params[]=$interviewee->getIdTest();
-        $array_params[]=$interviewee->getIdUser();
+        $array_params[]=$interviewee->getIdTesting();
         $this->db->execute($query_update,$array_params);
         $this->getMinNumberQuestion($interviewee);
         $query_qet_question="select id_question from questions where question_number=(select min(question_number) from questions);";

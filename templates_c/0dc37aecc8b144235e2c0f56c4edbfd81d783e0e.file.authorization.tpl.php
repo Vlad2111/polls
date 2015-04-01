@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-03-18 14:27:04
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-01 14:06:23
          compiled from "templates\authorization.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:6294550952f8757795-76089082%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0dc37aecc8b144235e2c0f56c4edbfd81d783e0e' => 
     array (
       0 => 'templates\\authorization.tpl',
-      1 => 1424960373,
+      1 => 1427882780,
       2 => 'file',
     ),
   ),
@@ -15,6 +15,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.21-dev',
+  'unifunc' => 'content_550952f8a18242_84328394',
   'variables' => 
   array (
     'title' => 0,
@@ -23,8 +25,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'error' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_550952f8a18242_84328394',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_550952f8a18242_84328394')) {function content_550952f8a18242_84328394($_smarty_tpl) {?><!DOCTYPE html>
 <html>
@@ -35,7 +35,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <form action=<?php echo $_smarty_tpl->tpl_vars['action']->value;?>
+        <form id="auth" action=<?php echo $_smarty_tpl->tpl_vars['action']->value;?>
  method="post">
             <h2>Меню авторизации</h2>
             <table>
@@ -44,7 +44,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                <td> <input type="text" name="login"></td></tr>
             <tr><td>Введите пароль:</td>
             <td><input type="password" name="pass"></td></tr>
-            <tr><td></td><td><input type="submit" value="отправить"></td></tr>
+            <tr><td> 
+            <button form="auth" type="submit" formaction="authorization.php" name="button_click" value='LDAP'>Войти как пользватель LDAP</button>
+            </td><td>
+            <button form="auth" type="submit" formaction="authorization.php" name="button_click" value='DB'>Войти как внутренний пользватель</button>
+            </td></tr>
             </table>
         
         </form>

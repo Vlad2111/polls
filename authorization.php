@@ -5,6 +5,7 @@ include_once 'DAO/AuthorizationDAO.php';
 include_once 'model/MAuthorization.php';
 include_once 'lib/smarty_lib/Smarty.class.php';
     $error="";
+    $user_login="";
 if (isset($_REQUEST['login']) && isset($_REQUEST['pass'])){
     $values_auth= new MAuthorization();
     //фильтруем входные данные
@@ -13,10 +14,18 @@ if (isset($_REQUEST['login']) && isset($_REQUEST['pass'])){
     $values_auth->setLogin($login);
     $values_auth->setPassword($password);
     $dao_auth=new AuthorizationDAO();
-    $user_login=$dao_auth->getAuthUser($values_auth);
+    if ($_REQUEST['button_click']=='DB'){
+        $param='database';
+    $user_login=$dao_auth->getAuthUser($values_auth, $param);
+    
+    }
+    if ($_REQUEST['button_click']=='LDAP'){
+        $param="LDAP";
+    $user_login=$dao_auth->getAuthUser($values_auth, $param);
+    }
     if ($user_login){
-        $obj_user=$dao_auth->getObjUser($values_auth);
-        $_SESSION['id_user']=$dao_auth->getObjUser($values_auth)->getIdUser();
+        $obj_user=$dao_auth->getObjUser($values_auth, $param);
+        $_SESSION['id_user']=$dao_auth->getObjUser($values_auth, $param)->getIdUser();
         $_SESSION['fio_user']=$obj_user->getFirstName()."".$obj_user->getLastName(); 
         $_SESSION['role_user']=$obj_user->getIdRole();
         header('HTTP/1.1 200 OK');

@@ -37,11 +37,11 @@
             }
         }      
         public function execute($query, $array_params=null){
-            return @pg_query_params($this->db, $query, $array_params);
+            return pg_query_params($this->db, $query, $array_params);
             //@-блокируем системные ошибки, чтобы срабатывали мои исключения            
         }        
         public function getFetchObject($result, $row=0){
-            $featch_object=@pg_fetch_object($result, $row); 
+            $featch_object=pg_fetch_object($result, $row); 
             return $featch_object;   
         }
         public function getArrayData($result, $field=0){
@@ -52,7 +52,7 @@
             return $array;
         }
                         
-        public function getConfig ($section='PostgreSQL'){
+        private function getConfig ($section= 'PostgreSQL'){
         $array= parse_ini_file(CheckOS::getConfigConnectDb(), true);
         return $array[$section];
         }        

@@ -244,7 +244,7 @@ class QuizDAO {
             $mquestion=new MQuestion();
             $mquestion->setIdQuestion($obj_status->id_question);
             $mquestion->setTextQuestion($obj_status->text_question);
-            $mquestion->setIdQuestionsType($obj_status->id_question_type);
+            $mquestion->setIdQuestionsType($obj_status->id_questions_type);
             $mquestion->setAnswerOption($question->getListAnswerOptions($obj_status->id_question));
             $mquestion->setCommentQuestion($obj_status->comment_question);
             $mquestion->setQuestionNumber($obj_status->question_number);

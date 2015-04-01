@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-03-25 14:08:45
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-01 09:40:12
          compiled from "templates\quiz.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:18514550a672ba088a8-70035935%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'bfd2b19e0f6c8caa86730ece86950200783687e3' => 
     array (
       0 => 'templates\\quiz.tpl',
-      1 => 1427278081,
+      1 => 1427866809,
       2 => 'file',
     ),
   ),
@@ -67,6 +67,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                     <td>
                                         Ограничение времени
                                     </td>
+                                    <td>
+                                        Статус
+                                    </td>
                                 </tr>
                                 <?php  $_smarty_tpl->tpl_vars['data_one_quiz'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['data_one_quiz']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['data_quiz']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
@@ -100,6 +103,10 @@ $_smarty_tpl->tpl_vars['data_one_quiz']->_loop = true;
 
                                             <?php } else { ?> Без ограничений    
                                             <?php }?>   
+                                        </td>
+                                        <td>
+                                            <a href="test_passing.php?testing=<?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getIdTesting();?>
+">Пройти тест</a>
                                         </td>
                                         </tr>
                                 <?php } ?>

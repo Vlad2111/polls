@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <form action={$action} method="post">
+        <form id="auth" action={$action} method="post">
             <h2>Меню авторизации</h2>
             <table>
                 <tr>         
@@ -14,7 +14,11 @@
                <td> <input type="text" name="login"></td></tr>
             <tr><td>Введите пароль:</td>
             <td><input type="password" name="pass"></td></tr>
-            <tr><td></td><td><input type="submit" value="отправить"></td></tr>
+            <tr><td> 
+            <button form="auth" type="submit" formaction="authorization.php" name="button_click" value='LDAP'>Войти как пользватель LDAP</button>
+            </td><td>
+            <button form="auth" type="submit" formaction="authorization.php" name="button_click" value='DB'>Войти как внутренний пользватель</button>
+            </td></tr>
             </table>
         
         </form>

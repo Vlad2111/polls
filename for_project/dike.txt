@@ -181,6 +181,10 @@ insert into alluser(last_name, first_name, patronymic, email, login, password) v
 	('Михаил', 'Тюбиков','Иваныч', 'compiler@mail.ru', 'Михаил', 'c81e728d9d4c2f636f067f89cc14862c'),
 	('Сергей', 'Иванов', 'Николаевич','test@mail.ru', 'Сергей', 'eccbc87e4b5ce2fe28308fd9f2a7baf3');
 
+insert into alluser(last_name, first_name, login, ) values	
+	('Aleksey', 'Porandaykin', 'porandaykin.a'),
+        ('Andrey', 'Smirnov', 'smirnov.a');
+
 insert into test(topic, time_limit, comment_test, see_the_result, see_details, id_status_quiz, author_test) values
 ('тест', null, null, 'Y', 'Y', 1, 1),
 ('тест', null, null, 'Y', 'Y', 2, 2);

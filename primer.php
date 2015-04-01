@@ -4,6 +4,7 @@
 <?php
 
 include_once 'lib/CheckOS.php';
+include_once 'lib/PhpLDAP.php';
 include_once 'DAO/AdministrationDAO.php';
 include_once 'DAO/UserDAO.php';
 include_once 'model/MUser.php';
@@ -20,15 +21,28 @@ include_once 'model/MQuestion.php';
 
  try{ 
      echo "<pre>";
+     $auth=new AuthorizationDAO();
+     $mauth=new MAuthorization();
+//     $mauth->setLogin('Иван');
+//     $mauth->setPassword(1);
+     $mauth->setLogin('porandaykin.a');
+     $mauth->setPassword('Tecom1');
+     $a=$auth->getObjUser($mauth, 'LDAP');
+     var_dump($a);
+     
 //        $mquiz=new MQuiz();
 //        $mquiz->setIdQuiz(1);
 //        $quiz=new QuizDAO();
-//        var_dump($quiz->getObjTestQuestion(1));
-//        
-     $interviewee=new IntervieweeDAO();
-     $temp=$interviewee->getDataTesting(1);
-     $e=$temp[0];
-     var_dump($e->getTest()->getTimeLimit());
+//        var_dump($quiz->getObjQuestions(2));
+////        
+//     $interviewee=new IntervieweeDAO();
+//     $temp=$interviewee->getDataTesting(1);
+//     $a=$temp[0];
+//     $b=$a->getQuestion();
+////     
+//     var_dump($a->getMarkTest());
+//     $e=$temp[0];
+//     var_dump($e->getIdTesting());
      
 //     $manswer= new MAnswerOptions();
 //     $manswer->setAnswerTheQuestions('Y');
@@ -47,7 +61,7 @@ include_once 'model/MQuestion.php';
 //     $mquestion->setQuestionNumber(1);
 //     $mquestion->setIdQuestion(2);
 //     
-     $question=new QuestionDAO();
+//     $question=new QuestionDAO();
 //     var_dump($question->getListAnswerOptions(2));
 //     var_dump($question->updateQuestion($mquestion));
      
@@ -82,13 +96,14 @@ include_once 'model/MQuestion.php';
 ////     var_dump($administration->getDataUsers());
 ////     var_dump($administration->getObjDataQuiz(6));
 //     var_dump($administration->getObjDataUser(8));
-//
-//     echo "</pre>";
-// }
-//    echo "<pre>"; 
+//// }
 //     $mauth=new MAuthorization();
-//     $mauth->setLogin('Иван');
-//     $mauth->setPassword(1);
+//     $mauth->setLogin("porandaykin.a");
+//     $mauth->setPasswordLDAP("Tecom1");
+//     $auth_ldap=new PhpLDAP();     
+//     var_dump($auth_ldap->checkUser($mauth));
+//     var_dump($auth_ldap->getListGroupUsers("OU=RnD,OU=MainOffice,DC=tecom,DC=nnov,DC=ru"));
+//     var_dump($auth_ldap->checkGroupUser("OU=RnD,OU=MainOffice,DC=tecom,DC=nnov,DC=ru", "Aleksey", "Porandaykin"));
 //     $auth=new AuthorizationDAO();
 //     var_dump($auth->getUser($mauth));
      echo "</pre>";

@@ -3,7 +3,7 @@ include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'lib/PhpLDAP.php';
 include_once 'Log4php/Logger.php';
-include_once 'model/Muser.php';
+include_once 'model/MUser.php';
     Logger::configure(CheckOS::getConfigLogger());
 class AuthorizationDAO {
     protected $db;
@@ -37,16 +37,19 @@ class AuthorizationDAO {
                 return $ldap->checkUser($auth);                
         }
     }
-    public function getIdUser(MAuthorization $auth, $param="database"){
+    public function getIdUser(MAuthorization $auth, $param){
         if ($param=="database"){
             return $this->checkUserDB($auth);            
         }
-        elseif ($param=="LDAP") {
+        if ($param=="LDAP") {
             return $this->checkUserLDAP($auth);
+        }
+        else {
+            return false;
         }
     }
     
-    public function getAuthUser(MAuthorization $auth, $param="database"){
+    public function getAuthUser(MAuthorization $auth, $param){
         if ($this->getIdUser($auth, $param)){                 
             $this->log->info('Успешно введены логин и пароль пользователем '.$auth->getLogin());
             return $auth->getLogin();
@@ -55,7 +58,7 @@ class AuthorizationDAO {
             $this->log->info('Неправильно введены логин и пароль пользователем '.$auth->getLogin());       
         }
      }     
-     public function getObjUser(MAuthorization $auth, $param="database"){
+     public function getObjUser(MAuthorization $auth, $param){
          $query="select * from alluser where id_user=$1;";
          $array_params=array();
         $array_params[]=$this->getIdUser($auth, $param);
@@ -64,17 +67,17 @@ class AuthorizationDAO {
         $muser=new MUser();
         $muser->setFirstName($data->first_name);
         $muser->setEmail($data->email);
-        $muser->setIdRole($data->id_role);
+        $muser->setIdRole($this->getRole($auth, $param));
         $muser->setIdUser($data->id_user);
         $muser->setLastName($data->last_name);
         $muser->setLogin($data->login);
 //        $muser->setIdRole($this->getRole($auth));
         return $muser;         
      }
-     private function getRole(MAuthorization $auth){
+     public function getRole(MAuthorization $auth, $param){
          $query="select id_role from role_user where id_user=$1";
          $array_params=array();
-        $array_params[]=$this->getIdUser($auth);
+        $array_params[]=$this->getIdUser($auth, $param);
         $result=$this->db->execute($query,$array_params);
         $data=$this->db->getFetchObject($result);
         return $data->id_role; 

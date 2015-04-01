@@ -54,7 +54,7 @@ class MQuiz {
         $this->id_status_quiz=$id_status_quiz;
     }
     public function getAuthorTest(){
-        return $this->$author_test;
+        return $this->author_test;
     }
     public function setAuthorTest(MUser $author_test){
         $this->author_test=$author_test;
