@@ -72,5 +72,10 @@ class PhpLDAP {
     private function getConfigLDAP ($section='LDAP'){
         $array= parse_ini_file(CheckOS::getConfigConnectDb(), true);
         return $array[$section];
-        } 
+        }
+    public function get($group_ldap){
+        $search=ldap_search($this->ldap, 'DC=tecom,DC=nnov,DC=ru', "(memberOf=$group_ldap)");
+         $data_users = ldap_get_entries($this->ldap, $search);
+         return $data_users;
+    }    
 }

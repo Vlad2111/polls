@@ -1,22 +1,22 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-03-18 12:02:16
-         compiled from "templates/quiz.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:116368087354ff7d278d0479-75350064%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-08 14:26:30
+         compiled from "templates\main.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:31967551ea94505dce0-27734828%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    'fcce0bdae3f9db301c4bb57def617401de3c1050' => 
+    '80ff610cdde7f73269c75c09f60e0971758e546d' => 
     array (
-      0 => 'templates/quiz.tpl',
-      1 => 1426669333,
+      0 => 'templates\\main.tpl',
+      1 => 1428488708,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '116368087354ff7d278d0479-75350064',
+  'nocache_hash' => '31967551ea94505dce0-27734828',
   'function' => 
   array (
   ),
   'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_54ff7d278e3517_76648129',
+  'unifunc' => 'content_551ea94590cfa0_42805940',
   'variables' => 
   array (
     'title' => 0,
@@ -25,13 +25,15 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_54ff7d278e3517_76648129')) {function content_54ff7d278e3517_76648129($_smarty_tpl) {?><html>
+<?php if ($_valid && !is_callable('content_551ea94590cfa0_42805940')) {function content_551ea94590cfa0_42805940($_smarty_tpl) {?><html>
     <head>
         <title><?php echo $_smarty_tpl->tpl_vars['title']->value;?>
 </title>
         <meta charset="UTF-8">
     </head>
     <body>
+<form id="go" method="post">
+                        </form>
         <table width="100%">
             <tr>
                 <td  width="100%">
@@ -67,6 +69,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                                     <td>
                                         Ограничение времени
                                     </td>
+                                    <td>
+                                        Статус
+                                    </td>
                                 </tr>
                                 <?php  $_smarty_tpl->tpl_vars['data_one_quiz'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['data_one_quiz']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['data_quiz']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
@@ -75,32 +80,37 @@ $_smarty_tpl->tpl_vars['data_one_quiz']->_loop = true;
 ?>
                                     <tr>
                                         <td>
-                                            <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['topic_test'];?>
+                                            <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getTest()->getTopic();?>
 
                                         </td>
                                         <td>
                                             
-                                            <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value['mark_test']=='available') {?>
+                                            <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value->getMarkTest()=='available') {?>
                                                 Доступен
-                                              <?php } elseif ($_smarty_tpl->tpl_vars['data_one_quiz']->value['mark_test']=='unfinished') {?>
+                                              <?php } elseif ($_smarty_tpl->tpl_vars['data_one_quiz']->value->getMarkTest()=='unfinished') {?>
                                                   Незаконченный
                                               <?php } else { ?>
                                                   Не доступен
                                             <?php }?>    
                                         </td>
                                         <td>
-                                            <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['author_quiz'][1];?>
- <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['author_quiz'][2];?>
- <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['author_quiz'][3];?>
+                                            <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getUser()->getFirstName();?>
+ <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getUser()->getLastName();?>
 
                                         </td>
                                         <td>
                                             
-                                            <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value['time_limit']) {?>
-                                                <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['time_limit'];?>
+                                            <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value->getTest()->getTimeLimit()) {?>
+                                                <?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getTest()->getTimeLimit();?>
 
                                             <?php } else { ?> Без ограничений    
                                             <?php }?>   
+                                        </td>
+                                        <td>
+<button form="go" type="submit" formaction="quiz.php" name="testing" value=<?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getIdTesting();?>
+>Пройти тест</button>
+                                            <a href="quiz.php?testing=<?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value->getIdTesting();?>
+">test</a>
                                         </td>
                                         </tr>
                                 <?php } ?>

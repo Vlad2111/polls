@@ -1,4 +1,3 @@
-
 <?php
 session_start();
  try{ 
@@ -19,7 +18,6 @@ $administration_view= new AdministrationView();
 //Объявляем переменные    
 $title="Меню администратора";
 $you=$_SESSION['fio_user'];
-$exit="Выход";
 $name_page='administration';
 $role_user=$_SESSION['role_user'];
 $create_user_fio='';
@@ -55,13 +53,12 @@ elseif ($button_click==='delete_quiz'){
         $quiz->deleteQuiz($mquiz);
     $view_admin='table_quiz'; 
     
-    /*
-     *  if (isset($quiz_control) && !empty($quiz_control)){
+      if (isset($quiz_control) && !empty($quiz_control)){
             $id_quiz=$quiz_control;
             $array_one_quiz=$administration->getDataOneQuiz($quiz_control);        
             $view_admin='edit_quiz';
             }    
-     */
+     
 }
 elseif (isset($last_name) && !empty($last_name) &&
 isset($first_name) && !empty($first_name) &&   
@@ -98,7 +95,6 @@ $smarty= new Smarty();
     $smarty->assign('title', $title);
     $smarty->assign('view_admin', $view_admin);
     $smarty->assign('you', $you);
-    $smarty->assign('exit', $exit);
     $smarty->assign('create_user_fio', $create_user_fio);
     $smarty->assign('users_data', $administration->getDataUsers());
     $smarty->assign('quiz_data', $administration->getDataQuiz());

@@ -6,30 +6,25 @@ include_once 'model/MAuthorization.php';
 include_once 'lib/smarty_lib/Smarty.class.php';
     $error="";
     $user_login="";
-if (isset($_REQUEST['login']) && isset($_REQUEST['pass'])){
-    $values_auth= new MAuthorization();
-    //фильтруем входные данные
+        //фильтруем входные данные
     $login=filter_input(INPUT_POST, 'login', FILTER_SANITIZE_SPECIAL_CHARS); 
     $password=filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_SPECIAL_CHARS);
+    $button_click=filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);
+if (isset($login) && isset($password)){
+    $values_auth= new MAuthorization();
+
+    
     $values_auth->setLogin($login);
     $values_auth->setPassword($password);
     $dao_auth=new AuthorizationDAO();
-    if ($_REQUEST['button_click']=='DB'){
-        $param='database';
-    $user_login=$dao_auth->getAuthUser($values_auth, $param);
-    
-    }
-    if ($_REQUEST['button_click']=='LDAP'){
-        $param="LDAP";
-    $user_login=$dao_auth->getAuthUser($values_auth, $param);
-    }
+    $user_login=$dao_auth->getAuthUser($values_auth);
     if ($user_login){
-        $obj_user=$dao_auth->getObjUser($values_auth, $param);
-        $_SESSION['id_user']=$dao_auth->getObjUser($values_auth, $param)->getIdUser();
+        $obj_user=$dao_auth->getObjUser($values_auth);
+        $_SESSION['id_user']=$dao_auth->getObjUser($values_auth)->getIdUser();
         $_SESSION['fio_user']=$obj_user->getFirstName()."".$obj_user->getLastName(); 
         $_SESSION['role_user']=$obj_user->getIdRole();
         header('HTTP/1.1 200 OK');
-        header('Location: quiz.php');
+        header('Location: main.php');
         exit();
     }
     $error="Такой пользователь не найден";

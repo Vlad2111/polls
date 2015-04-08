@@ -69,7 +69,7 @@ class QuestionDAO {
     }
     //Возращает список вариантов ответа для вопроса
     public function getArrayIdOptions($id_question){
-        $query="select id_answer_option from question_answer_options where id_question=$1;";
+        $query="select id_answer_option from answer_options where id_question=$1;";
         $array_params=array();
         $array_params[]=$id_question;
         $result=$this->db->execute($query,$array_params);

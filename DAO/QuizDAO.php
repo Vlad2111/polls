@@ -222,12 +222,8 @@ class QuizDAO {
     }
     //Возращает список всех вопросов для данного теста
         public function getObjTestQuestion($id_quiz){
-            $query="select id_question from questions where id_test=$1;";
-            $array_params=array();
-            $array_params[]=$id_quiz;
-            $result=$this->db->execute($query, $array_params);
-            $array_id_question=$this->db->getArrayData($result);
             $result=array();
+            $array_id_question=$this->getArrayIdQuestion($id_quiz);
             for($i=0; $i<count($array_id_question); $i++){
                 $result[$i]=$this->getObjQuestions($array_id_question[$i]);
             }
@@ -251,7 +247,13 @@ class QuizDAO {
             $mquestion->setIdTest($obj_status->id_test);
             return $mquestion;
        }
-
+       public function getArrayIdQuestion($id_quiz){
+           $query="select id_question from questions where id_test=$1;";
+            $array_params=array();
+            $array_params[]=$id_quiz;
+            $result=$this->db->execute($query, $array_params);
+            return $this->db->getArrayData($result);            
+       }
    
 }
 ?>

@@ -15,9 +15,7 @@
             <tr><td>Введите пароль:</td>
             <td><input type="password" name="pass"></td></tr>
             <tr><td> 
-            <button form="auth" type="submit" formaction="authorization.php" name="button_click" value='LDAP'>Войти как пользватель LDAP</button>
-            </td><td>
-            <button form="auth" type="submit" formaction="authorization.php" name="button_click" value='DB'>Войти как внутренний пользватель</button>
+            <button form="auth" type="submit" formaction="authorization.php" name="button_click">Войти</button>
             </td></tr>
             </table>
         

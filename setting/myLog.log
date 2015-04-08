@@ -405,3 +405,50 @@ LINE 1: UPDATE questions SET text_question=$1, id_question_type=$2, ...
 2015-04-01T14:10:11+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
 2015-04-01T14:41:21+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
 2015-04-01T14:41:36+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:35:36+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:38:03+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:38:31+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:39:12+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:39:42+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:39:58+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:43:33+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:44:18+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:45:34+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:47:30+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:48:00+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T09:48:47+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-02T10:11:49+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 54: Успешно введены логин и пароль пользователем Иван.  
+2015-04-03T18:40:52+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 60: Успешно введены логин и пароль пользователем Иван.  
+2015-04-03T18:52:31+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-03T18:54:20+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-03T19:18:43+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-03T19:19:39+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-03T19:20:29+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-08T09:30:20+04:00 ERROR [IntervieweeDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\IntervieweeDAO.php]: 222: Ошибка добавления строки в таблицу answer_users(ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_answer_users"
+DETAIL:  Ключ "(id_testing, id_question)=(1, 1)" уже существует.).  
+2015-04-08T09:36:15+04:00 ERROR [IntervieweeDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\IntervieweeDAO.php]: 218: Ошибка добавления строки в таблицу: answer_users( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_answer_users"
+DETAIL:  Ключ "(id_testing, id_question)=(1, 1)" уже существует.).  
+2015-04-08T09:38:03+04:00 ERROR [IntervieweeDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\IntervieweeDAO.php]: 218: Ошибка добавления строки в таблицу: answer_users( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_answer_users"
+DETAIL:  Ключ "(id_testing, id_question)=(1, 1)" уже существует.).  
+2015-04-08T11:52:22+04:00 ERROR [IntervieweeDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\IntervieweeDAO.php]: 224: Ошибка добавления строки в таблицу: answer_users( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_answer_users"
+DETAIL:  Ключ "(id_testing, id_question)=(1, 1)" уже существует.).  
+2015-04-08T12:28:15+04:00 ERROR [IntervieweeDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\IntervieweeDAO.php]: 224: Ошибка добавления строки в таблицу: answer_users( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_answer_users"
+DETAIL:  Ключ "(id_testing, id_question)=(1, 1)" уже существует.).  
+2015-04-08T12:39:48+04:00 ERROR [IntervieweeDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\IntervieweeDAO.php]: 224: Ошибка добавления строки в таблицу: answer_users( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_answer_users"
+DETAIL:  Ключ "(id_testing, id_question)=(1, 1)" уже существует.).  
+2015-04-08T13:35:50+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-08T13:40:38+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-08T14:13:29+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-08T14:16:39+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-08T14:18:54+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-08T14:26:30+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-08T14:31:29+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-08T14:32:16+04:00 ERROR [IntervieweeDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\IntervieweeDAO.php]: 242: Ошибка добавления строки в таблицу: answer_users( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_answer_users"
+DETAIL:  Ключ "(id_testing, id_question)=(1, 1)" уже существует.).  
+2015-04-08T14:32:27+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 51: Успешно введены логин и пароль пользователем Иван.  
+2015-04-08T14:32:31+04:00 ERROR [IntervieweeDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\IntervieweeDAO.php]: 242: Ошибка добавления строки в таблицу: answer_users( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_answer_users"
+DETAIL:  Ключ "(id_testing, id_question)=(1, 1)" уже существует.).  
+2015-04-08T14:35:11+04:00 ERROR [IntervieweeDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\IntervieweeDAO.php]: 242: Ошибка добавления строки в таблицу: answer_users( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_answer_users"
+DETAIL:  Ключ "(id_testing, id_question)=(1, 1)" уже существует.).  
+2015-04-08T14:39:41+04:00 ERROR [IntervieweeDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\IntervieweeDAO.php]: 242: Ошибка добавления строки в таблицу: answer_users( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_answer_users"
+DETAIL:  Ключ "(id_testing, id_question)=(1, 1)" уже существует.).  

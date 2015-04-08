@@ -18,31 +18,50 @@ include_once 'DAO/IntervieweeDAO.php';
 include_once 'model/MInterviewee.php';
 include_once 'DAO/QuizDAO.php';
 include_once 'model/MQuestion.php';
+include_once 'view/QuizView.php';
+include_once 'model/MAnswerUser.php';
 
  try{ 
      echo "<pre>";
-     $auth=new AuthorizationDAO();
-     $mauth=new MAuthorization();
-//     $mauth->setLogin('Иван');
-//     $mauth->setPassword(1);
-     $mauth->setLogin('porandaykin.a');
-     $mauth->setPassword('Tecom1');
-     $a=$auth->getObjUser($mauth, 'LDAP');
-     var_dump($a);
+//     $auth=new AuthorizationDAO();
+//     $mauth=new MAuthorization();
+////     $mauth->setLogin('Иван');
+////     $mauth->setPassword(1);
+//     $mauth->setLogin('porandaykin.a');
+//     $mauth->setPassword('Tecom1');
+//     $a=$auth->getObjUser($mauth, 'LDAP');
+//     var_dump($a);
+//     $ldap=new PhpLDAP();
+//     $ldap->checkGroupUser("CN=VPNusers,OU=MainOffice,DC=tecom,DC=nnov,DC=ru", 'Aleksey', 'Porandaykin');
+//     var_dump($ldap->getListGroupUsers('CN=Aleksey Porandaykin,OU=RnD,OU=MainOffice,DC=tecom,DC=nnov,DC=ru'));
+//     var_dump($ldap->get("OU=MainOffice,DC=tecom,DC=nnov,DC=ru"));
+//     var_dump($ldap->checkUser($mauth));
      
 //        $mquiz=new MQuiz();
 //        $mquiz->setIdQuiz(1);
 //        $quiz=new QuizDAO();
-//        var_dump($quiz->getObjQuestions(2));
-////        
+//        $array_question=$quiz->getArrayIdQuestion(1);
+//        shuffle($array_question);
+//        var_dump($array_question);
+////  
+//     $minterviewee=new MInterviewee();
+//     $manswer_user=new MAnswerUser();
+//     $manswer_user->setAnswerUser('ds');
+//     $manswer_user->setIdQuestion(1);
+//     $manswer_user->setIdTesting(1);
 //     $interviewee=new IntervieweeDAO();
-//     $temp=$interviewee->getDataTesting(1);
-//     $a=$temp[0];
-//     $b=$a->getQuestion();
-////     
-//     var_dump($a->getMarkTest());
-//     $e=$temp[0];
-//     var_dump($e->getIdTesting());
+//     $minterviewee=$interviewee->getDataOneTesting(1);   
+//     $array_question=$minterviewee->getQuestion();
+////     shuffle($array_question);
+//        var_dump($array_question);
+//     
+//     var_dump($minterviewee);
+//        var_dump($minterviewee->getQuestion());
+     
+     $quiz_view=new QuizView(1);
+//     $quiz_view->endQuiz();
+     var_dump($quiz_view->getTesting());
+//     echo date("Y-m-d H:i:s");
      
 //     $manswer= new MAnswerOptions();
 //     $manswer->setAnswerTheQuestions('Y');
