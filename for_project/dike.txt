@@ -2,13 +2,10 @@ CREATE SEQUENCE id_user INCREMENT BY 1;
 CREATE SEQUENCE id_test INCREMENT BY 1;
 CREATE SEQUENCE id_question INCREMENT BY 1;
 CREATE SEQUENCE id_answer_option INCREMENT BY 1;
-CREATE SEQUENCE question_number INCREMENT BY 1;
 CREATE SEQUENCE id_testing INCREMENT BY 1;
-CREATE SEQUENCE id_group INCREMENT BY 1;
 CREATE SEQUENCE id_answer_user  INCREMENT BY 1;
 
 CREATE TYPE yorn AS enum('N', 'Y');
-CREATE TYPE mark_for_test AS enum('available', 'unfinished', 'not available', 'finished');
 CREATE TYPE markerAU AS enum('latest');
 
 create table alluser(
@@ -19,53 +16,26 @@ create table alluser(
 	login character(50) NOT NULL CONSTRAINT must_be_different_login UNIQUE,
 	password character(50) NULL,
 	ldap_user integer DEFAULT 0,
-CONSTRAINT must_be_different_fio UNIQUE(last_name, first_name),
+CONSTRAINT must_be_different_lastName_firstName UNIQUE(last_name, first_name),
 constraint user_pkeys primary key (id_user));
 
 create table role (
 	id_role integer not null,
 	description_role character (50) NOT NULL CONSTRAINT must_be_different_description_role UNIQUE,
-constraint role_pkey primary key (id_role));
+constraint role_pkey primary key (id_role)
+);
 
 create table role_user (
 	id_role integer not null,
 	id_user integer not null,
 CONSTRAINT must_be_different_role_user UNIQUE(id_role, id_user),
 constraint role_user_fkey foreign key (id_role) references role(id_role),
-constraint user_role_fkey foreign key (id_user) references alluser(id_user)
+constraint user_role_fkey foreign key (id_user) references alluser(id_user));
+create table status_test(
+	id_status_test integer not null,
+	description_status_test character(50) not null,
+constraint status_test_pkey primary key (id_status_test)
 );
-
-create table all_group (
-	id_group integer DEFAULT NEXTVAL('id_group'),
-	name_group character(50) NOT NULL CONSTRAINT must_be_different_name_group UNIQUE,
-	description_group character(100),
-	ldap_group yorn DEFAULT 'N',
-CONSTRAINT group_pkey primary key (id_group)	
-);
-
-create table group_users (
-	id_group integer not null,
-	id_user integer not null,
-CONSTRAINT group_users_fkey foreign key (id_group) references all_group(id_group),
-CONSTRAINT users_group_fkey foreign key (id_user) references alluser(id_user)
-);
-
-create table role_group (
-	id_role integer not null,
-	id_group integer not null,
-CONSTRAINT must_be_different_role_group UNIQUE(id_role, id_group),
-constraint role_group_fkey foreign key (id_role) references role(id_role),
-constraint group_role_fkey foreign key (id_group) references all_group(id_group)
-);
-
-
-create table status_quiz(
-	id_status_quiz integer not null,
-	description_status_quiz character(50) not null,
-constraint status_quiz_pkey primary key (id_status_quiz)
-);
-
-
 create table test (
 	id_test integer DEFAULT NEXTVAL('id_test'),
 	topic character(150) not null,
@@ -73,94 +43,79 @@ create table test (
 	comment_test character(150) null,
 	see_the_result yorn not null,
 	see_details yorn not null,
-	id_status_quiz integer not null,
+	id_status_test integer not null,
 	author_test integer not null,
-CONSTRAINT must_be_different_test UNIQUE(topic, time_limit, comment_test, see_the_result, see_details, id_status_quiz, author_test),
+CONSTRAINT must_be_different_test UNIQUE(topic, time_limit, comment_test, see_the_result, see_details, id_status_test, author_test),
 constraint author_test_fkey foreign key (author_test) references alluser(id_user),
-constraint status_quiz_fkey foreign key (id_status_quiz) references status_quiz(id_status_quiz),
+constraint status_test_fkey foreign key (id_status_test) references status_test(id_status_test),
 constraint test_pkey primary key(id_test)
 );
 
-
-
 create table interviewees (
 	id_test integer not null,
-	id_group integer null,
 	id_user integer null,
+	group_ldap character(1000) null,
 CONSTRAINT test_interviewees_fkey foreign key(id_test) references test(id_test),
-CONSTRAINT group_interviewees_fkey foreign key (id_group) references all_group(id_group),
 CONSTRAINT user_interviewees_fkey foreign key (id_user) references alluser (id_user)
 );
-
-
-create table testing (
-	id_testing integer DEFAULT NEXTVAL('id_testing'),
-	id_user integer not null,
-	id_test integer not null,
-	mark_test mark_for_test not null,
-	datetime_start_test timestamp null,
-	datetime_end_test timestamp null,
-CONSTRAINT must_be_different_testing UNIQUE(id_user, id_test),
-constraint user_role_fkey foreign key (id_user) references alluser(id_user),
-constraint test_role_fkey foreign key (id_test) references test (id_test),
-constraint testing_pkeys primary key (id_testing)
-);
-
-
-
-create table result_percent(
-	id_testing integer not null,
-	datetime_end_test character(50) not null,
-	result character(50) not null,
-constraint testing_result_fkey foreign key (id_testing) references testing (id_testing)
-);
-
-
 create table type_the_questions (
 	id_questions_type integer not null,
 	description_questions_type character(100) NOT NULL CONSTRAINT must_be_different_answer_type UNIQUE,
 constraint answer_type_pkey primary key (id_questions_type)
 );
-
-
-
 create table questions (
 	id_question integer DEFAULT NEXTVAL('id_question'),
 	text_question text not null,
 	id_questions_type integer not null,	
-	comment_question character(100),
-	question_number integer DEFAULT NEXTVAL('question_number'),
+	comment_question character(100) null,
+	question_number integer null,
 	id_test integer not null,
-constraint test_questions_fkey foreign key (id_test) references test (id_test),
 constraint question_pkey primary key (id_question),
+constraint test_questions_fkey foreign key (id_test) references test (id_test),
 constraint answer_type_fkey foreign key (id_questions_type) references type_the_questions(id_questions_type)
 );
-
 create table answer_options(
 	id_answer_option integer DEFAULT NEXTVAL('id_answer_option'),
         id_question integer not null,
 	answer_the_questions character(1000) NULL,
 	right_answer yorn not null,
-constraint question_answer_fkey foreign key (id_question) references questions(id_question),
-constraint answer_the_questions_pkey primary key (id_answer_option)
+constraint answer_the_questions_pkey primary key (id_answer_option),
+constraint question_answer_fkey foreign key (id_question) references questions(id_question)
+);
+create table mark_test(
+	id_mark_test integer not null,
+	description_mark_test character(50) not null,
+constraint mark_test_pkey primary key (id_mark_test)
+);
+
+create table testing (
+	id_testing integer DEFAULT NEXTVAL('id_testing'),
+	id_user integer not null,
+	id_test integer not null,
+	id_mark_test integer not null,
+	datetime_start_test timestamp null,
+	datetime_end_test timestamp null,
+constraint testing_pkeys primary key (id_testing),
+CONSTRAINT must_be_different_testing UNIQUE(id_user, id_test),
+constraint user_testing_fkey foreign key (id_user) references alluser(id_user),
+constraint test_testing_fkey foreign key (id_test) references test (id_test),
+constraint mark_test_testing_fkey foreign key (id_mark_test) references mark_test (id_mark_test)
 );
 create table answer_users (
-	id_answer_user integer DEFAULT NEXTVAL('id_answer_user'),
 	id_testing integer not null,
 	id_question integer not null,	
+	answer_user character(1000) null,
 	marker_quiz markerAU null,
 CONSTRAINT must_be_different_answer_users UNIQUE(id_testing, id_question),
 constraint question_answer_users_fkey foreign key (id_question) references questions(id_question),
-constraint testing_answer_fkey foreign key (id_testing) references testing (id_testing),
-constraint answer_user_pkey primary key (id_answer_user) 
+constraint testing_answer_fkey foreign key (id_testing) references testing (id_testing)
 );
-
-create table question_answer_users (	
-	id_answer_user integer not null,
-	id_answer_option integer null,
-	answer_user character(1000) null,
-constraint id_answer_user_fkey foreign key (id_answer_user) references answer_users (id_answer_user),	
-constraint answer_users_question_fkey foreign key (id_answer_option) references  answer_options(id_answer_option)	
+create table result(
+	id_testing integer not null,
+	percent_of_right_answers integer null,
+	right_answers character(1000) null,
+	wrong_answers character(1000) null,
+constraint testing_result_fkey foreign key (id_testing) references testing (id_testing)
 );
 
 insert into role values
@@ -168,7 +123,7 @@ insert into role values
 	(2, 'Составитель опросов'),
 	(3, 'Администратор');
 
-insert into status_quiz values
+insert into status_test values
 	(1, 'Редактируемый'),
 	(2, 'Готов к опубликованию'),
 	(3, 'Активный'),
@@ -179,47 +134,32 @@ insert into type_the_questions values
 	(2, 'Вопрос с возможностью выбора одного ответа из списка'),
 	(3, 'Вопрос с возможностью выбора одного или более ответов из списка'),
 	(4, 'Вопрос, предполагающий написание ответа в виде произвольного текста длиной до 1000 символов');
-
-
+insert into mark_test values
+		(1, 'Доступный'),
+		(2, 'Неоконченный'),
+		(3, 'Не доступный'),
+		(4, 'Законченный');
 
 insert into alluser(last_name, first_name, email, login, password) values
 	('Иван', 'Иванов', 'admin@mail.ru', 'Иван', 'c4ca4238a0b923820dcc509a6f75849b'),
 	('Михаил', 'Тюбиков', 'compiler@mail.ru', 'Михаил', 'c81e728d9d4c2f636f067f89cc14862c'),
 	('Сергей', 'Иванов', 'test@mail.ru', 'Сергей', 'eccbc87e4b5ce2fe28308fd9f2a7baf3');
 
-insert into alluser(last_name, first_name, login, ldap_user) values	
-	('Aleksey', 'Porandaykin', 'porandaykin.a', 1),
-        ('Andrey', 'Smirnov', 'smirnov.a', 1);
+insert into role_user values(1, 6);
 
-insert into role_user values
-	(3, 1),
-	(3, 2),
-	(3, 3),
-	(2, 4),
-	(1, 5);
-
-insert into all_group(name_group, description_group, ldap_group) values 
-		('admin LDAP VPN', 'CN=VPNusers,OU=MainOffice,DC=tecom,DC=nnov,DC=ru', 'Y'),
-		('admin', 'Внутренняя группа', 'N');
-	
-insert into group_users values 
-	(2, 1);
-
-insert into test(topic, comment_test, see_the_result, see_details, id_status_quiz, author_test) values 
-	('test', 'Для тестирования', 'Y', 'Y', 3, 1);
+insert into test(topic, comment_test, see_the_result, see_details, id_status_test, author_test) values 
+	('test', 'Для тестирования', 'Y', 'Y', 3, 6);
 
 insert into interviewees (id_test, id_user) values
-	(1, 1),
-	(1, 2);
-insert into interviewees (id_test, id_group) values
-	(1, 1);
+	(3, 6),
+	(3, 28);
 
-insert into testing(id_user, id_test, mark_test) values 
-	(1, 1, 'available');
+insert into testing(id_user, id_test, id_mark_test) values 
+	(6, 3, 1);
 
 insert into questions(text_question, id_questions_type, comment_question, id_test) values
-	('Это тест', '1', 'test', 1),
-	('Ваш комментари', '4', 'test', 1);	
+	('Это тест', '1', 'test', 3),
+	('Ваш комментари', '4', 'test', 3);	
 
 insert into answer_options(id_question, answer_the_questions, right_answer) values 
-	(1, 'Y', 'Y');
+	(3, 'Y', 'Y');
