@@ -24,12 +24,6 @@ class MAuthorization {
     public function setUser(MUser $user){
         $this->user=$user;
     }
-//    public function getLoginLDAP(){
-//        return $this->loginLDAP;
-//    }
-//    public function setLoginLDAP($login){
-//        $this->loginLDAP="TECOM\\".$login;
-//    }
     public function getPasswordLDAP(){
         return $this->passwordLDAP;
     }

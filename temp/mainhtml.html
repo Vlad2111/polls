@@ -2,45 +2,55 @@
     <head>
         <title>{$title}</title>
         <meta charset="UTF-8">
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script src="/js/jquery.min.js"></script>
     </head>
     <body>
-        <table width="100%" align="center">
-            <tr align="center">
-                <td>
-                    Вопрос №1
-                </td>
-            </tr> 
-            <tr align="center">
-                <td>                
-                    Сам вопрос
-                </td>
-            </tr> 
-            <tr align="center">
-                <td>                
-                    Какие-то ответы
-                </td>
-            </tr>  
-            <tr align="center">
-                <td><form id="test_passing" method="post">
-                        </form>
-                    <table>
-                        <tr>
-                            <td>
-                                <button form="test_passing" type="submit" formaction="quiz.php" name="button_click" value='prev'>Следующий вопрос</button>                                
-                            </td>
-                            <td>
-                                <button form="test_passing" type="submit" formaction="quiz.php" name="button_click" value='end'>Следующий вопрос</button>
-                              
-                            </td>    
-                            <td>
-                                <button form="test_passing" type="submit" formaction="quiz.php" name="button_click" value='next'>Следующий вопрос</button>
-                                
-                            </td> 
-                        </tr>    
-                    </table> 
-                        
-                </td>
+        <table>
+            <tr bgcolor="#4682B4" valign="top">
+                <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
+                    Меню администратора
+                </td>                
             </tr>
-        </table>    
+            <tr  valign="top">
+                <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
+                    <a href="administration.php?link_click=show_quiz">Опросы</a>
+                </td>                
+            </tr>
+            <tr bgcolor="#87CEFA" valign="top">
+                <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
+                    <a href="administration.php?link_click=show_users">Пользователи</a>
+                </td>                
+            </tr>
+        </table>
+        <table>
+            <tr bgcolor="#4682B4" valign="top">
+                <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
+                    Меню автора теста
+                </td>                
+            </tr>
+            <tr  valign="top">
+                <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
+                    <a href="author_quiz.php">Мои опросы</a>
+                </td>                
+            </tr>
+            <tr bgcolor="#87CEFA" valign="top">
+                <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
+                    <a href="create_quiz.php">Создать опрос</a>
+                </td>                
+            </tr>
+        </table>
+        <table>
+            <tr bgcolor="#4682B4" valign="top">
+                <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
+                    Меню тестируемого
+                </td>                
+            </tr>
+            <tr  valign="top">
+                <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
+                    <a href="main.php">Список тестов</a>
+                </td>                
+            </tr>            
+        </table>
     </body>
 </html>

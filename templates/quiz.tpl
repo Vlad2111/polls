@@ -148,12 +148,8 @@
                     </tr>
                 </table>
             {/capture}
-            {if {$status_test} eq 'start_test'}
-                       {$smarty.capture.start_test}
-                    {elseif {$status_test} eq 'taking_a_test'}
-                        {$smarty.capture.taking_a_test}
-                    {elseif {$status_test} eq 'end_test'}
-                        {$smarty.capture.end_test}
+                    {if {$forms} eq 'start_test'}
+                       {$smarty.capture.start_test}                    
                     {elseif {$status_test} eq 'finished_test'}
                         {$smarty.capture.finished_test}
                     {/if}

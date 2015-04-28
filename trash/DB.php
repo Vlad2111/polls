@@ -1,18 +1,6 @@
-<?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of DB
- *
- * @author Aleksey Porandaykin
- */
-include_once 'CheckOS.php';
-include_once 'Log4php/Logger.php';
+<?php   
+    include_once 'CheckOS.php';
+    include_once 'Log4php/Logger.php';
         Logger::configure(CheckOS::getConfigLogger());
     class DB {
         protected static $_instance;  
@@ -47,9 +35,9 @@ include_once 'Log4php/Logger.php';
                 $this->log->ERROR('Ошибка соединения с БД( '.pg_last_error().')');
                 throw new Exception('Ошибка соединения с БД( '.pg_last_error().')');
             }
-        }
+        }      
         public function execute($query, $array_params=null){
-            if($array_params==null){
+            if(empty($array_params)){
                 $result= pg_query($this->db, $query);
                 return $result;
             }
@@ -85,4 +73,7 @@ include_once 'Log4php/Logger.php';
         return $array[$section];
         }        
         
-    }
+    }    
+    
+                            
+?>

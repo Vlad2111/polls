@@ -3,79 +3,115 @@
     include_once 'Log4php/Logger.php';
         Logger::configure(CheckOS::getConfigLogger());
 class PhpLDAP {
-    private $log;
     private $ldap;
+    private $base_dn;
+    private $log;
+    public $user_ldap=false;
+    private $auth;
     const LDAP_OPT_DIAGNOSTIC_MESSAGE='0x0032';
     
-    public function __construct() {
+    public function __construct(MAuthorization $auth) {
         $this->ldap= $this->setConnectLDAP();
         $this->log= Logger::getLogger(__CLASS__);
+        $this->auth=$auth;
+        $this->checkUser($this->auth);
     }
     //Установление соединения с LDAP сервером
     private function setConnectLDAP(){
         $array_ini= $this->getConfigLDAP();
         $ldaphost=$array_ini['ldaphost'];
         $ldapport=$array_ini['ldapport'];
+        $this->base_dn=$array_ini['basedn'];
         $ldap_temp=ldap_connect($ldaphost, $ldapport);
+        ldap_set_option($this->ldap, LDAP_OPT_REFERRALS, 0);
+        ldap_set_option($this->ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
         if($ldap_temp){
                 return $ldap_temp;
             } 
             else{   
                 $this->log->ERROR('Ошибка соединения с LDAP сервером');
-                throw new Exception('Ошибка соединения с LDAP сервером');
+//                throw new Exception('Ошибка соединения с LDAP сервером');
             }
     }
     //проверка пользователя
-    public function checkUser(MAuthorization $auth){
-        $bind=ldap_bind($this->ldap, "TECOM\\".$auth->getLogin(), $auth->getPasswordLDAP());
-        if (!$bind) {
-            if (ldap_get_option($this->ldap, self::LDAP_OPT_DIAGNOSTIC_MESSAGE, $extended_error)) {
-                $this->log->ERROR('Ошибка соединения с LDAP сервером( $extended_error)');
-                throw new Exception('Ошибка соединения с LDAP сервером( $extended_error)');
-            } else {
-                $this->log->ERROR('Ошибка соединения с LDAP сервером( неизвестная ошибка)');
-                throw new Exception('Ошибка соединения с LDAP сервером( неизвестная ошибка)');
+    public function checkUser(){
+        $bind=ldap_bind($this->ldap, "TECOM\\".$this->auth->getLogin(), $this->auth->getPasswordLDAP());
+        if ($bind) {
+            $this->user_ldap=true;
+        }
+        else{
+            
+//            if (ldap_get_option($this->ldap, self::LDAP_OPT_DIAGNOSTIC_MESSAGE, $extended_error)) {
+//                $this->log->ERROR('Ошибка соединения с LDAP сервером( $extended_error)');
+////                throw new Exception('Ошибка соединения с LDAP сервером( $extended_error)');
+//            } else {
+//                $this->log->ERROR('Ошибка соединения с LDAP сервером( неизвестная ошибка)');
+////                throw new Exception('Ошибка соединения с LDAP сервером( неизвестная ошибка)');
+//            }
+        }
+    }
+    //Проверка person    
+    private function checkObjectclass(){
+        $arr=array('objectclass');
+        $result = ldap_search($this->ldap, $this->base_dn, "(sAMAccountName={$this->auth->getLogin()})", $arr);
+        $result_ent = ldap_get_entries($this->ldap, $result);
+        $count=$result_ent[0]['objectclass']['count'];
+        for($i=0; $i<$count; $i++){
+            if($result_ent[0]['objectclass'][$i]=="person"){
+                return true;
             }
         }
-        return $bind;
-        
+        return $result_ent;
     }
-    //Проверка принадлежности пользователя к определенной группе
-    public function checkGroupUser($group_ldap, $last_name, $first_name){
-        $list_user_group=$this->getListGroupUsers($group_ldap);
-        for($i=0; $i<count($list_user_group); $i++){
-            if (count($list_user_group[$i])==2){
-                if ($list_user_group[$i][0]==$last_name || $list_user_group[$i][1]==$first_name){
-                    return $i; 
-                }
+    //Возращает данные пользователя
+    public function getDataUserLDAP(){
+        if($this->checkObjectclass($this->auth)){$arr=array('displayname', 'samaccountname', 'mail');
+            $temp_arr=array();
+            $result = ldap_search($this->ldap, $this->base_dn, "(sAMAccountName={$this->auth->getLogin()})", $arr);
+            $result_ent = ldap_get_entries($this->ldap, $result);
+            foreach($arr as $value){
+                $temp_arr[$value]=$result_ent[0][$value][0];
             }
-            else{
-                if ($list_user_group[$i][0]==$last_name){//???
-                    return $i; 
-                }
-            } 
-                
-        }        
+            $fi=  explode(' ', $temp_arr["displayname"]);
+            $return=array();
+            $return['first_name']=$fi[0];
+            $return['last_name']=$fi[1];
+            $return['login']=$temp_arr["samaccountname"];
+            $return['mail']=$temp_arr["mail"];
+        return $return;}
     }
-    //Получение списка членов группы
-    public function getListGroupUsers($group_ldap){
-        $search=ldap_search($this->ldap, $group_ldap, "cn=*"); //результаты поиска в группе
-        $data_users = ldap_get_entries($this->ldap, $search); //Получаем все резульаты поиска
-        $result=array();
-        for ($i=0; $i < $data_users["count"]; $i++) { //Выбираем только Имя и Фамиию пользователей в группе
-            $temp= $data_users[$i]["cn"][0];
-            $result[$i]=  explode(" ", $temp);
+    //Проверка принадлежности пользователя к группе(массив групп)
+    public function checkGroupLDAP($array_group){
+        $return=array();
+        if($this->checkObjectclass($this->auth)){
+            $array_group_user=$this->getGroupLDAPUser();
+            for ($b=0; $b<count($array_group); $b++){
+                for($i=0; $i<count($array_group_user); $i++){
+                    if ($array_group_user[$i]==$array_group[$b]){
+                        $return[$i]=$array_group[$b];
+                    }
+                }
+                return true;
+            }
+            return false;
         }
-        return $result;
+    }
+    //возвращает список групп пользователя
+    public function getGroupLDAPUser(){
+        if($this->checkObjectclass($this->auth)){$arr=array('memberof');
+            $arr_temp=array();
+            $result = ldap_search($this->ldap, $this->base_dn, "(sAMAccountName={$this->auth->getLogin()})", $arr);
+            $result_ent = ldap_get_entries($this->ldap, $result);
+            $count=$result_ent[0]['memberof']['count'];
+                for($i=0; $i<$count; $i++){
+                    $arr_temp[$i]=$result_ent[0]['memberof'][$i];
+            }
+            
+            return $arr_temp;}
     }
     //Получаем настройки LDAP из конфиг. файла
     private function getConfigLDAP ($section='LDAP'){
         $array= parse_ini_file(CheckOS::getConfigConnectDb(), true);
         return $array[$section];
-        }
-    public function get($group_ldap){
-        $search=ldap_search($this->ldap, 'DC=tecom,DC=nnov,DC=ru', "(memberOf=$group_ldap)");
-         $data_users = ldap_get_entries($this->ldap, $search);
-         return $data_users;
-    }    
+    }
 }

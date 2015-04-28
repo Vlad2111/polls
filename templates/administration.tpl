@@ -15,115 +15,96 @@
                 <table width="100%" >
                     <tr>                        
                 <td width="20%" valign="top">
-                <table id='menu_administration'>
-                    <tr bgcolor="#F5F5F5" valign="top">
-                            <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
-                                <a href=administration.php?link_click=show_quiz>Опросы</a>
-                            </td>
-                    </tr>
-                    <tr>   
-                            <td width="50%" height="10%" align="left" bgcolor="#8DB6CD">
-                                <a href=administration.php?link_click=show_users>Пользователи</a>
-                            </td>
-                    </tr>    
-                </table>
-                </td>
-           
+                    {include file='menu.tpl'}
+                </td>           
                 <td width="80%">
-                {capture name='table_users'}    
-                    <table  width="100%"  bgcolor="#CDC8B1">
-                        <tr align="center">
-                            <td bgcolor="#8B8378">
-                                <button form="users"  type="submit" formaction="administration.php">Выбрать пользователя</button>
-                            </td>
-                             <td bgcolor="#8B8378">
-                                <button form="users" type="submit" formaction="administration.php" name="button_click" value='new_user'>Новый пользователя</button>
-                            </td>
-                        </tr>
-                    </table>
-                    <table width="100%">
+                <form id="go" method="post">
+                        </form>
+                    {capture name='table_users'}
+                        <a href=administration.php?link_click=new_user>Создать пользователя</a>
+                        <table>
+                            <tr>
+                                <td>
+                                    Фамилия пользователя
+                                </td>
+                                <td>
+                                    Имя пользователя
+                                </td>
+                                <td>
+                                    Тип пользователя
+                                </td>
+                                <td>
+                                    
+                                </td>
+                            </tr>
+                            {foreach $users_data as $one_user_data}                                          
+                                <tr>
+                                    <td>
+                                        {$one_user_data->getLastName()}
+                                    </td>
+                                    <td>
+                                        {$one_user_data->getFirstName()}
+                                    </td>
+                                    <td>
+                                        {if $one_user_data->getLdapUser()==0}
+                                            Внутренний пользователь
+                                        {elseif $one_user_data->getLdapUser()==1}
+                                            Пользователь LDAP
+                                        {/if}
+                                    </td>
+                                    <td>
+                                       <a href="administration.php?link_click=edit_user&&id_user={$one_user_data->getIdUser()}">Изменить пользователя</a>
+                                    </td>
+                                </tr>
+                            {/foreach}
+                        </table>
+                    {/capture}
+                    {capture name='table_quizs'}
+                        <table>
+                            <tr>
+                                <td>
+                                    Тема теста
+                                </td>
+                                <td>
+                                    Статус теста
+                                </td>
+                                <td>
+                                    Автор теста
+                                </td>
+                            </tr>
+                            {foreach $quizs_data as $one_quiz_data}                                          
+                                <tr>
+                                    <td>
+                                        {$one_quiz_data->getTopic()}
+                                    </td>
+                                    <td>
+                                        {if $one_quiz_data->getIdStatusQuiz()==1}
+                                            Редактируемый
+                                        {elseif $one_quiz_data->getIdStatusQuiz()==2}
+                                            Готов к опубликованию
+                                        {elseif $one_quiz_data->getIdStatusQuiz()==3}
+                                            Активный
+                                        {elseif $one_quiz_data->getIdStatusQuiz()==4}
+                                            Завершённый
+                                        {/if}
+                                    </td>
+                                    <td>
+                                        {$one_quiz_data->getAuthorTest()->getLastName()} 
+                                        {$one_quiz_data->getAuthorTest()->getFirstName()}
+                                    </td>
+                                </tr>
+                            {/foreach}
+                        </table>
+                    {/capture}
+                    {capture name='new_user'}
+                        <a href="administration.php?link_click=new_user&&type_user=internal_user">Создать внутреннего пользователя</a> <br>
+                        <a href="administration.php?link_click=new_user&&type_user=ldap_user">Создать пользователя LDAP</a>
+                    {/capture}
+                    {capture name='new_internal_user'}
                         
-                        <tr>
-                            <td width="100%" bgcolor="#CDC8B1">
-                               <form id="users" method='post'>
-                                   <table width="100%">
-                                        {foreach $users_data as $one_user_data}                                          
-                                           <tr> <td><input type="radio" name="user_control" value="{$one_user_data[0]}"> </td>
-                                                <td>{$one_user_data[1]}</td>
-                                                <td>{$one_user_data[2]}</td>
-                                                <td>{$one_user_data[3]}</td>
-                                                <td>{$one_user_data[4]}</td>
-                                        </tr>
-
-                                        {/foreach}
-                                    </table>
-                              </form>
-                            </td>
-                        </tr>
-                    </table> 
-                {/capture}
-                {capture name='table_quiz'}    
-                    <table  width="100%"  bgcolor="#CDC8B1">
-                        <tr align="center">
-                            <td bgcolor="#8B8378">
-                                <button form="quiz" type="submit" formaction="administration.php" name="button_click" value='delet_quiz'>Удалить опрос</button>
-                            </td>
-                            <td bgcolor="#8B8378">
-                                <button form="quiz" type="reset" value="reset">Отменить выбор</button>
-                            </td>
-                        </tr>
-                    </table>
-                    <table width="100%">
-                        
-                        <tr>
-                            <td width="100%" bgcolor="#CDC8B1">
-                               <form id="quiz" method='POST'>
-                                   <table width="100%">
-                                       <tr align='center' bgcolor='#838B8B'>
-                                           <td width='20%'>
-                                           Название теста    
-                                           </td>
-                                           <td wight='40%'>
-                                               Автор теста
-                                           </td>
-                                           <td wight='40%'>
-                                               Статус теста
-                                           </td>
-                                       </tr>
-                                   </table>
-                                       <table width="100%">
-                                    {foreach $quiz_data as $one_quiz_data}  
-                                       <tr align='center'>                                             
-                               <td width='5'><input type="radio" name="id_delete_quiz" value="{$one_quiz_data[3]}"> </td>
-                               <td width='15%' align='left'>{$one_quiz_data[0]} </td>
-                                <td width='40%' >    {$one_quiz_data[1][1]} 
-                                    {$one_quiz_data[1][2]} 
-                                    {$one_quiz_data[1][3]}</td>
-                                <td   width='40%'>{$one_quiz_data[2]}</td>
-                                        </tr>
-                                    {/foreach}
-                                    </table>
-                              </form>
-                            </td>
-                        </tr>
-                    </table>
-                {/capture}
-                {capture name='create_user'}
-                    <table  width="100%"  bgcolor="#CDC8B1">
-                        <tr align="center">
-                            <td bgcolor="#8B8378">
-                            <button form="create_user" type="submit" formaction="administration.php">Создать пользователя</button>
-                            </td>
-                            <td bgcolor="#8B8378">
-                            <button form="create_user" type="reset" value="reset">Очистить поля</button>
-</td>
-                        </tr>
-                    </table>
-                    <table width="100%">                       
-                        <tr>
-                            <td width="100%" bgcolor="#CDC8B1">
-                                <form id="create_user">
-                                    <table width="60%" align="center">                                    
+                            <form action="administration.php" method="POST">
+                                <input type="hidden" name="button_click" value="create_internal_user">
+                                <table align="center">
                                     <tr>
                                         <td bgcolor="#8DB6CD" align="right">Фамилия </td>
                                         <td><input type="text" name="last_name" required><td>
@@ -131,11 +112,7 @@
                                     <tr>
                                         <td bgcolor="#8DB6CD" align="right">Имя </td>
                                         <td><input type="text" name="first_name" required><td>
-                                    </tr>
-                                    <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Отчество </td>
-                                        <td><input type="text" name="patronymic" required><td>
-                                    </tr>
+                                    </tr>                                
                                     <tr>
                                         <td bgcolor="#8DB6CD" align="right">Email</td>
                                         <td><input type="email" name="email"><td>
@@ -151,41 +128,129 @@
                                     <tr>
                                         <td bgcolor="#8DB6CD" align="right" required>Роль пользователя</td>
                                         <td>
-                                            <select name="role">
-                                                <option selected value="1">Опрашиваемый</option>
-                                                <option value="2">Составитель опросов</option>
-                                                <option value="3">Администратор</option>                                               
-                                            </select>    
+                                            <input type="checkbox" name="role_admin" value="1" checked>Опрашиваемый <br>
+                                            <input type="checkbox" name="role_author" value="2">Составитель опросов <br>
+                                            <input type="checkbox" name="role_interviewees" value="3">Администратор
                                         <td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="submit" value="Создать пользователя">
+                                       </td>
+                                    </tr>
+                                </table>
+                            </form>
+                            
+                    {/capture}
+                    {capture name='new_ldap_user'}
+                        Пользователь LDAP
+                    {/capture}
+                    {capture name='edit_user'}
+                        {foreach $users_data as $one_user_data}
+                            {if $one_user_data->getIdUser()==$id_edit_user}
+                                <form action="administration.php" method="POST">
+                                    <input type="hidden" name="button_click" value="edit_user">
+                                    <table align="center">
+                                        <tr>
+                                            <td bgcolor="#8DB6CD" align="right">Фамилия </td>
+                                            <td><input type="text" name="last_name"  value="{$one_user_data->getLastName()}" required><td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#8DB6CD" align="right">Имя </td>
+                                            <td><input type="text" name="first_name" value="{$one_user_data->getFirstName()}" required><td>
+                                        </tr>                                
+                                        <tr>
+                                            <td bgcolor="#8DB6CD" align="right">Email</td>
+                                            <td><input type="email" name="email" value="{$one_user_data->getEmail()}" required><td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#8DB6CD" align="right">Логин</td>
+                                            <td><input type="text" name="login" value="{$one_user_data->getLogin()}"  required><td>
+                                        </tr>                                
+                                        <tr>
+                                            <td bgcolor="#8DB6CD" align="right">Роль пользователя</td>
+                                            <td>
+                                                <input type="checkbox" name="role_admin" value="1" checked>Опрашиваемый <br>
+                                                <input type="checkbox" name="role_author" value="2">Составитель опросов <br>
+                                                <input type="checkbox" name="role_interviewees" value="3">Администратор
+                                            <td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button type="submit" formaction="administration.php" name="update_user" value={$id_edit_user}>Изменить пользователя</button>
+                                           </td>
+                                           <td>
+                                               <button type="submit" formaction="administration.php" name="delete_user" value="{$id_edit_user}" title='При удалении пользователя, также удалить вся зависимая информация представленная внизу в Дополнительной информации'>Удалить пользователя</button>
+                                               
+                                           </td>    
+                                        </tr>
                                     </table>
-                                </form>    
-                            </td>
-                        </tr>
-                    </table>
-                {/capture}
-                                {capture name='create_user_info'}
-                         <table width="100%">
+                                </form>
+                                           <h2>Дополнительная информация </h2>
+                                <p>Созданные тесты </p>
+                                {if $other_data_user['test'][0]!=false}
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                Тема теста
+                                            </td>    
+                                            <td>
+                                                Статус теста
+                                            </td>    
+                                        </tr>    
+                                        {foreach $other_data_user['test'] as $other_data_user_test}
+                                            <tr>
+                                                <td>
+                                                    {$other_data_user_test->topic}
+                                                </td>    
+                                                <td>
+                                                    {$other_data_user_test->description_status_test}
+                                                </td>    
+                                            </tr> 
+                                         {/foreach} 
+                                    </table>     
+                                    {else} Пользователь не составлял тесты
+                                {/if}   
+                                <p>Активированные тесты </p>
+                                {if $other_data_user['testing'][0]!=false}
+                                        <table>
+                                        <tr>
+                                            <td>
+                                                Тема опроса
+                                            </td>    
+                                            <td>
+                                                Статус опроса
+                                            </td>    
+                                        </tr>    
+                                        {foreach $other_data_user['testing'] as $other_data_user_testing}
+                                            <tr>
+                                                <td>
+                                                    {$other_data_user_testing->topic}
+                                                </td>    
+                                                <td>
+                                                    {$other_data_user_testing->description_mark_test}
+                                                </td>    
+                                            </tr> 
+                                         {/foreach} 
+                                    </table>
+                                    {else} Пользователь не активировал тесты
+                                {/if}  
+                            {/if}
+                        {/foreach}
                         
-                        <tr>
-                            <td width="100%" bgcolor="#CDC8B1">
-                               <form id="delete_quiz" method='post'>
-                                   <table width="100%">
-                                        <h3 align='center'>Добавлен пользователь: {$create_user_fio}</h3>
-                                    </table>
-                              </form>
-                            </td>
-                        </tr>
-                    </table>                
-                {/capture}
+                    {/capture}
                 {if {$view_admin} eq 'table_users'}
                    {$smarty.capture.table_users}
-                {elseif {$view_admin} eq 'create_user'}
-                    {$smarty.capture.create_user}
-                {elseif {$view_admin} eq 'table_quiz'}
-                    {$smarty.capture.table_quiz}  
-                {elseif {$view_admin} eq 'create_user_info'}
-                    {$smarty.capture.create_user_info}    
+                {elseif {$view_admin} eq 'table_quizs'}
+                    {$smarty.capture.table_quizs}
+                {elseif {$view_admin} eq 'new_user'}
+                    {$smarty.capture.new_user}
+                {elseif {$view_admin} eq 'edit_user'}
+                    {$smarty.capture.edit_user}
+                {elseif {$view_admin} eq 'new_internal_user'}
+                    {$smarty.capture.new_internal_user}
+                {elseif {$view_admin} eq 'new_ldap_user'}
+                    {$smarty.capture.new_ldap_user}
                  {/if}   
                 </td>
                     </tr> 

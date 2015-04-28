@@ -20,14 +20,14 @@ class QuestionDAO {
         $array_params[]=$questions->getIdQuestionsType();
         $array_params[]=$questions->getCommentQuestion();
         $array_params[]=$questions->getIdTest();
-
-        $result=$this->db->execute($query,$array_params);
-        if($result){
+        $this->db->execute($query,$array_params);
+        $result=$this->setIdQuestion($questions); 
+        if($result){            
             return $result;            
         } 
         else{
             $this->log->ERROR('Ошибка добавления строки в таблицу: questions('.pg_last_error().')'); 
-            throw new Exception('Ошибка добавления строки в таблицу: questions('.pg_last_error().')'); 
+//            throw new Exception('Ошибка добавления строки в таблицу: questions('.pg_last_error().')'); 
         }  
     }
     //Обновляет данные в таблице questions
@@ -48,7 +48,7 @@ class QuestionDAO {
         } 
         else{
             $this->log->ERROR('Ошибка обновления строки в таблице: questions('.pg_last_error().')'); 
-            throw new Exception('Ошибка обновления строки в таблице: questions('.pg_last_error().')'); 
+//            throw new Exception('Ошибка обновления строки в таблице: questions('.pg_last_error().')'); 
         }   
     }
     //Удаляет вопрос
@@ -57,14 +57,14 @@ class QuestionDAO {
         $array_params=array();
         $array_params[]=$questions->getIdQuestion();
         $result=$this->db->execute($query,$array_params);
-        $this->deleteAnswerQuestion($questions);
-        $this->deleteOptionAnswer($questions);
+//        $this->deleteAnswerQuestion($questions);
+//        $this->deleteOptionAnswer($questions);
         if($result){
             return $result;            
         } 
         else{
             $this->log->ERROR('Ошибка удаления строки в таблице: questions('.pg_last_error().')'); 
-            throw new Exception('Ошибка удаления строки в таблице: questions('.pg_last_error().')'); 
+//            throw new Exception('Ошибка удаления строки в таблице: questions('.pg_last_error().')'); 
         }  
     }
     //Возращает список вариантов ответа для вопроса
@@ -88,5 +88,17 @@ class QuestionDAO {
         return $array_data;        
     }
        
+    public function setIdQuestion(MQuestion $questions){
+        $query="select id_question from questions where "
+                . "text_question=$1 and id_questions_type=$2 and id_test=$3;";
+        $array_params=array();
+        $array_params[]=$questions->getTextQuestion();
+        $array_params[]=$questions->getIdQuestionsType();
+        $array_params[]=$questions->getIdTest();
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        $questions->setIdQuestion($obj->id_question);
+        return $obj->id_question;
+    }   
 }
 ?>

@@ -2,11 +2,12 @@
 class MAuthorQuiz {
     private $id_user;
     private $id_test;
-    private $mark_test='available'; //Статус теста: окрытый, незаконченный, закрытый
+    private $id_mark_test;
     private $datetime_start_test;
     private $datetime_end_test;
     private $id_question;
     private $question_number;
+    private $group_ldap;
     
     public function getIdUser(){
         return $this->id_user;
@@ -20,11 +21,11 @@ class MAuthorQuiz {
     public function setIdTest($id_test){
         $this->id_test=$id_test;
     }
-    public function getMarkTest(){
-        return $this->mark_test;
+    public function getIdMarkTest(){
+        return $this->id_mark_test;
     }
-    public function setMarkTest($mark_test){
-        $this->mark_test=$mark_test;
+    public function setIdMarkTest($id_mark_test){
+        $this->id_mark_test=$id_mark_test;
     }
     public function getDatetimeStartTest(){
         return $this->datetime_start_test;
@@ -50,5 +51,12 @@ class MAuthorQuiz {
     public function setQuestionNumber($question_number){
         $this->question_number=$question_number;
     }
+    public function getGroupLdap(){
+        return $this->group_ldap;
+    }
+    public function setGroupLdap($group_ldap){
+        $this->group_ldap=$group_ldap;
+    }
+    
 }
 ?>

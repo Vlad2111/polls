@@ -15,15 +15,12 @@
             <tr><td>Введите пароль:</td>
             <td><input type="password" name="pass"></td></tr>
             <tr><td> 
-            <button form="auth" type="submit" formaction="authorization.php" name="button_click">Войти</button>
+            <input type="submit" value="Войти">
             </td></tr>
             </table>
         
         </form>
 
-        {if isset($user_login)}
-            <h3>Вы зашли под именем {$user_login}</h3>
-        {else}<p><font size="5" color="red" face="Arial">{$error}</font>
-        {/if}
+            <p><font size="5" color="red" face="Arial">{$error}</font>
     </body>
 </html>

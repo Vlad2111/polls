@@ -1,32 +1,31 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-03 18:40:45
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-26 10:03:55
          compiled from "templates\authorization.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1407551cd83d999bf0-90257753%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:18476553c7fcb139e39-26408573%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '0dc37aecc8b144235e2c0f56c4edbfd81d783e0e' => 
     array (
       0 => 'templates\\authorization.tpl',
-      1 => 1428071937,
+      1 => 1429961618,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1407551cd83d999bf0-90257753',
+  'nocache_hash' => '18476553c7fcb139e39-26408573',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_551cd83de69b12_41926162',
   'variables' => 
   array (
     'title' => 0,
     'action' => 0,
-    'user_login' => 0,
     'error' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.21-dev',
+  'unifunc' => 'content_553c7fcb3dca49_14614932',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_551cd83de69b12_41926162')) {function content_551cd83de69b12_41926162($_smarty_tpl) {?><!DOCTYPE html>
+<?php if ($_valid && !is_callable('content_553c7fcb3dca49_14614932')) {function content_553c7fcb3dca49_14614932($_smarty_tpl) {?><!DOCTYPE html>
 <html>
     <head>
         <title><?php echo $_smarty_tpl->tpl_vars['title']->value;?>
@@ -45,18 +44,14 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             <tr><td>Введите пароль:</td>
             <td><input type="password" name="pass"></td></tr>
             <tr><td> 
-            <button form="auth" type="submit" formaction="authorization.php" name="button_click">Войти</button>
+            <input type="submit" value="Войти">
             </td></tr>
             </table>
         
         </form>
 
-        <?php if (isset($_smarty_tpl->tpl_vars['user_login']->value)) {?>
-            <h3>Вы зашли под именем <?php echo $_smarty_tpl->tpl_vars['user_login']->value;?>
-</h3>
-        <?php } else { ?><p><font size="5" color="red" face="Arial"><?php echo $_smarty_tpl->tpl_vars['error']->value;?>
+            <p><font size="5" color="red" face="Arial"><?php echo $_smarty_tpl->tpl_vars['error']->value;?>
 </font>
-        <?php }?>
     </body>
 </html>
 <?php }} ?>

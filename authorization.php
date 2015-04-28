@@ -9,20 +9,17 @@ include_once 'lib/smarty_lib/Smarty.class.php';
         //фильтруем входные данные
     $login=filter_input(INPUT_POST, 'login', FILTER_SANITIZE_SPECIAL_CHARS); 
     $password=filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_SPECIAL_CHARS);
-    $button_click=filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);
 if (isset($login) && isset($password)){
-    $values_auth= new MAuthorization();
-
-    
-    $values_auth->setLogin($login);
-    $values_auth->setPassword($password);
+    $mauth= new MAuthorization();
+    $mauth->setLogin($login);
+    $mauth->setPassword($password);
+    $mauth->setPasswordLDAP($password);
     $dao_auth=new AuthorizationDAO();
-    $user_login=$dao_auth->getAuthUser($values_auth);
-    if ($user_login){
-        $obj_user=$dao_auth->getObjUser($values_auth);
-        $_SESSION['id_user']=$dao_auth->getObjUser($values_auth)->getIdUser();
+    if ($dao_auth->getIdUser($mauth)){
+        $obj_user=$dao_auth->getObjUser($mauth);
+        $_SESSION['id_user']=$dao_auth->getIdUser($mauth);
         $_SESSION['fio_user']=$obj_user->getFirstName()."".$obj_user->getLastName(); 
-        $_SESSION['role_user']=$obj_user->getIdRole();
+        $_SESSION['role_user']=$dao_auth->getRole($mauth);
         header('HTTP/1.1 200 OK');
         header('Location: main.php');
         exit();

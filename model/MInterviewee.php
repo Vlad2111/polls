@@ -1,9 +1,9 @@
 <?php
 class MInterviewee {
     private $id_testing;
-    private $user;
-    private $test;
-    private $question;
+    private $user; //instance MUser
+    private $test; //instance MQuiz
+    private $question; //array
     private $mark_test;
     private $datetime_start_test;
     private $datetime_end_test;
