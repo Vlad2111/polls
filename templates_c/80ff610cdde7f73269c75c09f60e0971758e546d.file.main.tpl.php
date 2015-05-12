@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-29 00:23:19
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-05-10 00:50:39
          compiled from "templates\main.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:21237553c7fcea50e47-25516201%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '80ff610cdde7f73269c75c09f60e0971758e546d' => 
     array (
       0 => 'templates\\main.tpl',
-      1 => 1430252348,
+      1 => 1431204575,
       2 => 'file',
     ),
   ),
@@ -30,6 +30,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <title><?php echo $_smarty_tpl->tpl_vars['title']->value;?>
 </title>
         <meta charset="UTF-8">
+        <?php echo '<script'; ?>
+ type="text/javascript" src="https://www.google.com/jsapi"><?php echo '</script'; ?>
+>
+        <?php echo '<script'; ?>
+ src="js/jquery-2.1.3.min.js"><?php echo '</script'; ?>
+>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
 <form id="go" method="post">
@@ -72,47 +79,47 @@ $_smarty_tpl->tpl_vars['data_one_quiz']->_loop = true;
                                         <td>
                                             <table>
                                                 <tr>
-                                                    <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']) {?>
-                                                        <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getMarkTest()==1) {?>
-                                                            <td>
-                                                                Доступен
-                                                            </td>
-                                                            <td>
-                                                                <a href="quiz.php?testing=<?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getIdTesting();?>
+                                                        <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']) {?>
+                                                            <?php if ($_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getMarkTest()==1) {?>
+                                                                <td>
+                                                                    Доступен
+                                                                </td>
+                                                                <td>
+                                                                    <a href="quiz.php?status=available&testing=<?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getIdTesting();?>
 ">Пройти тест</a>
-                                                            </td>
-                                                        <?php } elseif ($_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getMarkTest()==2) {?>
-                                                             <td>
-                                                                Неоконченный
-                                                            </td>
-                                                            <td>
-                                                                <a href="quiz.php?testing=<?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getIdTesting();?>
+                                                                </td>
+                                                            <?php } elseif ($_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getMarkTest()==2) {?>
+                                                                 <td>
+                                                                    Неоконченный
+                                                                </td>
+                                                                <td>
+                                                                    <a href="quiz.php?status=unfinished&testing=<?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getIdTesting();?>
 ">Продолжить тест</a>
-                                                            </td>
-                                                        <?php } elseif ($_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getMarkTest()==3) {?>
-                                                            <td>
-                                                                Не доступный
-                                                            </td>
-                                                            <td>
-                                                                No
-                                                            </td>
-                                                        <?php } elseif ($_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getMarkTest()==4) {?>
-                                                            <td>
-                                                                Законченный
-                                                            </td>
-                                                            <td>
-                                                                No
-                                                            </td>
-                                                        <?php }?>
-                                                    <?php } else { ?>
-                                                            <td>
-                                                                Вы еще не открывали этот тест
-                                                            </td>
-                                                            <td>                                                                
-                                                               <a href="quiz.php?new_quiz=<?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['quiz']->id_test;?>
+                                                                </td>
+                                                            <?php } elseif ($_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getMarkTest()==3) {?>
+                                                                <td>
+                                                                    Не доступный
+                                                                </td>
+                                                                <td>
+                                                                    No
+                                                                </td>
+                                                            <?php } elseif ($_smarty_tpl->tpl_vars['data_one_quiz']->value['testing']->getMarkTest()==4) {?>
+                                                                <td>
+                                                                    Законченный
+                                                                </td>
+                                                                <td>
+                                                                    No
+                                                                </td>
+                                                            <?php }?>
+                                                        <?php } else { ?>
+                                                                <td>
+                                                                    Вы еще не открывали этот тест
+                                                                </td>
+                                                                <td>                                                                
+                                                                   <a href="quiz.php?status=new_test&testing=<?php echo $_smarty_tpl->tpl_vars['data_one_quiz']->value['quiz']->id_test;?>
 ">Начать тест</a>
-                                                            </td>
-                                                    <?php }?>
+                                                                </td>
+                                                        <?php }?>   
                                                 </tr>
                                             </table>
                                         </td> 
@@ -124,8 +131,9 @@ $_smarty_tpl->tpl_vars['data_one_quiz']->_loop = true;
                 </table>
                 </td>
             </tr>
-                
         </table>
+        <?php echo $_smarty_tpl->getSubTemplate ('footer.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
+                    
     </body>
 </html>
 <?php }} ?>

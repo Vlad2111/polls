@@ -5,6 +5,8 @@ include_once 'Log4php/Logger.php';
 include_once 'DAO/UserDAO.php';
 include_once 'model/MQuiz.php';
 include_once 'model/MUser.php';
+include_once 'DAO/AuthorizationDAO.php';
+include_once 'model/MAuthorization.php';
     Logger::configure(CheckOS::getConfigLogger());    
 class AdministrationDAO extends UserDAO{
     protected $nameclass=__CLASS__;
@@ -70,6 +72,7 @@ class AdministrationDAO extends UserDAO{
             $obj_data_quiz->setSeeDetails($obj_quiz->see_details);
             $obj_data_quiz->setIdStatusQuiz($obj_quiz->id_status_test);
             $obj_data_quiz->setAuthorTest($this->getObjDataUser($obj_quiz->author_test));
+            $obj_data_quiz->setVasibilityTest($obj_quiz->vasibility_test);
             return $obj_data_quiz;
         }
         else{
@@ -91,6 +94,17 @@ class AdministrationDAO extends UserDAO{
         $obj_data_user->setEmail($obj_quiz->email);
         $obj_data_user->setLogin($obj_quiz->login);
         $obj_data_user->setLdapUser($obj_quiz->ldap_user);
+        $obj_data_user->setUserVasibility($obj_quiz->user_vasibility);
+        $auth= new AuthorizationDAO();
+        $mauth=new MAuthorization();
+        if($obj_quiz->ldap_user==0){
+            $auth->user='db';
+        }
+        else{
+            $auth->user='ldap';
+        }
+        $mauth->setLogin($obj_quiz->login);
+        $obj_data_user->setRoles($auth->getRole($mauth, $obj_quiz->id_user));
         return $obj_data_user;
     }
     
@@ -146,6 +160,19 @@ class AdministrationDAO extends UserDAO{
         $array_params[]=$id_user;
         $result=$this->db->execute($query,$array_params);        
         return $this->db->getArrayData($result);
+    }
+    public function getStatusUser($id_user){
+        $query="select * from alluser where id_user=$1;";
+        $array_params[]=$id_user;
+        $result_query=$this->db->execute($query, $array_params);
+        $obj=$this->db->getFetchObject($result_query);
+        return $obj->user_vasibility;
+    }
+    public function setStatusUser($id_user, $status){
+        $query="UPDATE alluser SET user_vasibility=$1 where id_user=$2;";
+        $array_params[]=$status;        
+        $array_params[]=$id_user;
+        $this->db->execute($query, $array_params);
     }
     
 }

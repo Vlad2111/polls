@@ -6,11 +6,12 @@ include_once 'lib/DB.php';
 include_once 'lib/PhpLDAP.php';
 include_once 'Log4php/Logger.php';
 include_once 'model/MUser.php';
+include_once 'DAO/AdministrationDAO.php';
     Logger::configure(CheckOS::getConfigLogger());
 class AuthorizationDAO {
     protected $db;
     protected $log;
-    private $user;
+    public $user;
     protected $nameclass=__CLASS__;
     public function __construct(){
         $this->db=DB::getInstance();
@@ -65,7 +66,7 @@ class AuthorizationDAO {
         
     }
     public function getAuthUser(MAuthorization $auth){
-        if ($this->getIdUser($auth)){                 
+        if ($this->getUserVasibility($this->getIdUser($auth))){                 
             $this->log->info('Успешно введены логин и пароль пользователем '.$auth->getLogin());
             return $auth->getLogin();
         }
@@ -90,18 +91,42 @@ class AuthorizationDAO {
         $muser->setLdapUser(1);
         return $muser;         
      }
-    public function getRole(MAuthorization $auth){
+    public function getRole(MAuthorization $auth, $id_user=null){
          if($this->user=="ldap"){
-             return $this->getRoleLDAP($auth);
+             $result= $this->getRoleLDAP($auth);
          }
          else{
-             return $this->getRoleDB($auth);
+             $result= $this->getRoleDB($auth, $id_user);
          }
+         
+         if ($result){
+             $role=array();
+             foreach ($result as $value){
+                if($value==1){
+                    $role[0]=1;
+                }
+                elseif($value==2){
+                    $role[1]=2;
+                }
+                elseif($value==3){
+                    $role[2]=3;
+                    }
+                }
+            return $role;    
+         }
+         else {
+             return false;
+         }   
      }
-    public function getRoleDB(MAuthorization $auth){
+    public function getRoleDB(MAuthorization $auth, $id_user=null){
          $query="select id_role from role_user where id_user=$1";
          $array_params=array();
-        $array_params[]=$this->getIdUser($auth);
+         if($id_user==null){
+            $array_params[]=$this->getIdUser($auth);
+         }
+         else{
+             $array_params[]=$id_user;
+         }
         $result=$this->db->execute($query,$array_params);
         $data=$this->db->getArrayData($result);
         return $data; 
@@ -128,7 +153,21 @@ class AuthorizationDAO {
     public function getConfigRole ($section){
         $array= parse_ini_file(CheckOS::getConfigRole(), true);
         return $array[$section];
-     }
+    }
+    private function getUserVasibility($id_user){
+        if($id_user){
+                $admin= new AdministrationDAO();
+            if($admin->getStatusUser($id_user)==1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+           return $id_user; 
+        }
+    }
      
 }
 ?>

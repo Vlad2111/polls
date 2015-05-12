@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-26 10:03:55
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-05-03 15:10:35
          compiled from "templates\authorization.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:18476553c7fcb139e39-26408573%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0dc37aecc8b144235e2c0f56c4edbfd81d783e0e' => 
     array (
       0 => 'templates\\authorization.tpl',
-      1 => 1429961618,
+      1 => 1430651432,
       2 => 'file',
     ),
   ),
@@ -15,6 +15,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.21-dev',
+  'unifunc' => 'content_553c7fcb3dca49_14614932',
   'variables' => 
   array (
     'title' => 0,
@@ -22,8 +24,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'error' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.21-dev',
-  'unifunc' => 'content_553c7fcb3dca49_14614932',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_553c7fcb3dca49_14614932')) {function content_553c7fcb3dca49_14614932($_smarty_tpl) {?><!DOCTYPE html>
 <html>
@@ -40,9 +40,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             <table>
                 <tr>         
                <td>Введите логин:</td>
-               <td> <input type="text" name="login"></td></tr>
+               <td> <input type="text" name="login" required></td></tr>
             <tr><td>Введите пароль:</td>
-            <td><input type="password" name="pass"></td></tr>
+                <td><input type="password" name="pass" required></td></tr>
             <tr><td> 
             <input type="submit" value="Войти">
             </td></tr>

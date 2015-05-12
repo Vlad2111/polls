@@ -2,6 +2,9 @@
     <head>
         <title>{$title}</title>
         <meta charset="UTF-8">
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script src="js/jquery-2.1.3.min.js"></script>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
 <form id="go" method="post">
@@ -37,44 +40,44 @@
                                         <td>
                                             <table>
                                                 <tr>
-                                                    {if $data_one_quiz['testing']}
-                                                        {if $data_one_quiz['testing']->getMarkTest()==1}
-                                                            <td>
-                                                                Доступен
-                                                            </td>
-                                                            <td>
-                                                                <a href="quiz.php?testing={$data_one_quiz['testing']->getIdTesting()}">Пройти тест</a>
-                                                            </td>
-                                                        {elseif $data_one_quiz['testing']->getMarkTest()==2}
-                                                             <td>
-                                                                Неоконченный
-                                                            </td>
-                                                            <td>
-                                                                <a href="quiz.php?testing={$data_one_quiz['testing']->getIdTesting()}">Продолжить тест</a>
-                                                            </td>
-                                                        {elseif $data_one_quiz['testing']->getMarkTest()==3}
-                                                            <td>
-                                                                Не доступный
-                                                            </td>
-                                                            <td>
-                                                                No
-                                                            </td>
-                                                        {elseif $data_one_quiz['testing']->getMarkTest()==4}
-                                                            <td>
-                                                                Законченный
-                                                            </td>
-                                                            <td>
-                                                                No
-                                                            </td>
-                                                        {/if}
-                                                    {else}
-                                                            <td>
-                                                                Вы еще не открывали этот тест
-                                                            </td>
-                                                            <td>                                                                
-                                                               <a href="quiz.php?new_quiz={$data_one_quiz['quiz']->id_test}">Начать тест</a>
-                                                            </td>
-                                                    {/if}
+                                                        {if $data_one_quiz['testing']}
+                                                            {if $data_one_quiz['testing']->getMarkTest()==1}
+                                                                <td>
+                                                                    Доступен
+                                                                </td>
+                                                                <td>
+                                                                    <a href="quiz.php?status=available&testing={$data_one_quiz['testing']->getIdTesting()}">Пройти тест</a>
+                                                                </td>
+                                                            {elseif $data_one_quiz['testing']->getMarkTest()==2}
+                                                                 <td>
+                                                                    Неоконченный
+                                                                </td>
+                                                                <td>
+                                                                    <a href="quiz.php?status=unfinished&testing={$data_one_quiz['testing']->getIdTesting()}">Продолжить тест</a>
+                                                                </td>
+                                                            {elseif $data_one_quiz['testing']->getMarkTest()==3}
+                                                                <td>
+                                                                    Не доступный
+                                                                </td>
+                                                                <td>
+                                                                    No
+                                                                </td>
+                                                            {elseif $data_one_quiz['testing']->getMarkTest()==4}
+                                                                <td>
+                                                                    Законченный
+                                                                </td>
+                                                                <td>
+                                                                    No
+                                                                </td>
+                                                            {/if}
+                                                        {else}
+                                                                <td>
+                                                                    Вы еще не открывали этот тест
+                                                                </td>
+                                                                <td>                                                                
+                                                                   <a href="quiz.php?status=new_test&testing={$data_one_quiz['quiz']->id_test}">Начать тест</a>
+                                                                </td>
+                                                        {/if}   
                                                 </tr>
                                             </table>
                                         </td> 
@@ -86,7 +89,7 @@
                 </table>
                 </td>
             </tr>
-                
         </table>
+        {include file='footer.tpl'}                    
     </body>
 </html>

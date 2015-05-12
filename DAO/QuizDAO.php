@@ -25,10 +25,9 @@ class QuizDAO {
         $array_params[]=$quiz->getSeeDetails();
         $array_params[]=$quiz->getIdStatusQuiz();
         $array_params[]=$author->getIdUser();
-        $this->db->execute($query,$array_params);
-        $result= $this->setIdQuiz($quiz, $author);
+        $result=$this->db->execute($query,$array_params);
         if($result){
-            return $result;  
+            return $this->setIdQuiz($quiz, $author);
         }        
         else{
             $this->log->ERROR('Ошибка добавления строки в таблицу: test('.pg_last_error().')'); 
@@ -266,6 +265,28 @@ class QuizDAO {
             $array_params[]=$id_quiz;
             $result=$this->db->execute($query, $array_params);
             return $this->db->getArrayData($result);            
+       }
+       public function getVasibilityQuiz($id_quiz){
+           $query="select vasibility_test from test where id_test=$1;";
+           $array_params=array();
+           $array_params[]=$id_quiz;
+           $result_query=$this->db->execute($query, $array_params);
+           $obj=$this->db->getFetchObject($result_query);
+           return $obj->vasibility_test;           
+       }
+       public function setVasibilityQuiz($id_quiz, $status){
+            $query="UPDATE test SET vasibility_test=$1 where id_test=$2;";
+            $array_params[]=$status;        
+            $array_params[]=$id_quiz;
+            $this->db->execute($query, $array_params);
+       }
+       public function checkNameTopicQuiz($topic){
+           $query="select id_test from test where topic=$1;";
+           $array_params=array();
+           $array_params[]=$topic;
+           $result_query=$this->db->execute($query, $array_params);
+           $obj=$this->db->getFetchObject($result_query);
+           return $obj->id_test;
        }
     
 }

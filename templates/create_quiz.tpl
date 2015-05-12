@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script src="js/jquery-2.1.3.min.js"></script>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
         <script type="text/javascript">
@@ -17,6 +18,28 @@
                         $(".enter_time_limit").hide();
                         break;
                 }
+            }
+            function addAnswerTypeYorn(value){
+                if(parseInt(value)===1){
+                    $("#add_answer_type_yorn").show();
+                }
+                else{
+                    $("#add_answer_type_yorn").hide();
+                }
+            }
+            function checkTopicQuiz(value){
+                $.post("checkForms.php", { action: "check", field: "topic quiz", name: value }, function( data ) {
+                if(data=='true'){
+                    $("#yes_topic").show();
+                    $(".unsuitable").show();
+                    $("#no_topic").hide();
+                }
+                else{
+                    $("#yes_topic").hide();
+                    $(".unsuitable").hide();
+                    $("#no_topic").show();
+                }
+              });
             }
         </script>   
 <form id="go" method="post">
@@ -40,8 +63,12 @@
                                 <td>    
                                 {capture name='new_quiz'}
                                     <form method="post">
+                                        <input type='hidden' name='button_click' value='create_quiz'>
                                         Тема опроса:<br>
-                                        <input type="text" name="topic_quiz" placeholder="Ваша тема" required><br>
+                                        <input type="text" name="topic_quiz" placeholder="Ваша тема" required  onblur="checkTopicQuiz(this.value)"> 
+                                        <span class="unsuitable" id="no_topic" style="display: none; color: red">Такое название уже есть</span>
+                                        <span id="yes_topic" style="display: none; color: green">Ок</span>
+                                        <br>
                                         Время выполнения опроса:<Br>
                                         <input type="radio" name="time_limit" value="Y" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))'> Да<Br>
                                         <input type="radio" name="time_limit" value="N" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))' checked> Нет<Br>
@@ -57,24 +84,37 @@
                                         <input type="radio" name="see_details" value="Y" checked> Да<Br>
                                         <input type="radio" name="see_details" value="N"> Нет<Br>                                        
                                         <input type="hidden" name="status_test" value="1">
-                                        <input type="submit" value="Создать опрос"><br>         
+                                        <span class="unsuitable">
+                                            <input type="submit" value="Создать опрос"></span>         
                                     </form> 
                                 {/capture} 
                                 {capture name='add_question'}
                                     <form method="post">
-                                        <button name="button_create_quiz" value="new_question"> Добавить вопрос</button>                    
+                                        <button name="button_click" value="new_question"> Добавить вопрос</button>                    
                                     </form>  
                                     <table>
                                     <tr>
                                         <td>
-                                            текст вопроса
+                                            Порядок вопроса
                                         </td>
                                         <td>
-                                            тип вопроса
+                                            Текст вопроса
+                                        </td>
+                                        <td>
+                                            Тип вопроса
+                                        </td>
+                                        <td>
+                                            Редактирование вопроса
+                                        </td>
+                                        <td>
+                                            Удалить вопрос
                                         </td>
                                     </tr>
                                        {foreach $data_question as $data_question_one}
                                        <tr>
+                                           <td>
+                                               №
+                                           </td>
                                            <td>
                                             {$data_question_one->text_question}
                                            </td>
@@ -90,6 +130,12 @@
                                                 Вопрос, предполагающий написание ответа в виде произвольного текста длиной до 1000 символов
                                             {/if} 
                                            </td>
+                                           <td>
+                                               Edit
+                                           </td>
+                                           <td>
+                                               Delete
+                                           </td>
                                        </tr>
                                 {/foreach}
                                     </table>
@@ -101,27 +147,45 @@
                                         Дополнительная информация<br>
                                         <textarea rows="5" cols="40" name="comment_question"></textarea><br>
                                         Тип вопроса<br>
-                                        <select  name="question_type">
-                                            <option  selected value="1">Да/Нет/Не знаю</option>
+                                        <select  name="question_type"  onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
+                                            <option  value="1">Да/Нет/Не знаю</option>
                                             <option value="2">Один ответа из списка</option>
                                             <option value="3">Выбор одного или более ответов из списка</option>
-                                            <option value="4">Произвольный ответ</option>
-                                        </select><br>
-                                        <button name="add_question" value="yes"> Создать вопрос</button>
+                                            <option value="4" selected>Произвольный ответ</option>
+                                        </select><br>  
+                                        <div id='add_answer_type_yorn' style="display: none">
+                                            <input type='radio' name='add_answer_type_yorn' value='Yes' checked="">Да<br>
+                                            <input type='radio' name='add_answer_type_yorn' value='No'>Нет
+                                        </div>
+                                        <button name="button_click" value="add_question"> Создать вопрос</button>
                                     </form> 
                                 {/capture}
-                                {capture name='add_answer_option'}
-                                    Добавить варианты ответов
+                                {capture name='add_answer_option_one'}
+                                    <form  method='post'>
+                                        Текст ответа<br>
+                                        <textarea rows="5" cols="40" name="text_question"></textarea> 
+                                        <button name="button_click" value="add_answer_option_one">Добавить ответ</button>
+                                    </form>
                                 {/capture}
+                                {capture name='add_answer_option_more'}
+                                    Добавить несколько варианты ответов
+                                {/capture}
+                                {capture name='edit_quiz'}
+                                    {$smarty.capture.add_question}
+                                {/capture}    
                                     
-                                    {if {$forms} eq 'new_quiz'}
+                                    {if {$view_quiz} eq 'new_quiz'}
                                         {$smarty.capture.new_quiz}   
-                                    {elseif {$forms} eq 'add_question'}
+                                    {elseif {$view_quiz} eq 'add_question'}
                                         {$smarty.capture.add_question}
-                                    {elseif {$forms} eq 'new_question'}
+                                    {elseif {$view_quiz} eq 'new_question'}
                                         {$smarty.capture.new_question}
-                                    {elseif {$forms} eq 'add_answer_option'}
-                                        {$smarty.capture.add_answer_option}
+                                    {elseif {$view_quiz} eq 'add_answer_option_one'}
+                                        {$smarty.capture.add_answer_option_one}
+                                    {elseif {$view_quiz} eq 'add_answer_option_more'}
+                                        {$smarty.capture.add_answer_option_more}    
+                                    {elseif {$view_quiz} eq 'edit_quiz'}
+                                        {$smarty.capture.edit_quiz}    
                                      {/if}
                                 </td>
                                </tr>
@@ -131,7 +195,7 @@
                 </table>
                 </td>
             </tr>
-                
         </table>
+        {include file='footer.tpl'}                        
     </body>
 </html>

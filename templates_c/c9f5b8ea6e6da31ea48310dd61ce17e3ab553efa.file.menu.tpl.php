@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-29 00:46:30
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-05-10 22:17:47
          compiled from ".\templates\menu.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:6906553feada38bca5-28142536%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'c9f5b8ea6e6da31ea48310dd61ce17e3ab553efa' => 
     array (
       0 => '.\\templates\\menu.tpl',
-      1 => 1430253983,
+      1 => 1431281865,
       2 => 'file',
     ),
   ),
@@ -59,7 +59,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
             </tr>
             <tr bgcolor="#87CEFA" valign="top">
                 <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
-                    <a href="create_quiz.php">Создать опрос</a>
+                    <a href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
                 </td>                
             </tr>
         </table>

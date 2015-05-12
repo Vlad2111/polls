@@ -32,7 +32,7 @@
             </tr>
             <tr bgcolor="#87CEFA" valign="top">
                 <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
-                    <a href="create_quiz.php">Создать опрос</a>
+                    <a href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
                 </td>                
             </tr>
         </table>

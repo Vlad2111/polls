@@ -10,6 +10,7 @@ class MQuiz {
     private $see_details='Y'; //просматривание детального отчёта
     private $id_status_quiz; //статус теста
     private $author_test; //инстанс MUser
+    private $vasibility_test;
     
     public function getIdQuiz(){
         return $this->id_quiz;
@@ -58,5 +59,11 @@ class MQuiz {
     }
     public function setAuthorTest(MUser $author_test){
         $this->author_test=$author_test;
+    }
+    public function getVasibilityTest(){
+        return $this->vasibility_test;
+    }
+    public function setVasibilityTest($vasibility_test){
+        $this->vasibility_test=$vasibility_test;
     }
 }

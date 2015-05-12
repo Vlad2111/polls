@@ -1,61 +1,78 @@
 <?php
 session_start();
- try{ 
-include_once 'lib/smarty_lib/Smarty.class.php';
-include_once 'DAO/IntervieweeDAO.php';
-include_once 'model/MInterviewee.php';
+ try{
+include_once 'view/checkOnPage.php';
 include_once 'view/QuizView.php';
- $testing=filter_input(INPUT_GET, 'testing', FILTER_SANITIZE_SPECIAL_CHARS);
+    
+$data_one_question="";
+    //Фильтрация входных параметров. Мера предостарожности
+ $id_testing=filter_input(INPUT_GET, 'testing', FILTER_SANITIZE_SPECIAL_CHARS);
+ $status=filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
  $button=filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);
- if (isset($testing) || $testing!=""){
-     setcookie("testing", $testing);
+ $id_question=filter_input(INPUT_GET, 'id_question', FILTER_SANITIZE_SPECIAL_CHARS);
+ //Проверяем параметры в сессии
+if(isset($id_testing) && $id_testing!=""){
+    $_SESSION['id_testing']=$id_testing;
+} 
+if(isset($status) && $status!=""){
+    $_SESSION['status_testing']=$status;
+} 
+//Получаем овновные данные
+$quiz_view= new QuizView($_SESSION['id_testing']);
+
+
+//Работа с кнопками
+if($button=="start_quiz"){
+    $_SESSION['status_testing']='unfinished';
+    $quiz_view->startQuiz();
+}
+elseif($button=="end_quiz"){
+    $_SESSION['status_testing']='finished';
+    $quiz_view->endQuiz();
+}
+
+
+
+
+//Работа с данными
+//Представим данные в виде массива с номером вопроса и данными
+$data_questions=$quiz_view->getArrayQuestions();
+//Возврат данных вопроса по ид
+if(isset($id_question) && $id_question!=""){
+    for($i=0; $i<count($data_questions); $i++){
+        if($data_questions[$i]['data_questions']->getIdQuestion()==$id_question){
+            $data_one_question=$data_questions[$i];
+        }
+    }
+}
+
+
+//echo "<pre>";
+//    var_dump($data_one_question);
+//echo "</pre>";
+
+
+
+if ($_SESSION['status_testing']=='available'){
+    $status_testing='new_testing';
+}
+elseif ($_SESSION['status_testing']=='unfinished'){
+    $status_testing='continue_testing';
+}
+elseif($_SESSION['status_testing']=='finished'){
+    $status_testing='end_quiz';
+}
+$title="Прохождение тестов"; 
+$smarty->assign('title', $title);
+$smarty->assign("data_testing", $quiz_view->data_testing);
+$smarty->assign("data_questions", $data_questions);
+$smarty->assign("status_testing", $status_testing);
+$smarty->assign("data_test", $quiz_view->data_testing->getTest());
+$smarty->assign("data_one_question", $data_one_question);
+
+$smarty->display('templates/quiz.tpl');
  }
- $title="Прохождение теста ";
- $you=$_SESSION['fio_user'];
- $role_user=$_SESSION['role_user'];
-     $quiz_view=new QuizView($_COOKIE['testing']);
-    $data_testing=$quiz_view->getTesting();
-    $mark_test=$data_testing->getMarkTest();
-    $questionss=$data_testing->getQuestion();
-    $question='null';
-    echo "<pre>";
-    var_dump($data_testing);
-    echo "</pre>";
-      
-     if($mark_test==1){
-         $status_test="start_test";
-     }
-     elseif($mark_test==2){
-         $status_test="taking_a_test";
-     }
-     elseif($mark_test==4){
-         $status_test="finished_test";
-     }
-//      
-//    if($button=='start_quiz'){
-//        $quiz_view->startQuiz();
-//    }
-//    if($button=='end'){
-//        $quiz_view->endQuiz();
-//    }
-//    if($button=='next'){
-//        $quiz_view->nextQuestion($id_question);
-//    }
-//    $role_user=$_SESSION['role_user'];
-rsort($role_user);
-// $smarty= new Smarty();
-//    $smarty->assign('testing', $testing);
-//    $smarty->assign('title', $title);
-//    $smarty->assign('data_one_testing', $data_testing); //инстанс тестинга
-//    $smarty->assign('question', $questionss[0]); //Интсанс вопроса
-//    $smarty->assign('you', $you);    
-//    $smarty->assign('data_role',$role_user);
-//    $smarty->assign('type_answer', "1"); //ид типа вопроса
-//    $smarty->assign('status_test',$status_test);
-//    
-//    $smarty->display('templates/quiz.tpl');
-  }
-catch (Exception $e){
+ catch (Exception $e){
     $error= $e->getMessage().'. Строка '.$e->getLine().': '. ' ('. $e->getFile().')';
     echo $error;                            
 }

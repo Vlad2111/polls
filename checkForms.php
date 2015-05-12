@@ -1,6 +1,3 @@
-<html>
-	<head><title>Пример</title><meta charset="utf-8"></head>
-		<body>
 <?php
 include_once 'DAO/AuthorQuizDAO.php';
 include_once 'model/MAuthorQuiz.php';
@@ -23,22 +20,32 @@ include_once 'view/QuizView.php';
 include_once 'model/MAnswerUser.php';
 include_once 'DAO/TestingDAO.php';
 
- try{ 
-     $quiz=new QuizDAO();
-     echo "<pre>";
-     $quiz->setVasibilityQuiz(1, 1);
-        var_dump($quiz->getVasibilityQuiz(1));
-     echo "</pre>";     
- } catch (Exception $ex) {
-
- }
-
-catch (Exception $e){
-    $error= $e->getMessage().'. Строка '.$e->getLine().': '. ' ('. $e->getFile().')';
-    echo $error;                            
+$object_quiz_dao=new QuizDAO();
+$object_user_dao=new UserDAO();
+if(isset($_POST['action']) && $_POST['action']=='check'){
+    if($_POST[ 'field']=="topic quiz"){
+      if($object_quiz_dao->checkNameTopicQuiz($_POST['name'])){
+            echo "false";
+        }
+        else{
+            echo "true";
+        }  
+    }
+    if($_POST[ 'field']=="email user"){
+      if($object_user_dao->checkEmailUser($_POST['name'])){
+            echo "false";
+        }
+        else{
+            echo "true";
+        }  
+    }
+    if($_POST[ 'field']=="login user"){
+      if($object_user_dao->checkLoginUser($_POST['name'])){
+            echo "false";
+        }
+        else{
+            echo "true";
+        }  
+    }
+    
 }
-
- 
-?>
-                    	</body>
-</html>

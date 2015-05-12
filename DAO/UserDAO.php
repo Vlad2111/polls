@@ -33,14 +33,13 @@ class UserDAO {
     }
     public function updateUser(MUser $user){
         $query="UPDATE alluser SET last_name=$1, first_name=$2,"
-                . " email=$3, login=$4,  password=$5, ldap_user=$6"
-                . " where id_user=$7;";
+                . " email=$3, login=$4, ldap_user=$5"
+                . " where id_user=$6;";
         $array_params=array();
         $array_params[]=$user->getLastName();
         $array_params[]=$user->getFirstName();
         $array_params[]=$user->getEmail();
         $array_params[]=$user->getLogin();
-        $array_params[]=$user->getPassword(); 
         $array_params[]=$user->getLdapUser();
         $array_params[]=$user->getIdUser();
         $result=$this->db->execute($query,$array_params);
@@ -99,14 +98,31 @@ class UserDAO {
         return true;
     }
     public function deleteAllRoleUser(MUser $user){
-        $query="DELETE FROM role_user WHERE id_user=$1;";
-        $array_params=array();          
-        $array_params[]=$user->getIdUser();
-        $result=$this->db->execute($query,$array_params);
-        if(!$result){
-            $this->log->ERROR('Ошибка удаления строки в таблице: role_user( '.pg_last_error().')');  
-//                throw new Exception('Ошибка удаления строки в таблицу: role_user( '.pg_last_error().')');  
+        $temp_array=$this->getRolesUser($user->getIdUser());
+        if($temp_array){
+            for($i=0; $i<count($temp_array); $i++){
+                $query="DELETE FROM role_user WHERE id_user=$1;";
+                $array_params=array(); 
+                //$array_params[]=$temp_array[$i];
+                $array_params[]=$user->getIdUser();
+                $result=$this->db->execute($query,$array_params);
+                if(!$result){
+                    $this->log->ERROR('Ошибка удаления строки в таблице: role_user( '.pg_last_error().')');  
+        //                throw new Exception('Ошибка удаления строки в таблицу: role_user( '.pg_last_error().')');  
+                }
+            }            
         }
+        else{
+            return false;
+        }
+        
+    }
+    public function getRolesUser($id_user){
+        $query="select id_role FROM role_user WHERE id_user=$1;";
+        $array_params=array();          
+        $array_params[]=$id_user;     
+        $result=$this->db->execute($query,$array_params);
+        return $this->db->getArrayData($result);
     }
     public function resetPassword(MUser $user){
         $query="UPDATE alluser set password=$1 where id_user=$2;";
@@ -145,8 +161,23 @@ class UserDAO {
         }
         else{
             return false;
-        }
-        
-    }    
+        }        
+    }   
+    public function checkEmailUser($email){
+           $query="select id_user from alluser where email=$1;";
+           $array_params=array();
+           $array_params[]=$email;
+           $result_query=$this->db->execute($query, $array_params);
+           $obj=$this->db->getFetchObject($result_query);
+           return $obj->id_user;
+       }
+    public function checkLoginUser($login){
+            $query="select id_user from alluser where login=$1;";
+           $array_params=array();
+           $array_params[]=$login;
+           $result_query=$this->db->execute($query, $array_params);
+           $obj=$this->db->getFetchObject($result_query);
+           return $obj->id_user;
+    }   
 }
 ?>

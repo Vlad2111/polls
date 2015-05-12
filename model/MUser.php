@@ -9,6 +9,7 @@ class MUser {
     private $ldap_user;
     private $roles; //array
     private $availableTests;
+    private $user_vasibility;
    
     public function getIdUser(){
 	return $this->id_user;
@@ -63,6 +64,12 @@ class MUser {
     }
     public function setAvailableTests(MInterviewee $availabale_tests){
         $this->availableTests=$availabale_tests;
+    }
+    public function getUserVasibility(){
+        return $this->user_vasibility;
+    }
+    public function setUserVasibility($user_vasibility){
+        $this->user_vasibility=$user_vasibility;
     }
 }
 ?>

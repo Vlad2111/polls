@@ -9,8 +9,8 @@ class QuizView {
     protected $log;
     protected $nameclass=__CLASS__;
     private $testing;
-    private $data_testing;
-    private $array_question;
+    public $data_testing;
+    public $array_question;
     public function __construct($id_testing){
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
@@ -26,51 +26,13 @@ class QuizView {
     public function endQuiz(){
         $this->testing->statusEndQuiz($this->data_testing);
     }
-    public function takinPassing($id_question='null'){
-        if($this->testing->checkTime($this->data_testing) ){
-            if ($id_question=='null')
-            {
-                $i=0;
-            $id_question=$this->array_question[$i]->getIdQuestion();   
-            
-            }
-            else{
-                $i= $this->getIQuestion($id_question);
-                
-            }
-            $this->testing->setMarker($this->data_testing->getIdTesting(), $id_question);
-            return $this->array_question[$i];
+    public function getArrayQuestions(){
+        $data_questions=array();
+        $temp_array_question=$this->array_question;
+        for($i=0; $i<count($this->array_question); $i++){
+            $data_questions[$i]['number']=$i+1;
+            $data_questions[$i]['data_questions']=$temp_array_question[$i];            
         }
-        else {
-            $this->endQuiz();
-        }
-    }
-    public function nextQuestion($id_question, $id_answer_option='null', $answer_user='null'){
-        $manswer_user=new MAnswerUser();
-        $manswer_user->setAnswerUser($answer_user);
-        $manswer_user->setIdAnswerOption($id_answer_option);
-        $manswer_user->setIdQuestion($id_question);
-        $manswer_user->setIdTesting($this->data_testing->getIdTesting());
-        $this->testing->removeMarker($this->data_testing->getIdTesting(), $id_question);
-        $this->testing->answerTheQuestion($manswer_user);
-        $i_now= $this->getIQuestion($id_question);
-        count($this->array_question);        
-        if ($i<count($this->array_question)){
-            return $this->array_question[$i+1];
-        }
-        else{
-            $this->endQuiz();
-        }
-    }
-    private function getIQuestion($id_question){
-        foreach ($this->array_question as $key => $value) {
-                    $value->getIdQuestion();
-                    if ($value->getIdQuestion()==$id_question){
-                        return $key;
-                    }       
-        }
-    }
-    public function getTesting(){
-        return $this->data_testing;
+        return $data_questions;
     }
 }

@@ -16,6 +16,7 @@ create table alluser(
 	login character(50) NOT NULL CONSTRAINT must_be_different_login UNIQUE,
 	password character(50) NULL,
 	ldap_user integer DEFAULT 0,
+        user_vasibility integer DEFAULT 1,
 CONSTRAINT must_be_different_lastName_firstName UNIQUE(last_name, first_name),
 constraint user_pkeys primary key (id_user));
 
@@ -45,6 +46,7 @@ create table test (
 	see_details yorn not null,
 	id_status_test integer not null,
 	author_test integer not null,
+        vasibility_test integer DEFAULT 1,
 CONSTRAINT must_be_different_test UNIQUE(topic, time_limit, comment_test, see_the_result, see_details, id_status_test, author_test),
 constraint author_test_fkey foreign key (author_test) references alluser(id_user),
 constraint status_test_fkey foreign key (id_status_test) references status_test(id_status_test),

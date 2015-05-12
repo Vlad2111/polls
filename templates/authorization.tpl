@@ -11,9 +11,9 @@
             <table>
                 <tr>         
                <td>Введите логин:</td>
-               <td> <input type="text" name="login"></td></tr>
+               <td> <input type="text" name="login" required></td></tr>
             <tr><td>Введите пароль:</td>
-            <td><input type="password" name="pass"></td></tr>
+                <td><input type="password" name="pass" required></td></tr>
             <tr><td> 
             <input type="submit" value="Войти">
             </td></tr>

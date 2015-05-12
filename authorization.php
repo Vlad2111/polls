@@ -15,10 +15,10 @@ if (isset($login) && isset($password)){
     $mauth->setPassword($password);
     $mauth->setPasswordLDAP($password);
     $dao_auth=new AuthorizationDAO();
-    if ($dao_auth->getIdUser($mauth)){
+    if ($dao_auth->getAuthUser($mauth)){
         $obj_user=$dao_auth->getObjUser($mauth);
         $_SESSION['id_user']=$dao_auth->getIdUser($mauth);
-        $_SESSION['fio_user']=$obj_user->getFirstName()."".$obj_user->getLastName(); 
+        $_SESSION['fio_user']=$obj_user->getFirstName()." ".$obj_user->getLastName(); 
         $_SESSION['role_user']=$dao_auth->getRole($mauth);
         header('HTTP/1.1 200 OK');
         header('Location: main.php');
