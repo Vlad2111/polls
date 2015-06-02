@@ -127,7 +127,7 @@ class AuthorQuizDAO  extends QuizDAO{
         }    
     }
     
-    public function getDataQuestion($id_quiz){
+    public function getDataQuestions($id_quiz){
         $result=array();
         $array_id_question=$this->getListQuestion($id_quiz);
         for($i=0; $i<count($array_id_question); $i++){

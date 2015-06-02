@@ -12,10 +12,11 @@
  * @author Aleksey Porandaykin
  */
 include_once 'CheckOS.php';
+include_once 'ConfigFile.php';
 include_once 'Log4php/Logger.php';
         Logger::configure(CheckOS::getConfigLogger());
     class DB {
-        protected static $_instance;  
+        protected static $_instance;
         private $db;
         private $log;
         public static function getInstance() { // получить экземпляр данного класса 
@@ -27,11 +28,12 @@ include_once 'Log4php/Logger.php';
         
         private function __construct() { //Вставляем данные из конфиг. файла            
             $this->db= $this->setConnectDb();
-            $this->log= Logger::getLogger(__CLASS__);
+            $this->log= Logger::getLogger(__CLASS__);            
         }
     	    
     	private function setConnectDb() { // Установка соединения с базой данных. 
-            $array_ini= $this->getConfig ();
+            $config_file = ConfigFile::getInstance();
+            $array_ini = $config_file->array_params['PostgreSQL'];
             $host = $array_ini['host'];
             $port = $array_ini['port'];
             $dbname = $array_ini['dbname'];
@@ -80,9 +82,9 @@ include_once 'Log4php/Logger.php';
             }
         }
                         
-        public function getConfig ($section= 'PostgreSQL'){
-        $array= parse_ini_file(CheckOS::getConfigConnectDb(), true);
-        return $array[$section];
-        }        
+//        public function getConfig ($section= 'PostgreSQL'){
+//        $array= parse_ini_file(CheckOS::getConfigConnectDb(), true);
+//        return $array[$section];
+//        }        
         
     }

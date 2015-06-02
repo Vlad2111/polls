@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+        <div class="wrapper">
+            <div class="content">
 <form id="test_passing" method="post">
                         </form>
     <table width="100%">
@@ -162,6 +164,7 @@
                                         <tr>
                                             <td>
                                                 <input type="submit" value="ответить">
+                                                <input type="submit" value="пропустить">
                                             </td>                                             
                                         </tr>
                                         <tr>
@@ -208,6 +211,8 @@
                 </td>
             </tr>
         </table>
-        {include file='footer.tpl'}        
+        </div>
+        {include file='footer.tpl'}
+        </div>       
     </body>
 </html>

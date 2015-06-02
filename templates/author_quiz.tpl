@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+        <div class="wrapper">
+            <div class="content">
 <form id="go" method="post">
                         </form>
         <table width="100%">
@@ -85,6 +87,8 @@
                 </td>
             </tr>                
         </table>
-      {include file='footer.tpl'}                                 
+      </div>
+        {include file='footer.tpl'}
+        </div>                                
     </body>
 </html>

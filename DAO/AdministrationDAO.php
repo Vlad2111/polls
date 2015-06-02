@@ -12,7 +12,7 @@ class AdministrationDAO extends UserDAO{
     protected $nameclass=__CLASS__;
     //Возращеает массив состоящий из id тестов
     public function getListIdQuiz(){
-        $query="select id_test from test;";
+        $query="select id_test from test order by id_test ASC;";
         $array_params=array();
         $result=$this->db->execute($query,$array_params);
         if($result){
@@ -25,7 +25,7 @@ class AdministrationDAO extends UserDAO{
     }
     //Возращеает массив состоящий из id пользователей
    public function getListIdUsers(){
-        $query="select id_user from alluser;";
+        $query="select id_user from alluser order by id_user ASC;";
         $array_params=array();
         $result=$this->db->execute($query,$array_params);
         if($result){

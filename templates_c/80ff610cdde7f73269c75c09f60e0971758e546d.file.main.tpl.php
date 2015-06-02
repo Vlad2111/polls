@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-05-10 00:50:39
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-05-19 20:30:00
          compiled from "templates\main.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:21237553c7fcea50e47-25516201%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '80ff610cdde7f73269c75c09f60e0971758e546d' => 
     array (
       0 => 'templates\\main.tpl',
-      1 => 1431204575,
+      1 => 1432052997,
       2 => 'file',
     ),
   ),
@@ -39,6 +39,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+        <div class="wrapper">
+            <div class="content">
 <form id="go" method="post">
                         </form>
         <table width="100%">
@@ -132,8 +134,10 @@ $_smarty_tpl->tpl_vars['data_one_quiz']->_loop = true;
                 </td>
             </tr>
         </table>
+        </div>
         <?php echo $_smarty_tpl->getSubTemplate ('footer.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
-                    
+
+        </div>                 
     </body>
 </html>
 <?php }} ?>

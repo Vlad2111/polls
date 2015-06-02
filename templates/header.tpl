@@ -11,5 +11,6 @@
                                 <a href='authorization.php?link_click=exit'>Выход</a>
                             </td>
                         </tr>
-                    </table>                           
+                    </table>    
+    
         

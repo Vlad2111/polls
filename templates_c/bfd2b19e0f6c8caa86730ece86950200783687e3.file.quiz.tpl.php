@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-05-04 22:36:42
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-05-24 21:23:46
          compiled from "templates\quiz.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:236835547939aa3d8f2-82591857%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'bfd2b19e0f6c8caa86730ece86950200783687e3' => 
     array (
       0 => 'templates\\quiz.tpl',
-      1 => 1430764598,
+      1 => 1432488223,
       2 => 'file',
     ),
   ),
@@ -33,8 +33,17 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <title><?php echo $_smarty_tpl->tpl_vars['title']->value;?>
 </title>
         <meta charset="UTF-8">
+        <?php echo '<script'; ?>
+ type="text/javascript" src="https://www.google.com/jsapi"><?php echo '</script'; ?>
+>
+        <?php echo '<script'; ?>
+ src="js/jquery-2.1.3.min.js"><?php echo '</script'; ?>
+>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+        <div class="wrapper">
+            <div class="content">
 <form id="test_passing" method="post">
                         </form>
     <table width="100%">
@@ -238,6 +247,7 @@ if (!empty($_capture_buffer)) {
                                         <tr>
                                             <td>
                                                 <input type="submit" value="ответить">
+                                                <input type="submit" value="пропустить">
                                             </td>                                             
                                         </tr>
                                         <tr>
@@ -300,7 +310,10 @@ if (!empty($_capture_buffer)) {
                     <?php }}}?>    
                 </td>
             </tr>
-                
         </table>
+        </div>
+        <?php echo $_smarty_tpl->getSubTemplate ('footer.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
+
+        </div>       
     </body>
 </html><?php }} ?>

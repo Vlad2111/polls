@@ -232,3 +232,36 @@ DETAIL:  Ключ "(id_user, id_test)=(1, 1)" уже существует.).
 2015-05-10T23:53:18+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\QuestionDAO.php]: 29: Ошибка добавления строки в таблицу: questions().  
 2015-05-11T00:01:20+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\QuestionDAO.php]: 29: Ошибка добавления строки в таблицу: questions().  
 2015-05-11T00:01:55+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\QuestionDAO.php]: 29: Ошибка добавления строки в таблицу: questions().  
+2015-05-17T18:06:36+04:00 ERROR [AnswerOptionsDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  
+2015-05-17T18:06:47+04:00 ERROR [AnswerOptionsDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  
+2015-05-17T18:07:31+04:00 ERROR [AnswerOptionsDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  
+2015-05-17T18:07:36+04:00 ERROR [AnswerOptionsDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  
+2015-05-17T18:17:04+04:00 ERROR [AnswerOptionsDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  
+2015-05-17T18:18:08+04:00 ERROR [AnswerOptionsDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  
+2015-05-17T19:39:37+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\QuestionDAO.php]: 29: Ошибка добавления строки в таблицу: questions().  
+2015-05-17T19:39:58+04:00 ERROR [QuestionDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\QuestionDAO.php]: 29: Ошибка добавления строки в таблицу: questions().  
+2015-05-18T21:38:52+04:00 ERROR [AnswerOptionsDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  
+2015-05-18T21:39:12+04:00 ERROR [AnswerOptionsDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  
+2015-05-18T21:40:49+04:00 ERROR [AnswerOptionsDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  
+2015-05-24T11:40:11+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-05-24T16:08:37+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-05-24T16:28:16+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-05-24T16:28:57+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-05-24T21:05:24+04:00 ERROR [TestingDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_testing"
+DETAIL:  Ключ "(id_user, id_test)=(1, 1)" уже существует.).  
+2015-05-24T21:05:47+04:00 ERROR [TestingDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_testing"
+DETAIL:  Ключ "(id_user, id_test)=(1, 1)" уже существует.).  
+2015-05-24T21:06:08+04:00 ERROR [TestingDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_testing"
+DETAIL:  Ключ "(id_user, id_test)=(1, 1)" уже существует.).  
+2015-05-26T19:12:39+04:00 ERROR [AdministrationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\UserDAO.php]: 30: Ошибка добавления строки в таблицу: alluser( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_login"
+DETAIL:  Ключ "(login)=(qwer                                              )" уже существует.).  
+2015-05-26T19:12:40+04:00 ERROR [AdministrationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\UserDAO.php]: 78: Ошибка добавления строки в таблицу: role_user( ОШИБКА:  повторяющееся значение ключа нарушает ограничение уникальности "must_be_different_role_user"
+DETAIL:  Ключ "(id_role, id_user)=(1, 6)" уже существует.).  
+2015-05-30T00:23:32+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-05-30T01:17:15+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-05-30T01:17:58+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-05-30T01:32:09+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-05-30T01:32:17+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-05-31T13:26:52+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-05-31T16:51:04+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-06-03T00:46:07+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  

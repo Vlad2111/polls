@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-05-10 21:52:58
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-05-31 16:50:57
          compiled from "templates\author_quiz.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:24692553cf0b2257479-02474701%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '6009bb73be1ea7bddd9bedcb338c8dc6e2d1278e' => 
     array (
       0 => 'templates\\author_quiz.tpl',
-      1 => 1431280373,
+      1 => 1433076654,
       2 => 'file',
     ),
   ),
@@ -39,6 +39,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+        <div class="wrapper">
+            <div class="content">
 <form id="go" method="post">
                         </form>
         <table width="100%">
@@ -125,8 +127,10 @@ $_smarty_tpl->tpl_vars['data_one_quiz']->_loop = true;
                 </td>
             </tr>                
         </table>
-      <?php echo $_smarty_tpl->getSubTemplate ('footer.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
-                                 
+      </div>
+        <?php echo $_smarty_tpl->getSubTemplate ('footer.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
+
+        </div>                                
     </body>
 </html>
 <?php }} ?>

@@ -6,6 +6,7 @@ include_once 'DAO/AuthorQuizDAO.php';
 include_once 'model/MAuthorQuiz.php';
 include_once 'lib/CheckOS.php';
 include_once 'lib/PhpLDAP.php';
+include_once 'lib/ConfigFile.php';
 include_once 'DAO/AdministrationDAO.php';
 include_once 'DAO/UserDAO.php';
 include_once 'model/MUser.php';
@@ -24,11 +25,10 @@ include_once 'model/MAnswerUser.php';
 include_once 'DAO/TestingDAO.php';
 
  try{ 
-     $quiz=new QuizDAO();
-     echo "<pre>";
-     $quiz->setVasibilityQuiz(1, 1);
-        var_dump($quiz->getVasibilityQuiz(1));
-     echo "</pre>";     
+    $array=  ConfigFile::getInstance();
+    echo "<pre>";
+    var_dump ($array->array_params["ParamsDike"]["max_time"]);
+    echo "</pre>";
  } catch (Exception $ex) {
 
  }

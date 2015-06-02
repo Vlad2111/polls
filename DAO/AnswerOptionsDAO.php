@@ -70,5 +70,40 @@ class AnswerOptionsDAO {
         $obj=$this->db->getFetchObject($result);
         $answer_options->setIdAnswerOption($obj->id_answer_option);
         return $obj->id_answer_option;
+    }
+    public function getListIdAnswerOption($id_question){
+        $query="select id_answer_option from answer_options where id_question=$1;";
+        $array_params=array();
+        $array_params[]=$id_question;
+        $result=$this->db->execute($query,$array_params);
+        return $this->db->getArrayData($result);    
+    }
+    public function getListObjAnswerOption($id_answer_option){
+        $query="select * from answer_options where id_answer_option=$1;";
+        $array_params=array();
+        $array_params[]=$id_answer_option;
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj;                
+    }
+    public function getDataAnswerOtions($id_question){
+        $result=array();
+        $array_id_answer_option=$this->getListIdAnswerOption($id_question);
+        for($i=0; $i<count($array_id_answer_option); $i++){
+            $result[$i]=$this->getListObjAnswerOption($array_id_answer_option[$i]);
         }
+        return $result;
+    }
+    public function addRightAnswerOptions($id_answer_option){
+        $query="UPDATE answer_options SET  right_answer='Y' where id_answer_option=$1;";
+        $array_params=array();
+        $array_params[]=$id_answer_option;
+        $this->db->execute($query,$array_params);        
+    }
+    public function resetRightAnswerOptions($id_question){
+        $query="update answer_options set right_answer = 'N' where id_question =$1;";
+        $array_params=array();
+        $array_params[]=$id_question;
+        $this->db->execute($query,$array_params);  
+    }
 }

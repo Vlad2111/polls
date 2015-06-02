@@ -178,6 +178,12 @@ class UserDAO {
            $result_query=$this->db->execute($query, $array_params);
            $obj=$this->db->getFetchObject($result_query);
            return $obj->id_user;
-    }   
+    }
+    public function searchUser($name){
+        $query = "select * from alluser where last_name like '%".$name."%';";
+        $result_query=$this->db->execute($query);
+        $obj=$this->db->getFetchObject($result_query);
+        return $query;
+    }
 }
 ?>
