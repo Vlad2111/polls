@@ -4,7 +4,7 @@ include_once 'DAO/UserDAO.php';
 include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'lib/PhpLDAP.php';
-include_once 'Log4php/Logger.php';
+include_once 'log4php/Logger.php';
 include_once 'model/MUser.php';
 include_once 'DAO/AdministrationDAO.php';
     Logger::configure(CheckOS::getConfigLogger());

@@ -2,7 +2,7 @@
 include_once 'lib/CheckOS.php';
 include_once 'IntervieweeDAO.php';
 include_once 'lib/DB.php';
-include_once 'Log4php/Logger.php';
+include_once 'log4php/Logger.php';
     Logger::configure(CheckOS::getConfigLogger());
 class UserDAO {
     protected $db;

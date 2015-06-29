@@ -13,7 +13,7 @@
  */
 include_once 'CheckOS.php';
 include_once 'ConfigFile.php';
-include_once 'Log4php/Logger.php';
+include_once 'log4php/Logger.php';
         Logger::configure(CheckOS::getConfigLogger());
     class DB {
         protected static $_instance;

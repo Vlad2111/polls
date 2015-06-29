@@ -1,7 +1,7 @@
 <?php
 include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
-include_once 'Log4php/Logger.php';
+include_once 'log4php/Logger.php';
 include_once 'model/MQuestion.php';
 include_once 'DAO/QuestionDAO.php';
 Logger::configure(CheckOS::getConfigLogger());

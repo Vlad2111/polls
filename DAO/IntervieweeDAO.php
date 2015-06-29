@@ -5,7 +5,7 @@ include_once 'model/MInterviewee.php';
 include_once 'AdministrationDAO.php';
 include_once 'QuizDAO.php';
 include_once 'DAO/AuthorQuizDAO.php';
-include_once 'Log4php/Logger.php';
+include_once 'log4php/Logger.php';
 include_once 'DAO/TestingDAO.php';
 Logger::configure(CheckOS::getConfigLogger());
 class IntervieweeDAO {
