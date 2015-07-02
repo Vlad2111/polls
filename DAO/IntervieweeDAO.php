@@ -167,7 +167,7 @@ class IntervieweeDAO {
         for($i=0; $i<count($array_quiz); $i++){
             $return[$i]['quiz']=$author_quiz->getListObjQuiz($array_quiz[$i]);
             if ( $this->getIdTesting($id_user, $array_quiz[$i])){
-                $return[$i]['testing']=$this->getDataOneTesting($this->getIdTesting($id_user, $array_quiz[$i]));        
+                $return[$i]['testing']=$this->getDataOneTesting($this->getIdTesting($id_user, $array_quiz[$i]));   
             }
             else{
                 $return[$i]['testing']=false;
@@ -175,13 +175,21 @@ class IntervieweeDAO {
         }        
         return $return;
     }
+    public function setMInterviewee($id_testing) {
+	$admin= new AdministrationDAO();
+        $minterviewee=new MInterviewee();
+        $minterviewee->setUser($admin->getObjDataUser($_SESSION['id_user']));
+        $minterviewee->setTest($admin->getObjDataQuiz($id_testing));
+	return $minterviewee;
+    }
+
     //возвратить информацию опроса
     public function getDataOneTesting($id_testing){
-        $id_quiz=$this->getObjTesting($id_testing)->id_test;
+        $id_quiz=$this->getObjTesting($id_testing)->id_testing;
         $admin= new AdministrationDAO();
         $minterviewee=new MInterviewee();
         $quiz=new QuizDAO();
-        $minterviewee->setIdTesting($id_quiz);
+        $minterviewee->setIdTesting($id_quiz);//$minterviewee->setIdTesting($id_quiz);
         $minterviewee->setUser($admin->getObjDataUser($this->getObjTesting($id_quiz)->id_user));
         $minterviewee->setTest($admin->getObjDataQuiz($this->getObjTesting($id_quiz)->id_test));
         $minterviewee->setQuestion($quiz->getObjTestQuestion($id_quiz));

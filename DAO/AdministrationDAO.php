@@ -57,12 +57,14 @@ class AdministrationDAO extends UserDAO{
     }
     //Возращает данные о тесте типа MQuiz
     public function getObjDataQuiz($id_quiz){
+	
         $query="select * from test where id_test=$1;";
         $array_params=array();
         $array_params[]=$id_quiz;
         $result_query=$this->db->execute($query, $array_params);
         $obj_quiz= $this->db->getFetchObject($result_query);
-        if($obj_quiz){
+	//echo $id_quiz;
+        //if($obj_quiz){
             $obj_data_quiz=new MQuiz();
             $obj_data_quiz->setIdQuiz($obj_quiz->id_test);
             $obj_data_quiz->setTopic($obj_quiz->topic);
@@ -72,12 +74,12 @@ class AdministrationDAO extends UserDAO{
             $obj_data_quiz->setSeeDetails($obj_quiz->see_details);
             $obj_data_quiz->setIdStatusQuiz($obj_quiz->id_status_test);
             $obj_data_quiz->setAuthorTest($this->getObjDataUser($obj_quiz->author_test));
-            $obj_data_quiz->setVasibilityTest($obj_quiz->vasibility_test);
+            $obj_data_quiz->setVasibilityTest($obj_quiz->vasibility_test);// change reurn statement 
             return $obj_data_quiz;
-        }
-        else{
-            return $obj_quiz;
-        }
+        //}
+        //else{
+        //    return $obj_quiz;
+        //}
         
     }
     //Возращает данные о пользователе типа MUser

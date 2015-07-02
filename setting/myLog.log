@@ -265,3 +265,7 @@ DETAIL:  Ключ "(id_role, id_user)=(1, 6)" уже существует.).
 2015-05-31T13:26:52+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
 2015-05-31T16:51:04+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
 2015-06-03T00:46:07+04:00 INFO [AuthorizationDAO] [Z:\home\localhost\www\NetBeans\PhpPrimer1\DAO\AuthorizationDAO.php]: 70: Успешно введены логин и пароль пользователем Иван.  
+2015-07-02T11:58:22+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
+DETAIL:  Key (id_user, id_test)=(42, 11) already exists.).  
+2015-07-02T12:47:23+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
+DETAIL:  Key (id_user, id_test)=(42, 13) already exists.).  

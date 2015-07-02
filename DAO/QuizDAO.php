@@ -69,6 +69,7 @@ class QuizDAO {
 //            throw new Exception('Ошибка удаления строки в таблице: test('.pg_last_error().')'); 
         }          
     }    
+
     public function getListIdQuestions(MQuiz $quiz){
         $query="select id_question from questions where id_test=$1;";
         $array_params=array();

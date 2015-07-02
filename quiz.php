@@ -66,8 +66,8 @@ $title="Прохождение тестов";
 $smarty->assign('title', $title);
 $smarty->assign("data_testing", $quiz_view->data_testing);
 $smarty->assign("data_questions", $data_questions);
-$smarty->assign("status_testing", 'continue_testing');
-$smarty->assign("data_test", $quiz_view->data_testing->getTest());
+$smarty->assign("status_testing", $status_testing); //continue testing
+$smarty->assign("data_test", $quiz_view->data_testing);//$smarty->assign("data_test", $quiz_view->data_testing->getTest());
 $smarty->assign("data_one_question", $data_one_question);
 
 $smarty->display('templates/quiz.tpl');
