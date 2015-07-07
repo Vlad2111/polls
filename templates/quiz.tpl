@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <td>
-                    {capture name="new_testing"}
+                    {capture name='new_testing'}
                         <table width="100%" >
                             <tr>                        
                                 <td width="30%" valign="top">
@@ -93,8 +93,95 @@
                             </tr>    
                         </table>            
                     {/capture}
-                   
-                    {capture name="end_quiz"}
+                    {capture name='continue_testing'}
+                        <table width="100%" >
+                            <tr>                        
+                                <td width="30%" valign="top">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                Вопросы
+                                            </td>
+                                        </tr>
+                                        {foreach $data_questions as $question}
+                                                <tr>
+                                                    <td>                                                        
+                                                        <a href='quiz.php?id_question={$question["data_questions"]->getIdQuestion()}'>Вопрос № {$question['number']}</a>
+                                                    </td>
+                                                </tr>
+                                        {/foreach}
+                                    </table>
+                                </td>
+                                <td width="70%">
+                                    <table>
+                                        <tr>
+                                            <th>
+                                                Тема теста: {$data_test->getTopic()}
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Вопрос №  {$data_one_question->getIdQuestion()}                                              
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                               {$data_one_question->getTextQuestion()}                                           
+                                            </td>
+                                        </tr> 
+                                        <form method="post">
+                                        <tr>
+                                            <td>
+                                                
+                                               {capture name='radio'}                     
+                                                      <p><input type="radio" name="Y" value="Yes" checked>Да<Br>
+                                                      <input type="radio" name="N" value="No">Нет<Br>
+                                                {/capture}
+                                                {capture name='radio_list'}
+													{foreach $data_one_question->getAnswerOption() as $option}
+                                                      <input type="radio" name="answer" value="$option->getIdAnswerOption()">{$option->getAnswerTheQuestions()}</p>  
+													{/foreach}
+                                                {/capture}
+                                                {capture name='checkbox_list'} 
+													   {foreach $data_one_question->getAnswerOption() as $option}
+                                                      <input type="checkbox" name="answer" value="$option->getIdAnswerOption()">{$option->getAnswerTheQuestions()}</p>  
+													{/foreach}
+                                                {/capture}
+                                                {capture name='textarea'}
+                                                       <textarea name="comment" maxlength="1000" cols="80" rows="10"></textarea></p>                          
+                                                   
+                                                {/capture}
+                                                {if {$data_one_question->getIdQuestionsType()} eq '1'}
+                                                    {$smarty.capture.radio}    
+                                                {elseif {$data_one_question->getIdQuestionsType()} eq '2'}
+                                                    {$smarty.capture.radio_list}
+                                                {elseif {$data_one_question->getIdQuestionsType()} eq '3'}
+                                                    {$smarty.capture.checkbox_list}
+                                                {elseif {$data_one_question->getIdQuestionsType()} eq '4'}
+                                                    {$smarty.capture.textarea}
+                                                {/if} 
+                                                
+                                         
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button name="button_click" value="answer"> Ответить</button>
+                                                <input type="submit" value="пропустить">
+                                            </td>                                             
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button type="submit" formaction="quiz.php" name="button_click" value='end_quiz'>Закончить тест</button>
+                                            </td>                                             
+                                        </tr>
+                                        </form>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    {/capture} 
+                    {capture name='end_quiz'}
                         <table width="100%" >
                             <tr>                        
                                 <td width="30%" valign="top">

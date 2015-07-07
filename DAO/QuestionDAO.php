@@ -2,6 +2,7 @@
 include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'log4php/Logger.php';
+include_once 'model/MAnswerOptions.php';
 Logger::configure(CheckOS::getConfigLogger());
 class QuestionDAO {
     protected $db;
@@ -11,7 +12,7 @@ class QuestionDAO {
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
     }
-    //Создаёт описание теста в таблице questions
+       //Создаёт описание теста в таблице questions
     public function createQuestion(MQuestion $questions){
         $query="INSERT INTO questions(text_question, id_questions_type, comment_question, id_test)
         VALUES ($1, $2, $3, $4);"; 
@@ -75,7 +76,7 @@ class QuestionDAO {
         $result=$this->db->execute($query,$array_params);
         return $this->db->getArrayData($result);   
     }
-    public function getListAnswerOptions($id_question){
+    public function getListAnsweOptions($id_question){
         $array_data=array();
         $id_answer_option=$this->getArrayIdOptions($id_question);        
         $query="select answer_the_questions from answer_options where id_answer_option=$1;";
@@ -85,8 +86,33 @@ class QuestionDAO {
         $result=$this->db->execute($query,$array_params);
         $array_data[]=$this->db->getArrayData($result);        
         }
-        return $array_data;        
+        return $array_data;    
     }
+	
+	public function getListAnswerOptions($id_quiz){
+            $result=array();
+            $array_id_option=$this->getArrayIdOptions($id_quiz);
+            for($i=0; $i<count($array_id_option); $i++){
+                $result[$i]=$this->getObjOptions($array_id_option[$i]);
+            }
+            return $result;
+        }
+		
+		
+    //Возращает информацию об вопросе типи MQuestion     
+       public function getObjOptions($id_answer_option){
+           $query="select * from answer_options where id_answer_option=$1;";
+           $array_params=array();
+            $array_params[]=$id_answer_option;
+            $result=$this->db->execute($query,$array_params);
+            $obj_status= $this->db->getFetchObject($result);
+            $manswer=new MAnswerOptions();
+            $manswer->setIdAnswerOption($obj_status->id_answer_option);
+            $manswer->setAnswerTheQuestions($obj_status->answer_the_questions);
+            $manswer->setRightAnswer($obj_status->right_answer);
+            $manswer->setIdQuestion($obj_status->id_question);
+            return $manswer;
+       }
        
     public function setIdQuestion(MQuestion $questions){
         $query="select id_question from questions where "
@@ -99,6 +125,7 @@ class QuestionDAO {
         $obj=$this->db->getFetchObject($result);
         $questions->setIdQuestion($obj->id_question);
         return $obj->id_question;
-    }   
+    } 
 }
 ?>
+

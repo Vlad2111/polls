@@ -77,7 +77,7 @@
                                                                     Вы еще не открывали этот тест
                                                                 </td>
                                                                 <td>                                                                
-                                                                   <a href="quiz.php?status=available&testing={$data_one_quiz['quiz']->id_test}">Начать тест</a>
+                                                                   <a href="quiz.php?status=new_test&testing={$data_one_quiz['quiz']->id_test}">Начать тест</a>
                                                                 </td>
                                                         {/if}   
                                                 </tr>
@@ -97,3 +97,4 @@
         </div>                 
     </body>
 </html>
+

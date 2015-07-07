@@ -38,6 +38,15 @@ class IntervieweeDAO {
     public function statusContinueTheQuiz(MInterviewee $interviewee){
         return $this->getMarker($interviewee);
     }
+	
+	public function statusNextQuestion(MInterviewee $interviewee){
+		//$this->answerTheQuestion
+		$this->removeMarker($interviewee->getTest()->getIdQuiz(),$interviewee->getQuestion());
+		
+        $this->setMarker($interviewee->getIdTesting(), $this->getNextQuestion($interviewee->getTest()->getIdQuiz()));
+		return false;
+    }
+	
    
     // Ответить на вопрос
     public function answerTheQuestion($id_testing, $id_question, $answer_user) {
@@ -150,6 +159,22 @@ class IntervieweeDAO {
            return false;
        }
    }
+   public function getNextQuestion($id_quiz){
+       $query="select min(q.id_question) as question from questions as q
+			left join answer_users
+			on q.id_question = answer_users.id_question
+			where q.id_test = $1 AND answer_users.id_question is NULL;";
+       $array_params=array();
+       $array_params[]=$id_quiz;
+       $result=$this->db->execute($query,$array_params);
+       $obj=$this->db->getFetchObject($result);
+       if($obj->question!=null){
+           return $obj->question;
+       }
+       else{
+           return false;
+       }
+   }
     ////////////////////////////////////////////////////////////////////////////
     //Возвратить инфо. о всех опроса для данного пользователя
     public function getDataTesting($id_user){
@@ -167,7 +192,7 @@ class IntervieweeDAO {
         for($i=0; $i<count($array_quiz); $i++){
             $return[$i]['quiz']=$author_quiz->getListObjQuiz($array_quiz[$i]);
             if ( $this->getIdTesting($id_user, $array_quiz[$i])){
-                $return[$i]['testing']=$this->getDataOneTesting($this->getIdTesting($id_user, $array_quiz[$i]));   
+                $return[$i]['testing']=$this->getDataOneTesting($this->getIdTesting($id_user, $array_quiz[$i]));        
             }
             else{
                 $return[$i]['testing']=false;
@@ -175,23 +200,15 @@ class IntervieweeDAO {
         }        
         return $return;
     }
-    public function setMInterviewee($id_testing) {
-	$admin= new AdministrationDAO();
-        $minterviewee=new MInterviewee();
-        $minterviewee->setUser($admin->getObjDataUser($_SESSION['id_user']));
-        $minterviewee->setTest($admin->getObjDataQuiz($id_testing));
-	return $minterviewee;
-    }
-
     //возвратить информацию опроса
     public function getDataOneTesting($id_testing){
         $id_quiz=$this->getObjTesting($id_testing)->id_testing;
         $admin= new AdministrationDAO();
         $minterviewee=new MInterviewee();
         $quiz=new QuizDAO();
-        $minterviewee->setIdTesting($id_quiz);//$minterviewee->setIdTesting($id_quiz);
-        $minterviewee->setUser($admin->getObjDataUser($this->getObjTesting($id_quiz)->id_user));
-        $minterviewee->setTest($admin->getObjDataQuiz($this->getObjTesting($id_quiz)->id_test));
+        $minterviewee->setIdTesting($id_quiz);
+        $minterviewee->setUser($admin->getObjDataUser($_SESSION['id_user']));
+        $minterviewee->setTest($admin->getObjDataQuiz($id_testing));
         $minterviewee->setQuestion($quiz->getObjTestQuestion($id_quiz));
         $minterviewee->setMarkTest($this->getObjTesting($id_quiz)->id_mark_test);
         $minterviewee->setDatetimeStartTest($this->getObjTesting($id_quiz)->datetime_start_test);
@@ -243,4 +260,5 @@ class IntervieweeDAO {
     } 
     }
     
+
 

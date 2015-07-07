@@ -9,34 +9,33 @@ class QuizView {
     protected $log;
     protected $nameclass=__CLASS__;
     private $testing;
-    private $question;
     public $data_testing;
+	public $data_tes;
     public $array_question;
-    public $minterwee;
-    private $dataM;
+	public $admini;
+	public $inter;
     public function __construct($id_testing){
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
-        //$this->testing=new IntervieweeDAO();
-        //$this->data_testing=$this->testing->getDataOneTesting($id_testing);
-	$this->testing=new AdministrationDAO();
-	$this->question = new QuizDAO();
-	$this->data_testing=$this->testing->getObjDataQuiz($id_testing);
-	$array_question = $this->question->getObjTestQuestion($id_testing);
-       // $array_question=$this->getArrayQuestions();
-	//$array_question=$this->data_testing->getQuestion();
+        $this->testing=new QuizDAO();
+		$this->admini = new AdministrationDAO();
+        $this->data_test=$this->admini->getObjDataQuiz($id_testing);
+        $array_question=$this->testing->getObjTestQuestion($id_testing);
 //        shuffle($array_question); //Случайный порядок вопросов
         $this->array_question=$array_question;
-	$this->testing=new IntervieweeDAO();
-	$this->minterwee = new IntervieweeDAO();
-	$this->dataM = $this->minterwee->setMInterviewee($id_testing);
+		 $this->testing=new IntervieweeDAO();
+		$this->data_testing=$this->testing->getDataOneTesting($id_testing);
+        $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);  
     }
     public function startQuiz(){
-        $this->testing->statusStartQuiz($this->dataM);
+        $this->testing->statusStartQuiz($this->data_testing);
     }
     public function endQuiz(){
-        $this->testing->statusEndQuiz($this->dataM);
+        $this->testing->statusEndQuiz($this->data_testing);
     }
+	public function answerQuestion(){
+		$this->testing->statusNextQuestion($this->data_testing);
+	}
     public function getArrayQuestions(){
         $data_questions=array();
         $temp_array_question=$this->array_question;
@@ -47,3 +46,4 @@ class QuizView {
         return $data_questions;
     }
 }
+
