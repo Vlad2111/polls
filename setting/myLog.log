@@ -269,3 +269,31 @@ DETAIL:  Ключ "(id_role, id_user)=(1, 6)" уже существует.).
 DETAIL:  Key (id_user, id_test)=(42, 11) already exists.).  
 2015-07-02T12:47:23+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
 DETAIL:  Key (id_user, id_test)=(42, 13) already exists.).  
+2015-07-08T10:44:11+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (20, 42, null, 2, null, null).).  
+2015-07-08T10:44:16+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (21, 42, null, 2, null, null).).  
+2015-07-08T10:44:21+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (22, 42, null, 2, null, null).).  
+2015-07-08T10:44:27+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (23, 42, null, 2, null, null).).  
+2015-07-08T10:44:40+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (24, 42, null, 2, null, null).).  
+2015-07-08T10:45:16+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (25, 42, null, 2, null, null).).  
+2015-07-08T10:51:46+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (26, 42, null, 2, null, null).).  
+2015-07-08T10:59:27+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (27, 42, null, 2, null, null).).  
+2015-07-08T11:05:06+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 26: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (28, 42, null, 2, null, null).).  
+2015-07-08T11:06:43+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 26: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (29, 42, null, 2, null, null).).  
+2015-07-08T11:08:21+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 26: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (30, 42, null, 2, null, null).).  
+2015-07-08T11:13:20+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 26: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (31, 42, null, 2, null, null).).  
+2015-07-08T11:13:24+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 26: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (32, 42, null, 2, null, null).).  
+2015-07-08T11:13:48+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 26: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
+DETAIL:  Failing row contains (33, 42, null, 2, null, null).).  

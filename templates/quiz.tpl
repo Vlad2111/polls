@@ -133,22 +133,23 @@
                                         <tr>
                                             <td>
                                                 
-                                               {capture name='radio'}                     
-                                                      <p><input type="radio" name="Y" value="Yes" checked>Да<Br>
-                                                      <input type="radio" name="N" value="No">Нет<Br>
+                                              {capture name='radio'}   
+                                              {foreach $data_one_question->getAnswerOption() as $option}                  
+                                                      <p><input form="test_passing" type="radio" name="answer" value="{$option->getIdAnswerOption()}" checked>Да<Br>
+                                                      {/foreach}
                                                 {/capture}
                                                 {capture name='radio_list'}
 													{foreach $data_one_question->getAnswerOption() as $option}
-                                                      <input type="radio" name="answer" value="$option->getIdAnswerOption()">{$option->getAnswerTheQuestions()}</p>  
+                                                      <input form="test_passing" type="radio" formaction="quiz.php" name="answer" value="{$option->getIdAnswerOption()}" checked>{$option->getAnswerTheQuestions()}</p>  
 													{/foreach}
                                                 {/capture}
                                                 {capture name='checkbox_list'} 
 													   {foreach $data_one_question->getAnswerOption() as $option}
-                                                      <input type="checkbox" name="answer" value="$option->getIdAnswerOption()">{$option->getAnswerTheQuestions()}</p>  
+                                                      <input form="test_passing" type="checkbox" formaction="quiz.php" name="answer[]" value="{$option->getIdAnswerOption()}">{$option->getAnswerTheQuestions()}</p>  
 													{/foreach}
                                                 {/capture}
                                                 {capture name='textarea'}
-                                                       <textarea name="comment" maxlength="1000" cols="80" rows="10"></textarea></p>                          
+                                                       <textarea form="test_passing" name="answer[]" formaction="quiz.php" maxlength="1000" cols="80" rows="10"></textarea></p>                          
                                                    
                                                 {/capture}
                                                 {if {$data_one_question->getIdQuestionsType()} eq '1'}
@@ -166,7 +167,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <button name="button_click" value="answer"> Ответить</button>
+                                                <button form="test_passing" type="submit" formaction="quiz.php" name="button_click" value='end_question'> Ответить</button>
                                                 <input type="submit" value="пропустить">
                                             </td>                                             
                                         </tr>

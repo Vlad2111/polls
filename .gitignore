@@ -1,0 +1,4 @@
+*.php~
+*.tpl~
+temlates_c/*
+

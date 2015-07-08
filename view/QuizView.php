@@ -24,7 +24,7 @@ class QuizView {
 //        shuffle($array_question); //Случайный порядок вопросов
         $this->array_question=$array_question;
 		 $this->testing=new IntervieweeDAO();
-		$this->data_testing=$this->testing->getDataOneTesting($id_testing);
+		$this->data_testing=$this->testing->getDataOneTest($id_testing);//////////////////testing
         $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);  
     }
     public function startQuiz(){
@@ -33,8 +33,9 @@ class QuizView {
     public function endQuiz(){
         $this->testing->statusEndQuiz($this->data_testing);
     }
-	public function answerQuestion(){
-		$this->testing->statusNextQuestion($this->data_testing);
+	public function answerQuestion($answers){
+		$boolean = $this->testing->statusNextQuestion($this->data_testing, $answers);
+		return $boolean;
 	}
     public function getArrayQuestions(){
         $data_questions=array();

@@ -7,6 +7,8 @@ include_once 'QuizDAO.php';
 include_once 'DAO/AuthorQuizDAO.php';
 include_once 'log4php/Logger.php';
 include_once 'DAO/TestingDAO.php';
+include_once 'DAO/AnswerDAO.php';
+include_once 'model/MAnswer.php';
 Logger::configure(CheckOS::getConfigLogger());
 class IntervieweeDAO {
     protected $db;
@@ -39,24 +41,28 @@ class IntervieweeDAO {
         return $this->getMarker($interviewee);
     }
 	
-	public function statusNextQuestion(MInterviewee $interviewee){
-		//$this->answerTheQuestion
-		$this->removeMarker($interviewee->getTest()->getIdQuiz(),$interviewee->getQuestion());
+	public function statusNextQuestion(MInterviewee $interviewee, $answers){
+	    $answer = new AnswerDAO();
+	    $manswer = new MAnswer();
 		
-        $this->setMarker($interviewee->getIdTesting(), $this->getNextQuestion($interviewee->getTest()->getIdQuiz()));
-		return false;
+		for ( $i=0; $i < count($answers); $i++){
+		    $manswer->setIdTesting($interviewee->getIdTesting());
+		    $manswer->setAnswer($answers[$i]);
+		    $answer->setAnswer($manswer);
+		    $answer->setAnswersAndAnswerUser($answer->getIdAnswer($interviewee->getIdTesting()), $this->getMarkerId($interviewee));
+        }
+        $this->removeMarker($interviewee->getIdTesting(), $this->getMarker($interviewee));
+		if($this->getNextQuestion($interviewee->getTest()->getIdQuiz()) != null) {
+            $this->setMarker($interviewee->getIdTesting(), $this->getNextQuestion($interviewee->getTest()->getIdQuiz()));
+            return "true";
+        }
+        else {
+		    return null;
+		}
     }
 	
    
-    // Ответить на вопрос
-    public function answerTheQuestion($id_testing, $id_question, $answer_user) {
-        $query="UPDATE answer_users SET answer_user=$3 where id_testing=$1 and id_question=$2;";
-        $array_params=array();
-        $array_params[]=$id_testing;
-        $array_params[]=$id_question;
-        $array_params[]=$answer_user;
-        $this->db->execute($query,$array_params);
-    } 
+  
     //Вставить "маяк"(помечается вопрос на котором остановился пользователь)
     public function setMarker($id_testing, $id_question){
         if($this->checkMarker($id_testing, $id_question)){
@@ -94,6 +100,14 @@ class IntervieweeDAO {
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
         return $obj->id_question;
+    }
+     public function getMarkerId(MInterviewee $interviewee){
+        $query="select id_answer_users from answer_users where marker_quiz='latest' and id_testing=$1;";
+        $array_params=array();
+        $array_params[]=$interviewee->getIdTesting();
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj->id_answer_users;
     }
     //Удалить "маяк"
     public function removeMarker($id_testing, $id_question){
@@ -208,6 +222,20 @@ class IntervieweeDAO {
         $quiz=new QuizDAO();
         $minterviewee->setIdTesting($id_quiz);
         $minterviewee->setUser($admin->getObjDataUser($_SESSION['id_user']));
+        $minterviewee->setTest($admin->getObjDataQuiz($this->getObjTesting($id_quiz)->id_test));
+        $minterviewee->setQuestion($quiz->getObjTestQuestion($id_quiz));
+        $minterviewee->setMarkTest($this->getObjTesting($id_quiz)->id_mark_test);
+        $minterviewee->setDatetimeStartTest($this->getObjTesting($id_quiz)->datetime_start_test);
+        $minterviewee->getDatetimeEndTest($this->getObjTesting($id_quiz)->datetime_end_test);
+        return $minterviewee;
+    }
+    public function getDataOneTest($id_testing){
+        $id_quiz=$this->getObjTest($id_testing)->id_testing;
+        $admin= new AdministrationDAO();
+        $minterviewee=new MInterviewee();
+        $quiz=new QuizDAO();
+        $minterviewee->setIdTesting($id_quiz);
+        $minterviewee->setUser($admin->getObjDataUser($_SESSION['id_user']));
         $minterviewee->setTest($admin->getObjDataQuiz($id_testing));
         $minterviewee->setQuestion($quiz->getObjTestQuestion($id_quiz));
         $minterviewee->setMarkTest($this->getObjTesting($id_quiz)->id_mark_test);
@@ -225,6 +253,13 @@ class IntervieweeDAO {
     }
     private function getObjTesting($id_testing){
         $query="select * from testing where id_testing=$1;";
+        $array_params=array();
+        $array_params[]=$id_testing;
+        $result=$this->db->execute($query, $array_params);
+        return $this->db->getFetchObject($result);
+    }
+    private function getObjTest($id_testing){
+        $query="select * from testing where id_test=$1;";
         $array_params=array();
         $array_params[]=$id_testing;
         $result=$this->db->execute($query, $array_params);

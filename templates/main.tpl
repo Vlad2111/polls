@@ -48,14 +48,14 @@
                                                                     Доступен
                                                                 </td>
                                                                 <td>
-                                                                    <a href="quiz.php?status=available&testing={$data_one_quiz['testing']->getIdTesting()}">Пройти тест</a>
+                                                                    <a href="quiz.php?status=available&testing={$data_one_quiz['quiz']->id_test}"}">Пройти тест$data_one_quiz['testing']->getIdTesting()</a>
                                                                 </td>
                                                             {elseif $data_one_quiz['testing']->getMarkTest()==2}
                                                                  <td>
                                                                     Неоконченный
                                                                 </td>
                                                                 <td>
-                                                                    <a href="quiz.php?status=unfinished&testing={$data_one_quiz['testing']->getIdTesting()}">Продолжить тест</a>
+                                                                    <a href="quiz.php?status=unfinished&testing={$data_one_quiz['quiz']->id_test}">Продолжить тест</a>
                                                                 </td>
                                                             {elseif $data_one_quiz['testing']->getMarkTest()==3}
                                                                 <td>

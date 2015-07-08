@@ -11,6 +11,7 @@ class TestingDAO {
         $this->log= Logger::getLogger($this->nameclass);
     }
     public function createTesting(MInterviewee $interviewee, $id_mark_test){
+    echo "1";
         $query="insert into testing(id_user, id_test, id_mark_test) values 
                 ($1, $2, $3);";
         $array_params=array();

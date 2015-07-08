@@ -10,6 +10,7 @@ include_once 'view/QuizView.php';
  $status=filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
  $button=filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);
  $id_question=filter_input(INPUT_GET, 'id_question', FILTER_SANITIZE_SPECIAL_CHARS);
+ $quiz=filter_input(INPUT_POST, 'answer', FILTER_SANITIZE_SPECIAL_CHARS);
  //Проверяем параметры в сессии
 if(isset($id_testing) && $id_testing!=""){
     $_SESSION['id_testing']=$id_testing;
@@ -19,8 +20,9 @@ if(isset($status) && $status!=""){
 } 
 //Получаем овновные данные
 $quiz_view= new QuizView($_SESSION['id_testing']);
-
-
+for ( $i=0; $i < count($_POST['answer']); $i++){
+    echo $_POST['answer'][$i];
+}
 //Работа с кнопками
 if($button=="start_quiz"){
     $_SESSION['status_testing']='unfinished';
@@ -30,9 +32,16 @@ elseif($button=="end_quiz"){
     $_SESSION['status_testing']='finished';
     $quiz_view->endQuiz();
 }
-elseif($button=="end_quiz"){
-    $_SESSION['status_testing']='unfinished';
-    $quiz_view->answerQuestion();
+
+elseif($button=="end_question"){
+    $boolean = $quiz_view->answerQuestion($_POST['answer']);
+    if(isset($boolean)) {
+        $_SESSION['status_testing']='unfinished';
+    }
+    else {
+        $_SESSION['status_testing']='finished';
+        $quiz_view->endQuiz();
+    }
 }
 
 
@@ -51,18 +60,6 @@ if(isset($marker)){
 else {
 	$data_one_question=$quiz->getObjQuestions($data_questions[0]['data_questions']->getIdQuestion());
 }
-//Возврат данных вопроса по ид
-if(isset($id_question) && $id_question!=""){
-    for($i=0; $i<count($data_questions); $i++){
-	echo $data_questions[$i]['data_questions']->getIdQuestion();
-	
-        if($data_questions[$i]['data_questions']->getIdQuestion()==$marker){//==$id_question
-		echo "ZASHLO";
-            
-        }
-    }
-}
-
 
 //echo "<pre>";
 //    var_dump($tr);
