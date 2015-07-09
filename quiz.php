@@ -20,9 +20,9 @@ if(isset($status) && $status!=""){
 } 
 //Получаем овновные данные
 $quiz_view= new QuizView($_SESSION['id_testing']);
-for ( $i=0; $i < count($_POST['answer']); $i++){
+/*for ( $i=0; $i < count($_POST['answer']); $i++){
     echo $_POST['answer'][$i];
-}
+}*/
 //Работа с кнопками
 if($button=="start_quiz"){
     $_SESSION['status_testing']='unfinished';
@@ -43,7 +43,21 @@ elseif($button=="end_question"){
         $quiz_view->endQuiz();
     }
 }
-
+elseif($button=="skip_question") {
+    $boolean = $quiz_view->answerQuestion(null);
+    if(isset($boolean)) {
+        $_SESSION['status_testing']='unfinished';
+    }
+    else {
+        $_SESSION['status_testing']='finished';
+        $quiz_view->endQuiz();
+    }
+}
+elseif($button=="skip_end_question") {
+    $quiz_view->skipAllQuestions();
+    $_SESSION['status_testing']='finished';
+    $quiz_view->endQuiz();
+}
 
 
 

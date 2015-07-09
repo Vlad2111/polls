@@ -168,12 +168,12 @@
                                         <tr>
                                             <td>
                                                 <button form="test_passing" type="submit" formaction="quiz.php" name="button_click" value='end_question'> Ответить</button>
-                                                <input type="submit" value="пропустить">
+                                                <button form="test_passing" type="submit" formaction="quiz.php" name="button_click" value='skip_question'> Пропустить</button>
                                             </td>                                             
                                         </tr>
                                         <tr>
                                             <td>
-                                                <button type="submit" formaction="quiz.php" name="button_click" value='end_quiz'>Закончить тест</button>
+                                                <button form="test_passing" type="submit" formaction="quiz.php" name="button_click" value='skip_end_question'>Закончить тест</button>
                                             </td>                                             
                                         </tr>
                                         </form>

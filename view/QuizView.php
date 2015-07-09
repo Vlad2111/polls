@@ -14,7 +14,9 @@ class QuizView {
     public $array_question;
 	public $admini;
 	public $inter;
+	public $id_testing;
     public function __construct($id_testing){
+        $this->id_testing = $id_testing;
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
         $this->testing=new QuizDAO();
@@ -31,12 +33,20 @@ class QuizView {
         $this->testing->statusStartQuiz($this->data_testing);
     }
     public function endQuiz(){
+        $this->data_testing=$this->testing->getDataOneTest($this->id_testing);
         $this->testing->statusEndQuiz($this->data_testing);
     }
 	public function answerQuestion($answers){
 		$boolean = $this->testing->statusNextQuestion($this->data_testing, $answers);
 		return $boolean;
 	}
+	public function skipAllQuestions(){
+	    $boolean = "true";
+	    while (isset($boolean)) {
+		    $boolean = $this->testing->statusNextQuestion($this->data_testing, null);
+	    }
+	}
+	
     public function getArrayQuestions(){
         $data_questions=array();
         $temp_array_question=$this->array_question;
