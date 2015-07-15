@@ -233,62 +233,61 @@ class QuizDAO {
         }         
     }
     //Возращает список всех вопросов для данного теста
-        public function getObjTestQuestion($id_quiz){
-            $result=array();
-            $array_id_question=$this->getArrayIdQuestion($id_quiz);
-            for($i=0; $i<count($array_id_question); $i++){
-                $result[$i]=$this->getObjQuestions($array_id_question[$i]);
-            }
-            return $result;
+    public function getObjTestQuestion($id_quiz){
+        $result=array();
+        $array_id_question=$this->getArrayIdQuestion($id_quiz);
+        for($i=0; $i<count($array_id_question); $i++){
+            $result[$i]=$this->getObjQuestions($array_id_question[$i]);
         }
+        return $result;
+    }
     //Возращает информацию об вопросе типи MQuestion     
-       public function getObjQuestions($id_question){
-           $query="select * from questions where id_question=$1;";
-           $array_params=array();
-            $array_params[]=$id_question;
-            $result=$this->db->execute($query,$array_params);
-            $obj_status= $this->db->getFetchObject($result);
-            $question=new QuestionDAO();
-            $mquestion=new MQuestion();
-            $mquestion->setIdQuestion($obj_status->id_question);
-            $mquestion->setTextQuestion($obj_status->text_question);
-            $mquestion->setIdQuestionsType($obj_status->id_questions_type);
-            $mquestion->setAnswerOption($question->getListAnswerOptions($obj_status->id_question));
-            $mquestion->setCommentQuestion($obj_status->comment_question);
-            $mquestion->setQuestionNumber($obj_status->question_number);
-            $mquestion->setIdTest($obj_status->id_test);
-            return $mquestion;
-       }
-       public function getArrayIdQuestion($id_quiz){
-           $query="select id_question from questions where id_test=$1;";
-            $array_params=array();
-            $array_params[]=$id_quiz;
-            $result=$this->db->execute($query, $array_params);
-            return $this->db->getArrayData($result);            
-       }
-       public function getVasibilityQuiz($id_quiz){
-           $query="select vasibility_test from test where id_test=$1;";
-           $array_params=array();
-           $array_params[]=$id_quiz;
-           $result_query=$this->db->execute($query, $array_params);
-           $obj=$this->db->getFetchObject($result_query);
-           return $obj->vasibility_test;           
-       }
-       public function setVasibilityQuiz($id_quiz, $status){
-            $query="UPDATE test SET vasibility_test=$1 where id_test=$2;";
-            $array_params[]=$status;        
-            $array_params[]=$id_quiz;
-            $this->db->execute($query, $array_params);
-       }
-       public function checkNameTopicQuiz($topic){
-           $query="select id_test from test where topic=$1;";
-           $array_params=array();
-           $array_params[]=$topic;
-           $result_query=$this->db->execute($query, $array_params);
-           $obj=$this->db->getFetchObject($result_query);
-           return $obj->id_test;
-       }
+   public function getObjQuestions($id_question){
+       $query="select * from questions where id_question=$1;";
+       $array_params=array();
+        $array_params[]=$id_question;
+        $result=$this->db->execute($query,$array_params);
+        $obj_status= $this->db->getFetchObject($result);
+        $question=new QuestionDAO();
+        $mquestion=new MQuestion();
+        $mquestion->setIdQuestion($obj_status->id_question);
+        $mquestion->setTextQuestion($obj_status->text_question);
+        $mquestion->setIdQuestionsType($obj_status->id_questions_type);
+        $mquestion->setAnswerOption($question->getListAnswerOptions($obj_status->id_question));
+        $mquestion->setCommentQuestion($obj_status->comment_question);
+        $mquestion->setQuestionNumber($obj_status->question_number);
+        $mquestion->setIdTest($obj_status->id_test);
+        return $mquestion;
+   }
+   public function getArrayIdQuestion($id_quiz){
+       $query="select id_question from questions where id_test=$1;";
+        $array_params=array();
+        $array_params[]=$id_quiz;
+        $result=$this->db->execute($query, $array_params);
+        return $this->db->getArrayData($result);            
+   }
+   public function getVasibilityQuiz($id_quiz){
+       $query="select vasibility_test from test where id_test=$1;";
+       $array_params=array();
+       $array_params[]=$id_quiz;
+       $result_query=$this->db->execute($query, $array_params);
+       $obj=$this->db->getFetchObject($result_query);
+       return $obj->vasibility_test;           
+   }
+   public function setVasibilityQuiz($id_quiz, $status){
+        $query="UPDATE test SET vasibility_test=$1 where id_test=$2;";
+        $array_params[]=$status;        
+        $array_params[]=$id_quiz;
+        $this->db->execute($query, $array_params);
+   }
+   public function checkNameTopicQuiz($topic){
+       $query="select id_test from test where topic=$1;";
+       $array_params=array();
+       $array_params[]=$topic;
+       $result_query=$this->db->execute($query, $array_params);
+       $obj=$this->db->getFetchObject($result_query);
+       return $obj->id_test;
+   }
     
 }
 ?>
-

@@ -86,4 +86,35 @@ class TestingDAO {
         $interviewee->setIdTesting($obj->id_testing);
         return $obj->id_testing;
     }
+    public function setAnswers(MInterviewee $interviewee, $result){
+        $query="UPDATE testing SET right_answers=$1,wrong_answers=$2,skip_answers=$3 where id_testing=$4;";
+        $array_params=array();
+        $array_params[]=$result['right'];
+        $array_params[]=$result['wrong'];
+        $array_params[]=$result['skip'];
+        $array_params[]=$interviewee->getIdTesting();
+        $this->db->execute($query,$array_params);
+    }
+    public function getAnswers($id_testing){
+        $query="select right_answers,wrong_answers,skip_answers from testing where id_testing=$1;";
+        $array_params=array();
+        $array_params[]=$id_testing;
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj;
+    }
+    public function setInterval($id_testing){
+        $query="Update testing set datetime_duration_test=(select datetime_end_test from testing where id_testing=$1)-(select datetime_start_test from testing where id_testing=$1) where id_testing=$1;";
+        $array_params=array();
+        $array_params[]=$id_testing;
+        $this->db->execute($query,$array_params);
+    }
+    public function getInterval($id_testing){
+        $query="select datetime_duration_test from testing where id_testing=$1;";
+        $array_params=array();
+        $array_params[]=$id_testing;
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj->datetime_duration_test;
+    }
 }

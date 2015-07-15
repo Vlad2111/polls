@@ -5,6 +5,7 @@ class MAnswerUser {
     private $id_question;
     private $id_answer_option='null';
     private $answer_user='null';
+    private $skip_answer;
     
     public function getIdAnswerUsers(){
         return $this->id_answer_users;
@@ -36,5 +37,11 @@ class MAnswerUser {
     }
     public function setAnswerUser($answer_user){
         $this->answer_user=$answer_user;
+    }
+    public function getSkipAnswer(){
+        return $this->skip_answer;
+    }
+    public function setSkipAnswer($skip_answer){
+        $this->skip_answer=$skip_answer;
     }
 }

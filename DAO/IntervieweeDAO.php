@@ -8,6 +8,8 @@ include_once 'DAO/AuthorQuizDAO.php';
 include_once 'log4php/Logger.php';
 include_once 'DAO/TestingDAO.php';
 include_once 'DAO/AnswerDAO.php';
+include_once 'DAO/QuestionDAO.php';
+include_once 'DAO/AnswerOptionsDAO.php';
 include_once 'model/MAnswer.php';
 Logger::configure(CheckOS::getConfigLogger());
 class IntervieweeDAO {
@@ -31,7 +33,50 @@ class IntervieweeDAO {
     public function statusEndQuiz(MInterviewee $interviewee){
         $this->testing->editMarkTest($interviewee, 4);
         $this->testing->setDatetimeEndTest($interviewee, date("Y-m-d H:i:s"));
+        $result = $this->getCountofRightAnswers($interviewee);
+        $this->testing->setAnswers($interviewee, $result);
+        $this->testing->setInterval($interviewee->getIdTesting());
     }
+    public function getCountofRightAnswers(MInterviewee $interviewee){
+        $manswer = new AnswerDAO();
+        $answeroption = new AnswerOptionsDAO();
+        $quiz = new QuizDAO();
+        $que = new QuestionDAO();
+        $answers = $manswer->getAnswersForTesting($interviewee->getIdTesting());
+        $result=array();
+        $result['wrong']=0;
+        $result['right']=0;
+        $result['skip']=0;
+        $array_id_question=$quiz->getArrayIdQuestion($interviewee->getTest()->getIdQuiz());
+        for($i=0; $i<count($array_id_question); $i++){
+            for($j=0; $j<count($answers[$array_id_question[$i]]); $j++){
+                if($que->getIdQuestionType($array_id_question[$i]) != 4){
+                    if(isset($answers[$array_id_question[$i]][$j])){
+                        $obj=$answeroption->getRightAnswerOptions($answers[$array_id_question[$i]][$j]);
+                        if($obj == 'Y'){
+                            $result['right']++;
+                        }
+                        else {
+                            $result['wrong']++;
+                        }
+                    }
+                    else {
+                        $result['skip']++;
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+    public function getListOfAnswers(MInterviewee $interviewee){
+        $manswer = new AnswerDAO();
+        $answeroption = new AnswerOptionsDAO();
+        $quiz = new QuizDAO();
+        $que = new QuestionDAO();
+        $answers = $manswer->getAnswersForTesting($interviewee->getIdTesting());
+        return $answers;
+    }
+    
 //    // Прервать тест
 //    public function interruptTheQuiz(MInterviewee $interviewee){        
 //        $this->testing->editMarkTest($interviewee, 2);
@@ -44,13 +89,21 @@ class IntervieweeDAO {
 	public function statusNextQuestion(MInterviewee $interviewee, $answers){
 	    $answer = new AnswerDAO();
 	    $manswer = new MAnswer();
+		$skipFlag = true;
 		
 		for ( $i=0; $i < count($answers); $i++){
 		    $manswer->setIdTesting($interviewee->getIdTesting());
 		    $manswer->setAnswer($answers[$i]);
 		    $answer->setAnswer($manswer);
 		    $answer->setAnswersAndAnswerUser($answer->getIdAnswer($interviewee->getIdTesting()), $this->getMarkerId($interviewee));
+			$skipFlag=false;
         }
+		if($skipFlag) {
+			$this->setSkipAnswer($interviewee->getIdTesting(), $this->getMarker($interviewee), 'Y');
+		}
+		else {
+			$this->setSkipAnswer($interviewee->getIdTesting(), $this->getMarker($interviewee), 'N');
+		}
         $this->removeMarker($interviewee->getIdTesting(), $this->getMarker($interviewee));
 		if($this->getNextQuestion($interviewee->getTest()->getIdQuiz()) != null) {
             $this->setMarker($interviewee->getIdTesting(), $this->getNextQuestion($interviewee->getTest()->getIdQuiz()));
@@ -61,7 +114,26 @@ class IntervieweeDAO {
 		}
     }
 	
-   
+	public function getCountOfAnswered($id_testing){
+        $query="select count(id_question) as id_question from answer_users where  marker_quiz is null and id_testing=$1";
+        $array_params=array();
+        $array_params[]=$id_testing;
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj->id_question;
+        
+    }
+  
+	 public function setSkipAnswer($id_testing, $id_question, $skip){
+        $query="UPDATE answer_users SET skip_answer=$3 where id_testing=$1 and id_question=$2;";
+        
+		$array_params=array();
+        $array_params[]=$id_testing;
+        $array_params[]=$id_question;
+		$array_params[]=$skip;
+        $result=$this->db->execute($query,$array_params);
+        
+    }
   
     //Вставить "маяк"(помечается вопрос на котором остановился пользователь)
     public function setMarker($id_testing, $id_question){
@@ -101,7 +173,7 @@ class IntervieweeDAO {
         $obj=$this->db->getFetchObject($result);
         return $obj->id_question;
     }
-     public function getMarkerId(MInterviewee $interviewee){
+    public function getMarkerId(MInterviewee $interviewee){
         $query="select id_answer_users from answer_users where marker_quiz='latest' and id_testing=$1;";
         $array_params=array();
         $array_params[]=$interviewee->getIdTesting();
@@ -295,5 +367,6 @@ class IntervieweeDAO {
     } 
     }
     
+
 
 

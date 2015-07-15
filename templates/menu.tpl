@@ -1,53 +1,34 @@
-  
-    {if {$data_role[2]} eq 3}
-            <table>
-                <tr bgcolor="#4682B4" valign="top">
-                    <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
+	 <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+			{if {$data_role[2]} eq 3}
+                <li class="sidebar-brand">
                         Меню администратора
-                    </td>                
-                </tr>
-                <tr  valign="top">
-                    <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
-                        <a href="administration.php?link_click=show_quiz">Опросы</a>
-                    </td>                
-                </tr>
-                <tr bgcolor="#87CEFA" valign="top">
-                    <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
-                        <a href="administration.php?link_click=show_users">Пользователи</a>
-                    </td>                
-                </tr>
-            </table> 
-            {/if}
-    {if {$data_role[1]} eq 2}
-        <table>
-            <tr bgcolor="#4682B4" valign="top">
-                <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
+                </li>
+                <li>
+                    <a href="administration.php?link_click=show_quiz">Опросы</a>
+                </li>
+				<li>
+					<a href="administration.php?link_click=show_users">Пользователи</a>
+				</li>
+			{/if}
+			{if {$data_role[1]} eq 2}
+                <li class="sidebar-brand">
                     Меню автора теста
-                </td>                
-            </tr>
-            <tr  valign="top">
-                <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
+                </li>
+                <li>
                     <a href="author_quiz.php">Мои опросы</a>
-                </td>                
-            </tr>
-            <tr bgcolor="#87CEFA" valign="top">
-                <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
+                </li>
+                <li>
                     <a href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
-                </td>                
-            </tr>
-        </table>
-        {/if}
-    {if  {$data_role[0]} eq 1}
-        <table>
-            <tr bgcolor="#4682B4" valign="top">
-                <td width="50%" height="10%" align="left" bgcolor="#6CA6CD">
+                </li>
+			{/if}
+			{if  {$data_role[0]} eq 1}
+                <li class="sidebar-brand">
                     Меню тестируемого
-                </td>                
-            </tr>
-            <tr  valign="top">
-                <td width="50%" height="10%" align="right" bgcolor="#87CEFA">
+                </li>
+                <li>
                     <a href="main.php">Список тестов</a>
-                </td>                
-            </tr>            
-        </table>
-     {/if}
+                </li>
+			{/if}
+            </ul>
+        </div>

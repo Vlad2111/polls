@@ -81,10 +81,10 @@ class QuestionDAO {
         $id_answer_option=$this->getArrayIdOptions($id_question);        
         $query="select answer_the_questions from answer_options where id_answer_option=$1;";
         for ($i=0; $i<count($id_answer_option); $i++){
-        $array_params=array();
-        $array_params[]=$id_answer_option[$i];
-        $result=$this->db->execute($query,$array_params);
-        $array_data[]=$this->db->getArrayData($result);        
+            $array_params=array();
+            $array_params[]=$id_answer_option[$i];
+            $result=$this->db->execute($query,$array_params);
+            $array_data[]=$this->db->getArrayData($result);
         }
         return $array_data;    
     }
@@ -126,6 +126,14 @@ class QuestionDAO {
         $questions->setIdQuestion($obj->id_question);
         return $obj->id_question;
     } 
+    public function getIdQuestionType($id_question) {
+        $query="select id_questions_type from questions where id_question=$1;";
+        $array_params=array();
+        $array_params[]=$id_question;
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj->id_questions_type;
+    }
 }
 ?>
 

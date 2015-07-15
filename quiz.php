@@ -4,7 +4,6 @@ session_start();
 include_once 'view/checkOnPage.php';
 include_once 'view/QuizView.php';
     
-
     //Фильтрация входных параметров. Мера предостарожности
  $id_testing=filter_input(INPUT_GET, 'testing', FILTER_SANITIZE_SPECIAL_CHARS);
  $status=filter_input(INPUT_GET, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -20,43 +19,54 @@ if(isset($status) && $status!=""){
 } 
 //Получаем овновные данные
 $quiz_view= new QuizView($_SESSION['id_testing']);
-/*for ( $i=0; $i < count($_POST['answer']); $i++){
-    echo $_POST['answer'][$i];
-}*/
 //Работа с кнопками
 if($button=="start_quiz"){
     $_SESSION['status_testing']='unfinished';
     $quiz_view->startQuiz();
+	header("Location:quiz.php?status=unfinished&testing=".$_SESSION['id_testing']);
+	exit;
 }
 elseif($button=="end_quiz"){
     $_SESSION['status_testing']='finished';
     $quiz_view->endQuiz();
+	header("Location:quiz.php?status=finished&testing=".$_SESSION['id_testing']);
+	exit;
 }
 
 elseif($button=="end_question"){
     $boolean = $quiz_view->answerQuestion($_POST['answer']);
     if(isset($boolean)) {
         $_SESSION['status_testing']='unfinished';
+		header("Location:quiz.php?status=unfinished&testing=".$_SESSION['id_testing']);
+		exit;
     }
     else {
         $_SESSION['status_testing']='finished';
         $quiz_view->endQuiz();
+		header("Location:quiz.php?status=finished&testing=".$_SESSION['id_testing']);
+		exit;
     }
 }
 elseif($button=="skip_question") {
     $boolean = $quiz_view->answerQuestion(null);
     if(isset($boolean)) {
         $_SESSION['status_testing']='unfinished';
+		header("Location:quiz.php?status=unfinished&testing=".$_SESSION['id_testing']);
+		exit;
     }
     else {
         $_SESSION['status_testing']='finished';
         $quiz_view->endQuiz();
+		header("Location:quiz.php?status=finished&testing=".$_SESSION['id_testing']);
+		exit;
     }
 }
 elseif($button=="skip_end_question") {
     $quiz_view->skipAllQuestions();
     $_SESSION['status_testing']='finished';
     $quiz_view->endQuiz();
+	header("Location:quiz.php?status=finished&testing=".$_SESSION['id_testing']);
+	exit;
 }
 
 
@@ -99,6 +109,11 @@ $smarty->assign("data_questions", $data_questions);
 $smarty->assign("status_testing", $status_testing);
 $smarty->assign("data_test", $quiz_view->data_test);
 $smarty->assign("data_one_question", $data_one_question);
+$smarty->assign("countOfAnswered", $quiz_view->countOfAnswered);
+$smarty->assign("countOfQuestions", $quiz_view->countOfQuestions);
+$smarty->assign("countOfAnswers", $quiz_view->countOfAnswers);
+$smarty->assign("interval", $quiz_view->interval);
+$smarty->assign("listOfAnswers", $quiz_view->listOfAnswers);
 
 $smarty->display('templates/quiz.tpl');
  }
@@ -107,4 +122,5 @@ $smarty->display('templates/quiz.tpl');
     echo $error;                            
 }
 ?>
+
 

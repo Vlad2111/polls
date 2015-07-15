@@ -15,19 +15,33 @@ class QuizView {
 	public $admini;
 	public $inter;
 	public $id_testing;
+	public $countOfAnswered;
+	public $countOfQuestions;
+	public $countOfAnswers;
+	public $interval;
     public function __construct($id_testing){
         $this->id_testing = $id_testing;
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
         $this->testing=new QuizDAO();
 		$this->admini = new AdministrationDAO();
+		$testingDAO = new TestingDAO();
         $this->data_test=$this->admini->getObjDataQuiz($id_testing);
-        $array_question=$this->testing->getObjTestQuestion($id_testing);
 //        shuffle($array_question); //Случайный порядок вопросов
-        $this->array_question=$array_question;
-		 $this->testing=new IntervieweeDAO();
+        $this->array_question=$this->testing->getObjTestQuestion($id_testing);
+		$this->countOfQuestions=count($this->testing->getArrayIdQuestion($id_testing));
+		$this->testing=new IntervieweeDAO();
 		$this->data_testing=$this->testing->getDataOneTest($id_testing);//////////////////testing
-        $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);  
+		if($this->data_testing->getIdTesting()){
+			$this->countOfAnswered=$this->testing->getCountOfAnswered($this->data_testing->getIdTesting());
+		}
+		else {
+			$this->countOfAnswered=0;
+		}
+        $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);
+        $this->countOfAnswers = $testingDAO->getAnswers($this->data_testing->getIdTesting()); 
+        $this->interval = $testingDAO->getInterval($this->data_testing->getIdTesting());
+        $this->listOfAnswers = $this->testing->getListOfAnswers($this->data_testing);
     }
     public function startQuiz(){
         $this->testing->statusStartQuiz($this->data_testing);
@@ -57,4 +71,5 @@ class QuizView {
         return $data_questions;
     }
 }
+
 

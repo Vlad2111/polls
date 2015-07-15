@@ -106,4 +106,13 @@ class AnswerOptionsDAO {
         $array_params[]=$id_question;
         $this->db->execute($query,$array_params);  
     }
+    public function getRightAnswerOptions($id_answer_option){
+        $query="select right_answer from answer_options where id_answer_option =$1;";
+        $array_params=array();
+        $array_params[]=$id_answer_option;
+        $this->db->execute($query,$array_params);  
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj->right_answer;
+    }
 }
