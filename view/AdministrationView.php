@@ -3,7 +3,7 @@ include_once 'DAO/AdministrationDAO.php';
 include_once 'DAO/QuizDAO.php';
 include_once 'model/MUser.php';
 include_once 'lib/DB.php';
-include_once 'Log4php/Logger.php';
+include_once 'log4php/Logger.php';
     Logger::configure('setting/config.xml');
 class AdministrationView{
     public $id_user;

@@ -50,18 +50,64 @@ class IntervieweeDAO {
         $array_id_question=$quiz->getArrayIdQuestion($interviewee->getTest()->getIdQuiz());
         for($i=0; $i<count($array_id_question); $i++){
             for($j=0; $j<count($answers[$array_id_question[$i]]); $j++){
+                $flag = true;
                 if($que->getIdQuestionType($array_id_question[$i]) != 4){
                     if(isset($answers[$array_id_question[$i]][$j])){
                         $obj=$answeroption->getRightAnswerOptions($answers[$array_id_question[$i]][$j]);
                         if($obj == 'Y'){
-                            $result['right']++;
+                            $flag = true;
                         }
                         else {
-                            $result['wrong']++;
+                            $flag = false;
+                        }
+                        if($j==count($answers[$array_id_question[$i]])-1) {
+                            if($flag) {
+                                $result['right']++;
+                            }
+                            else {
+                                $result['wrong']++;
+                            }
                         }
                     }
                     else {
                         $result['skip']++;
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+    public function getRightAnswers(MInterviewee $interviewee){
+        $manswer = new AnswerDAO();
+        $answeroption = new AnswerOptionsDAO();
+        $quiz = new QuizDAO();
+        $que = new QuestionDAO();
+        $answers = $manswer->getAnswersForTesting($interviewee->getIdTesting());
+        $result=array();
+        $array_id_question=$quiz->getArrayIdQuestion($interviewee->getTest()->getIdQuiz());
+        for($i=0; $i<count($array_id_question); $i++){
+            for($j=0; $j<count($answers[$array_id_question[$i]]); $j++){
+                $flag = true;
+                if($que->getIdQuestionType($array_id_question[$i]) != 4){
+                    if(isset($answers[$array_id_question[$i]][$j])){
+                        $obj=$answeroption->getRightAnswerOptions($answers[$array_id_question[$i]][$j]);
+                        if($obj == 'Y'){
+                            $flag = true;
+                        }
+                        else {
+                            $flag = false;
+                        }
+                        if($j==count($answers[$array_id_question[$i]])-1) {
+                            if($flag) {
+                                $result[$array_id_question[$i]]['value'] = 'success';
+                            }
+                            else {
+                                $result[$array_id_question[$i]]['value'] = 'danger';
+                            }
+                        }
+                    }
+                    else {
+                        $result[$array_id_question[$i]]['value'] = 'warning';
                     }
                 }
             }

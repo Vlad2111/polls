@@ -20,25 +20,12 @@
 				<div id="page-content-wrapper">
 				<div class="container-fluid">
 				{capture name='new_testing'}
+					<h1>{$data_test->getTopic()}</h1>
+					<h4 style="color:Gray">{$data_test->getCommentQuiz()}</h4>
 						<table class="table">
-							<thead>
-								<tr>
-									<th colspan='2' align="center">
-										<h2>Информация по тесту</h2>
-									</th>
-								</tr>
-							</thead>
 							<tbody>
 								<tr>
 									<td class='info' width='35%'>
-										<b>Тема теста</b>
-									</td>
-									<td>
-									   {$data_test->getTopic()}
-									</td>
-								</tr>
-								<tr>
-									<td class='info'>
 										<b>Ограничение по времени</b>
 									</td>
 									<td>
@@ -48,40 +35,6 @@
 											{$data_test->getTimeLimit()}
 										{/if}    
 									</td>
-								</tr>  
-								<tr>
-									<td  class='info'>
-										<b>Комментарий автора</b>
-									</td>
-									<td>
-										{$data_test->getCommentQuiz()}
-									</td>
-								</tr>
-								<tr>
-									<td  class='info'>
-										<b>Разрешено просматривать результат</b>
-									</td>
-									<td>
-										{if $data_test->getSeeTheResult()=='Y'}
-											<span class="glyphicon glyphicon-ok"></span>
-										
-										{else}
-											<span class="glyphicon glyphicon-remove"></span>
-										{/if}
-									</td>    
-								</tr>
-								<tr>
-									<td  class='info'>
-										<b>Разрешено просматривать детальны отчёт</b>
-									</td>
-									<td>
-										{if $data_test->getSeeDetails()=='Y'}
-											<span class="glyphicon glyphicon-ok"></span>
-										
-										{else}
-											<span class="glyphicon glyphicon-remove"></span>
-										{/if}
-									</td>    
 								</tr>
 								<tr>
 									<td  class='info'>
@@ -111,19 +64,19 @@
 					<hr width="100%" color="7088FF" />
 					<div class="row">
 						<div class="col-lg-12">
-							<h3>{$data_one_question->getTextQuestion()} </h3>                                          
+							<h3>{$data_one_question->getTextQuestion()}</h3>                                          
 						</div>
 					</div>
 					<div class="row quiz-row">
 						{capture name='radio'}   
 						{foreach $data_one_question->getAnswerOption() as $option}                  
-							 <div class="radio"><input form="test_passing" type="radio" name="answer" value="{$option->getIdAnswerOption()}" checked>Да</div>
+							 <div class="radio"><input form="test_passing" type="radio" name="answer[]" value="{$option->getIdAnswerOption()}" checked>{$option->getAnswerTheQuestions()}</div>
 							{/foreach}
 						{/capture}
 						{capture name='radio_list'}
 							{foreach $data_one_question->getAnswerOption() as $option}
 							  <div class="radio">
-							  <input form="test_passing" type="radio" action="quiz.php" name="answer" value="{$option->getIdAnswerOption()}" checked>{$option->getAnswerTheQuestions()}</div>  
+							  <input form="test_passing" type="radio" action="quiz.php" name="answer[]" value="{$option->getIdAnswerOption()}" checked>{$option->getAnswerTheQuestions()}</div>  
 							{/foreach}
 						{/capture}
 						{capture name='checkbox_list'} 
@@ -189,7 +142,57 @@
 						<span class="glyphicon glyphicon-remove"></span>
 					{/if}
 					{if $data_test->getSeeDetails()=='Y'}
-						
+						<table class="table">
+							<tbody>
+							    {foreach $data_questions as $one_question}
+								<tr class="{$colors[$one_question['data_questions']->getIdQuestion()]['value']}">
+									<td>
+										<div class="row quiz-row "><h3>{$one_question['data_questions']->getTextQuestion()}</h3></div>
+									    <div class="row quiz-row">
+					                        {capture name='radio'}   
+					                            {foreach $one_question['data_questions']->getAnswerOption() as $option}                  
+						                           <div class="radio disabled">
+						                                <input form="test_passing" type="radio" name="{$one_question['data_questions']->getIdQuestion()}" value="{$option->getIdAnswerOption()}" {if $listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]==$option->getIdAnswerOption()} checked{/if} disabled> {$option->getAnswerTheQuestions()}{if $option->getRightAnswer()=='Y'} <span class="glyphicon glyphicon-ok"></span> {/if}
+						                           </div>
+						                        {/foreach}
+					                        {/capture}
+					                        {capture name='radio_list'}
+					                            {foreach $one_question['data_questions']->getAnswerOption() as $option}
+					                              <div class="radio disabled">
+					                                <input form="test_passing" type="radio" action="quiz.php" name="{$one_question['data_questions']->getIdQuestion()}" value="{$option->getIdAnswerOption()}" {if $listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]==$option->getIdAnswerOption()} checked{/if} disabled>{$option->getAnswerTheQuestions()}{if $option->getRightAnswer()=='Y'} <span class="glyphicon glyphicon-ok"></span> {/if}
+					                              </div>
+					                            {/foreach}
+					                            {$listOfAnswers[$one_question['data_questions']->getIdQuestion()]['value']}
+					                        {/capture}
+					                        {capture name='checkbox_list'} 
+						                           {foreach $one_question['data_questions']->getAnswerOption() as $option}
+							                        <div class="checkbox disabled">
+								                        <input form="test_passing" type="checkbox" action="quiz.php" name="answer[]" value="{$option->getIdAnswerOption()}" {foreach $listOfAnswers[$one_question['data_questions']->getIdQuestion()] as $Answer}{if $Answer == $option->getIdAnswerOption()} checked{/if}{/foreach} disabled>{$option->getAnswerTheQuestions()}{if $option->getRightAnswer()=='Y'} <span class="glyphicon glyphicon-ok"></span> {/if}
+							                        </div>  
+						                        {/foreach}
+					                        {/capture}
+					                        {capture name='textarea'}
+						                        <div class="form-group">
+							                        <textarea class = "form-control" form="test_passing" name="answer[]" action="quiz.php" maxlength="1000" cols="80" rows="10" disabled>{$listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]}</textarea>
+						                        </div>                          
+					                        {/capture}
+					                        {if {$one_question['data_questions']->getIdQuestionsType()} eq '1'}
+						                        {$smarty.capture.radio}    
+					                        {elseif {$one_question['data_questions']->getIdQuestionsType()} eq '2'}
+						                        {$smarty.capture.radio_list}
+					                        {elseif {$one_question['data_questions']->getIdQuestionsType()} eq '3'}
+						                        {$smarty.capture.checkbox_list}
+					                        {elseif {$one_question['data_questions']->getIdQuestionsType()} eq '4'}
+						                        {$smarty.capture.textarea}
+					                        {/if} 
+					                        </div>
+					                        <div class="row quiz-row">
+					                            <p class="quiz-end-com">Пояснения: {$one_question['data_questions']->getCommentQuestion()}</p>
+					               </td>
+								</tr>
+								{/foreach}
+							</tbody>
+						</table>
 					{else}
 						<span class="glyphicon glyphicon-remove"></span>
 					{/if}

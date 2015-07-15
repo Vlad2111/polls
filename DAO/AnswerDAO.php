@@ -74,7 +74,10 @@ class AnswerDAO {
             }
             else {
                 $obj = $this->getIdAnswer_user($answer_user[$i]->getIdAnswerUsers());
-                $result[$answer_user[$i]->getIdQuestion()][count($result[$answer_user[$i]->getIdQuestion()])] = $this->getAnswer($obj);
+                
+                for($j=0;$j<count($obj);$j++) {
+                    $result[$answer_user[$i]->getIdQuestion()][count($result[$answer_user[$i]->getIdQuestion()])] = $this->getAnswer($obj[$j]);
+                }            
             }
         }
         return $result;
@@ -93,8 +96,7 @@ class AnswerDAO {
         $array_params=array();
         $array_params[]=$id_answer_users;
         $result=$this->db->execute($query,$array_params);
-        $obj=$this->db->getFetchObject($result);
-        return $obj->id_answer;
+        return $this->db->getArrayData($result);
     }
     public function getAnswer($id_answer){
         $query="select answer from answers where id_answer=$1;"; 

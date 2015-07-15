@@ -42,6 +42,7 @@ class QuizView {
         $this->countOfAnswers = $testingDAO->getAnswers($this->data_testing->getIdTesting()); 
         $this->interval = $testingDAO->getInterval($this->data_testing->getIdTesting());
         $this->listOfAnswers = $this->testing->getListOfAnswers($this->data_testing);
+        $this->colors = $this->testing->getRightAnswers($this->data_testing);
     }
     public function startQuiz(){
         $this->testing->statusStartQuiz($this->data_testing);
@@ -71,5 +72,3 @@ class QuizView {
         return $data_questions;
     }
 }
-
-

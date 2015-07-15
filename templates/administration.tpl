@@ -5,6 +5,11 @@
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script src="js/jquery-2.1.3.min.js"></script>
         <link rel="stylesheet" href="css/styles.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">	
+		<link href="css/simple-sidebar.css" rel="stylesheet">
+		<link href="css/navbar-fixed-top.css" rel="stylesheet">
+        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
         <script type="text/javascript">

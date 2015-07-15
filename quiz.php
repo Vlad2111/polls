@@ -114,6 +114,7 @@ $smarty->assign("countOfQuestions", $quiz_view->countOfQuestions);
 $smarty->assign("countOfAnswers", $quiz_view->countOfAnswers);
 $smarty->assign("interval", $quiz_view->interval);
 $smarty->assign("listOfAnswers", $quiz_view->listOfAnswers);
+$smarty->assign("colors", $quiz_view->colors);
 
 $smarty->display('templates/quiz.tpl');
  }
