@@ -10,8 +10,38 @@
 		<link href="css/simple-sidebar.css" rel="stylesheet">
 		<link href="css/navbar-fixed-top.css" rel="stylesheet">
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.countdown.min.js"></script>
+         <script src="js/kk.js"></script>
+        <link rel="stylesheet" href="http://hilios.github.io/jQuery.countdown/css/syntax.css">
+        <script type="text/javascript">
+            $(document).ready(function(){
+
+                	var secs = $("#secs").val(),
+                        cdBox = $(".kkcountdown-2");
+                    $("#secs").hide();
+                    
+	                cdBox.attr('data-seconds', {$dateinterval})
+	                	.kkcountdown({
+                            displayDays:        true,
+                            displayZeroDays:    false,
+    	                    hoursText:          ':',
+    	                    minutesText:        ':',
+    	                    secondsText:        '',
+    	                    textAfterCount:     'TimeIsOut! ',
+    	                    warnSeconds:        10,
+    	                    warnClass:          'alert',
+                            callback:           cBack
+    	                });
+
+            });
+
+            function cBack(){
+            $("#skip_end_question").click();
+            }
+        </script>
     </head>
     <body>
+    
         {include file='header.tpl'}
         <div id="wrapper">
 			<form id="test_passing" method="post"> 
@@ -58,7 +88,8 @@
 						<div class="col-lg-8 quiz-h">
 							{$data_test->getTopic()}
 						</div>
-						<div class="col-lg-4 timer">
+						<div class="col-lg-4 quiz-h">
+                            <span data-seconds="60" class="kkcountdown-2"></span>
 						</div>
 					</div>
 					<hr width="100%" color="7088FF" />
@@ -106,7 +137,7 @@
 						<button class="btn btn-md btn-danger" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_question'> Пропустить</button>
 					</div>
 					<div class="row quiz-padding">
-						<button class="btn btn-md btn-warning" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_end_question'>Закончить тест</button>
+						<button class="btn btn-md btn-warning" id="skip_end_question" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_end_question'>Закончить тест</button>
 					</div>	
 					<div class="row quiz-padding">
 							<div class="progress">
@@ -123,7 +154,7 @@
 						       Тест:  {$data_test->getTopic()}
 					        </div>
 					        <div class="col-lg-4 timer">
-					           Затраченое время: {$interval}
+					           Затраченное время: {$interval}
 					        </div>
 				        </div>
 					    <div class="row quiz-answers">
@@ -216,7 +247,8 @@
 				</div>
 			</div>
         {include file='footer.tpl'}
-        </div>       
+        </div>   
+         
     </body>
 </html>
 

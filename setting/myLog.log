@@ -297,3 +297,5 @@ DETAIL:  Failing row contains (31, 42, null, 2, null, null).).
 DETAIL:  Failing row contains (32, 42, null, 2, null, null).).  
 2015-07-08T11:13:48+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 26: Ошибка добавления строки в таблицу: testing( ERROR:  null value in column "id_test" violates not-null constraint
 DETAIL:  Failing row contains (33, 42, null, 2, null, null).).  
+2015-07-15T17:23:36+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
+DETAIL:  Key (id_user, id_test)=(47, 23) already exists.).  

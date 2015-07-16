@@ -19,6 +19,7 @@ class QuizView {
 	public $countOfQuestions;
 	public $countOfAnswers;
 	public $interval;
+	public $dateinterval;
     public function __construct($id_testing){
         $this->id_testing = $id_testing;
         $this->db=DB::getInstance();
@@ -43,6 +44,9 @@ class QuizView {
         $this->interval = $testingDAO->getInterval($this->data_testing->getIdTesting());
         $this->listOfAnswers = $this->testing->getListOfAnswers($this->data_testing);
         $this->colors = $this->testing->getRightAnswers($this->data_testing);
+        $interval = $this->data_test->getTimeLimit();
+        $a = split ( ':' , $interval, -1 );
+        $this->dateinterval = $a[0] * 60 * 60 + $a[1] * 60 + $a[2]; 
     }
     public function startQuiz(){
         $this->testing->statusStartQuiz($this->data_testing);
