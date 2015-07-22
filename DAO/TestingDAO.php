@@ -69,12 +69,28 @@ class TestingDAO {
         $array_params[]=$interviewee->getIdTesting();
         $this->db->execute($query,$array_params);
     }
+    public function getDatetimeStartTest(MInterviewee $interviewee){
+        $query="select datetime_start_test from testing where id_testing=$1;";
+        $array_params=array();
+        $array_params[]=$interviewee->getIdTesting();
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj->datetime_start_test;
+    }
     public function setDatetimeEndTest(MInterviewee $interviewee, $datetime_start_test){
         $query="UPDATE testing SET datetime_end_test=$1 where id_testing=$2;";
         $array_params=array();
         $array_params[]=$datetime_start_test;
         $array_params[]=$interviewee->getIdTesting();
         $this->db->execute($query,$array_params);
+    }
+    public function getDatetimeEndTest(MInterviewee $interviewee){
+        $query="select datetime_end_test from testing where id_testing=$1;";
+        $array_params=array();
+        $array_params[]=$interviewee->getIdTesting();
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj->datetime_end_test;
     }
     public function setIdTesting(MInterviewee $interviewee){
         $query="select * from testing where id_user=$1 and id_test=$2;";

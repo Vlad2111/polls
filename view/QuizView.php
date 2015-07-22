@@ -44,12 +44,10 @@ class QuizView {
         $this->interval = $testingDAO->getInterval($this->data_testing->getIdTesting());
         $this->listOfAnswers = $this->testing->getListOfAnswers($this->data_testing);
         $this->colors = $this->testing->getRightAnswers($this->data_testing);
-        $interval = $this->data_test->getTimeLimit();
-        $a = split ( ':' , $interval, -1 );
-        $this->dateinterval = $a[0] * 60 * 60 + $a[1] * 60 + $a[2]; 
+        $this->dateinterval = $testingDAO->getDatetimeEndTest($this->data_testing);
     }
     public function startQuiz(){
-        $this->testing->statusStartQuiz($this->data_testing);
+        $this->testing->statusStartQuiz($this->data_testing, $this->data_test->getTimeLimit());
     }
     public function endQuiz(){
         $this->data_testing=$this->testing->getDataOneTest($this->id_testing);

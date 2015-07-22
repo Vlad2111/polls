@@ -23,9 +23,16 @@ class IntervieweeDAO {
         $this->testing= new TestingDAO();
     }
     // Начать тест: обновить статус теста,
-    public function statusStartQuiz(MInterviewee $interviewee){
+    public function statusStartQuiz(MInterviewee $interviewee, $interval){
         $return=$this->testing->createTesting($interviewee, 2);
         $this->testing->setDatetimeStartTest($interviewee, date("Y-m-d H:i:s"));
+        $time = $this->testing->getDatetimeStartTest($interviewee);
+        $timer = new DateTime($time);
+        $a = split ( ':' , $interval, -1 );
+        $timer->modify('+'.$a[0].' hour +'.$a[1].' minute +'.$a[2].' second');
+        if(isset($interval)) {
+            $this->testing->setDatetimeEndTest($interviewee, $timer->format("Y-m-d H:i:s"));
+        }
         $this->setMarker($interviewee->getIdTesting(), $this->getFirstQuestion($interviewee->getTest()->getIdQuiz()));
         return $return;
     }

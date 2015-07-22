@@ -14,7 +14,7 @@
          <script src="js/kk.js"></script>
         <link rel="stylesheet" href="http://hilios.github.io/jQuery.countdown/css/syntax.css">
         <script type="text/javascript">
-            $(document).ready(function(){
+           /* $(document).ready(function(){
 
                 	var secs = $("#secs").val(),
                         cdBox = $(".kkcountdown-2");
@@ -34,14 +34,52 @@
     	                });
 
             });
-
+            */
+            var flag=false;
             function cBack(){
-            $("#skip_end_question").click();
+                $("#skip_end_question").click();
+            }
+            function timer() {
+                var nowDate = new Date();
+                var st = '{$dateinterval}';
+                var t = st.split(/[- :]/);
+                var d = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
+                var achiveDate = d;
+                var result = (achiveDate - nowDate)+1000;
+                flag=true;
+                if (result < 0) {
+                    var elmnt = document.getElementById('timer');
+                    elmnt.innerHTML = ' - : - - : - - : - - ';
+                    flag=false;
+                    cBack();
+                }
+                var seconds = Math.floor((result/1000)%60);
+                var minutes = Math.floor((result/1000/60)%60);
+                var hours = Math.floor((result/1000/60/60)%24);
+                //var days = Math.floor(result/1000/60/60/24);
+                if (seconds < 10) seconds = '0' + seconds;
+                if (minutes < 10) minutes = '0' + minutes;
+                if (hours < 10) hours = '0' + hours;
+                var elmnt = document.getElementById('timer');
+                elmnt.innerHTML = hours + ':' + minutes + ':' + seconds;
+                setTimeout(timer, 1000);
+            }
+            window.onload = function() {
+                timer();
+                flag=false;
+            }
+            function clicked(){
+                flag=false;
+            }
+            window.onbeforeunload = confirmExit;
+            function confirmExit(){
+                if($('#timer').text() && flag){
+                    cBack();  
+                }
             }
         </script>
     </head>
     <body>
-    
         {include file='header.tpl'}
         <div id="wrapper">
 			<form id="test_passing" method="post"> 
@@ -89,7 +127,7 @@
 							{$data_test->getTopic()}
 						</div>
 						<div class="col-lg-4 quiz-h">
-                            <span data-seconds="60" class="kkcountdown-2"></span>
+                            <span id="timer"></span>
 						</div>
 					</div>
 					<hr width="100%" color="7088FF" />
@@ -133,11 +171,11 @@
 						{/if} 
 					</div>	
 					<div class="row">
-						<button class="btn btn-md btn-success" form="test_passing" type="submit" action="quiz.php" name="button_click" value='end_question'> Ответить</button>
-						<button class="btn btn-md btn-danger" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_question'> Пропустить</button>
+						<button class="btn btn-md btn-success" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='end_question'> Ответить</button>
+						<button class="btn btn-md btn-danger" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_question'> Пропустить</button>
 					</div>
 					<div class="row quiz-padding">
-						<button class="btn btn-md btn-warning" id="skip_end_question" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_end_question'>Закончить тест</button>
+						<button class="btn btn-md btn-warning" id="skip_end_question" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_end_question'>Закончить тест</button>
 					</div>	
 					<div class="row quiz-padding">
 							<div class="progress">
@@ -158,13 +196,13 @@
 					        </div>
 				        </div>
 					    <div class="row quiz-answers">
-					        <div class="col-lg-4 text-success">
+					        <div class="col-lg-4">
 							    Правильных ответов: {$countOfAnswers->right_answers}
 							</div>
-						    <div class="col-lg-4 text-danger">
+						    <div class="col-lg-4">
 							    Неправильных ответов: {$countOfAnswers->wrong_answers}
 						    </div>
-					        <div class="col-lg-4 text-warning">
+					        <div class="col-lg-4">
 							    Пропущенных ответов: {$countOfAnswers->skip_answers}
 						    </div>
 						</div>

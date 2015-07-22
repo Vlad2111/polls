@@ -299,3 +299,7 @@ DETAIL:  Failing row contains (32, 42, null, 2, null, null).).
 DETAIL:  Failing row contains (33, 42, null, 2, null, null).).  
 2015-07-15T17:23:36+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
 DETAIL:  Key (id_user, id_test)=(47, 23) already exists.).  
+2015-07-21T10:56:41+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
+DETAIL:  Key (id_user, id_test)=(42, 23) already exists.).  
+2015-07-21T11:04:04+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
+DETAIL:  Key (id_user, id_test)=(42, 23) already exists.).  
