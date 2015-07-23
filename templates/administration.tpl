@@ -76,95 +76,158 @@
             }
 }
         </script> 
-        <div class="wrapper">
-            <div class="content">
-        <table width="100%">
-            <tr>
-                <td  width="100%">
-                    {include file='header.tpl'}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                <table width="100%" >
-                    <tr>                        
-                <td width="20%" valign="top">
-                    {include file='menu.tpl'}
-                </td>           
-                <td width="80%">
-                    <form id="go" method="post">
-                    </form>
+        {include file='header.tpl'}
+        <div id="wrapper">
+			<form id="test_passing" method="post"> 
+					</form>
                     {capture name='table_users'}
-                        <a href="administration.php?link_click=new_internal_user" title="Создать внутреннего пользователя"><img class="icon_on_page" src="img/add-user.png">Создать внутреннего пользователя</a>
-                        <table width="80%" align="center">
-                            <tr>
-                                <td>
-                                    Фамилия пользователя
-                                </td>
-                                <td>
-                                    Имя пользователя
-                                </td>
-                                <td>
-                                    Тип пользователя
-                                </td>
-                                <td>
-                                    Статус пользователя
-                                </td>
-                                <td>
-                                    
-                                </td>
-                            </tr>
-                            {foreach $users_data as $one_user_data}                                          
-                                <tr>
-                                    <td>
-                                        {$one_user_data->getLastName()}
-                                    </td>
-                                    <td>
-                                        {$one_user_data->getFirstName()}
-                                    </td>
-                                    <td>
-                                        {if $one_user_data->getLdapUser()==0}
-                                            Внутренний пользователь
-                                        {elseif $one_user_data->getLdapUser()==1}
-                                            Пользователь LDAP
-                                        {/if}
-                                    </td>
-                                    <td>
-                                        {if $one_user_data->getUserVasibility()==1}
-                                            Активный
-                                        {else}
-                                            Неактивный
-                                        {/if}    
-                                    </td>
-                                    <td>
-                                        {if $one_user_data->getLdapUser()==0}
-                                            <a href="administration.php?link_click=edit_user&id_user={$one_user_data->getIdUser()}" title="Изменить пользователя"><img class="icon_on_page" src="img/edit-user.png"></a>
-                                        {/if}
-                                    </td>
-                                </tr>
-                            {/foreach}
-                        </table>
+                    <!-- MENU -->
+                    <div id="sidebar-wrapper">
+                        <ul class="sidebar-nav">
+			            {if {$data_role[2]} eq 3}
+                            <li class="sidebar-brand">
+                                    Меню администратора
+                            </li>
+                            <li>
+                                <a href="administration.php?link_click=show_quiz">Опросы</a>
+                            </li>
+				            <li>
+					            <a href="administration.php?link_click=show_users" class="foc">Пользователи</a>
+				            </li>
+			            {/if}
+			            {if {$data_role[1]} eq 2}
+                            <li class="sidebar-brand">
+                                Меню автора теста
+                            </li>
+                            <li>
+                                <a href="author_quiz.php">Мои опросы</a>
+                            </li>
+                            <li>
+                                <a href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
+                            </li>
+			            {/if}
+			            {if  {$data_role[0]} eq 1}
+                            <li class="sidebar-brand">
+                                Меню тестируемого
+                            </li>
+                            <li>
+                                <a href="main.php">Список тестов</a>
+                            </li>
+			            {/if}
+                        </ul>
+                    </div>
+                    <div id="page-content-wrapper">
+				            <div class="container-fluid">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <th>
+                                            Фамилия пользователя
+                                        </th>
+                                        <th>
+                                            Имя пользователя
+                                        </th>
+                                        <th>
+                                            Тип пользователя
+                                        </th>
+                                        <th>
+                                            Статус пользователя
+                                        </th>
+                                        <th>
+                                            
+                                        </th>
+                                    </thead>
+                                    {foreach $users_data as $one_user_data}                                          
+                                        <tr>
+                                            <td class='info'>
+                                                {$one_user_data->getLastName()}
+                                            </td>
+                                            <td class='info'>
+                                                {$one_user_data->getFirstName()}
+                                            </td>
+                                            <td>
+                                                {if $one_user_data->getLdapUser()==0}
+                                                    Внутренний пользователь
+                                                {elseif $one_user_data->getLdapUser()==1}
+                                                    Пользователь LDAP
+                                                {/if}
+                                            </td>
+                                            <td>
+                                                {if $one_user_data->getUserVasibility()==1}
+                                                    Активный
+                                                {else}
+                                                    Неактивный
+                                                {/if}    
+                                            </td>
+                                            <td>
+                                                {if $one_user_data->getLdapUser()==0}
+                                                    <a href="administration.php?link_click=edit_user&id_user={$one_user_data->getIdUser()}" title="Изменить пользователя"><img class="icon_on_page" src="img/edit-user.png"></a>
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                    {/foreach}
+                                </table>
+                                <a href="administration.php?link_click=new_internal_user" title="Создать внутреннего пользователя"><img class="icon_on_page" src="img/add-user.png">Создать внутреннего пользователя</a>
+                            </div>
+                    </div>   
                     {/capture}
                     {capture name='table_quizs'}
+                                        <!-- MENU -->
+                    <div id="sidebar-wrapper">
+                        <ul class="sidebar-nav">
+			            {if {$data_role[2]} eq 3}
+                            <li class="sidebar-brand">
+                                    Меню администратора
+                            </li>
+                            <li>
+                                <a href="administration.php?link_click=show_quiz" class="foc">Опросы</a>
+                            </li>
+				            <li>
+					            <a href="administration.php?link_click=show_users">Пользователи</a>
+				            </li>
+			            {/if}
+			            {if {$data_role[1]} eq 2}
+                            <li class="sidebar-brand">
+                                Меню автора теста
+                            </li>
+                            <li>
+                                <a href="author_quiz.php">Мои опросы</a>
+                            </li>
+                            <li>
+                                <a href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
+                            </li>
+			            {/if}
+			            {if  {$data_role[0]} eq 1}
+                            <li class="sidebar-brand">
+                                Меню тестируемого
+                            </li>
+                            <li>
+                                <a href="main.php">Список тестов</a>
+                            </li>
+			            {/if}
+                        </ul>
+                    </div>
+                    <div id="page-content-wrapper">
+				            <div class="container-fluid">
                         <form method="POST">
-                        <table width="100%">
-                            <tr>
-                                <td>
+                        <table class="table table-hover">
+                            <thead>
+                                <th>
                                     Тема теста
-                                </td>
-                                <td>
+                                </th>
+                                <th>
                                     Состояние теста
-                                </td>
-                                <td>
+                                </th>
+                                <th>
                                     Автор теста
-                                </td>
-                                <td>
+                                </th>
+                                <th>
                                     Статус теста
-                                </td>
-                            </tr>
+                                </th>
+                            </thead>
+                            <tbody>
                             {foreach $quizs_data as $one_quiz_data}                                          
                                 <tr>
-                                    <td>
+                                    <td class='info'>
                                         {$one_quiz_data->getTopic()}
                                     </td>
                                     <td>
@@ -190,209 +253,207 @@
                                         {/if}   
                                     </td>
                                     <td>
-                                            {if $one_quiz_data->getVasibilityTest()==1}
-                                                <button type="submit" formaction="administration.php?link_click=show_quiz" name="deactivate_quiz" value="{$one_quiz_data->getIdQuiz()}">Заблокировать тест</button>                                           
-                                            {else}
-                                                <button type="submit" formaction="administration.php?link_click=show_quiz" name="activate_quiz" value="{$one_quiz_data->getIdQuiz()}">Активировать тест</button>
-                                            {/if}      
+                                        {if $one_quiz_data->getVasibilityTest()==1}
+                                            <button class="btn btn-xs btn-primary" type="submit" formaction="administration.php?link_click=show_quiz" name="deactivate_quiz" value="{$one_quiz_data->getIdQuiz()}">Заблокировать тест</button>                                           
+                                        {else}
+                                            <button class="btn btn-xs btn-primary" type="submit" formaction="administration.php?link_click=show_quiz" name="activate_quiz" value="{$one_quiz_data->getIdQuiz()}">Активировать тест</button>
+                                        {/if}      
                                     </td>
                                 </tr>
                             {/foreach}
+                            </tbody>
                         </table> 
-                        </form>   
+                        </form>
+                        </div>
+                    </div>   
                     {/capture}
                     {capture name='new_internal_user'}
-                        
+                    {include file='menu.tpl'}
+				    <div id="page-content-wrapper">
+				        <div class="container-fluid">
                             <form action="administration.php" method="POST">
                                 <input type="hidden" name="button_click" value="create_internal_user">
-                                <table align="center">
+                                <table class="table">
                                     <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Фамилия </td>
-                                        <td><input type="text" name="last_name" required><td>
+                                        <td class='info' width='35%'><b>Фамилия</b></td>
+                                        <td><input class="form-control" type="text" name="last_name" required><td>
                                     </tr>
                                     <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Имя </td>
-                                        <td><input type="text" name="first_name" required><td>
+                                        <td class='info' width='35%'><b>Имя</b></td>
+                                        <td><input class="form-control" type="text" name="first_name" required><td>
                                     </tr>                                
                                     <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Email</td>
-                                        <td><input type="email" name="email" onblur="checkEmailUser(this.value)">
+                                        <td class='info' width='35%'><b>Email</b></td>
+                                        <td><input class="form-control" type="email" name="email" onblur="checkEmailUser(this.value)">
                                             <span id="no_email" style="display: none; color: red">Такое название уже есть</span>
                                             <span id="yes_email" style="display: none; color: green">Ок</span>
                                         <td>
                                     </tr>
                                     <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Логин</td>
-                                        <td><input type="text" name="login"  onblur="checkLoginUser(this.value)">
+                                        <td class='info' width='35%'><b>Логин</b></td>
+                                        <td><input class="form-control" type="text" name="login"  onblur="checkLoginUser(this.value)">
                                             <span  id="no_login" style="display: none; color: red">Такое название уже есть</span>
                                             <span id="yes_login" style="display: none; color: green">Ок</span>
                                         <td>    
                                     </tr>
                                     <tr>
-                                        <td bgcolor="#8DB6CD" align="right">Пароль</td>
-                                        <td><input type="text" name="password"><td>
+                                        <td class='info' width='35%'><b>Пароль</b></td>
+                                        <td><input class="form-control" type="text" name="password"><td>
                                     </tr>
                                     <tr>
-                                        <td bgcolor="#8DB6CD" align="right" required>Роль пользователя</td>
+                                        <td class='info' width='35%' required><b>Роль пользователя</b></td>
                                         <td>
-                                            <input type="checkbox" name="role_admin" value="1" checked>Опрашиваемый <br>
-                                            <input type="checkbox" name="role_author" value="2">Составитель опросов <br>
+                                            <input type="checkbox" name="role_admin" value="1" checked>Опрашиваемый</br>
+                                            <input type="checkbox" name="role_author" value="2">Составитель опросов</br>
                                             <input type="checkbox" name="role_interviewees" value="3">Администратор
                                         <td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
                                             <span class="unsuitable">
-                                            <input type="submit" value="Создать пользователя">
+                                                <input class="btn btn-primary" type="submit" value="Создать пользователя">
                                             </span>
                                        </td>
                                     </tr>
                                 </table>
                             </form>
-                            
+                        </div>
+                    </div>
                     {/capture}
                     {capture name='edit_user'}   
                         {if $id_user != NULL}
+                            {include file='menu.tpl'}
+                            <div id="page-content-wrapper">
+				                <div class="container-fluid">
                                 <form action="administration.php" method="POST">
                                     <input type="hidden" name="button_click" value="edit_user">
                                     <input type="hidden" name="id_user" value="{$id_user}">
-                                    <table align="center">
-                                        <tr>
-                                            <td colspan="2" align="center">
+                                    <table class="table">
                                                 {if $data_edit_user->getUserVasibility()==1}                                                    
-                                                    <p><font size="4" color="blue" face="Arial">Активный пользователь</font>   
+                                                    <h4 align="center"><font color="blue" face="Arial">Активный пользователь</font></h4>   
                                                 {else}
-                                                    <p><font size="4" color="red" face="Arial">Неактивный пользователь</font>                                                    
-                                                {/if} 
-                                            </td>
+                                                    <h4 align="center"><font color="red" face="Arial">Неактивный пользователь</font><h4>
+                                                {/if}
+                                        <tr>
+                                            <td class='info' width='35%'><b>Фамилия</b></td>
+                                            <td><input class="form-control" type="text" name="last_name"  value="{$data_edit_user->getLastName()}" required><td>
                                         </tr>
                                         <tr>
-                                            <td bgcolor="#8DB6CD" align="right">Фамилия </td>
-                                            <td><input type="text" name="last_name"  value="{$data_edit_user->getLastName()}" required><td>
-                                        </tr>
-                                        <tr>
-                                            <td bgcolor="#8DB6CD" align="right">Имя </td>
-                                            <td><input type="text" name="first_name" value="{$data_edit_user->getFirstName()}" required><td>
+                                            <td class='info' width='35%'><b>Имя<b></td>
+                                            <td><input class="form-control" type="text" name="first_name" value="{$data_edit_user->getFirstName()}" required><td>
                                         </tr>                                
                                         <tr>
-                                            <td bgcolor="#8DB6CD" align="right">Email</td>
-                                            <td><input type="email" name="email" value="{$data_edit_user->getEmail()}" required><td>
+                                            <td class='info' width='35%'><b>Email</b></td>
+                                            <td><input class="form-control" type="email" name="email" value="{$data_edit_user->getEmail()}" required><td>
                                         </tr>
                                         <tr>
-                                            <td bgcolor="#8DB6CD" align="right">Логин</td>
-                                            <td><input type="text" name="login" value="{$data_edit_user->getLogin()}"  required><td>
+                                            <td class='info' width='35%'><b>Логин</b></td>
+                                            <td><input class="form-control" type="text" name="login" value="{$data_edit_user->getLogin()}"  required><td>
                                         </tr>                                
                                         <tr>
-                                            <td bgcolor="#8DB6CD" align="right">Роль пользователя</td>
+                                            <td class='info' width='35%'><b>Роль пользователя</b></td>
                                             <td>
                                                 {$array=$data_edit_user->getRoles()}
-                                                {if $array[0]==1}
-                                                    <input type="checkbox" name="role_admin" value="1" checked>Опрашиваемый <br>
-                                                {else}
-                                                    <input type="checkbox" name="role_admin" value="1">Опрашиваемый <br>
-                                                {/if}   
-                                                {if $array[1]==2}
-                                                    <input type="checkbox" name="role_author" value="2" checked>Составитель опросов <br>
-                                                {else}
-                                                    <input type="checkbox" name="role_author" value="2">Составитель опросов <br>
-                                                {/if} 
-                                                {if $array[2]==3}
-                                                    <input type="checkbox" name="role_interviewees" value="3" checked>Администратор
-                                                {else}
-                                                    <input type="checkbox" name="role_interviewees" value="3">Администратор
-                                                {/if}    
+                                                
+                                                    <input type="checkbox" name="role_admin" value="1" {if $array[0]==1}checked{/if}>Опрашиваемый <br>
+                                                
+                                                    <input type="checkbox" name="role_author" value="2" {if $array[1]==2}checked{/if}>Составитель опросов <br>
+                                                    <input type="checkbox" name="role_interviewees" value="3" {if $array[2]==3}checked{/if} >Администратор   
                                             <td>
                                         </tr>
                                         <tr>
-                                            <td bgcolor="#8DB6CD" align="right">Изменить пароль</td>
+                                            <td class='info' width='35%'><b>Изменить пароль</b></td>
                                             <td>
                                                 <input type="radio" name="reset_password" value="Yes" onchange = 'setNewPassword((this.getAttribute("value")));'>да</br>
                                                 <input type="radio" name="reset_password" value="No" onchange = 'setNewPassword((this.getAttribute("value")))' checked>нет</br>
-                                                <div class="enter_new_password" style="display: none">
-                                                    Установить пароль: <br><input type="text" name="set_new_password" id="set_new_password" value="***" required>
-                                                 </div>
-                                            </td>
-                                        </tr> 
-                                        <tr>
-                                            <td>
-                                                <button type="submit" formaction="administration.php" name="update_user" value={$id_user}>Изменить пользователя</button>
-                                           </td>
-                                           <td>
-                                               <button type="submit" formaction="administration.php" name="delete_user" value="{$id_user}" onclick="return confirmDelete();" title='При удалении пользователя, также удалиться вся зависимая информация представленная внизу в Дополнительной информации'>Удалить пользователя</button>
-                                               
-                                           </td>    
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                {if $data_edit_user->getUserVasibility()==1}
-                                                     <button type="submit" formaction="administration.php?link_click=edit_user&&id_user={$id_user}" name="deactivate_user" value="{$id_user}">Заблокировать пользователя</button>
-                                                {else}
-                                                     <button type="submit" formaction="administration.php?link_click=edit_user&&id_user={$id_user}" name="activate_user" value="{$id_user}">Активировать пользователя</button>
-                                                {/if}                                                 
-                                            </td>
-                                                <td>
-                                                    <div id="show_other_information_user">
-                                                        <input type="button" name="other_information" value="Показать дополнительную информацию" onclick = 'otherInformation("show");'>                                                         
-                                                   </div>
-                                                   <div id="hide_other_information_user" style="display: none">
-                                                        <input type="button" name="other_information" value="Скрыть дополнительную информацию" onclick = 'otherInformation("hide");'>   
-                                                   </div>
+                                                <div class="enter_new_password" style="display: none"> Установить пароль: <br>
+                                                    <input type="text" name="set_new_password" id="set_new_password" value="***" required>
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
+                                    <div class="row">
+                                       <div class="col-lg-6">
+                                            <button class="btn btn-primary"  type="submit" formaction="administration.php" name="update_user" value={$id_user}>Изменить пользователя</button>
+                                       </div>
+                                       <div class="col-lg-6">     
+                                           <button class="btn btn-primary" type="submit" formaction="administration.php" name="delete_user" value="{$id_user}" onclick="return confirmDelete();" title='При удалении пользователя, также удалиться вся зависимая информация представленная внизу в Дополнительной информации'>Удалить пользователя</button>
+                                       </div>
+                                    </div>
+                                    <div class="row padding-top10">
+                                        <div class="col-lg-6" >
+                                            {if $data_edit_user->getUserVasibility()==1}
+                                                <button class="btn btn-primary" type="submit" formaction="administration.php?link_click=edit_user&&id_user={$id_user}" name="deactivate_user" value="{$id_user}">Заблокировать пользователя</button>
+                                            {else}
+                                                 <button class="btn btn-primary" type="submit" formaction="administration.php?link_click=edit_user&&id_user={$id_user}" name="activate_user" value="{$id_user}">Активировать пользователя</button>
+                                            {/if} 
+                                        </div>
+                                        <div class="col-lg-6">
+                                           <div id="show_other_information_user">
+                                                <input class="btn btn-primary" type="button" name="other_information" value="Показать дополнительную информацию" onclick = 'otherInformation("show");'>                                                         
+                                           </div>
+                                       </div>
+                                       <div class="col-lg-6">
+                                           <div id="hide_other_information_user" style="display: none">
+                                                <input class="btn btn-primary" type="button" name="other_information" value="Скрыть дополнительную информацию" onclick = 'otherInformation("hide");'>   
+                                           </div>
+                                       </div>
+                                   </div>
                                 </form>
-                                        
-                                            <div class="other_information_user" style="display: none">
-                                                <h2>Дополнительная информация </h2>
-                                                <p>Созданные тесты </p>
-                                                {if $other_data_user['test'][0]!=false}
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                Тема теста
-                                                            </td>    
-                                                            <td>
-                                                                Статус теста
-                                                            </td>    
-                                                        </tr>    
-                                                        {foreach $other_data_user['test'] as $other_data_user_test}
-                                                            <tr>
-                                                                <td>
-                                                                    {$other_data_user_test->topic}
-                                                                </td>    
-                                                                <td>
-                                                                    {$other_data_user_test->description_status_test}
-                                                                </td>    
-                                                            </tr> 
-                                                         {/foreach} 
-                                                    </table>     
-                                                    {else} Пользователь не составлял тесты
-                                                {/if}   
-                                                <p>Активированные тесты </p>
-                                                {if $other_data_user['testing'][0]!=false}
-                                                        <table>
-                                                        <tr>
-                                                            <td>
-                                                                Тема опроса
-                                                            </td>    
-                                                            <td>
-                                                                Статус опроса
-                                                            </td>    
-                                                        </tr>    
-                                                        {foreach $other_data_user['testing'] as $other_data_user_testing}
-                                                            <tr>
-                                                                <td>
-                                                                    {$other_data_user_testing->topic}
-                                                                </td>    
-                                                                <td>
-                                                                    {$other_data_user_testing->description_mark_test}
-                                                                </td>    
-                                                            </tr> 
-                                                         {/foreach} 
-                                                    </table>
-                                                    {else} Пользователь не активировал тесты
-                                                {/if} 
-                                            </div>     
+                                <div class="other_information_user" style="display: none">
+                                    <h2>Дополнительная информация </h2>
+                                    <p>Созданные тесты </p>
+                                    {if $other_data_user['test'][0]!=false}
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    Тема теста
+                                                </td>    
+                                                <td>
+                                                    Статус теста
+                                                </td>    
+                                            </tr>    
+                                            {foreach $other_data_user['test'] as $other_data_user_test}
+                                                <tr>
+                                                    <td>
+                                                        {$other_data_user_test->topic}
+                                                    </td>    
+                                                    <td>
+                                                        {$other_data_user_test->description_status_test}
+                                                    </td>    
+                                                </tr> 
+                                            {/foreach} 
+                                        </table>     
+                                    {else} 
+                                        Пользователь не составлял тесты
+                                    {/if}   
+                                    <p>Активированные тесты </p>
+                                    {if $other_data_user['testing'][0]!=false}
+                                            <table>
+                                            <tr>
+                                                <td>
+                                                    Тема опроса
+                                                </td>    
+                                                <td>
+                                                    Статус опроса
+                                                </td>    
+                                            </tr>    
+                                            {foreach $other_data_user['testing'] as $other_data_user_testing}
+                                                <tr>
+                                                    <td>
+                                                        {$other_data_user_testing->topic}
+                                                    </td>    
+                                                    <td>
+                                                        {$other_data_user_testing->description_mark_test}
+                                                    </td>    
+                                                </tr> 
+                                             {/foreach} 
+                                        </table>
+                                        {else} Пользователь не активировал тесты
+                                    {/if} 
+                                </div> 
+                                </div>
+                        </div>     
                         {/if}                    
                     {/capture}
                 {if {$view_admin} eq 'table_users'}
@@ -403,15 +464,8 @@
                     {$smarty.capture.edit_user}
                 {elseif {$view_admin} eq 'new_internal_user'}
                     {$smarty.capture.new_internal_user}
-                 {/if}   
-                </td>
-                    </tr> 
-                </table>
-                </td>  
-            </tr>            
-        </table>
-                </div>
-        {include file='footer.tpl'}
-        </div>
+                 {/if}  
+             </div>
+			
     </body>
 </html>

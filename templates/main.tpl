@@ -70,6 +70,7 @@
                                 {foreach $data_quiz as $data_one_quiz}
 							<tbody>
                                 <tr>
+                                {if isset($data_one_quiz['quiz']->topic)}
                                     <td>
                                         {$data_one_quiz['quiz']->topic}
                                     </td>  
@@ -103,7 +104,7 @@
 												No
 											</td>
 										{/if}
-										{else}
+									{else}
 											<td>
 												Вы еще не открывали этот тест
 											</td>
@@ -111,6 +112,13 @@
 												<a class="btn btn-xs btn-primary" href="quiz.php?status=new_test&testing={$data_one_quiz['quiz']->id_test}" role="button">Начать тест &raquo;</a>
 											</td>
 									{/if} 
+									{else}
+									    <td>
+									    </td>
+									    <td>
+									        У вас нет доступных тестов
+									    </td>
+									{/if}
                                 </tr>
 							</tbody>
 							{/foreach}

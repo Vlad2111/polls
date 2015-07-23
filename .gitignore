@@ -1,4 +1,7 @@
 *.php~
 *.tpl~
 temlates_c/*
+*.php.tpl
+*s~
+
 

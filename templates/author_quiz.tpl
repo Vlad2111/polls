@@ -12,88 +12,90 @@
         <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div class="wrapper">
-            <div class="content">
-<form id="go" method="post">
-                        </form>
-        <table width="100%">
-            <tr>
-                <td  width="100%">
-                    {include file='header.tpl'}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                <table width="100%" >
-                    <tr>                        
-                        <td width="30%" valign="top">
-                            {include file='menu.tpl'}
-                        </td>
-                        <td width="70%">
-                            <table width="100%">
-                               <tr>
-                                   <td>
-                                       <a href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
-                                   </td>
-                               </tr>
-                               <tr>
-                                   <td>
-                                       <table width="100%" align="center">
-                                           <tr>                                               
-                                               <td>
-                                                   Тема теста
-                                               </td>
-                                               <td>
-                                                   Дата создания
-                                               </td>
-                                               <td>
-                                                   Последние изменения
-                                               </td>
-                                               <td>
-                                                   Статус опроса
-                                               </td>
-                                               <td colspan="2">
-                                                   Операции
-                                               </td>
-                                           </tr>
-                                           {foreach $data_quiz as $data_one_quiz}
-                                            <tr>
-                                                <td>
-                                                    {$data_one_quiz->topic}
-                                                </td>
-                                                <td>
-                                                   01.01.2015
-                                               </td>
-                                               <td>
-                                                   ---
-                                               </td>
-                                               <td>
-                                                   {if $data_one_quiz->vasibility_test==1}
-                                                        Тест доступен 
-                                                    {else}
-                                                        Тест заблокирован
-                                                    {/if}
-                                               </td>
-                                                <td>
-                                                    <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">Редактировать тест</a>
-                                                </td>
-                                                <td>
-                                                    <a href="javascript: void(0);">Заблокировать</a>
-                                                </td>                                               
-                                            </tr>
-                                            {/foreach}
-                                       </table>
-                                   </td>
-                               </tr>  
-                           </table>  
-                        </td>
-                    </tr>
-                </table>
-                </td>
-            </tr>                
-        </table>
-      </div>
-        {include file='footer.tpl'}
-        </div>                                
+        {include file='header.tpl'}
+        <div id="wrapper">
+            <!-- MENU -->
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+			    {if {$data_role[2]} eq 3}
+                    <li class="sidebar-brand">
+                            Меню администратора
+                    </li>
+                    <li>
+                        <a href="administration.php?link_click=show_quiz">Опросы</a>
+                    </li>
+				    <li>
+					    <a href="administration.php?link_click=show_users">Пользователи</a>
+				    </li>
+			    {/if}
+			    {if {$data_role[1]} eq 2}
+                    <li class="sidebar-brand">
+                        Меню автора теста
+                    </li>
+                    <li>
+                        <a class="foc" href="author_quiz.php">Мои опросы</a>
+                    </li>
+                    <li>
+                        <a href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
+                    </li>
+			    {/if}
+			    {if  {$data_role[0]} eq 1}
+                    <li class="sidebar-brand">
+                        Меню тестируемого
+                    </li>
+                    <li>
+                        <a href="main.php">Список тестов</a>
+                    </li>
+			    {/if}
+                </ul>
+            </div>
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <table class="table table-hover">
+                       <thead>                                               
+                           <th>
+                               Тема теста
+                           </th>
+                           <th>
+                               Дата создания
+                           </th>
+                           <th>
+                               Последние изменения
+                           </th>
+                           <th>
+                               Статус опроса
+                           </th>
+                           <th>
+                               Операции
+                           </th>
+                       </thead>
+                       {foreach $data_quiz as $data_one_quiz}
+                       <tbody>
+                            <td class="info">
+                                <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">{$data_one_quiz->topic}</a>
+                            </td>
+                            <td>
+                               01.01.2015
+                           </td>
+                           <td>
+                               ---
+                           </td>
+                           <td>
+                               {if $data_one_quiz->vasibility_test==1}
+                                    Тест доступен 
+                                {else}
+                                    Тест заблокирован
+                                {/if}
+                           </td>
+                           <td>
+                               <a class="btn btn-xs btn-primary" href="javascript: void(0);">Заблокировать</a>
+                           </td>                                               
+                       </tbody>
+                       {/foreach}
+                    </table>
+                    <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
+                </div>
+            </div>
+        </div>                      
     </body>
 </html>

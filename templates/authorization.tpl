@@ -13,19 +13,18 @@
     </head>
     <body>        
         <div class="container">
-        <form class="form-signin" role="form" id="auth" method="post">
-          <h2 class="form-signin-heading">Авторизируйтесь</h2>
-          <input type="text" name="login" class="form-control" placeholder="Введите логин" required autofocus>
-          <input type="password" name="pass" class="form-control" placeholder="Введите пароль" required>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-        </form>
+            <h1 align="center">Автоматическая система тестирования</h1>
+            <form class="form-signin" role="form" id="auth" method="post">
+                <h3 class="form-signin-heading" style="color:Gray">Авторизируйтесь</h2>
+                <input type="text" name="login" class="form-control" placeholder="Введите логин" required autofocus>
+                <input type="password" name="pass" class="form-control" placeholder="Введите пароль" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+            </form>
             {if $error != ""}
                 <div class="alert alert-danger">
                     <p><font size="5" face="Arial">{$error}</font>
                 </div>
             {/if}
-      </div>
-        
-            
+        </div>
     </body>
 </html>

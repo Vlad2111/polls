@@ -85,191 +85,275 @@
                 
             }
         </script>  
-        <div class="wrapper">
-            <div class="content">
-<form id="go" method="post">
-                        </form>
-        <table width="100%">
-            <tr>
-                <td  width="100%">
-                    {include file='header.tpl'}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                <table width="100%" >
-                    <tr>                        
-                        <td width="30%" valign="top">
-                            {include file='menu.tpl'}
-                        </td>
-                        <td width="70%">
-                            <table width="100%">
-                               <tr>
-                                <td>    
-                                {capture name='new_quiz'}
-                                    <form method="post">
-                                        <input type='hidden' name='button_click' value='create_quiz'>
-                                        Тема опроса:<br>
-                                        <input type="text" name="topic_quiz" placeholder="Ваша тема" required  onblur="checkTopicQuiz(this.value)"> 
-                                        <span class="unsuitable" id="no_topic" style="display: none; color: red">Такое название уже есть</span>
-                                        <span id="yes_topic" style="display: none; color: green">Ок</span>
-                                        <br>
-                                        Время выполнения опроса:<Br>
-                                        <input type="radio" name="time_limit" value="Y" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))'> Да<Br>
-                                        <input type="radio" name="time_limit" value="N" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))' checked> Нет<Br>
-                                        <div class="enter_time_limit" style="display: none">
-                                            
-                                            Установите время: <input type="time" name="set_time_limit" id="set_time_limit" value="{$max_time}">
-                                         </div>
-                                        Дополнительная информация:<Br>
-                                        <textarea rows="5" cols="40" name="comment_test" placeholder="Информация, которая необходима для прохождения теста"></textarea><br>
-                                        Разрешить смотреть результаты опроса:<Br>
-                                        <input type="radio" name="see_the_result" value="Y" checked> Да<Br>
-                                        <input type="radio" name="see_the_result" value="N"> Нет<Br>
-                                        Разрешить смотреть детальную информацию:<Br>
-                                        <input type="radio" name="see_details" value="Y" checked> Да<Br>
-                                        <input type="radio" name="see_details" value="N"> Нет<Br>                                        
-                                        <input type="hidden" name="status_test" value="1">
-                                        <span class="unsuitable">
-                                            <input type="submit" value="Создать опрос"></span>         
-                                    </form> 
-                                {/capture} 
-                                {capture name='menu_questions'}
-                                    <h2>Опрос: {$data_one_quiz->topic}</h2>
-                                    <form method="post">
-                                        <a href='create_quiz.php?action=new_question'>Добавить вопрос</a>
-                                        <a href='create_quiz.php?action=add_inteviewee'>Добавить тестируемых</a>
-                                    </form>  
-                                    <table>
+        {include file='header.tpl'}
+        <div id="wrapper">
+            {capture name='new_quiz'}
+            <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+			{if {$data_role[2]} eq 3}
+                <li class="sidebar-brand">
+                        Меню администратора
+                </li>
+                <li>
+                    <a href="administration.php?link_click=show_quiz">Опросы</a>
+                </li>
+				<li>
+					<a href="administration.php?link_click=show_users">Пользователи</a>
+				</li>
+			{/if}
+			{if {$data_role[1]} eq 2}
+                <li class="sidebar-brand">
+                    Меню автора теста
+                </li>
+                <li>
+                    <a href="author_quiz.php">Мои опросы</a>
+                </li>
+                <li>
+                    <a class="foc" href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
+                </li>
+			{/if}
+			{if  {$data_role[0]} eq 1}
+                <li class="sidebar-brand">
+                    Меню тестируемого
+                </li>
+                <li>
+                    <a href="main.php">Список тестов</a>
+                </li>
+			{/if}
+            </ul>
+        </div>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <form method="post">
+                    <table class="table">
+                        <thead>
+                            <th class='info' width="35%">
+                                <input type='hidden' name='button_click' value='create_quiz'>
+                                Тема опроса:
+                            </th>
+                            <th>
+                                <input class="form-control" type="text" name="topic_quiz" placeholder="Ваша тема" required  onblur="checkTopicQuiz(this.value)"> 
+                                <span class="unsuitable" id="no_topic" style="display: none; color: red">Такое название уже есть</span>
+                                <span id="yes_topic" style="display: none; color: green">Ок</span>
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class='info' width="35%">
+                                    <b>Время выполнения опроса:</b>
+                                </td>
+                                <td>
+                                    <input type="radio" name="time_limit" value="Y" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))'> Да<Br>
+                                    <input type="radio" name="time_limit" value="N" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))' checked> Нет
+                                </td>
+                            </tr>
+                            <tr>
+                                <div class="enter_time_limit" style="display: none">
+                                <td class='info'>
+                                    <b>Установите время:</b>
+                                </td>
+                                <td>
+                                     <input type="time" name="set_time_limit" id="set_time_limit" value="{$max_time}">
+                                </td>
+                                </div>
+                            </tr>
+                            <tr>
+                                <td class='info'>
+                                    <b>Дополнительная информация:</b>
+                                </td>
+                                <td>
+                                    <textarea rows="5" cols="40" name="comment_test" class="form-control" placeholder="Информация, которая необходима для прохождения теста"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='info'>
+                                    <b>Разрешить смотреть результаты опроса:</b>
+                                </td>
+                                <td>
+                                    <input type="radio" name="see_the_result" value="Y" checked> Да<Br>
+                                    <input type="radio" name="see_the_result" value="N"> Нет
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='info'>
+                                    <b>Разрешить смотреть детальную информацию:</b>
+                                </td>
+                                <td>
+                                    <input type="radio" name="see_details" value="Y" checked> Да<Br>
+                                    <input type="radio" name="see_details" value="N"> Нет<Br> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                                       
+                    <input type="hidden" name="status_test" value="1">
+                    <span class="unsuitable">
+                        <input class="btn btn-primary" type="submit" value="Создать опрос">
+                    </span>         
+                </form> 
+            </div>
+        </div>
+        {/capture} 
+        {capture name='menu_questions'}
+            <form method="post">
+                <a href='create_quiz.php?action=new_question'>Добавить вопрос</a>
+                <a href='create_quiz.php?action=add_inteviewee'>Добавить тестируемых</a>
+            </form>  
+            <table class='table'>
+            <thead>
+                <th>
+                    Порядок вопроса
+                </th>
+                <th>
+                    Текст вопроса
+                </th>
+                <th>
+                    Тип вопроса
+                </th>
+                <th>
+                    Редактирование вопроса
+                </th>
+                <th>
+                    Удалить вопрос
+                </th>
+            </thead>
+            <tbody>
+           {foreach $data_questions as $data_question_one}  
+               {if $data_question_one}
+               <tr>
+                   <td>
+                       №
+                   </td>
+                   <td>
+                    {$data_question_one->text_question}
+                   </td>
+                    <td>
+                    {if  {$data_question_one->id_questions_type}==1}
+                        Вопрос типа Да/Нет
+                    {elseif  {$data_question_one->id_questions_type}==2}
+                          Вопрос с возможностью выбора одного ответа из списка
+                    {elseif  {$data_question_one->id_questions_type}==3}
+                        Вопрос с возможностью выбора одного или более ответов из списка
+                    {elseif  {$data_question_one->id_questions_type}==4}
+                        Произвольный текст
+                    {/if} 
+                   </td>
+                   <td>
+                        <a href="?action=edit_question&id_question={$data_question_one->id_question}">Редактировать</a>
+                   </td>
+                   <td>
+                       <a href="?action=delete&id_question={$data_question_one->id_question}">Удалить</a>
+                   </td>
+               </tr>
+               {/if}
+        {/foreach}
+            </tbody>
+        </table>
+        {/capture}
+        {capture name='new_question'}
+        {include file='menu.tpl'}
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <form method="post">
+                        <table class="table">
+                            <tr>
+                                <td class='info' width='35%'>
+                                    Текст вопроса 
+                                </td>
+                                <td>
+                                    <textarea class="form-control" rows="5" cols="40" name="text_question" placeholder="Ваш вопрос" required></textarea><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='info'>
+                                    Дополнительная информация
+                                </td>
+                                <td>
+                                    <textarea class="form-control" rows="5" cols="40" name="comment_question"></textarea><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='info'>
+                                    Тип вопроса
+                                </td>
+                                <td>
+                                    <select  name="question_type"  onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
+                                        <option  value="1">Да/Нет/Не знаю</option>
+                                        <option value="2">Один ответа из списка</option>
+                                        <option value="3">Выбор одного или более ответов из списка</option>
+                                        <option value="4" selected>Произвольный ответ</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <div id='add_answer_type_yorn' style="display: none">
+                            Выберите привильный ответ<br>
+                            <input type='radio' name='add_answer_type_yorn' value='Yes' checked="">Да<br>
+                            <input type='radio' name='add_answer_type_yorn' value='No'>Нет
+                        </div>                                        
+                        <div id="addNewQuestion" style="display: none">
+                            <button name="button_click" value="add_question"> Создать вопрос</button>
+                        </div>
+                        <div id='add_answer_type_many_answers' style="display: none">
+                            <form  method='post'>
+                                Текст ответа<br>
+                                <textarea id='addQuestion' rows="5" cols="40" name="answer_the_question"></textarea> 
+                                <a href="javascript: void(0);" onclick="addNewAnswer();">Добавить ответ</a>
+                                <table>                                                
                                     <tr>
-                                        <td>
-                                            Порядок вопроса
-                                        </td>
-                                        <td>
-                                            Текст вопроса
-                                        </td>
-                                        <td>
-                                            Тип вопроса
-                                        </td>
-                                        <td>
-                                            Редактирование вопроса
-                                        </td>
-                                        <td>
-                                            Удалить вопрос
-                                        </td>
-                                    </tr>
-                                       {foreach $data_questions as $data_question_one}  
-                                           {if $data_question_one}
-                                       <tr>
-                                           <td>
-                                               №
-                                           </td>
-                                           <td>
-                                            {$data_question_one->text_question}
-                                           </td>
-                                            <td>
-                                                
-                                                {if  {$data_question_one->id_questions_type}==1}
-                                                Вопрос типа Да/Нет
-                                              {elseif  {$data_question_one->id_questions_type}==2}
-                                                  Вопрос с возможностью выбора одного ответа из списка
-                                              {elseif  {$data_question_one->id_questions_type}==3}
-                                                Вопрос с возможностью выбора одного или более ответов из списка
-                                              {elseif  {$data_question_one->id_questions_type}==4}
-                                                Произвольный текст
-                                            {/if} 
-                                           </td>
-                                           <td>
-                                                <a href="?action=edit_question&id_question={$data_question_one->id_question}">Редактировать</a>
-                                           </td>
-                                           <td>
-                                               <a href="?action=delete&id_question={$data_question_one->id_question}">Удалить</a>
-                                           </td>
-                                       </tr>
-                                       {/if}
-                                {/foreach}
-                                    </table>
-                                {/capture}
-                                {capture name='new_question'}
-                                    <form method="post">
-                                        Текст вопроса <br>
-                                        <textarea rows="5" cols="40" name="text_question" placeholder="Ваш вопрос" required></textarea><br>
-                                        Дополнительная информация<br>
-                                        <textarea rows="5" cols="40" name="comment_question"></textarea><br>
-                                        Тип вопроса<br>
-                                        <select  name="question_type"  onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
-                                            <option  value="1">Да/Нет/Не знаю</option>
-                                            <option value="2">Один ответа из списка</option>
-                                            <option value="3">Выбор одного или более ответов из списка</option>
-                                            <option value="4" selected>Произвольный ответ</option>
-                                        </select><br>  
-                                        <div id='add_answer_type_yorn' style="display: none">
-                                            Выберите привильный ответ<br>
-                                            <input type='radio' name='add_answer_type_yorn' value='Yes' checked="">Да<br>
-                                            <input type='radio' name='add_answer_type_yorn' value='No'>Нет
-                                        </div>                                        
-                                        <div id="addNewQuestion" style="display: none">
-                                            <button name="button_click" value="add_question"> Создать вопрос</button>
-                                        </div>
-                                        <div id='add_answer_type_many_answers' style="display: none">
-                                        <form  method='post'>
-                                        Текст ответа<br>
-                                        <textarea id='addQuestion' rows="5" cols="40" name="answer_the_question"></textarea> 
-                                        <a href="javascript: void(0);" onclick="addNewAnswer();">Добавить ответ</a>
-                                    
-                                        <table>                                                
-                                            <tr>
-                                            <div class="new_answer"></div>
-                                            </tr>                                       
-                                        </table> 
-                                        </form>
-                                    </div>
-                                        
-                                        <div id='add_answer_type_many_answers_some' style="display: none">
-                                        <form  method='post'>
-                                        Текст ответа<br>
-                                        <textarea id='addSomeQuestion' rows="5" cols="40" name="answer_some_the_question"></textarea> 
-                                        <a href="javascript: void(0);" onclick="addSomeNewAnswer();">Добавить ответ</a>
-                                    
-                                        <table>                                                
-                                            <tr>
-                                            <div class="new_some_answer"></div>
-                                            </tr>                                       
-                                        </table> 
-                                        </form>
-                                    </div>
-                                        
-                                {/capture}
-                                {capture name='add_answer_option_one'}
-                                    <form  method='post'>
-                                        Текст ответа<br>
-                                        <textarea id='addQuestion' rows="5" cols="40" name="answer_the_question"></textarea> 
-                                        <button name="button_click" value='add_answer_option_one'>Добавить ответ</button>
-                                    
-                                    <table>
-                                        {foreach $data_answer_option as $one_data_answer_option}                                                
-                                            <tr>
-                                                <td>
-                                                    {if $one_data_answer_option->right_answer == 'Y'}
-                                                        <input type="radio" name="value_answer_option" value="{$one_data_answer_option->id_answer_option}" checked>
-                                                    {elseif $one_data_answer_option->right_answer == 'N'}
-                                                        <input type="radio" name="value_answer_option" value='{$one_data_answer_option->id_answer_option}'>
-                                                    {/if}
-                                                </td>
-                                                <td> 
-                                                    {$one_data_answer_option->answer_the_questions}
-                                                </td>
-                                            </tr>
-                                        {/foreach}                                        
-                                    </table>   
-                                    <button name="button_click" value='add_right_answer_option_one'>Внести ответы</button>
-                                    </form>
-                                {/capture}
+                                        <div class="new_answer"></div>
+                                    </tr>                                       
+                                </table> 
+                            </form>
+                        </div>
+                        <div id='add_answer_type_many_answers_some' style="display: none">
+                            <form  method='post'>
+                                Текст ответа<br>
+                                <textarea id='addSomeQuestion' rows="5" cols="40" name="answer_some_the_question"></textarea> 
+                                <a href="javascript: void(0);" onclick="addSomeNewAnswer();">Добавить ответ</a>
+                                <table>                                                
+                                    <tr>
+                                      <div class="new_some_answer"></div>
+                                    </tr>                                       
+                                </table> 
+                            </form>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {/capture}
+        {capture name='add_answer_option_one'}
+            <form  method='post'>
+                Текст ответа<br>
+                <textarea id='addQuestion' rows="5" cols="40" name="answer_the_question"></textarea> 
+                <button name="button_click" value='add_answer_option_one'>Добавить ответ</button>
+            
+            <table>
+                {foreach $data_answer_option as $one_data_answer_option}                                                
+                    <tr>
+                        <td>
+                            {if $one_data_answer_option->right_answer == 'Y'}
+                                <input type="radio" name="value_answer_option" value="{$one_data_answer_option->id_answer_option}" checked>
+                            {elseif $one_data_answer_option->right_answer == 'N'}
+                                <input type="radio" name="value_answer_option" value='{$one_data_answer_option->id_answer_option}'>
+                            {/if}
+                        </td>
+                        <td> 
+                            {$one_data_answer_option->answer_the_questions}
+                        </td>
+                    </tr>
+                {/foreach}                                        
+            </table>   
+            <button name="button_click" value='add_right_answer_option_one'>Внести ответы</button>
+            </form>
+        {/capture}
                                 {capture name='add_answer_option_more'}
                                     Добавить несколько варианты ответов
                                 {/capture}
                                 {capture name='edit_quiz'}
-                                    <h2><a href="javascript: void(0);" onclick="showEditQuiz();"><img src="img/edit.png" width='30' height='30'></a>Опрос: {$data_one_quiz->topic}</h2>
+                                {include file='menu.tpl'}
+                                <div id="page-content-wrapper">
+            <div class="container-fluid">
+                                 <h2><a href="javascript: void(0);" onclick="showEditQuiz();"><img src="img/edit.png" width='30' height='30'></a>Опрос: {$data_one_quiz->topic}</h2>
                                     <div id="quiz" style="display: none">
                                     <form method="post">
                                         <input type="hidden" name="id_quiz" value="{$data_one_quiz->id_test}">
@@ -342,6 +426,8 @@
                                     </form>
                                     </div>            
                                     {$smarty.capture.menu_questions}
+                                    </div>
+                                </div>
                                 {/capture}
                                 
                                 {capture name=edit_question}
@@ -388,17 +474,6 @@
                                     {elseif {$view_quiz} eq 'add_inteviewee'}
                                         {$smarty.capture.add_inteviewee}     
                                      {/if}
-                                </td>
-                               </tr>
-                           </table>  
-                        </td>
-                    </tr>
-                </table>
-                </td>
-            </tr>
-        </table>
-                                </div>
-        {include file='footer.tpl'}       
-        </div>
+         </div>
     </body>
 </html>
