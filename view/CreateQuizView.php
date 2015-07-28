@@ -67,8 +67,14 @@ class CreateQuizView{
         }
         if(isset($this->button_click) && !empty($this->button_click)){
             if ($this->button_click == 'create_quiz'){  
-                $this->createQuiz();
-                header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");            
+                $var = $this->createQuiz();
+                if($var!=0){
+                    header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");      
+				    exit;
+				}
+				else {
+				    echo "Wrong time!";
+				}
             }        
             elseif ($this->button_click == 'add_question'){
                 $this->addQuestion();            
@@ -91,10 +97,23 @@ class CreateQuizView{
         
         $muser->setIdUser($this->id_author);
         $mquiz->setTopic($_POST['topic_quiz']);
-        if($_POST['time_limit']=='N'){
-            $_POST['set_time_limit']=null;
-        }        
-        $mquiz->setTimeLimit($_POST['set_time_limit']);
+        if(preg_match("/[0-9]*/",$_POST['hour']) && preg_match("/[0-9]*/",$_POST['minutes']) && $_POST['minutes']<60 && !$_POST['hour']=='' && !$_POST['minutes']==''){
+           $mquiz->setTimeLimit($_POST['hour'].':'.$_POST['minutes'].':00');
+           
+        }
+        elseif($_POST['hour']=='' && $_POST['minutes']==''){
+            $mquiz->setTimeLimit(null);
+        }
+        elseif($_POST['hour']=='' && !$_POST['minutes']==''){
+            $mquiz->setTimeLimit('00:'.$_POST['minutes'].':00');
+        }
+        elseif(!$_POST['hour']=='' && $_POST['minutes']==''){
+            $mquiz->setTimeLimit($_POST['hour'].':00:00');
+        }   
+        else
+        {      
+            return 0;
+        }
         $mquiz->setCommentQuiz($_POST['comment_test']);
         $mquiz->setSeeTheResult($_POST['see_the_result']);
         $mquiz->setSeeDetails($_POST['see_details']);
@@ -113,17 +132,22 @@ class CreateQuizView{
         $mquestion->setIdTest($this->id_quiz);     
         $_SESSION['id_question'] = $question->createQuestion($mquestion);
         if ($_POST['question_type'] == 1){
-            $this->addAnswerQuestion($this->id_question, $_POST['add_answer_type_yorn'], 'Y');
-            header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+        var_dump($_POST['answer']);
+            //$this->addAnswerQuestion($this->id_question, $_POST['add_answer_type_yorn'], 'Y');
+            //header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+			//exit;
         }
         elseif ($_POST['question_type'] == 2){
             header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+			exit;
         }
         elseif ($_POST['question_type'] == 3){
             header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+			exit;
         }
         elseif ($_POST['question_type'] == 4){
             header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+			exit;
         }
     }
     public function getDataQuestions(){
@@ -151,15 +175,17 @@ class CreateQuizView{
             $this->answer_option->createAnswerOptions($manswer_option);
         }
         header("Location: create_quiz.php?link_click=".$this->link_click."&action=answer_option_one");
+		exit;
     }
     public function addRightAnswerQuestion(){
         if (isset($_POST['value_answer_option']) && !empty($_POST['value_answer_option'])){
             $this->answer_option->addRightAnswerOptions($_POST['value_answer_option']);
         }
         header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+		exit;
     }
     public function resetRightAnswer(){
         $this->answer_option->resetRightAnswerOptions($this->id_question);
     }
     
-}
+}?>

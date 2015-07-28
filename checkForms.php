@@ -27,11 +27,11 @@ $object_user_dao=new UserDAO();
 if(isset($_POST['action']) && $_POST['action']=='check'){
     if($_POST[ 'field']=="topic quiz"){
       if($object_quiz_dao->checkNameTopicQuiz($_POST['name'])){
-            echo "false";
+            echo 0;
         }
         else{
-            echo "true";
-        }  
+            echo 1;
+        } 
     }
     if($_POST[ 'field']=="email user"){
       if($object_user_dao->checkEmailUser($_POST['name'])){

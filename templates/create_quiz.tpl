@@ -10,6 +10,10 @@
 		<link href="css/simple-sidebar.css" rel="stylesheet">
 		<link href="css/navbar-fixed-top.css" rel="stylesheet">
         <script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-timepicker.min.js"></script>
+		<script type="text/javascript" src="js/moment-with-locales.min.js"></script>
+		<link rel="stylesheet" href="css/bootstrap-timepicker.min.css">
     </head>
     <body>
         <script type="text/javascript">
@@ -25,42 +29,58 @@
                 }
             }
             function addAnswerTypeYorn(value){
+				if(parseInt(value) === 0){
+					document.getElementById("create-question").disabled = true;
+                }
                 if(parseInt(value) === 1){
                     $("#add_answer_type_yorn").show();
-                    $("#addNewQuestion").show();
+					document.getElementById("create-question").disabled = false;
                     $("#add_answer_type_many_answers").hide();
                 }
                 if(parseInt(value) === 2){
                     $("#add_answer_type_many_answers").show();
                     $("#add_answer_type_yorn").hide();
-                    $("#addNewQuestion").hide();
+                    document.getElementById("create-question").disabled = false;
                 }
                 if(parseInt(value) === 3) {
                     $("#add_answer_type_many_answers").hide();
                     $("#add_answer_type_yorn").hide();
-                    $("#addNewQuestion").hide();
+                    document.getElementById("create-question").disabled = true;
                     $("#add_answer_type_many_answers_some").show();
                 }
                 if(parseInt(value) === 4) {
                     $("#add_answer_type_many_answers").hide();
                     $("#add_answer_type_yorn").hide();
-                    $("#addNewQuestion").show();
+                    document.getElementById("create-question").disabled = false;
                 }
                 
             }
             function checkTopicQuiz(value){
+			if(value != ""){
                 $.post("checkForms.php", { action: "check", field: "topic quiz", name: value }, function( data ) {
-                if(data == 'true'){
-                    $("#yes_topic").show();
-                    $(".unsuitable").show();
-                    $("#no_topic").hide();
+				
+                if(data == 1){
+					$("#inp").removeClass("has-error");
+                    $("#inp").addClass("has-success");
+					document.getElementById("button-create").disabled = false;
+					$("#glyphicon").removeClass("glyphicon-remove");
+					$("#glyphicon").addClass("glyphicon-ok");
                 }
                 else{
-                    $("#yes_topic").hide();
-                    $(".unsuitable").hide();
-                    $("#no_topic").show();
+					$("#inp").removeClass("has-success");
+					$("#inp").addClass("has-error");
+					document.getElementById("button-create").disabled = true;
+					$("#glyphicon").removeClass("glyphicon-ok");
+					$("#glyphicon").addClass("glyphicon-remove");
                 }
-              });              
+              });  
+			}
+			else{
+				$("#inp").removeClass("has-success");
+				$("#inp").removeClass("has-error");
+				$("#glyphicon").removeClass("glyphicon-ok");
+				$("#glyphicon").removeClass("glyphicon-remove");
+			}
             }
             function showEditQuiz(){
                 $("#quiz").show();
@@ -126,19 +146,21 @@
             <div class="container-fluid">
                 <form method="post">
                     <table class="table">
-                        <thead>
-                            <th class='info' width="35%">
-                                <input type='hidden' name='button_click' value='create_quiz'>
-                                Тема опроса:
-                            </th>
-                            <th>
-                                <input class="form-control" type="text" name="topic_quiz" placeholder="Ваша тема" required  onblur="checkTopicQuiz(this.value)"> 
-                                <span class="unsuitable" id="no_topic" style="display: none; color: red">Такое название уже есть</span>
-                                <span id="yes_topic" style="display: none; color: green">Ок</span>
-                            </th>
-                        </thead>
                         <tbody>
-                            <tr>
+						<tr>
+                            <td class='info' width="35%">
+                                <input type='hidden' name='button_click' value='create_quiz'>
+                                <b>Тема опроса:</b>
+                            </td>
+                            <td>
+								<div class="form-group has-feedback" id="inp">
+                                <input class="form-control" type="text" name="topic_quiz" placeholder="Ваша тема" required onblur=
+								"checkTopicQuiz(this.value)">
+								<span class="glyphicon form-control-feedback" id="glyphicon"></span>
+								</div>
+							</td>
+						</tr>
+                            <!--<tr>
                                 <td class='info' width="35%">
                                     <b>Время выполнения опроса:</b>
                                 </td>
@@ -146,14 +168,20 @@
                                     <input type="radio" name="time_limit" value="Y" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))'> Да<Br>
                                     <input type="radio" name="time_limit" value="N" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))' checked> Нет
                                 </td>
-                            </tr>
-                            <tr>
+                            </tr>-->
+                            <tr data-toggle="tooltip" data-placement="right" title="Усановите время в формате ЧЧ:ММ. Неустановленное время, означает о безлимитности теста">
                                 <div class="enter_time_limit" style="display: none">
                                 <td class='info'>
                                     <b>Установите время:</b>
                                 </td>
                                 <td>
-                                     <input type="time" name="set_time_limit" id="set_time_limit" value="{$max_time}">
+                                    <div class="input-group">
+								        <input class="form-control" type="number" pattern="[0-9]*" id="hour" name="hour" aria-describedby="basic-addon2"> 
+								        <span class="input-group-addon" id="basic-addon2">ЧЧ</span>
+								        
+								        <input class="form-control" type="number" pattern="[0-9]*" id="minutes" name="minutes" aria-describedby="basic-addon3"> 
+									    <span class="input-group-addon" id="basic-addon3">ММ</span>
+								    </div>
                                 </td>
                                 </div>
                             </tr>
@@ -187,7 +215,7 @@
                     </table>                                       
                     <input type="hidden" name="status_test" value="1">
                     <span class="unsuitable">
-                        <input class="btn btn-primary" type="submit" value="Создать опрос">
+                        <input class="btn btn-primary" id="button-create" type="submit" value="Создать опрос">
                     </span>         
                 </form> 
             </div>
@@ -253,11 +281,11 @@
         {include file='menu.tpl'}
             <div id="page-content-wrapper">
                 <div class="container-fluid">
-                    <form method="post">
+                    <form method="post" id="test_passing">
                         <table class="table">
                             <tr>
                                 <td class='info' width='35%'>
-                                    Текст вопроса 
+                                    <b>Текст вопроса</b> 
                                 </td>
                                 <td>
                                     <textarea class="form-control" rows="5" cols="40" name="text_question" placeholder="Ваш вопрос" required></textarea><br>
@@ -265,7 +293,7 @@
                             </tr>
                             <tr>
                                 <td class='info'>
-                                    Дополнительная информация
+                                    <b>Дополнительная информация</b>
                                 </td>
                                 <td>
                                     <textarea class="form-control" rows="5" cols="40" name="comment_question"></textarea><br>
@@ -273,55 +301,65 @@
                             </tr>
                             <tr>
                                 <td class='info'>
-                                    Тип вопроса
+                                    <b>Тип вопроса</b>
                                 </td>
                                 <td>
                                     <select  name="question_type"  onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
-                                        <option  value="1">Да/Нет/Не знаю</option>
+										<option value="0" selected>--/--</option>
+                                        <option value="1">Да/Нет/Не знаю</option>
                                         <option value="2">Один ответа из списка</option>
                                         <option value="3">Выбор одного или более ответов из списка</option>
-                                        <option value="4" selected>Произвольный ответ</option>
+                                        <option value="4">Произвольный ответ</option>
                                     </select>
                                 </td>
                             </tr>
+							<tr>
+								<td class='info'>
+								</td>
+								<td>
+									<div id='add_answer_type_yorn' style="display: none">
+                                        Выберите привильный ответ<br>
+                                        <input type='radio' form="test_passing" name='answer[]' value='Да' checked="">Да<br>
+                                        <input type='radio' form="test_passing" name='answer[]' value='Нет'>Нет
+                                        <label name='label' value='Да,Нет'></label>
+                                    </div>
+								    <div id='add_answer_type_many_answers' style="display: none">
+                                        <form  method='post'>
+                                            Текст ответа<br>
+                                            <textarea id='addQuestion' rows="5" cols="40" name="answer_the_question"></textarea> 
+                                            <a href="javascript: void(0);" onclick="addNewAnswer();">Добавить ответ</a>
+                                            <table>                                                
+                                                <tr>
+                                                    <div class="new_answer"></div>
+                                                </tr>                                       
+                                            </table> 
+                                        </form>
+                                    </div>
+                                    <div id='add_answer_type_many_answers_some' style="display: none">
+                                        <form  method='post'>
+                                            Текст ответа<br>
+                                            <textarea id='addSomeQuestion' rows="5" cols="40" name="answer_some_the_question"></textarea> 
+                                            <a href="javascript: void(0);" onclick="addSomeNewAnswer();">Добавить ответ</a>
+                                            <table>                                                
+                                                <tr>
+                                                  <div class="new_some_answer"></div>
+                                                </tr>                                       
+                                            </table> 
+                                        </form>
+                                    </div>
+								</td>
+							</tr>
                         </table>
-                        <div id='add_answer_type_yorn' style="display: none">
-                            Выберите привильный ответ<br>
-                            <input type='radio' name='add_answer_type_yorn' value='Yes' checked="">Да<br>
-                            <input type='radio' name='add_answer_type_yorn' value='No'>Нет
-                        </div>                                        
-                        <div id="addNewQuestion" style="display: none">
-                            <button name="button_click" value="add_question"> Создать вопрос</button>
-                        </div>
-                        <div id='add_answer_type_many_answers' style="display: none">
-                            <form  method='post'>
-                                Текст ответа<br>
-                                <textarea id='addQuestion' rows="5" cols="40" name="answer_the_question"></textarea> 
-                                <a href="javascript: void(0);" onclick="addNewAnswer();">Добавить ответ</a>
-                                <table>                                                
-                                    <tr>
-                                        <div class="new_answer"></div>
-                                    </tr>                                       
-                                </table> 
-                            </form>
-                        </div>
-                        <div id='add_answer_type_many_answers_some' style="display: none">
-                            <form  method='post'>
-                                Текст ответа<br>
-                                <textarea id='addSomeQuestion' rows="5" cols="40" name="answer_some_the_question"></textarea> 
-                                <a href="javascript: void(0);" onclick="addSomeNewAnswer();">Добавить ответ</a>
-                                <table>                                                
-                                    <tr>
-                                      <div class="new_some_answer"></div>
-                                    </tr>                                       
-                                </table> 
-                            </form>
-                        </div>
+                                              
+                            <button class="btn btn-primary" id="create-question" form="test_passing" name="button_click" value="add_question" disabled> Создать вопрос</button>
+                        
+                        
                     </form>
                 </div>
             </div>
         {/capture}
         {capture name='add_answer_option_one'}
+		{include file='menu.tpl'}
             <form  method='post'>
                 Текст ответа<br>
                 <textarea id='addQuestion' rows="5" cols="40" name="answer_the_question"></textarea> 
@@ -477,3 +515,4 @@
          </div>
     </body>
 </html>
+
