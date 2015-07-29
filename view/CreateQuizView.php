@@ -132,20 +132,75 @@ class CreateQuizView{
         $mquestion->setIdTest($this->id_quiz);     
         $_SESSION['id_question'] = $question->createQuestion($mquestion);
         if ($_POST['question_type'] == 1){
-        var_dump($_POST['answer']);
-            //$this->addAnswerQuestion($this->id_question, $_POST['add_answer_type_yorn'], 'Y');
-            //header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
-			//exit;
+            $manswer_option=new MAnswerOptions();
+            $manswer_option->setIdQuestion($this->id_question);
+            $manswer_option->setAnswerTheQuestions('Да');
+            if($_POST['answer'][0]=='Да'){
+                $manswer_option->setRightAnswer('Y');
+            }
+            else {
+                $manswer_option->setRightAnswer('N');
+            }
+            $this->answer_option->createAnswerOptions($manswer_option);
+            $manswer_option=new MAnswerOptions();
+            $manswer_option->setIdQuestion($this->id_question);
+            $manswer_option->setAnswerTheQuestions('Нет');
+            if($_POST['answer'][0]=='Нет'){
+                $manswer_option->setRightAnswer('Y');
+            }
+            else {
+                $manswer_option->setRightAnswer('N');
+            }
+            $this->answer_option->createAnswerOptions($manswer_option);
+            header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+			exit;
         }
         elseif ($_POST['question_type'] == 2){
+            for($i=0;$i<count($_POST['texting']);$i++)
+            {
+                $manswer_option=new MAnswerOptions();
+                $manswer_option->setIdQuestion($this->id_question);
+                $manswer_option->setAnswerTheQuestions($_POST['texting'][$i]);
+                $flag = false;
+                for($j=0;$j<count($_POST['rad']);$j++){
+                    if($_POST['rad'][$j]==$i){
+                        $flag=true;
+                    }
+                }
+                if($flag==true){
+                    $manswer_option->setRightAnswer('Y');
+                } else {
+                    $manswer_option->setRightAnswer('N');
+                }
+                $this->answer_option->createAnswerOptions($manswer_option);
+            }
             header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
 			exit;
         }
         elseif ($_POST['question_type'] == 3){
+            for($i=0;$i<count($_POST['textr']);$i++)
+            {
+                $manswer_option=new MAnswerOptions();
+                $manswer_option->setIdQuestion($this->id_question);
+                $manswer_option->setAnswerTheQuestions($_POST['textr'][$i]);
+                $flag = false;
+                for($j=0;$j<count($_POST['checkbox']);$j++){
+                    if($_POST['checkbox'][$j]==$i){
+                        $flag=true;
+                    }
+                }
+                if($flag==true){
+                    $manswer_option->setRightAnswer('Y');
+                } else {
+                    $manswer_option->setRightAnswer('N');
+                }
+                $this->answer_option->createAnswerOptions($manswer_option);
+            }
             header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
 			exit;
         }
         elseif ($_POST['question_type'] == 4){
+        
             header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
 			exit;
         }
@@ -167,7 +222,7 @@ class CreateQuizView{
         return $this->author->getListObjQuiz($this->id_quiz);
     }
     public function addAnswerQuestion(){
-        if(!empty($this->id_question) && !empty($_POST['answer_the_question'])){
+        /*if(!empty($this->id_question) && !empty($_POST['answer_the_question'])){
             $manswer_option=new MAnswerOptions();
             $manswer_option->setIdQuestion($this->id_question);
             $manswer_option->setAnswerTheQuestions($_POST['answer_the_question']);
@@ -175,7 +230,8 @@ class CreateQuizView{
             $this->answer_option->createAnswerOptions($manswer_option);
         }
         header("Location: create_quiz.php?link_click=".$this->link_click."&action=answer_option_one");
-		exit;
+		exit;*/
+		
     }
     public function addRightAnswerQuestion(){
         if (isset($_POST['value_answer_option']) && !empty($_POST['value_answer_option'])){

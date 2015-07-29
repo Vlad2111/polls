@@ -36,11 +36,13 @@
                     $("#add_answer_type_yorn").show();
 					document.getElementById("create-question").disabled = false;
                     $("#add_answer_type_many_answers").hide();
+                    $("#add_answer_type_many_answers_some").hide();
                 }
                 if(parseInt(value) === 2){
                     $("#add_answer_type_many_answers").show();
                     $("#add_answer_type_yorn").hide();
-                    document.getElementById("create-question").disabled = false;
+                    $("#add_answer_type_many_answers_some").hide();
+                    document.getElementById("create-question").disabled = true;
                 }
                 if(parseInt(value) === 3) {
                     $("#add_answer_type_many_answers").hide();
@@ -50,59 +52,93 @@
                 }
                 if(parseInt(value) === 4) {
                     $("#add_answer_type_many_answers").hide();
+                    $("#add_answer_type_many_answers_some").hide();
                     $("#add_answer_type_yorn").hide();
                     document.getElementById("create-question").disabled = false;
                 }
-                
             }
             function checkTopicQuiz(value){
-			if(value != ""){
-                $.post("checkForms.php", { action: "check", field: "topic quiz", name: value }, function( data ) {
+			    if(value != ""){
+                    $.post("checkForms.php", { action: "check", field: "topic quiz", name: value }, function( data ) {
 				
-                if(data == 1){
-					$("#inp").removeClass("has-error");
-                    $("#inp").addClass("has-success");
-					document.getElementById("button-create").disabled = false;
-					$("#glyphicon").removeClass("glyphicon-remove");
-					$("#glyphicon").addClass("glyphicon-ok");
-                }
-                else{
-					$("#inp").removeClass("has-success");
-					$("#inp").addClass("has-error");
-					document.getElementById("button-create").disabled = true;
-					$("#glyphicon").removeClass("glyphicon-ok");
-					$("#glyphicon").addClass("glyphicon-remove");
-                }
-              });  
-			}
-			else{
-				$("#inp").removeClass("has-success");
-				$("#inp").removeClass("has-error");
-				$("#glyphicon").removeClass("glyphicon-ok");
-				$("#glyphicon").removeClass("glyphicon-remove");
-			}
+                    if(data == 1){
+					    $("#inp").removeClass("has-error");
+                        $("#inp").addClass("has-success");
+					    document.getElementById("button-create").disabled = false;
+					    $("#glyphicon").removeClass("glyphicon-remove");
+					    $("#glyphicon").addClass("glyphicon-ok");
+                    }
+                    else{
+					    $("#inp").removeClass("has-success");
+					    $("#inp").addClass("has-error");
+					    document.getElementById("button-create").disabled = true;
+					    $("#glyphicon").removeClass("glyphicon-ok");
+					    $("#glyphicon").addClass("glyphicon-remove");
+                    }
+                  });  
+			    }
+			    else{
+				    $("#inp").removeClass("has-success");
+				    $("#inp").removeClass("has-error");
+				    $("#glyphicon").removeClass("glyphicon-ok");
+				    $("#glyphicon").removeClass("glyphicon-remove");
+			    }
             }
             function showEditQuiz(){
                 $("#quiz").show();
             }
             function hideEditQuiz(){
                 $("#quiz").hide();
-            }  
+            }
+            var int = 1;  
             function addNewAnswer(){
-                var answer = $('textarea[name = "answer_the_question"]').val();
+               /* var answer = $('textarea[name = "answer_the_question"]').val();
                 var text = '<tr><td><input type="radio" class="answer_the_question" name="answer_the_question" value="'+answer+'">'+answer+' <a href="#" onclick="$(\'[value = '+answer+']\').remove()">Удалить</a></td></tr>';
                 $(".new_answer").append(text);
                 $('textarea[name = "answer_the_question"]').val("");
-                $("#addNewQuestion").show();
+                $("#addNewQuestion").show();*/
+                var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..."></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                $(".foraddradio").append(text);
+                int++;
+			    document.getElementById("create-question").disabled = true;
                 
             }
-            function addSomeNewAnswer(){
-                var answer = $('textarea[name = "answer_some_the_question"]').val();
-                var text = '<tr><td><input type="checkbox" class="answer_some_the_question" name="answer_some_the_question" value="'+answer+'">'+answer+' <a href="#" onclick="$(\'[value = '+answer+']\').remove()">Удалить</a></td></tr>';
-                $(".new_some_answer").append(text);
-                $('textarea[name = "answer_some_the_question"]').val("");
-                $("#addNewQuestion").show();
+            function checkAnswer(value) {
+                var flag;
+                for(var i=0;i<int;i++){
+                    if(document.getElementById('texting'+i) && document.getElementById('texting'+i).value == ""){
+                        flag=false;
+                    }
+                }
                 
+                if(flag == false){
+			        document.getElementById("create-question").disabled = true;
+                }
+                else{   
+				    document.getElementById("create-question").disabled = false;
+                }
+            }
+            var intr = 1;
+            function addSomeNewAnswer(){
+                var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                $(".foraddcheckbox").append(text);
+                intr++;
+			    document.getElementById("create-question").disabled = true;
+            }
+            function checkSomeAnswer(value) {
+                var flagr;
+                for(var j=0;j<intr;j++){
+                    if(document.getElementById('textr'+j) && document.getElementById('textr'+j).value == ""){
+                        flagr=false;
+                    }
+                }
+                
+                if(flagr == false){
+			        document.getElementById("create-question").disabled = true;
+                }
+                else{   
+				    document.getElementById("create-question").disabled = false;
+                }
             }
         </script>  
         {include file='header.tpl'}
@@ -319,32 +355,43 @@
 								<td>
 									<div id='add_answer_type_yorn' style="display: none">
                                         Выберите привильный ответ<br>
-                                        <input type='radio' form="test_passing" name='answer[]' value='Да' checked="">Да<br>
+                                        <input type='radio' form="test_passing" name='answer[]' value='Да' checked>Да<br>
                                         <input type='radio' form="test_passing" name='answer[]' value='Нет'>Нет
-                                        <label name='label' value='Да,Нет'></label>
                                     </div>
 								    <div id='add_answer_type_many_answers' style="display: none">
                                         <form  method='post'>
                                             Текст ответа<br>
-                                            <textarea id='addQuestion' rows="5" cols="40" name="answer_the_question"></textarea> 
-                                            <a href="javascript: void(0);" onclick="addNewAnswer();">Добавить ответ</a>
-                                            <table>                                                
-                                                <tr>
-                                                    <div class="new_answer"></div>
-                                                </tr>                                       
-                                            </table> 
+                                            <div class="foraddradio">
+                                                <div class="row" id="0">
+                                                    <div class="col-xs-10">
+                                                        <div  class="input-group">
+                                                            <span class="input-group-addon" id="radios[]">
+                                                                <input type="radio" value="0" name="rad[]" aria-label="..." checked>
+                                                            </span>
+                                                            <input type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="javascript: void(0);" onclick="addNewAnswer();"><span class="glyphicon glyphicon-plus"></span></a>
                                         </form>
                                     </div>
                                     <div id='add_answer_type_many_answers_some' style="display: none">
                                         <form  method='post'>
                                             Текст ответа<br>
-                                            <textarea id='addSomeQuestion' rows="5" cols="40" name="answer_some_the_question"></textarea> 
-                                            <a href="javascript: void(0);" onclick="addSomeNewAnswer();">Добавить ответ</a>
-                                            <table>                                                
-                                                <tr>
-                                                  <div class="new_some_answer"></div>
-                                                </tr>                                       
-                                            </table> 
+                                            <div class="foraddcheckbox">
+                                                <div class="row" id="0">
+                                                    <div class="col-xs-10">
+                                                        <div  class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <input type="checkbox" form="test_passing" value="0" name="checkbox[]" aria-label="..." checked>
+                                                            </span>
+                                                            <input type="text" form="test_passing" name="textr[]" id="textr0" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="javascript: void(0);" onclick="addSomeNewAnswer();"><span class="glyphicon glyphicon-plus"></span></a>
                                         </form>
                                     </div>
 								</td>
