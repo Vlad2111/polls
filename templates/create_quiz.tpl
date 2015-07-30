@@ -276,7 +276,7 @@
         {include file='menu.tpl'}
             <form method="post">
                 <a href='create_quiz.php?action=new_question'>Добавить вопрос</a>
-                <a href='create_quiz.php?action=add_inteviewee'>Добавить тестируемых</a>
+                <a href='create_quiz.php?action=add_inteviewee'>Тестируемые</a>
             </form>  
             <table class='table'>
             <thead>
@@ -669,7 +669,59 @@
                 </div>
             </div>
             {/capture}
-                                {capture name=add_inteviewee}
+            {capture name=add_inteviewee}
+            {include file='menu.tpl'}
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    Тестируемые пользователи
+                    <table class="table">
+                        <thead>
+                            <th>
+                                Фамилия пользователя
+                            </th>
+                            <th>
+                                Имя пользователя
+                            </th>
+                            <th>
+                                Тип пользователя
+                            </th>
+                            <th>
+                                Статус пользователя
+                            </th>
+                            <th>
+                                
+                            </th>
+                        </thead>
+                        {foreach $users_data as $one_user_data}                                          
+                            <tr>
+                                <td class='info'>
+                                    {$one_user_data->getLastName()}
+                                </td>
+                                <td class='info'>
+                                    {$one_user_data->getFirstName()}
+                                </td>
+                                <td>
+                                    {if $one_user_data->getLdapUser()==0}
+                                        Внутренний пользователь
+                                    {elseif $one_user_data->getLdapUser()==1}
+                                        Пользователь LDAP
+                                    {/if}
+                                </td>
+                                <td>
+                                    {if $one_user_data->getUserVasibility()==1}
+                                        Активный
+                                    {else}
+                                        Неактивный
+                                    {/if}    
+                                </td>
+                                <td>
+                                    {if $one_user_data->getLdapUser()==0}
+                                        <a>Удалить</a>
+                                    {/if}
+                                </td>
+                            </tr>
+                        {/foreach}
+                    </table>
                                     <h2>Добавить опрашиваемых</h2>
                                     <form method="post">
                                     <table>                                            
@@ -692,7 +744,8 @@
                                     </table>
                                     <input type="submit">
                                     </form>   
-                                        
+                </div>
+            </div>        
                                         
                                 {/capture}    
                                     {if {$view_quiz} eq 'new_quiz'}

@@ -16,6 +16,7 @@ $smarty->assign('data_one_question', $create_quiz_view->getOneDataQuestion());
 $smarty->assign('data_answer_option', $create_quiz_view->getAnswerOptionsData());
 $smarty->assign('id_question', $create_quiz_view->id_question);
 $smarty->assign('data_one_quiz', $create_quiz_view->getOneDataQuiz());
+$smarty->assign('users_data', $create_quiz_view->getUsers());
 $smarty->assign('max_time', $config_file->array_params["ParamsDike"]["max_time"]);
 
 $smarty->display('templates/create_quiz.tpl');

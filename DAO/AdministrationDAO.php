@@ -109,8 +109,18 @@ class AdministrationDAO extends UserDAO{
         $obj_data_user->setRoles($auth->getRole($mauth, $obj_quiz->id_user));
         return $obj_data_user;
     }
-    
-    
+    public function getTestingUsers($id_test){
+        $query="select id_user from interviewees where id_test=$1;";
+        $array_params=array();
+        $array_params[]=$id_test;
+        $result=$this->db->execute($query, $array_params);
+        $arr = $this->db->getArrayData($result); 
+        $array_result=array();
+        for($i=0; $i<count($arr); $i++){
+            $array_result[$i]=$this->getObjDataUser($arr[$i]);
+        }
+        return $array_result;
+    }
     //Возращает список авторских тестов
     public function getTestsAuthor($id_user){
         $id_array_test=$this->getIdArrayQuiz($id_user);

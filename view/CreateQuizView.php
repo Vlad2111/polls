@@ -1,5 +1,6 @@
 <?php
 include_once 'DAO/AuthorQuizDAO.php';
+include_once 'DAO/AdministrationDAO.php';
 include_once 'model/MAuthorQuiz.php';
 include_once 'model/MQuiz.php';
 include_once 'DAO/QuizDAO.php';
@@ -347,6 +348,9 @@ class CreateQuizView{
         header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
 		exit;
     }
-    
-    
+    public function getUsers(){
+        $administration = new AdministrationDAO();
+        $arr = $administration->getTestingUsers($this->id_quiz);
+        return $arr;
+    }
 }?>
