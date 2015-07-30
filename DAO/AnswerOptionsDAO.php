@@ -47,9 +47,9 @@ class AnswerOptionsDAO {
     }
  //Удаляет вариант ответа   
     public function deleteAnswerOptions(MAnswerOptions $answer_options){
-        $query="DELETE FROM answer_options WHERE id_answer_option=$1;";
+        $query="DELETE FROM answer_options WHERE id_question=$1;";
         $array_params=array();
-        $array_params[]=$answer_options->getIdAnswerOption();
+        $array_params[]=$answer_options->getIdQuestion();
         $result=$this->db->execute($query,$array_params);
         if($result){
             return $result;            

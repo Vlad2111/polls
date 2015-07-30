@@ -17,6 +17,18 @@
     </head>
     <body>
         <script type="text/javascript">
+        $(document).ready(function()
+        {
+            addAnswerTypeYorn(document.getElementById("question_type").options[document.getElementById("question_type").selectedIndex].value);
+        });
+        $("#tags").autocomplete({
+            source: 'search.php',
+            onSelect: function(data, value){
+                alert('data');
+             },
+             lookup: ['January', 'February', 'March']
+        });
+        
             function setTimeLimit(value){
                 
                 switch(value){
@@ -30,6 +42,9 @@
             }
             function addAnswerTypeYorn(value){
 				if(parseInt(value) === 0){
+                    $("#add_answer_type_many_answers").hide();
+                    $("#add_answer_type_many_answers_some").hide();
+                    $("#add_answer_type_yorn").hide();
 					document.getElementById("create-question").disabled = true;
                 }
                 if(parseInt(value) === 1){
@@ -183,19 +198,19 @@
                 <form method="post">
                     <table class="table">
                         <tbody>
-						<tr>
-                            <td class='info' width="35%">
-                                <input type='hidden' name='button_click' value='create_quiz'>
-                                <b>Тема опроса:</b>
-                            </td>
-                            <td>
-								<div class="form-group has-feedback" id="inp">
-                                <input class="form-control" type="text" name="topic_quiz" placeholder="Ваша тема" required onblur=
-								"checkTopicQuiz(this.value)">
-								<span class="glyphicon form-control-feedback" id="glyphicon"></span>
-								</div>
-							</td>
-						</tr>
+						    <tr>
+                                <td class='info' width="35%">
+                                    <input type='hidden' name='button_click' value='create_quiz'>
+                                    <b>Тема опроса:</b>
+                                </td>
+                                <td>
+								    <div class="form-group has-feedback" id="inp">
+                                    <input class="form-control" type="text" name="topic_quiz" placeholder="Ваша тема" required onblur=
+								    "checkTopicQuiz(this.value)">
+								    <span class="glyphicon form-control-feedback" id="glyphicon"></span>
+								    </div>
+							    </td>
+						    </tr>
                             <!--<tr>
                                 <td class='info' width="35%">
                                     <b>Время выполнения опроса:</b>
@@ -258,6 +273,7 @@
         </div>
         {/capture} 
         {capture name='menu_questions'}
+        {include file='menu.tpl'}
             <form method="post">
                 <a href='create_quiz.php?action=new_question'>Добавить вопрос</a>
                 <a href='create_quiz.php?action=add_inteviewee'>Добавить тестируемых</a>
@@ -274,9 +290,6 @@
                     Тип вопроса
                 </th>
                 <th>
-                    Редактирование вопроса
-                </th>
-                <th>
                     Удалить вопрос
                 </th>
             </thead>
@@ -288,7 +301,7 @@
                        №
                    </td>
                    <td>
-                    {$data_question_one->text_question}
+                    <a href="?action=edit_question&id_question={$data_question_one->id_question}">{$data_question_one->text_question}</a>
                    </td>
                     <td>
                     {if  {$data_question_one->id_questions_type}==1}
@@ -302,10 +315,7 @@
                     {/if} 
                    </td>
                    <td>
-                        <a href="?action=edit_question&id_question={$data_question_one->id_question}">Редактировать</a>
-                   </td>
-                   <td>
-                       <a href="?action=delete&id_question={$data_question_one->id_question}">Удалить</a>
+                       <a class="btn btn-primary btn-xs" href="?action=delete&id_question={$data_question_one->id_question}">Удалить</a>
                    </td>
                </tr>
                {/if}
@@ -340,7 +350,7 @@
                                     <b>Тип вопроса</b>
                                 </td>
                                 <td>
-                                    <select  name="question_type"  onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
+                                    <select  name="question_type" id="question_type"  onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
 										<option value="0" selected>--/--</option>
                                         <option value="1">Да/Нет/Не знаю</option>
                                         <option value="2">Один ответа из списка</option>
@@ -434,6 +444,7 @@
                                 {capture name='add_answer_option_more'}
                                     Добавить несколько варианты ответов
                                 {/capture}
+                                
                                 {capture name='edit_quiz'}
                                 {include file='menu.tpl'}
                                 <div id="page-content-wrapper">
@@ -515,9 +526,149 @@
                                 </div>
                                 {/capture}
                                 
-                                {capture name=edit_question}
-                                    Редактирование вопроса
-                                {/capture}
+            {capture name=edit_question}
+            {include file='menu.tpl'}
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <form method="post" id="test_passing">
+                        <table class="table">
+                            <tr>
+                                <td class='info' width='35%'>
+                                    <b>Текст вопроса</b> 
+                                </td>
+                                <td>
+                                    <textarea class="form-control" rows="5" cols="40" name="text_question" placeholder="Ваш вопрос" required>{$data_one_question->text_question}</textarea><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='info'>
+                                    <b>Дополнительная информация</b>
+                                </td>
+                                <td>
+                                    <textarea class="form-control" rows="5" cols="40" name="comment_question">{$data_one_question->comment_question}</textarea><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='info'>
+                                    <b>Тип вопроса</b>
+                                </td>
+                                <td>
+                                    
+                                    <select  name="question_type" id="question_type" onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
+										<option value="0">--/--</option>
+                                        <option value="1" {if $data_one_question->id_questions_type == 1}selected{/if}>Да/Нет/Не знаю</option>
+                                        <option value="2" {if $data_one_question->id_questions_type == 2}selected{/if}>Один ответа из списка</option>
+                                        <option value="3" {if $data_one_question->id_questions_type == 3}selected{/if}>Выбор одного или более ответов из списка</option>
+                                        <option value="4" {if $data_one_question->id_questions_type == 4}selected{/if}>Произвольный ответ</option>
+                                    </select>
+                                </td>
+                            </tr>
+							<tr>
+								<td class='info'>
+								</td>
+								<td>
+									<div id='add_answer_type_yorn' style="display: none">
+                                        Выберите привильный ответ<br>
+                                        <input type='radio' form="test_passing" name='answer[]' value='Да' {if $option_one->right_answer == 'Y'}checked{/if}>Да<br>
+                                        <input type='radio' form="test_passing" name='answer[]' value='Нет' {if $option_one->right_answer == 'Y'}checked{/if}>Нет
+                                    </div>
+								    <div id='add_answer_type_many_answers' style="display: none">
+                                        <form  method='post'>
+                                            Текст ответа<br>
+                                            <div class="foraddradio">
+                                            {$vars = 0}
+                                            {foreach $data_answer_option as $option_one}
+                                                {if $vars == 0}
+                                                    <div class="row" id="0">
+                                                        <div class="col-xs-10">
+                                                            <div  class="input-group">
+                                                                <span class="input-group-addon" id="radios[]">
+                                                                    <input type="radio" value="0" name="rad[]" aria-label="..." {if $option_one->right_answer == 'Y'}checked{/if}>
+                                                                </span>
+                                                                <input type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" value="{$option_one->answer_the_questions}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {$vars=1}
+                                                {else}
+                                                <script type="text/javascript">
+                                                addRadioAnswer(1);
+                                                   function addRadioAnswer(col){
+                                                   if(col==1){
+                                                    var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..." {if $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" value="{$option_one->answer_the_questions}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                    }
+                                                    else {
+                                                    var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..."></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                    }
+			                                        int++;
+                                                    $(".foraddradio").append(text);
+			                                        document.getElementById("create-question").disabled = true;
+			                                        }
+                                                </script>
+                                                
+                                                {/if}
+                                            {/foreach}
+                                            <script type="text/javascript">
+                                                checkAnswer(0);
+                                            </script>
+                                            </div>
+                                            <a href="javascript: void(0);" onclick="addRadioAnswer(0);"><span class="glyphicon glyphicon-plus"></span></a>
+                                        </form>
+                                    </div>
+                                    <div id='add_answer_type_many_answers_some' style="display: none">
+                                        <form  method='post'>
+                                            Текст ответа<br>
+                                            <div class="foraddcheckbox">
+                                            {$vars = 0}
+                                            {foreach $data_answer_option as $option_one}
+                                                {if $vars == 0}
+                                                <div class="row" id="0">
+                                                    <div class="col-xs-10">
+                                                        <div  class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <input type="checkbox" form="test_passing" value="0" name="checkbox[]" aria-label="..." {if $option_one->right_answer == 'Y'}checked{/if}>
+                                                            </span>
+                                                            <input type="text" form="test_passing" name="textr[]" id="textr0" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" value="{$option_one->answer_the_questions}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {$vars=1}
+                                                {else}
+                                                <script type="text/javascript">
+                                                addCheckAnswer(1);
+                                                   function addCheckAnswer(col){
+                                                   if(col==1){
+                                                    var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..." {if $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" value="{$option_one->answer_the_questions}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                    }
+                                                    else {
+                                                    var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                    }
+			    intr++;         
+                $(".foraddcheckbox").append(text);
+			    document.getElementById("create-question").disabled = true;
+			    }
+                                                </script>
+                                                
+                                                {/if}
+                                            {/foreach}
+                                            <script type="text/javascript">
+                                                checkSomeAnswer(0);
+                                            </script>
+                                            </div>
+                                            <a href="javascript: void(0);" onclick="addCheckAnswer(0);"><span class="glyphicon glyphicon-plus"></span></a>
+                                        </form>
+                                    </div>
+								</td>
+							</tr>
+                        </table>
+                                              
+                            <button class="btn btn-primary" id="create-question" form="test_passing" name="button_click" value="edit_question" disabled> Создать вопрос</button>
+                        
+                        
+                    </form>
+                </div>
+            </div>
+            {/capture}
                                 {capture name=add_inteviewee}
                                     <h2>Добавить опрашиваемых</h2>
                                     <form method="post">
@@ -532,7 +683,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input type="text" size="50%">
+                                                <input id="tags" name="tags" type="text" size="50%">
                                             </td>
                                             <td>
                                                 <input type="text" size="50%">
@@ -555,7 +706,9 @@
                                     {elseif {$view_quiz} eq 'add_answer_option_more'}
                                         {$smarty.capture.add_answer_option_more}    
                                     {elseif {$view_quiz} eq 'edit_quiz'}
-                                        {$smarty.capture.edit_quiz}    
+                                        {$smarty.capture.edit_quiz} 
+                                    {elseif {$view_quiz} eq 'edit_question'}
+                                        {$smarty.capture.edit_question}    
                                     {elseif {$view_quiz} eq 'add_inteviewee'}
                                         {$smarty.capture.add_inteviewee}     
                                      {/if}
