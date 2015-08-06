@@ -88,16 +88,16 @@ $smarty->assign('title', $administration_view->title);
 $smarty->assign('view_admin', $administration_view->view_admin);
 $smarty->assign('id_user', $administration_view->id_user);
 
-if ($administration_view->view_admin == "edit_user"){
+//if ($administration_view->view_admin == "edit_user"){
     $smarty->assign('data_edit_user', $administration_view->data_edit_user);
     $smarty->assign("other_data_user", $administration_view->other_data_user);
-}
-elseif ($administration_view->view_admin == "table_quizs"){
+//}
+//elseif ($administration_view->view_admin == "table_quizs"){
     $smarty->assign('quizs_data', $administration_view->getQuizsData());
-}
-elseif ($administration_view->view_admin == "table_users"){
+//}
+//elseif ($administration_view->view_admin == "table_users"){
     $smarty->assign('users_data', $administration_view->getUsersData());
-}
+//}
 $smarty->display('templates/administration.tpl');
 
  }

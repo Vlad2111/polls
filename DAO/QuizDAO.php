@@ -237,7 +237,9 @@ class QuizDAO {
         $result=array();
         $array_id_question=$this->getArrayIdQuestion($id_quiz);
         for($i=0; $i<count($array_id_question); $i++){
-            $result[$i]=$this->getObjQuestions($array_id_question[$i]);
+            if(isset($array_id_question[$i])){
+                $result[$i]=$this->getObjQuestions($array_id_question[$i]);
+            }
         }
         return $result;
     }

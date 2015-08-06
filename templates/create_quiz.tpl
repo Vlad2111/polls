@@ -13,21 +13,21 @@
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap-timepicker.min.js"></script>
 		<script type="text/javascript" src="js/moment-with-locales.min.js"></script>
+		<script type="text/javascript" src="js/autocomplete.js"></script>
 		<link rel="stylesheet" href="css/bootstrap-timepicker.min.css">
     </head>
     <body>
         <script type="text/javascript">
-        $(document).ready(function()
-        {
-            addAnswerTypeYorn(document.getElementById("question_type").options[document.getElementById("question_type").selectedIndex].value);
-        });
-        $("#tags").autocomplete({
-            source: 'search.php',
-            onSelect: function(data, value){
-                alert('data');
-             },
-             lookup: ['January', 'February', 'March']
-        });
+            $(document).ready(function()
+            {
+                addAnswerTypeYorn(document.getElementById("question_type").options[document.getElementById("question_type").selectedIndex].value);
+                
+            });
+            /**/
+            
+            function inputN(){
+                $("#inputName").hide();
+            }
         
             function setTimeLimit(value){
                 
@@ -201,7 +201,7 @@
 						    <tr>
                                 <td class='info' width="35%">
                                     <input type='hidden' name='button_click' value='create_quiz'>
-                                    <b>Тема опроса:</b>
+                                    <b>Тема опроса</b>
                                 </td>
                                 <td>
 								    <div class="form-group has-feedback" id="inp">
@@ -223,7 +223,7 @@
                             <tr data-toggle="tooltip" data-placement="right" title="Усановите время в формате ЧЧ:ММ. Неустановленное время, означает о безлимитности теста">
                                 <div class="enter_time_limit" style="display: none">
                                 <td class='info'>
-                                    <b>Установите время:</b>
+                                    <b>Время на прохождение опроса</b>
                                 </td>
                                 <td>
                                     <div class="input-group">
@@ -238,7 +238,7 @@
                             </tr>
                             <tr>
                                 <td class='info'>
-                                    <b>Дополнительная информация:</b>
+                                    <b>Дополнительная информация</b>
                                 </td>
                                 <td>
                                     <textarea rows="5" cols="40" name="comment_test" class="form-control" placeholder="Информация, которая необходима для прохождения теста"></textarea>
@@ -246,7 +246,7 @@
                             </tr>
                             <tr>
                                 <td class='info'>
-                                    <b>Разрешить смотреть результаты опроса:</b>
+                                    <b>Разрешить смотреть результаты опроса</b>
                                 </td>
                                 <td>
                                     <input type="radio" name="see_the_result" value="Y" checked> Да<Br>
@@ -255,7 +255,7 @@
                             </tr>
                             <tr>
                                 <td class='info'>
-                                    <b>Разрешить смотреть детальную информацию:</b>
+                                    <b>Разрешить смотреть детальную информацию</b>
                                 </td>
                                 <td>
                                     <input type="radio" name="see_details" value="Y" checked> Да<Br>
@@ -569,8 +569,13 @@
 								<td>
 									<div id='add_answer_type_yorn' style="display: none">
                                         Выберите привильный ответ<br>
-                                        <input type='radio' form="test_passing" name='answer[]' value='Да' {if $option_one->right_answer == 'Y'}checked{/if}>Да<br>
-                                        <input type='radio' form="test_passing" name='answer[]' value='Нет' {if $option_one->right_answer == 'Y'}checked{/if}>Нет
+                                        {foreach $data_answer_option as $option_one}
+                                            {if $option_one->answer_the_questions == 'Да'}
+                                            <input type='radio' form="test_passing" name='answer[]' value='Да' {if $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
+                                            {else}
+                                            <input type='radio' form="test_passing" name='answer[]' value='Нет' {if $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
+                                            {/if}
+                                        {/foreach}
                                     </div>
 								    <div id='add_answer_type_many_answers' style="display: none">
                                         <form  method='post'>
@@ -735,17 +740,48 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input id="tags" name="tags" type="text" size="50%">
+                                                <input id="inputName" type="text" size="50%">
                                             </td>
                                             <td>
                                                 <input type="text" size="50%">
                                             </td>
                                         </tr>
                                     </table>
-                                    <input type="submit">
+                                     <a href="javascript: void(0);" onclick="inputN();"><span class="glyphicon glyphicon-plus"></span></a>
                                     </form>   
                 </div>
             </div>        
+            <script type="text/javascript">
+                $("#inputName").autocomplete({
+                    source: function(request, response){
+                        $.ajax({
+                            type: 'POST', 
+                            dataType: 'json', 
+                            url: 'search.php',
+                            
+                            data:{
+                                maxRows: 12, // показать первые 12 результатов
+                                nameStartsWith: request.term // поисковая фраза
+                            },
+                            success: function(data){
+                                response($.map(data, function(item){
+                                    return {
+                                        plink: item.plink, // ссылка на страницу товара
+                                        label: item.title_ru // наименование товара
+                                    }
+                                }));
+                            }
+                        });
+                    },
+                    select: function( event, ui ) {
+                        // по выбору - перейти на страницу товара
+                        // Вы можете делать вывод результата на экран
+                        location.href = ui.item.plink;
+                        return false;
+                    },
+                    minLength: 1 // начинать поиск с трех символов
+                });
+            </script>
                                         
                                 {/capture}    
                                     {if {$view_quiz} eq 'new_quiz'}

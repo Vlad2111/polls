@@ -44,6 +44,7 @@ class QuestionDAO {
         $array_params[]=$questions->getIdTest();
         $array_params[]=$questions->getIdQuestion();
         $result=$this->db->execute($query,$array_params);
+        $result=$this->setIdQuestion($questions); 
         if($result){
             return $result;            
         } 
@@ -90,29 +91,30 @@ class QuestionDAO {
     }
 	
 	public function getListAnswerOptions($id_quiz){
-            $result=array();
-            $array_id_option=$this->getArrayIdOptions($id_quiz);
-            for($i=0; $i<count($array_id_option); $i++){
+        $result=array();
+        $array_id_option=$this->getArrayIdOptions($id_quiz);
+        for($i=0; $i<count($array_id_option); $i++){
+            if(isset($array_id_option[$i])){
                 $result[$i]=$this->getObjOptions($array_id_option[$i]);
             }
-            return $result;
         }
-		
+        return $result;
+    }
 		
     //Возращает информацию об вопросе типи MQuestion     
-       public function getObjOptions($id_answer_option){
-           $query="select * from answer_options where id_answer_option=$1;";
-           $array_params=array();
-            $array_params[]=$id_answer_option;
-            $result=$this->db->execute($query,$array_params);
-            $obj_status= $this->db->getFetchObject($result);
-            $manswer=new MAnswerOptions();
-            $manswer->setIdAnswerOption($obj_status->id_answer_option);
-            $manswer->setAnswerTheQuestions($obj_status->answer_the_questions);
-            $manswer->setRightAnswer($obj_status->right_answer);
-            $manswer->setIdQuestion($obj_status->id_question);
-            return $manswer;
-       }
+   public function getObjOptions($id_answer_option){
+       $query="select * from answer_options where id_answer_option=$1;";
+       $array_params=array();
+        $array_params[]=$id_answer_option;
+        $result=$this->db->execute($query,$array_params);
+        $obj_status= $this->db->getFetchObject($result);
+        $manswer=new MAnswerOptions();
+        $manswer->setIdAnswerOption($obj_status->id_answer_option);
+        $manswer->setAnswerTheQuestions($obj_status->answer_the_questions);
+        $manswer->setRightAnswer($obj_status->right_answer);
+        $manswer->setIdQuestion($obj_status->id_question);
+        return $manswer;
+   }
        
     public function setIdQuestion(MQuestion $questions){
         $query="select id_question from questions where "

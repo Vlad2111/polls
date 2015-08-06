@@ -214,7 +214,11 @@
 						<table class="table">
 							<tbody>
 							    {foreach $data_questions as $one_question}
-								<tr class="{$colors[$one_question['data_questions']->getIdQuestion()]['value']}">
+							    {if $one_question['data_questions']->getIdQuestionsType() != '4'}
+								    <tr class="{$colors[$one_question['data_questions']->getIdQuestion()]['value']}">
+								{else}
+								    <tr>
+								{/if}
 									<td>
 										<div class="row quiz-row "><h3>{$one_question['data_questions']->getTextQuestion()}</h3></div>
 									    <div class="row quiz-row">
@@ -231,7 +235,7 @@
 					                                <input form="test_passing" type="radio" action="quiz.php" name="{$one_question['data_questions']->getIdQuestion()}" value="{$option->getIdAnswerOption()}" {if $listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]==$option->getIdAnswerOption()} checked{/if} disabled>{$option->getAnswerTheQuestions()}{if $option->getRightAnswer()=='Y'} <span class="glyphicon glyphicon-ok"></span> {/if}
 					                              </div>
 					                            {/foreach}
-					                            {$listOfAnswers[$one_question['data_questions']->getIdQuestion()]['value']}
+					                            <!--$listOfAnswers[$one_question['data_questions']->getIdQuestion()]['value']-->
 					                        {/capture}
 					                        {capture name='checkbox_list'} 
 						                           {foreach $one_question['data_questions']->getAnswerOption() as $option}

@@ -303,3 +303,9 @@ DETAIL:  Key (id_user, id_test)=(47, 23) already exists.).
 DETAIL:  Key (id_user, id_test)=(42, 23) already exists.).  
 2015-07-21T11:04:04+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
 DETAIL:  Key (id_user, id_test)=(42, 23) already exists.).  
+2015-08-04T16:05:41+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
+DETAIL:  Key (id_user, id_test)=(46, 52) already exists.).  
+2015-08-04T16:08:56+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
+DETAIL:  Key (id_user, id_test)=(46, 52) already exists.).  
+2015-08-05T14:47:25+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
+DETAIL:  Key (id_user, id_test)=(42, 52) already exists.).  

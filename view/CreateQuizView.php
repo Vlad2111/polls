@@ -23,7 +23,7 @@ class CreateQuizView{
                 $_SESSION['id_quiz'] = $_GET['id_quiz'];     
         }
         $this->id_author = $_SESSION['id_user'];
-        $this->id_quiz = $_SESSION['id_quiz'];
+        //$this->id_quiz = $_SESSION['id_quiz'];
         //$this->id_question = $_SESSION['id_question'];
         $this->mauthor = new MAuthorQuiz();
         $this->mauthor->setIdUser($this->id_author);
@@ -73,13 +73,13 @@ class CreateQuizView{
         if(isset($this->button_click) && !empty($this->button_click)){
             if ($this->button_click == 'create_quiz'){  
                 $var = $this->createQuiz();
-                if($var!=0){
+                //if($var!=0){
                     header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");      
 				    exit;
-				}
+				/*}
 				else {
 				    echo "Wrong time!";
-				}
+				}*/
             }        
             elseif ($this->button_click == 'add_question'){
                 $this->addQuestion();            
@@ -141,7 +141,7 @@ class CreateQuizView{
         $_SESSION['id_question'] = $question->createQuestion($mquestion);
         if ($_POST['question_type'] == 1){
             $manswer_option=new MAnswerOptions();
-            $manswer_option->setIdQuestion($this->id_question);
+            $manswer_option->setIdQuestion( $_SESSION['id_question']);
             $manswer_option->setAnswerTheQuestions('Да');
             if($_POST['answer'][0]=='Да'){
                 $manswer_option->setRightAnswer('Y');
@@ -149,9 +149,10 @@ class CreateQuizView{
             else {
                 $manswer_option->setRightAnswer('N');
             }
+            
             $this->answer_option->createAnswerOptions($manswer_option);
             $manswer_option=new MAnswerOptions();
-            $manswer_option->setIdQuestion($this->id_question);
+            $manswer_option->setIdQuestion( $_SESSION['id_question']);
             $manswer_option->setAnswerTheQuestions('Нет');
             if($_POST['answer'][0]=='Нет'){
                 $manswer_option->setRightAnswer('Y');
@@ -167,7 +168,7 @@ class CreateQuizView{
             for($i=0;$i<count($_POST['texting']);$i++)
             {
                 $manswer_option=new MAnswerOptions();
-                $manswer_option->setIdQuestion($this->id_question);
+                $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($_POST['texting'][$i]);
                 $flag = false;
                 for($j=0;$j<count($_POST['rad']);$j++){
@@ -189,7 +190,7 @@ class CreateQuizView{
             for($i=0;$i<count($_POST['textr']);$i++)
             {
                 $manswer_option=new MAnswerOptions();
-                $manswer_option->setIdQuestion($this->id_question);
+                $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($_POST['textr'][$i]);
                 $flag = false;
                 for($j=0;$j<count($_POST['checkbox']);$j++){
@@ -223,11 +224,11 @@ class CreateQuizView{
         $mquestion->setIdTest($this->id_quiz);     
         $_SESSION['id_question'] = $question->updateQuestion($mquestion);
         $manswer_option=new MAnswerOptions();
-        $manswer_option->setIdQuestion($this->id_question);
+        $manswer_option->setIdQuestion($_SESSION['id_question']);
         $this->answer_option->deleteAnswerOptions($manswer_option);
         if ($_POST['question_type'] == 1){
             $manswer_option=new MAnswerOptions();
-            $manswer_option->setIdQuestion($this->id_question);
+            $manswer_option->setIdQuestion($_SESSION['id_question']);
             $manswer_option->setAnswerTheQuestions('Да');
             if($_POST['answer'][0]=='Да'){
                 $manswer_option->setRightAnswer('Y');
@@ -237,7 +238,7 @@ class CreateQuizView{
             }
             $this->answer_option->createAnswerOptions($manswer_option);
             $manswer_option=new MAnswerOptions();
-            $manswer_option->setIdQuestion($this->id_question);
+            $manswer_option->setIdQuestion($_SESSION['id_question']);
             $manswer_option->setAnswerTheQuestions('Нет');
             if($_POST['answer'][0]=='Нет'){
                 $manswer_option->setRightAnswer('Y');
@@ -253,7 +254,7 @@ class CreateQuizView{
             for($i=0;$i<count($_POST['texting']);$i++)
             {
                 $manswer_option=new MAnswerOptions();
-                $manswer_option->setIdQuestion($this->id_question);
+                $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($_POST['texting'][$i]);
                 $flag = false;
                 for($j=0;$j<count($_POST['rad']);$j++){
@@ -275,7 +276,7 @@ class CreateQuizView{
             for($i=0;$i<count($_POST['textr']);$i++)
             {
                 $manswer_option=new MAnswerOptions();
-                $manswer_option->setIdQuestion($this->id_question);
+                $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($_POST['textr'][$i]);
                 $flag = false;
                 for($j=0;$j<count($_POST['checkbox']);$j++){
@@ -310,6 +311,8 @@ class CreateQuizView{
         return $this->author->getListObjQuestion($this->id_question);
     }
     public function getAnswerOptionsData(){
+    /*var_dump($this->id_question);
+    var_dump($this->answer_option->getDataAnswerOtions($this->id_question));*/
         return $this->answer_option->getDataAnswerOtions($this->id_question);        
     }
     public function getOneDataQuiz(){

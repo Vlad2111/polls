@@ -61,7 +61,9 @@ class AnswerDAO {
         $return=array();
         $array_answer=$this->getArrayIdAnswer_user($id_testing);
         for($i=0; $i<count($array_answer); $i++){
-            $return[$i]=$this->getAnswer_user($array_answer[$i]);        
+            if(isset($array_answer[$i])){
+                $return[$i]=$this->getAnswer_user($array_answer[$i]);        
+            }
         }        
         return $return;
     }
@@ -76,7 +78,10 @@ class AnswerDAO {
                 $obj = $this->getIdAnswer_user($answer_user[$i]->getIdAnswerUsers());
                 
                 for($j=0;$j<count($obj);$j++) {
-                    $result[$answer_user[$i]->getIdQuestion()][count($result[$answer_user[$i]->getIdQuestion()])] = $this->getAnswer($obj[$j]);
+                    if(isset($obj[$j])){
+                        $result[$answer_user[$i]->getIdQuestion()][count($result[$answer_user[$i]->getIdQuestion()])] = $this->getAnswer($obj[$j]);
+                        
+                    }
                 }            
             }
         }

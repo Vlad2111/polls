@@ -5,7 +5,7 @@ include_once 'lib/smarty_lib/Smarty.class.php';
 //header('Location: authorization.php');
 //exit();        
 //}
-if(!$_SESSION['role_user']){
+if(!isset($_SESSION['role_user'])){
 header('HTTP/1.1 200 OK');
 header('Location: authorization.php');
 exit();        

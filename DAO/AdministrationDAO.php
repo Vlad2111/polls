@@ -42,7 +42,7 @@ class AdministrationDAO extends UserDAO{
         $countUsers=count($listIdUsers);
         $array_list_data_users=array();
         for ($i=0; $i<$countUsers; $i++){
-        $array_list_data_users[$i]=$this->getObjDataUser($listIdUsers[$i]); 
+            $array_list_data_users[$i]=$this->getObjDataUser($listIdUsers[$i]); 
         }
         return $array_list_data_users;
     }
@@ -73,7 +73,9 @@ class AdministrationDAO extends UserDAO{
             $obj_data_quiz->setSeeTheResult($obj_quiz->see_the_result);
             $obj_data_quiz->setSeeDetails($obj_quiz->see_details);
             $obj_data_quiz->setIdStatusQuiz($obj_quiz->id_status_test);
-            $obj_data_quiz->setAuthorTest($this->getObjDataUser($obj_quiz->author_test));
+            if(isset($obj_quiz->author_test)){
+                $obj_data_quiz->setAuthorTest($this->getObjDataUser($obj_quiz->author_test));
+            }
             $obj_data_quiz->setVasibilityTest($obj_quiz->vasibility_test);// change reurn statement 
             return $obj_data_quiz;
         //}
@@ -117,7 +119,9 @@ class AdministrationDAO extends UserDAO{
         $arr = $this->db->getArrayData($result); 
         $array_result=array();
         for($i=0; $i<count($arr); $i++){
-            $array_result[$i]=$this->getObjDataUser($arr[$i]);
+            if(isset($arr[$i])){
+                $array_result[$i]=$this->getObjDataUser($arr[$i]);
+            }
         }
         return $array_result;
     }
