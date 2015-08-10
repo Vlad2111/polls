@@ -13,6 +13,7 @@
     </head>
     <body>        
         <div class="container">
+        <img src="img/tecom-EN.png" align="middle"></img>
             <h1 align="center">Автоматическая система тестирования</h1>
             <form class="form-signin" role="form" id="auth" method="post">
                 <h3 class="form-signin-heading" style="color:Gray">Авторизируйтесь</h2>

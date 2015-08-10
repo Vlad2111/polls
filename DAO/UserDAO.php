@@ -3,6 +3,7 @@ include_once 'lib/CheckOS.php';
 include_once 'IntervieweeDAO.php';
 include_once 'lib/DB.php';
 include_once 'log4php/Logger.php';
+include_once 'DAO/AdministrationDAO.php';
     Logger::configure(CheckOS::getConfigLogger());
 class UserDAO {
     protected $db;
@@ -172,18 +173,32 @@ class UserDAO {
            return $obj->id_user;
        }
     public function checkLoginUser($login){
-            $query="select id_user from alluser where login=$1;";
+           $query="select id_user from alluser where login=$1;";
            $array_params=array();
            $array_params[]=$login;
            $result_query=$this->db->execute($query, $array_params);
            $obj=$this->db->getFetchObject($result_query);
-           return $obj->id_user;
+           if(isset($obj->id_user)) {
+                return $obj->id_user;
+           } else
+           return null;
     }
     public function searchUser($name){
-        $query = "select * from alluser where last_name like '%".$name."%';";
-        $result_query=$this->db->execute($query);
-        $obj=$this->db->getFetchObject($result_query);
-        return $query;
+		$adm = new AdministrationDAO();
+        $query = "select id_user from alluser where login like '%".strtolower($name)."%' OR login like '%".strtoupper($name)."%'";
+		$array_params=array();
+        //$array_params[]=$name;
+        $result=$this->db->execute($query);
+		$arr = $this->db->getArrayData($result);
+		$array_result=array();
+        for($i=0; $i<count($arr); $i++){
+            if(isset($arr[$i])){
+                $array_result[$i]=$adm->getObjDataUser($arr[$i]);
+            }
+        }
+        return $array_result;
     }
+	
 }
 ?>
+

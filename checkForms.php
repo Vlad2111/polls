@@ -43,10 +43,10 @@ if(isset($_POST['action']) && $_POST['action']=='check'){
     }
     if($_POST[ 'field']=="login user"){
       if($object_user_dao->checkLoginUser($_POST['name'])){
-            echo "false";
+            echo 1;
         }
         else{
-            echo "true";
+            echo 0;
         }  
     }    
 }

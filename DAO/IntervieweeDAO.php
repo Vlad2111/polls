@@ -427,7 +427,36 @@ class IntervieweeDAO {
             return false;
         }
     } 
+    public function addUserIntoTest($test, $user){
+        $query="INSERT INTO interviewees(id_test, id_user)
+                VALUES ($1, $2);"; 
+        $array_params=array();
+        $array_params[]=$test;
+        $array_params[]=$user;
+        $result=$this->db->execute($query,$array_params);
+        if($result){
+            return $result;            
+        }
+        else{
+            $this->log->ERROR('Ошибка добавления строки в таблицу: interviewees( '.pg_last_error().')'); 
+//            throw new Exception('Ошибка добавления строки в таблицу: alluser( '.pg_last_error().')');  
+        }   
     }
+    public function deleteUser($id_test, $id_user){
+        $query="DELETE FROM interviewees WHERE id_user=$1 AND id_test=$2;";
+        $array_params=array();
+        $array_params[]=$id_user;
+        $array_params[]=$id_test;
+        $result=$this->db->execute($query,$array_params);
+        if($result){
+            return $result;            
+        }
+        else{
+            $this->log->ERROR('Ошибка удаления строки в таблице: interviewees( '.pg_last_error().')');  
+//            throw new Exception('Ошибка удаления строки в таблице: alluser( '.pg_last_error().')'); 
+        }  
+    }
+}
     
 
 

@@ -15,6 +15,8 @@ class CreateQuizView{
     public $link_click; // какая кнопка нажата
     public $view_quiz; // Какое действие отображается
     public $title; // Заголовок страницы
+    public $user;
+    public $inter;
     private $mauthor; 
     private $author;
     private $answer_option;
@@ -22,12 +24,16 @@ class CreateQuizView{
         if(isset($_GET['id_quiz']) && !empty($_GET['id_quiz'])){
                 $_SESSION['id_quiz'] = $_GET['id_quiz'];     
         }
-        $this->id_author = $_SESSION['id_user'];
+        if(isset($_SESSION['id_user'])) {
+            $this->id_author = $_SESSION['id_user'];
+        }
         //$this->id_quiz = $_SESSION['id_quiz'];
         //$this->id_question = $_SESSION['id_question'];
+        $this->user = new UserDAO();
         $this->mauthor = new MAuthorQuiz();
         $this->mauthor->setIdUser($this->id_author);
         $this->author = new AuthorQuizDAO();
+        $this->inter = new IntervieweeDAO();
         $this->answer_option = new AnswerOptionsDAO();
         $this->link_click = filter_input(INPUT_GET, 'link_click', FILTER_SANITIZE_SPECIAL_CHARS);
         $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);  
@@ -66,6 +72,11 @@ class CreateQuizView{
                 $this->deleteQuestion();
                 
             }
+            elseif($_GET['action'] == 'deleteUser' && !empty ($_GET['id_user'])){  
+                $this->inter->deleteUser($_SESSION['id_quiz'], $_GET['id_user']);
+                header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee");      
+				exit;
+            }
             elseif($_GET['action'] == 'add_inteviewee'){                
                 $this->view_quiz = 'add_inteviewee';
             }
@@ -93,6 +104,12 @@ class CreateQuizView{
             }
             elseif ($this->button_click == 'add_answer_option_one'){  
                 $this->addAnswerQuestion();
+            }
+            elseif ($this->button_click == 'addUserIntoTest'){  
+                //var_dump('gf');
+                $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($_POST['inputName']));
+                header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee");      
+				exit;
             }
         }
     }    
@@ -301,22 +318,26 @@ class CreateQuizView{
         }
     }
     public function getDataQuestions(){
-        $result = $this->author->getDataQuestions($this->id_quiz);
+        $result = $this->author->getDataQuestions($_SESSION['id_quiz']);
         if(count($result) > 0){            
             return $result;
         }
         return false;
     }
     public function getOneDataQuestion(){
-        return $this->author->getListObjQuestion($this->id_question);
+        if(isset($this->id_question)){
+            return $this->author->getListObjQuestion($this->id_question);
+        }
     }
     public function getAnswerOptionsData(){
     /*var_dump($this->id_question);
     var_dump($this->answer_option->getDataAnswerOtions($this->id_question));*/
-        return $this->answer_option->getDataAnswerOtions($this->id_question);        
+        if(isset($this->id_question)){
+            return $this->answer_option->getDataAnswerOtions($this->id_question);    
+        }    
     }
     public function getOneDataQuiz(){
-        return $this->author->getListObjQuiz($this->id_quiz);
+        return $this->author->getListObjQuiz($_SESSION['id_quiz']);
     }
     public function addAnswerQuestion(){
         /*if(!empty($this->id_question) && !empty($_POST['answer_the_question'])){
@@ -353,7 +374,8 @@ class CreateQuizView{
     }
     public function getUsers(){
         $administration = new AdministrationDAO();
-        $arr = $administration->getTestingUsers($this->id_quiz);
+        $arr = $administration->getTestingUsers($_SESSION['id_quiz']);
         return $arr;
     }
 }?>
+

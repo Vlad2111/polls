@@ -2,7 +2,7 @@
     <head>
         <title>{$title}</title>
         <meta charset="UTF-8">
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
         <script src="js/jquery-2.1.3.min.js"></script>
         <link rel="stylesheet" href="css/styles.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -11,23 +11,17 @@
 		<link href="css/navbar-fixed-top.css" rel="stylesheet">
         <script src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap-timepicker.min.js"></script>
 		<script type="text/javascript" src="js/moment-with-locales.min.js"></script>
 		<script type="text/javascript" src="js/autocomplete.js"></script>
-		<link rel="stylesheet" href="css/bootstrap-timepicker.min.css">
     </head>
     <body>
         <script type="text/javascript">
             $(document).ready(function()
             {
-                addAnswerTypeYorn(document.getElementById("question_type").options[document.getElementById("question_type").selectedIndex].value);
+               // addAnswerTypeYorn(document.getElementById("question_type").options[document.getElementById("question_type").selectedIndex].value);
                 
             });
             /**/
-            
-            function inputN(){
-                $("#inputName").hide();
-            }
         
             function setTimeLimit(value){
                 
@@ -70,6 +64,18 @@
                     $("#add_answer_type_many_answers_some").hide();
                     $("#add_answer_type_yorn").hide();
                     document.getElementById("create-question").disabled = false;
+                }
+            }
+            function checkLogin() {
+                var value = $('#inputName').val();
+			    if(value != ""){
+                    $.post("checkForms.php", { action: "check", field: "login user", name: value }, function( data ) {
+                        if (data == 1) {
+                            $('#btn').click();
+                        } else {
+                            alert("Wrong login");
+                        }
+                    });
                 }
             }
             function checkTopicQuiz(value){
@@ -158,6 +164,71 @@
         </script>  
         {include file='header.tpl'}
         <div id="wrapper">
+		{capture name='form_for_quiz'}
+			<tr>
+				<td class='info' width="35%">
+					<input type='hidden' name='button_click' value='create_quiz'>
+					<b>Тема опроса</b>
+				</td>
+				<td>
+					<div class="form-group has-feedback" id="inp">
+					<input class="form-control" type="text" value="{$data_one_quiz->topic}" name="topic_quiz" placeholder="Ваша тема" required onblur="checkTopicQuiz(this.value)">
+					<span class="glyphicon form-control-feedback" id="glyphicon"></span>
+					</div>
+				</td>
+			</tr>
+			<!--<tr>
+				<td class='info' width="35%">
+					<b>Время выполнения опроса:</b>
+				</td>
+				<td>
+					<input type="radio" name="time_limit" value="Y" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))'> Да<Br>
+					<input type="radio" name="time_limit" value="N" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))' checked> Нет
+				</td>
+			</tr>-->
+			<tr data-toggle="tooltip" data-placement="right" title="Усановите время в формате ЧЧ:ММ. Неустановленное время, означает о безлимитности теста">
+				<div class="enter_time_limit" style="display: none">
+				<td class='info'>
+					<b>Время на прохождение опроса</b>
+				</td>
+				<td>
+					<div class="input-group">
+						<input class="form-control" type="number" pattern="[0-9]*" id="hour" name="hour" aria-describedby="basic-addon2"> 
+						<span class="input-group-addon" id="basic-addon2">ЧЧ</span>
+						
+						<input class="form-control" type="number" pattern="[0-9]*" id="minutes" name="minutes" aria-describedby="basic-addon3"> 
+						<span class="input-group-addon" id="basic-addon3">ММ</span>
+					</div>
+				</td>
+				</div>
+			</tr>
+			<tr>
+				<td class='info'>
+					<b>Дополнительная информация</b>
+				</td>
+				<td>
+					<textarea rows="5" cols="40" name="comment_test" class="form-control" placeholder="Информация, которая необходима для прохождения теста"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td class='info'>
+					<b>Разрешить смотреть результаты опроса</b>
+				</td>
+				<td>
+					<input type="radio" name="see_the_result" value="Y" checked> Да<Br>
+					<input type="radio" name="see_the_result" value="N"> Нет
+				</td>
+			</tr>
+			<tr>
+				<td class='info'>
+					<b>Разрешить смотреть детальную информацию</b>
+				</td>
+				<td>
+					<input type="radio" name="see_details" value="Y" checked> Да<Br>
+					<input type="radio" name="see_details" value="N"> Нет<Br> 
+				</td>
+			</tr>
+		{/capture}
             {capture name='new_quiz'}
             <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
@@ -198,70 +269,7 @@
                 <form method="post">
                     <table class="table">
                         <tbody>
-						    <tr>
-                                <td class='info' width="35%">
-                                    <input type='hidden' name='button_click' value='create_quiz'>
-                                    <b>Тема опроса</b>
-                                </td>
-                                <td>
-								    <div class="form-group has-feedback" id="inp">
-                                    <input class="form-control" type="text" name="topic_quiz" placeholder="Ваша тема" required onblur=
-								    "checkTopicQuiz(this.value)">
-								    <span class="glyphicon form-control-feedback" id="glyphicon"></span>
-								    </div>
-							    </td>
-						    </tr>
-                            <!--<tr>
-                                <td class='info' width="35%">
-                                    <b>Время выполнения опроса:</b>
-                                </td>
-                                <td>
-                                    <input type="radio" name="time_limit" value="Y" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))'> Да<Br>
-                                    <input type="radio" name="time_limit" value="N" id="time_limit" onchange = 'setTimeLimit((this.getAttribute("value")))' checked> Нет
-                                </td>
-                            </tr>-->
-                            <tr data-toggle="tooltip" data-placement="right" title="Усановите время в формате ЧЧ:ММ. Неустановленное время, означает о безлимитности теста">
-                                <div class="enter_time_limit" style="display: none">
-                                <td class='info'>
-                                    <b>Время на прохождение опроса</b>
-                                </td>
-                                <td>
-                                    <div class="input-group">
-								        <input class="form-control" type="number" pattern="[0-9]*" id="hour" name="hour" aria-describedby="basic-addon2"> 
-								        <span class="input-group-addon" id="basic-addon2">ЧЧ</span>
-								        
-								        <input class="form-control" type="number" pattern="[0-9]*" id="minutes" name="minutes" aria-describedby="basic-addon3"> 
-									    <span class="input-group-addon" id="basic-addon3">ММ</span>
-								    </div>
-                                </td>
-                                </div>
-                            </tr>
-                            <tr>
-                                <td class='info'>
-                                    <b>Дополнительная информация</b>
-                                </td>
-                                <td>
-                                    <textarea rows="5" cols="40" name="comment_test" class="form-control" placeholder="Информация, которая необходима для прохождения теста"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class='info'>
-                                    <b>Разрешить смотреть результаты опроса</b>
-                                </td>
-                                <td>
-                                    <input type="radio" name="see_the_result" value="Y" checked> Да<Br>
-                                    <input type="radio" name="see_the_result" value="N"> Нет
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class='info'>
-                                    <b>Разрешить смотреть детальную информацию</b>
-                                </td>
-                                <td>
-                                    <input type="radio" name="see_details" value="Y" checked> Да<Br>
-                                    <input type="radio" name="see_details" value="N"> Нет<Br> 
-                                </td>
-                            </tr>
+						    {$smarty.capture.form_for_quiz}
                         </tbody>
                     </table>                                       
                     <input type="hidden" name="status_test" value="1">
@@ -450,10 +458,11 @@
                                 <div id="page-content-wrapper">
             <div class="container-fluid">
                                  <h2><a href="javascript: void(0);" onclick="showEditQuiz();"><img src="img/edit.png" width='30' height='30'></a>Опрос: {$data_one_quiz->topic}</h2>
-                                    <div id="quiz" style="display: none">
+                                    <!--<div id="quiz" style="display: none">-->
                                     <form method="post">
                                         <input type="hidden" name="id_quiz" value="{$data_one_quiz->id_test}">
-                                        <table width="60%" align="center" bgcolor="#87CEFA">
+                                        <table width="60%" align="center" bgcolor="#87CEFA" class="table">
+										{$smarty.capture.form_for_quiz}
                                             <tr>
                                                 <td>
                                                     Тема опроса
@@ -522,7 +531,7 @@
                                     </form>
                                     </div>            
                                     {$smarty.capture.menu_questions}
-                                    </div>
+                                    <!--</div>-->
                                 </div>
                                 {/capture}
                                 
@@ -537,7 +546,7 @@
                                     <b>Текст вопроса</b> 
                                 </td>
                                 <td>
-                                    <textarea class="form-control" rows="5" cols="40" name="text_question" placeholder="Ваш вопрос" required>{$data_one_question->text_question}</textarea><br>
+                                    <textarea class="form-control" rows="5" cols="40" name="text_question" placeholder="Ваш вопрос" required>{if isset($data_one_question->text_question)}{$data_one_question->text_question}{/if}</textarea><br>
                                 </td>
                             </tr>
                             <tr>
@@ -545,7 +554,7 @@
                                     <b>Дополнительная информация</b>
                                 </td>
                                 <td>
-                                    <textarea class="form-control" rows="5" cols="40" name="comment_question">{$data_one_question->comment_question}</textarea><br>
+                                    <textarea class="form-control" rows="5" cols="40" name="comment_question">{if isset($data_one_question->comment_question)}{$data_one_question->comment_question}{/if}</textarea><br>
                                 </td>
                             </tr>
                             <tr>
@@ -556,10 +565,10 @@
                                     
                                     <select  name="question_type" id="question_type" onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
 										<option value="0">--/--</option>
-                                        <option value="1" {if $data_one_question->id_questions_type == 1}selected{/if}>Да/Нет/Не знаю</option>
-                                        <option value="2" {if $data_one_question->id_questions_type == 2}selected{/if}>Один ответа из списка</option>
-                                        <option value="3" {if $data_one_question->id_questions_type == 3}selected{/if}>Выбор одного или более ответов из списка</option>
-                                        <option value="4" {if $data_one_question->id_questions_type == 4}selected{/if}>Произвольный ответ</option>
+                                        <option value="1" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 1}selected{/if}>Да/Нет/Не знаю</option>
+                                        <option value="2" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 2}selected{/if}>Один ответа из списка</option>
+                                        <option value="3" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 3}selected{/if}>Выбор одного или более ответов из списка</option>
+                                        <option value="4" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 4}selected{/if}>Произвольный ответ</option>
                                     </select>
                                 </td>
                             </tr>
@@ -720,72 +729,75 @@
                                     {/if}    
                                 </td>
                                 <td>
-                                    {if $one_user_data->getLdapUser()==0}
-                                        <a>Удалить</a>
-                                    {/if}
+                                    <a href="?action=deleteUser&id_user={$one_user_data->getIdUser()}"><span class="glyphicon glyphicon-trash"></span></a>
                                 </td>
                             </tr>
                         {/foreach}
                     </table>
                                     <h2>Добавить опрашиваемых</h2>
-                                    <form method="post">
-                                    <table>                                            
-                                        <tr>
-                                            <td>
-                                                <h3>Добавить пользователя</h3>
-                                            </td>
-                                            <td>
-                                                <h3>Добавить группу</h3>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input id="inputName" type="text" size="50%">
-                                            </td>
-                                            <td>
-                                                <input type="text" size="50%">
-                                            </td>
-                                        </tr>
-                                    </table>
-                                     <a href="javascript: void(0);" onclick="inputN();"><span class="glyphicon glyphicon-plus"></span></a>
+                                    <form method="post" id="test_passing">
+                                        <table>                                            
+                                            <tr>
+                                                <td>
+                                                    <h3>Добавить пользователя</h3>
+                                                </td>
+                                                <td>
+                                                    <h3>Добавить группу</h3>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+												    <div class="input_container">
+													    <input id="inputName" name="inputName" form="test_passing" type="text" size="50%" onkeyup="autocomplet()">
+													    <ul id="country_list_id"></ul>
+												    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" size="50%">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <a onclick="checkLogin();"><span class="glyphicon glyphicon-plus"></span></a>
+                                        <button style="display: none" id="btn" form="test_passing" name='button_click' value='addUserIntoTest'></button>
                                     </form>   
                 </div>
             </div>        
             <script type="text/javascript">
-                $("#inputName").autocomplete({
-                    source: function(request, response){
-                        $.ajax({
-                            type: 'POST', 
-                            dataType: 'json', 
-                            url: 'search.php',
-                            
-                            data:{
-                                maxRows: 12, // показать первые 12 результатов
-                                nameStartsWith: request.term // поисковая фраза
-                            },
-                            success: function(data){
-                                response($.map(data, function(item){
-                                    return {
-                                        plink: item.plink, // ссылка на страницу товара
-                                        label: item.title_ru // наименование товара
-                                    }
-                                }));
-                            }
-                        });
-                    },
-                    select: function( event, ui ) {
-                        // по выбору - перейти на страницу товара
-                        // Вы можете делать вывод результата на экран
-                        location.href = ui.item.plink;
-                        return false;
-                    },
-                    minLength: 1 // начинать поиск с трех символов
-                });
+			function autocomplet() {
+				var min_length = 0; // min caracters to display the autocomplete
+				var keyword = $('#inputName').val();
+				if (keyword.length > min_length) {
+					$.ajax({
+						url: 'search.php',
+						type: 'POST',
+						data: { keyword: keyword},
+						success:function(data){
+							$('#country_list_id').show();
+							$('#country_list_id').html(data);
+						}
+					});
+				} else {
+					$('#country_list_id').hide();
+				}
+			}
+
+			// set_item : this function will be executed when we select an item
+			function set_item(item) {
+				// change input value
+				$('#inputName').val(item);
+				// hide proposition list
+				$('#country_list_id').hide();
+			}
+			
+            
+            
             </script>
                                         
                                 {/capture}    
                                     {if {$view_quiz} eq 'new_quiz'}
                                         {$smarty.capture.new_quiz}   
+									{elseif {$view_quiz} eq 'form_for_quiz'}
+                                        {$smarty.capture.form_for_quiz}
                                     {elseif {$view_quiz} eq 'menu_questions'}
                                         {$smarty.capture.menu_questions}
                                     {elseif {$view_quiz} eq 'new_question'}
@@ -804,4 +816,5 @@
          </div>
     </body>
 </html>
+
 

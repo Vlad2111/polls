@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="main.php">Автоматическая система тестирования</a>
+          <a class="navbar-brand" href="main.php"><img class="leftimg" src="img/tecom-EN.png"></img>Автоматическая система тестирования</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
