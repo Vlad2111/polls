@@ -3,6 +3,7 @@
         <title>{$title}</title>
         <meta charset="UTF-8">
         <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script src="js/jquery-2.1.3.min.js"></script>
         <link rel="stylesheet" href="css/styles.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -20,9 +21,27 @@
             {
                // addAnswerTypeYorn(document.getElementById("question_type").options[document.getElementById("question_type").selectedIndex].value);
                 
+
             });
             /**/
-        
+            function changeOfResults(){
+                if(ISchecked('see_the_result') && ISchecked('see_details')){
+                    checkTopicQuiz($('#topic_quiz').val());
+                } 
+                else {
+                    document.getElementById("button-create").disabled = true;
+                }
+
+            }
+            function ISchecked(name)
+            {
+              var elements = document.getElementsByName(name);
+              for (var i=0; i<elements.length; i++)  {
+              if  (elements[i].checked) return true
+              }
+              return false
+            }
+
             function setTimeLimit(value){
                 
                 switch(value){
@@ -85,9 +104,14 @@
                     if(data == 1){
 					    $("#inp").removeClass("has-error");
                         $("#inp").addClass("has-success");
-					    document.getElementById("button-create").disabled = false;
 					    $("#glyphicon").removeClass("glyphicon-remove");
 					    $("#glyphicon").addClass("glyphicon-ok");
+					    if(ISchecked('see_the_result') && ISchecked('see_details')){
+                            document.getElementById("button-create").disabled = false;
+                        }
+                        else {
+                            document.getElementById("button-create").disabled = true;
+                        } 
                     }
                     else{
 					    $("#inp").removeClass("has-success");
@@ -103,6 +127,7 @@
 				    $("#inp").removeClass("has-error");
 				    $("#glyphicon").removeClass("glyphicon-ok");
 				    $("#glyphicon").removeClass("glyphicon-remove");
+				    document.getElementById("button-create").disabled = true;
 			    }
             }
             function showEditQuiz(){
@@ -172,7 +197,7 @@
 				</td>
 				<td>
 					<div class="form-group has-feedback" id="inp">
-					<input class="form-control" type="text" value="{$data_one_quiz->topic}" name="topic_quiz" placeholder="Ваша тема" required onblur="checkTopicQuiz(this.value)">
+					<input class="form-control" type="text" value="{if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}" name="topic_quiz" id="topic_quiz" placeholder="Ваша тема" required onblur="checkTopicQuiz(this.value)">
 					<span class="glyphicon form-control-feedback" id="glyphicon"></span>
 					</div>
 				</td>
@@ -193,10 +218,10 @@
 				</td>
 				<td>
 					<div class="input-group">
-						<input class="form-control" type="number" pattern="[0-9]*" id="hour" name="hour" aria-describedby="basic-addon2"> 
+						<input class="form-control" type="number" pattern="[0-9]*" id="hour" name="hour" aria-describedby="basic-addon2" value="{if isset($data_one_quiz->time_limit)}{$time_array[0]}{/if}"> 
 						<span class="input-group-addon" id="basic-addon2">ЧЧ</span>
 						
-						<input class="form-control" type="number" pattern="[0-9]*" id="minutes" name="minutes" aria-describedby="basic-addon3"> 
+						<input class="form-control" type="number" pattern="[0-9]*" id="minutes" name="minutes" aria-describedby="basic-addon3" value="{if isset($data_one_quiz->time_limit)}{$time_array[1]}{/if}"> 
 						<span class="input-group-addon" id="basic-addon3">ММ</span>
 					</div>
 				</td>
@@ -207,7 +232,7 @@
 					<b>Дополнительная информация</b>
 				</td>
 				<td>
-					<textarea rows="5" cols="40" name="comment_test" class="form-control" placeholder="Информация, которая необходима для прохождения теста"></textarea>
+					<textarea rows="5" cols="40" name="comment_test" class="form-control" placeholder="Информация, которая необходима для прохождения теста" >{if isset($data_one_quiz->comment_test)}{$data_one_quiz->comment_test}{/if}</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -215,8 +240,8 @@
 					<b>Разрешить смотреть результаты опроса</b>
 				</td>
 				<td>
-					<input type="radio" name="see_the_result" value="Y" checked> Да<Br>
-					<input type="radio" name="see_the_result" value="N"> Нет
+					<input type="radio" name="see_the_result" id="see_the_result" value="Y" onchange="changeOfResults()" {if isset($data_one_quiz->see_the_result)}{if $data_one_quiz->see_the_result == "Y"}checked{/if}{/if}> Да<Br>
+					<input type="radio" name="see_the_result" id="see_the_result" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_the_result)}{if $data_one_quiz->see_the_result == "N"}checked{/if}{/if}> Нет
 				</td>
 			</tr>
 			<tr>
@@ -224,8 +249,8 @@
 					<b>Разрешить смотреть детальную информацию</b>
 				</td>
 				<td>
-					<input type="radio" name="see_details" value="Y" checked> Да<Br>
-					<input type="radio" name="see_details" value="N"> Нет<Br> 
+					<input type="radio" name="see_details" id="see_details" value="Y" onchange="changeOfResults()" {if isset($data_one_quiz->see_details)}{if $data_one_quiz->see_details == "Y"}checked{/if}{/if}> Да<Br>
+					<input type="radio" name="see_details" id="see_details" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_details)}{if $data_one_quiz->see_details == "N"}checked{/if}{/if}> Нет<Br> 
 				</td>
 			</tr>
 		{/capture}
@@ -274,62 +299,11 @@
                     </table>                                       
                     <input type="hidden" name="status_test" value="1">
                     <span class="unsuitable">
-                        <input class="btn btn-primary" id="button-create" type="submit" value="Создать опрос">
+                        <input class="btn btn-primary" id="button-create" type="submit" value="Создать опрос" disabled>
                     </span>         
                 </form> 
             </div>
         </div>
-        {/capture} 
-        {capture name='menu_questions'}
-        {include file='menu.tpl'}
-            <form method="post">
-                <a href='create_quiz.php?action=new_question'>Добавить вопрос</a>
-                <a href='create_quiz.php?action=add_inteviewee'>Тестируемые</a>
-            </form>  
-            <table class='table'>
-            <thead>
-                <th>
-                    Порядок вопроса
-                </th>
-                <th>
-                    Текст вопроса
-                </th>
-                <th>
-                    Тип вопроса
-                </th>
-                <th>
-                    Удалить вопрос
-                </th>
-            </thead>
-            <tbody>
-           {foreach $data_questions as $data_question_one}  
-               {if $data_question_one}
-               <tr>
-                   <td>
-                       №
-                   </td>
-                   <td>
-                    <a href="?action=edit_question&id_question={$data_question_one->id_question}">{$data_question_one->text_question}</a>
-                   </td>
-                    <td>
-                    {if  {$data_question_one->id_questions_type}==1}
-                        Вопрос типа Да/Нет
-                    {elseif  {$data_question_one->id_questions_type}==2}
-                          Вопрос с возможностью выбора одного ответа из списка
-                    {elseif  {$data_question_one->id_questions_type}==3}
-                        Вопрос с возможностью выбора одного или более ответов из списка
-                    {elseif  {$data_question_one->id_questions_type}==4}
-                        Произвольный текст
-                    {/if} 
-                   </td>
-                   <td>
-                       <a class="btn btn-primary btn-xs" href="?action=delete&id_question={$data_question_one->id_question}">Удалить</a>
-                   </td>
-               </tr>
-               {/if}
-        {/foreach}
-            </tbody>
-        </table>
         {/capture}
         {capture name='new_question'}
         {include file='menu.tpl'}
@@ -453,87 +427,80 @@
                                     Добавить несколько варианты ответов
                                 {/capture}
                                 
-                                {capture name='edit_quiz'}
-                                {include file='menu.tpl'}
-                                <div id="page-content-wrapper">
-            <div class="container-fluid">
-                                 <h2><a href="javascript: void(0);" onclick="showEditQuiz();"><img src="img/edit.png" width='30' height='30'></a>Опрос: {$data_one_quiz->topic}</h2>
-                                    <!--<div id="quiz" style="display: none">-->
-                                    <form method="post">
-                                        <input type="hidden" name="id_quiz" value="{$data_one_quiz->id_test}">
-                                        <table width="60%" align="center" bgcolor="#87CEFA" class="table">
-										{$smarty.capture.form_for_quiz}
-                                            <tr>
-                                                <td>
-                                                    Тема опроса
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="topic" value="{$data_one_quiz->topic}">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Ограничение времени
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="time_limit" value="{$data_one_quiz->time_limit}">
-                                                </td>
-                                            </tr>  
-                                            <tr>
-                                                <td>
-                                                    Комментарий к опросу
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="comment_test" value="{$data_one_quiz->comment_test}">
-                                                </td>
-                                            </tr>  
-                                            <tr>
-                                                <td>
-                                                    Смотреть результат
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="see_the_result" value="{$data_one_quiz->see_the_result}">
-                                                </td>
-                                            </tr> 
-                                            <tr>
-                                                <td>
-                                                    Смотреть детальную информацию
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="see_details" value="{$data_one_quiz->see_details}">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Состояние теста
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="id_status_test" value="{$data_one_quiz->id_status_test}">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Статус теста
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="vasibility_test" value="{$data_one_quiz->vasibility_test}">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input type="submit" value="Изменить опрос">
-                                                </td>
-                                                <td align="right">
-                                                    <a href='javascript: void(0);' onclick='hideEditQuiz();'><img src="img/exit.png" width="20" height="20"></a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </form>
-                                    </div>            
-                                    {$smarty.capture.menu_questions}
-                                    <!--</div>-->
-                                </div>
-                                {/capture}
+            {capture name='edit_data_quiz'}
+            {include file='menu.tpl'}
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <form method="post">
+                        <input type="hidden" name="id_quiz" value="{if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">
+                        <table width="60%" align="center" bgcolor="#87CEFA" class="table">
+			                {$smarty.capture.form_for_quiz}
+                        </table>
+                        <input type="hidden" name="status_test" value="1">
+                        <button class="btn btn-primary" name='button_click' value='edit_data_quiz'>Изменить опрос</button>
+                    </form>
+                </div>
+            </div>
+            {/capture}                    
+            {capture name='edit_quiz'}
+            {include file='menu.tpl'}
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <h2><a href="javascript: void(0);" onclick="showEditQuiz();"><img src="img/edit.png" width='30' height='30'></a>Опрос: {if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}</h2>
+                    <!--<div id="quiz" style="display: none">-->
+                    
+                    <form method="post">
+                        <a href='create_quiz.php?action=new_question'>Добавить вопрос</a>
+                        <a href='create_quiz.php?action=add_inteviewee'>Тестируемые</a>
+                        <a href='create_quiz.php?action=edit_data_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'>Редактировать опрос</a>
+                    </form>  
+                    <table class='table'>
+                        <thead>
+                            <th>
+                                Порядок вопроса
+                            </th>
+                            <th>
+                                Текст вопроса
+                            </th>
+                            <th>
+                                Тип вопроса
+                            </th>
+                            <th>
+                                Удалить вопрос
+                            </th>
+                        </thead>
+                        <tbody>
+                       {foreach $data_questions as $data_question_one}  
+                           {if $data_question_one}
+                           <tr>
+                               <td>
+                                   №
+                               </td>
+                               <td>
+                                <a href="?action=edit_question&id_question={$data_question_one->id_question}">{$data_question_one->text_question}</a>
+                               </td>
+                                <td>
+                                {if  {$data_question_one->id_questions_type}==1}
+                                    Вопрос типа Да/Нет
+                                {elseif  {$data_question_one->id_questions_type}==2}
+                                      Вопрос с возможностью выбора одного ответа из списка
+                                {elseif  {$data_question_one->id_questions_type}==3}
+                                    Вопрос с возможностью выбора одного или более ответов из списка
+                                {elseif  {$data_question_one->id_questions_type}==4}
+                                    Произвольный текст
+                                {/if} 
+                               </td>
+                               <td>
+                                   <a class="btn btn-primary btn-xs" href="?action=delete&id_question={$data_question_one->id_question}">Удалить</a>
+                               </td>
+                           </tr>
+                           {/if}
+                        {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {/capture}
                                 
             {capture name=edit_question}
             {include file='menu.tpl'}
@@ -788,8 +755,6 @@
 				// hide proposition list
 				$('#country_list_id').hide();
 			}
-			
-            
             
             </script>
                                         
@@ -798,8 +763,8 @@
                                         {$smarty.capture.new_quiz}   
 									{elseif {$view_quiz} eq 'form_for_quiz'}
                                         {$smarty.capture.form_for_quiz}
-                                    {elseif {$view_quiz} eq 'menu_questions'}
-                                        {$smarty.capture.menu_questions}
+                                    {elseif {$view_quiz} eq 'edit_data_quiz'}
+                                        {$smarty.capture.edit_data_quiz}
                                     {elseif {$view_quiz} eq 'new_question'}
                                         {$smarty.capture.new_question}
                                     {elseif {$view_quiz} eq 'add_answer_option_one'}

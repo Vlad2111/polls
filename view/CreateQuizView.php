@@ -21,6 +21,9 @@ class CreateQuizView{
     private $author;
     private $answer_option;
     public function __construct() {
+        if(isset($_SESSION['id_quiz'])) {
+            unset($_SESSION['id_quiz']);
+        }
         if(isset($_GET['id_quiz']) && !empty($_GET['id_quiz'])){
                 $_SESSION['id_quiz'] = $_GET['id_quiz'];     
         }
@@ -80,12 +83,15 @@ class CreateQuizView{
             elseif($_GET['action'] == 'add_inteviewee'){                
                 $this->view_quiz = 'add_inteviewee';
             }
+            elseif($_GET['action'] == 'edit_data_quiz'){                
+                $this->view_quiz = 'edit_data_quiz';
+            }
         }
         if(isset($this->button_click) && !empty($this->button_click)){
             if ($this->button_click == 'create_quiz'){  
                 $var = $this->createQuiz();
                 //if($var!=0){
-                    header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");      
+                    header("Location: create_quiz.php?link_click=edit_quiz&id_quiz=".$_SESSION['id_quiz']);      
 				    exit;
 				/*}
 				else {
@@ -111,6 +117,11 @@ class CreateQuizView{
                 header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee");      
 				exit;
             }
+            elseif ($this->button_click == 'edit_data_quiz'){
+                $this->editQuiz();
+                header("Location: create_quiz.php?link_click=edit_quiz&id_quiz=".$_SESSION['id_quiz']);      
+				exit;
+            }  
         }
     }    
     public function createQuiz(){
@@ -144,6 +155,40 @@ class CreateQuizView{
         $mquiz->setSeeDetails($_POST['see_details']);
         $mquiz->setIdStatusQuiz($_POST['status_test']);
         $_SESSION['id_quiz'] = $quiz->createQuiz($mquiz, $muser);
+        $this->id_quiz = $_SESSION['id_quiz'];
+        $this->addAnswerQuestion();
+    }
+    public function editQuiz(){
+        unset($_SESSION['id_quiz']);
+        unset($_SESSION['id_question']);
+        $quiz=new QuizDAO();
+        $muser=new MUser();
+        $mquiz= new MQuiz();
+        
+        $muser->setIdUser($this->id_author);
+        $mquiz->setTopic($_POST['topic_quiz']);
+        if(preg_match("/[0-9]*/",$_POST['hour']) && preg_match("/[0-9]*/",$_POST['minutes']) && $_POST['minutes']<60 && !$_POST['hour']=='' && !$_POST['minutes']==''){
+           $mquiz->setTimeLimit($_POST['hour'].':'.$_POST['minutes'].':00');
+           
+        }
+        elseif($_POST['hour']=='' && $_POST['minutes']==''){
+            $mquiz->setTimeLimit(null);
+        }
+        elseif($_POST['hour']=='' && !$_POST['minutes']==''){
+            $mquiz->setTimeLimit('00:'.$_POST['minutes'].':00');
+        }
+        elseif(!$_POST['hour']=='' && $_POST['minutes']==''){
+            $mquiz->setTimeLimit($_POST['hour'].':00:00');
+        }   
+        else
+        {      
+            return 0;
+        }
+        $mquiz->setCommentQuiz($_POST['comment_test']);
+        $mquiz->setSeeTheResult($_POST['see_the_result']);
+        $mquiz->setSeeDetails($_POST['see_details']);
+        $mquiz->setIdStatusQuiz($_POST['status_test']);
+        $_SESSION['id_quiz'] = $quiz->updateQuiz($mquiz, $muser);
         $this->id_quiz = $_SESSION['id_quiz'];
         $this->addAnswerQuestion();
     }
@@ -318,9 +363,11 @@ class CreateQuizView{
         }
     }
     public function getDataQuestions(){
-        $result = $this->author->getDataQuestions($_SESSION['id_quiz']);
-        if(count($result) > 0){            
-            return $result;
+        if(isset($_SESSION['id_quiz'])){
+            $result = $this->author->getDataQuestions($_SESSION['id_quiz']);
+            if(count($result) > 0){            
+                return $result;
+            }
         }
         return false;
     }
@@ -337,7 +384,9 @@ class CreateQuizView{
         }    
     }
     public function getOneDataQuiz(){
-        return $this->author->getListObjQuiz($_SESSION['id_quiz']);
+        if(isset($_SESSION['id_quiz'])){
+            return $this->author->getListObjQuiz($_SESSION['id_quiz']);
+        }
     }
     public function addAnswerQuestion(){
         /*if(!empty($this->id_question) && !empty($_POST['answer_the_question'])){
@@ -373,9 +422,11 @@ class CreateQuizView{
 		exit;
     }
     public function getUsers(){
-        $administration = new AdministrationDAO();
-        $arr = $administration->getTestingUsers($_SESSION['id_quiz']);
-        return $arr;
+        if(isset($_SESSION['id_quiz'])){
+            $administration = new AdministrationDAO();
+            $arr = $administration->getTestingUsers($_SESSION['id_quiz']);
+            return $arr;
+        }
     }
 }?>
 

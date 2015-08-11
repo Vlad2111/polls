@@ -1,7 +1,7 @@
 <?php
     include_once 'CheckOS.php';
     include_once 'log4php/Logger.php';
-        Logger::configure(CheckOS::getConfigLogger());
+ 
 class PhpLDAP {
     private $ldap;
     private $base_dn;
@@ -12,6 +12,7 @@ class PhpLDAP {
     
     public function __construct(MAuthorization $auth) {
         $this->ldap= $this->setConnectLDAP();
+        Logger::configure('/etc/config_log4php.xml');
         $this->log= Logger::getLogger(__CLASS__);
         $this->auth=$auth;
         $this->checkUser($this->auth);
@@ -53,6 +54,7 @@ class PhpLDAP {
     //Проверка person    
     private function checkObjectclass(){
         $arr=array('objectclass');
+        var_dump($this->ldap, $this->base_dn, "(sAMAccountName={$this->auth->getLogin()})", $arr);
         $result = ldap_search($this->ldap, $this->base_dn, "(sAMAccountName={$this->auth->getLogin()})", $arr);
         $result_ent = ldap_get_entries($this->ldap, $result);
         $count=$result_ent[0]['objectclass']['count'];

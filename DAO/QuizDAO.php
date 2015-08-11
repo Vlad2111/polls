@@ -15,8 +15,8 @@ class QuizDAO {
     }
     
     public function createQuiz(MQuiz $quiz, MUser $author){
-        $query="INSERT INTO test(topic, time_limit, comment_test, see_the_result, see_details, id_status_test, author_test)
-                VALUES ($1, $2, $3, $4, $5, $6, $7);"; 
+        $query="INSERT INTO test(topic, time_limit, comment_test, see_the_result, see_details, id_status_test, author_test, date_create)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, now());"; 
         $array_params=array();
         $array_params[]=$quiz->getTopic();
         $array_params[]=$quiz->getTimeLimit();
@@ -288,7 +288,9 @@ class QuizDAO {
        $array_params[]=$topic;
        $result_query=$this->db->execute($query, $array_params);
        $obj=$this->db->getFetchObject($result_query);
-       return $obj->id_test;
+       if(isset($obj->id_test)) {
+        return $obj->id_test;
+       }
    }
     
 }

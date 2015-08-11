@@ -68,3 +68,4 @@ if(isset($_POST['action']) && $_POST['action']=='getInterviewees'){
 if(isset($_POST['action']) &&  $_POST['action']=='getAnswerOption'){
     echo $_POST['id_question'];
 }
+exit;

@@ -3,7 +3,7 @@
 
 $ldaphost="192.168.12.1";
 $ldapport="389";
-$login="TECOM\\porandaykin.a";
+$login="TECOM\\ldapquery";
 $password="Tecom1";
 $ldap=ldap_connect($ldaphost, $ldapport) or die("Cant connect to ldap Server");
  ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
@@ -28,7 +28,7 @@ echo "<hr>";
 echo "Подтверждение принадлежности пользователя к определённойй группе: ";
 $memberof = "CN=VPNusers,OU=MainOffice,DC=tecom,DC=nnov,DC=ru";
 $base = "DC=tecom,DC=nnov,DC=ru";
-$samaccountname = "porandaykin.a";
+$samaccountname = "ldapquery";
 //    $arr=array('cn', 'mail', 'samaccountname', 'objectclass');
     $arr=array('objectclass');
     $arr2=array();
