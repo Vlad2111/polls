@@ -72,16 +72,16 @@
                        {foreach $data_quiz as $data_one_quiz}
                        <tbody>
                             <td class="info">
-                                <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">{$data_one_quiz->topic}</a>
+                                <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->getIdQuiz()}">{$data_one_quiz->getTopic()}</a>
                             </td>
                             <td>
-                               01.01.2015
+                               {$data_one_quiz->getDateCreate()}
                            </td>
                            <td>
                                ---
                            </td>
                            <td>
-                               {if $data_one_quiz->vasibility_test==1}
+                               {if $data_one_quiz->getVasibilityTest()==1}
                                     Тест доступен 
                                 {else}
                                     Тест заблокирован

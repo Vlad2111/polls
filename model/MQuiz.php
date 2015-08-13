@@ -11,6 +11,7 @@ class MQuiz {
     private $id_status_quiz; //статус теста
     private $author_test; //инстанс MUser
     private $vasibility_test;
+    private $date_create;
     
     public function getIdQuiz(){
         return $this->id_quiz;
@@ -65,5 +66,11 @@ class MQuiz {
     }
     public function setVasibilityTest($vasibility_test){
         $this->vasibility_test=$vasibility_test;
+    }
+    public function getDateCreate(){
+        return $this->date_create;
+    }
+    public function setDateCreate($date_create){
+        $this->date_create=$date_create;
     }
 }

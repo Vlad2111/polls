@@ -98,10 +98,10 @@
 											</td>
 										{elseif $data_one_quiz['testing']->getMarkTest()==4}
 											<td>
-												Законченный
+												Завершенный
 											</td>
 											<td>
-												No
+												<a class="btn btn-xs btn-primary" href="quiz.php?status=finished&testing={$data_one_quiz['quiz']->id_test}" role="button">Посмотреть результат</a>
 											</td>
 										{/if}
 									{else}

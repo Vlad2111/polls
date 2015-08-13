@@ -3,6 +3,8 @@ include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'log4php/Logger.php';
 include_once 'DAO/QuizDAO.php';
+include_once 'model/MQuiz.php';
+include_once 'model/MUser.php';
     Logger::configure(CheckOS::getConfigLogger());
 class AuthorQuizDAO  extends QuizDAO{
     protected $nameclass=__CLASS__;
@@ -91,8 +93,21 @@ class AuthorQuizDAO  extends QuizDAO{
         $array_params[]=$id_quiz;
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
+        $mquiz = new MQuiz();
+        $muser = new MUser();
+        $muser->setIdUser($obj->author_test);
+        $mquiz->setIdQuiz($id_quiz);
+        $mquiz->setTopic($obj->topic);
+        $mquiz->setTimeLimit($obj->time_limit);
+        $mquiz->setCommentQuiz($obj->comment_test);
+        $mquiz->setSeeTheResult($obj->see_the_result);
+        $mquiz->setSeeDetails($obj->see_details);
+        $mquiz->setIdStatusQuiz($obj->id_status_test);
+        $mquiz->setAuthorTest($muser);
+        $mquiz->setVasibilityTest($obj->vasibility_test);
+        $mquiz->setDateCreate($obj->date_create);
         if($result){
-             return $obj;          
+             return $mquiz;          
         } 
         else{
             $this->log->ERROR('Ошибка запроса к таблице: test('.pg_last_error().')'); 

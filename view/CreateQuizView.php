@@ -159,13 +159,10 @@ class CreateQuizView{
         $this->addAnswerQuestion();
     }
     public function editQuiz(){
-        unset($_SESSION['id_quiz']);
         unset($_SESSION['id_question']);
         $quiz=new QuizDAO();
-        $muser=new MUser();
         $mquiz= new MQuiz();
-        
-        $muser->setIdUser($this->id_author);
+        $mquiz->setIdQuiz($_SESSION['id_quiz']);
         $mquiz->setTopic($_POST['topic_quiz']);
         if(preg_match("/[0-9]*/",$_POST['hour']) && preg_match("/[0-9]*/",$_POST['minutes']) && $_POST['minutes']<60 && !$_POST['hour']=='' && !$_POST['minutes']==''){
            $mquiz->setTimeLimit($_POST['hour'].':'.$_POST['minutes'].':00');
@@ -188,9 +185,8 @@ class CreateQuizView{
         $mquiz->setSeeTheResult($_POST['see_the_result']);
         $mquiz->setSeeDetails($_POST['see_details']);
         $mquiz->setIdStatusQuiz($_POST['status_test']);
-        $_SESSION['id_quiz'] = $quiz->updateQuiz($mquiz, $muser);
+        $_SESSION['id_quiz'] = $quiz->updateQuiz($mquiz);
         $this->id_quiz = $_SESSION['id_quiz'];
-        $this->addAnswerQuestion();
     }
     public function addQuestion(){ 
         unset($_SESSION['id_question']);

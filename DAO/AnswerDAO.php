@@ -78,9 +78,11 @@ class AnswerDAO {
                 $obj = $this->getIdAnswer_user($answer_user[$i]->getIdAnswerUsers());
                 
                 for($j=0;$j<count($obj);$j++) {
-                    if(isset($obj[$j])){
+                    if(isset($obj[$j]) && isset($result[$answer_user[$i]->getIdQuestion()])){
                         $result[$answer_user[$i]->getIdQuestion()][count($result[$answer_user[$i]->getIdQuestion()])] = $this->getAnswer($obj[$j]);
-                        
+                    }
+                    else {
+                        $result[$answer_user[$i]->getIdQuestion()][0] = $this->getAnswer($obj[$j]);
                     }
                 }            
             }

@@ -309,3 +309,11 @@ DETAIL:  Key (id_user, id_test)=(46, 52) already exists.).
 DETAIL:  Key (id_user, id_test)=(46, 52) already exists.).  
 2015-08-05T14:47:25+03:00 ERROR [TestingDAO] [/var/www/polls/DAO/TestingDAO.php]: 25: Ошибка добавления строки в таблицу: testing( ERROR:  duplicate key value violates unique constraint "must_be_different_testing"
 DETAIL:  Key (id_user, id_test)=(42, 52) already exists.).  
+2015-08-13T11:25:17+03:00 ERROR [AdministrationDAO] [/var/www/polls/DAO/UserDAO.php]: 31: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_lastname_firstname"
+DETAIL:  Key (last_name, first_name)=(ghfdgf, hdgfhgf) already exists.).  
+2015-08-13T11:25:17+03:00 ERROR [AdministrationDAO] [/var/www/polls/DAO/UserDAO.php]: 79: Ошибка добавления строки в таблицу: role_user( ERROR:  duplicate key value violates unique constraint "must_be_different_role_user"
+DETAIL:  Key (id_role, id_user)=(1, 62) already exists.).  
+2015-08-13T11:47:27+03:00 ERROR [AdministrationDAO] [/var/www/polls/DAO/UserDAO.php]: 31: Ошибка добавления строки в таблицу: alluser( ERROR:  duplicate key value violates unique constraint "must_be_different_lastname_firstname"
+DETAIL:  Key (last_name, first_name)=(jhg, jhgj) already exists.).  
+2015-08-13T11:47:27+03:00 ERROR [AdministrationDAO] [/var/www/polls/DAO/UserDAO.php]: 79: Ошибка добавления строки в таблицу: role_user( ERROR:  duplicate key value violates unique constraint "must_be_different_role_user"
+DETAIL:  Key (id_role, id_user)=(1, 71) already exists.).  

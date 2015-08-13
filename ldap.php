@@ -9,9 +9,9 @@ $ldap=ldap_connect($ldaphost, $ldapport) or die("Cant connect to ldap Server");
  ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
  ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 echo "Произошло подключение к серверу $ldap";
-$bind= ldap_bind($ldap);
+/*$bind= ldap_bind($ldap);
 echo "<br>анонимная привязка ";
-var_dump($bind);
+var_dump($bind);*/
 echo "<br>Привязка под пользователем $login  ";
 $bind1=ldap_bind($ldap, $login, $password);
 var_dump($bind1);

@@ -113,6 +113,8 @@ class AnswerOptionsDAO {
         $this->db->execute($query,$array_params);  
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
-        return $obj->right_answer;
+        if(isset($obj->right_answer)) {
+            return $obj->right_answer;
+        }
     }
 }

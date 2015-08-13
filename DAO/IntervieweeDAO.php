@@ -92,7 +92,6 @@ class IntervieweeDAO {
         $answers = $manswer->getAnswersForTesting($interviewee->getIdTesting());
         $result=array();
         $array_id_question=$quiz->getArrayIdQuestion($interviewee->getTest()->getIdQuiz());
-        var_dump($answers);
         for($i=0; $i<count($array_id_question); $i++){
             
                 for($j=0; $j<count($answers[$array_id_question[$i]]); $j++){
@@ -122,7 +121,6 @@ class IntervieweeDAO {
                 }
             
         }
-        var_dump($result);
         return $result;
     }
     public function getListOfAnswers(MInterviewee $interviewee){

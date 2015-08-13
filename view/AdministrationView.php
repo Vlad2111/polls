@@ -39,10 +39,20 @@ class AdministrationView{
                 $this->other_data_user= $this->getDataEditUser($this->id_user);    
             } 
         }
+        if(isset($_GET['action']) && !empty($_GET['action'])){
+            if($_GET['action'] == 'deleteUser' && !empty ($_GET['id_user'])){  
+                $this->deleteUser($_GET['id_user']);
+                header("Location: administration.php?link_click=show_users");      
+				exit;
+            }
+        }
         if(isset($this->button_click) && !empty($this->button_click)){
-            if ($this->button_click=="create_internal_user"){                
+            if ($this->button_click=="create_internal_user"){ 
+               $this->createInternalUser();
+               header("Location: administration.php?link_click=show_users");
+               exit;
             }            
-        }              
+        }
     }
     public function getUsersData(){
         return $this->admin->getDataUsers();
@@ -65,7 +75,7 @@ class AdministrationView{
        $muser->setLdapUser(0);
        $this->admin->createUser($muser);
        $this->admin->addRole($muser);
-       unset($this->button_click);
+      
     }
     public function updateUser($id_user, $last_name, $first_name, $email, $login, $role_user, $create_new_password, $new_password){
        $muser=new MUser();

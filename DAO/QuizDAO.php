@@ -34,11 +34,8 @@ class QuizDAO {
 //            throw new Exception('Ошибка добавления строки в таблицу: test('.pg_last_error().')');
         }
     }
-    public function updateQuiz(MQuiz $quiz, MUser $author){
-        $query="UPDATE test SET topic=$1, time_limit=$2,"
-                . " comment_test=$3, see_the_result=$4,"
-                . " see_details=$5, id_status_test=$6, author_test=$7"
-                . " where id_test=$8;";
+    public function updateQuiz(MQuiz $quiz){
+        $query="UPDATE test SET topic=$1, time_limit=$2, comment_test=$3, see_the_result=$4, see_details=$5, id_status_test=$6 where id_test=$7";
         $array_params=array();
         $array_params[]=$quiz->getTopic();
         $array_params[]=$quiz->getTimeLimit();
@@ -46,15 +43,14 @@ class QuizDAO {
         $array_params[]=$quiz->getSeeTheResult();
         $array_params[]=$quiz->getSeeDetails();
         $array_params[]=$quiz->getIdStatusQuiz();
-        $array_params[]=$author->getIdUser();
         $array_params[]=$quiz->getIdQuiz();
         $result=$this->db->execute($query,$array_params);
         if($result){
-            return $result;            
+            return $quiz->getIdQuiz();            
         } 
         else{
             $this->log->ERROR('Ошибка обновления строки в таблице: test('.pg_last_error().')'); 
-        }          
+        }    
     }
     public function deleteQuiz(MQuiz $quiz){
         $query="DELETE FROM test WHERE id_test=$1;";

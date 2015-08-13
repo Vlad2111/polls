@@ -170,7 +170,11 @@ class UserDAO {
            $array_params[]=$email;
            $result_query=$this->db->execute($query, $array_params);
            $obj=$this->db->getFetchObject($result_query);
-           return $obj->id_user;
+           if(isset($obj->id_user)){
+            return $obj->id_user;
+           } else {
+            return null;
+           }
        }
     public function checkLoginUser($login){
            $query="select id_user from alluser where login=$1;";

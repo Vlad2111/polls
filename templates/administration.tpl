@@ -40,33 +40,58 @@
                 }
             }
             function checkEmailUser(value){
-                $.post("checkForms.php", { action: "check", field: "email user", name: value }, function( data ) {
-                if(data=='true'){
-                    $("#yes_email").show();
-                    $(".unsuitable").show();
-                    $("#no_email").hide();
-                }
-                else{
-                    $("#yes_email").hide();
-                    $(".unsuitable").hide();
-                    $("#no_email").show();
-                }
-              });
+                if(value != "") {
+                    $.post("checkForms.php", { action: "check", field: "email user", name: value }, function( data ) {
+                    if(data == 1){
+					    $("#inp").removeClass("has-error");
+                        $("#inp").addClass("has-success");
+					    $("#glyphicon").removeClass("glyphicon-remove");
+					    $("#glyphicon").addClass("glyphicon-ok");
+                        document.getElementById("button-create").disabled = false;
+                    }
+                    else{
+					    $("#inp").removeClass("has-success");
+					    $("#inp").addClass("has-error");
+					    document.getElementById("button-create").disabled = true;
+					    $("#glyphicon").removeClass("glyphicon-ok");
+					    $("#glyphicon").addClass("glyphicon-remove");
+                    }
+                  });  
+			    }
+			    else{
+				    $("#inp").removeClass("has-success");
+				    $("#inp").removeClass("has-error");
+				    $("#glyphicon").removeClass("glyphicon-ok");
+				    $("#glyphicon").removeClass("glyphicon-remove");
+				    document.getElementById("button-create").disabled = true;
+			    }
             }
             function checkLoginUser(value){
-                $.post("checkForms.php", { action: "check", field: "login user", name: value }, function( data ) {
-                    console.log(data);
-                if(data=='true'){
-                    $("#yes_login").show();
-                    $(".unsuitable").show();
-                    $("#no_login").hide();
+                if(value != "") {
+                    $.post("checkForms.php", { action: "check", field: "login user", name: value }, function( data ) {
+                    if(data == 1){
+					    $("#inpLog").removeClass("has-error");
+                        $("#inpLog").addClass("has-success");
+					    $("#glyphiconLog").removeClass("glyphicon-remove");
+					    $("#glyphiconLog").addClass("glyphicon-ok");
+                        document.getElementById("button-create").disabled = false;
+                    }
+                    else{
+					    $("#inpLog").removeClass("has-success");
+					    $("#inpLog").addClass("has-error");
+					    document.getElementById("button-create").disabled = true;
+					    $("#glyphiconLog").removeClass("glyphicon-ok");
+					    $("#glyphiconLog").addClass("glyphicon-remove");
+                    }
+                  });  
                 }
                 else{
-                    $("#yes_login").hide();
-                    $(".unsuitable").hide();
-                    $("#no_login").show();
-                }
-              });
+				    $("#inpLog").removeClass("has-success");
+				    $("#inpLog").removeClass("has-error");
+				    $("#glyphiconLog").removeClass("glyphicon-ok");
+				    $("#glyphiconLog").removeClass("glyphicon-remove");
+				    document.getElementById("button-create").disabled = true;
+			    }
             }
             function confirmDelete() {
                 if (confirm("Вы подтверждаете удаление?")) {
@@ -228,7 +253,7 @@
                             {foreach $quizs_data as $one_quiz_data}                                          
                                 <tr>
                                     <td class='info'>
-                                        {$one_quiz_data->getTopic()}
+                                        <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$one_quiz_data->getIdQuiz()}">{$one_quiz_data->getTopic()}
                                     </td>
                                     <td>
                                         {if $one_quiz_data->getIdStatusQuiz()==1}
@@ -257,7 +282,7 @@
                                             <button class="btn btn-xs btn-primary" type="submit" formaction="administration.php?link_click=show_quiz" name="deactivate_quiz" value="{$one_quiz_data->getIdQuiz()}">Заблокировать тест</button>                                           
                                         {else}
                                             <button class="btn btn-xs btn-primary" type="submit" formaction="administration.php?link_click=show_quiz" name="activate_quiz" value="{$one_quiz_data->getIdQuiz()}">Активировать тест</button>
-                                        {/if}      
+                                        {/if}
                                     </td>
                                 </tr>
                             {/foreach}
@@ -271,7 +296,7 @@
                     {include file='menu.tpl'}
 				    <div id="page-content-wrapper">
 				        <div class="container-fluid">
-                            <form action="administration.php" method="POST">
+                            <form method="POST">
                                 <input type="hidden" name="button_click" value="create_internal_user">
                                 <table class="table">
                                     <tr>
@@ -284,16 +309,20 @@
                                     </tr>                                
                                     <tr>
                                         <td class='info' width='35%'><b>Email</b></td>
-                                        <td><input class="form-control" type="email" name="email" onblur="checkEmailUser(this.value)">
-                                            <span id="no_email" style="display: none; color: red">Такое название уже есть</span>
-                                            <span id="yes_email" style="display: none; color: green">Ок</span>
+                                        <td>
+                                            <div class="form-group has-feedback" id="inp">
+					                            <input class="form-control" type="email" name="email" onblur="checkEmailUser(this.value)">
+					                            <span class="glyphicon form-control-feedback" id="glyphicon"></span>
+					                        </div>
                                         <td>
                                     </tr>
                                     <tr>
                                         <td class='info' width='35%'><b>Логин</b></td>
-                                        <td><input class="form-control" type="text" name="login"  onblur="checkLoginUser(this.value)">
-                                            <span  id="no_login" style="display: none; color: red">Такое название уже есть</span>
-                                            <span id="yes_login" style="display: none; color: green">Ок</span>
+                                        <td>
+                                            <div class="form-group has-feedback" id="inpLog">
+                                                <input class="form-control" type="text" name="login"  onblur="checkLoginUser(this.value)">
+                                                <span class="glyphicon form-control-feedback" id="glyphiconLog"></span>
+					                        </div>
                                         <td>    
                                     </tr>
                                     <tr>
@@ -311,7 +340,7 @@
                                     <tr>
                                         <td colspan="2">
                                             <span class="unsuitable">
-                                                <input class="btn btn-primary" type="submit" value="Создать пользователя">
+                                                <input class="btn btn-primary" type="submit" id="button-create" value="Создать пользователя">
                                             </span>
                                        </td>
                                     </tr>
@@ -355,10 +384,10 @@
                                             <td>
                                                 {$array=$data_edit_user->getRoles()}
                                                 
-                                                    <input type="checkbox" name="role_admin" value="1" {if $array[0]==1}checked{/if}>Опрашиваемый <br>
+                                                    <input type="checkbox" name="role_admin" value="1" {if isset($array[0])}{if $array[0]==1}checked{/if}{/if}>Опрашиваемый <br>
                                                 
-                                                    <input type="checkbox" name="role_author" value="2" {if $array[1]==2}checked{/if}>Составитель опросов <br>
-                                                    <input type="checkbox" name="role_interviewees" value="3" {if $array[2]==3}checked{/if} >Администратор   
+                                                    <input type="checkbox" name="role_author" value="2" {if isset($array[1])}{if $array[1]==2}checked{/if}{/if}>Составитель опросов <br>
+                                                    <input type="checkbox" name="role_interviewees" value="3" {if isset($array[2])}{if $array[2]==3}checked{/if}{/if} >Администратор   
                                             <td>
                                         </tr>
                                         <tr>
@@ -377,7 +406,7 @@
                                             <button class="btn btn-primary"  type="submit" formaction="administration.php" name="update_user" value={$id_user}>Изменить пользователя</button>
                                        </div>
                                        <div class="col-lg-6">     
-                                           <button class="btn btn-primary" type="submit" formaction="administration.php" name="delete_user" value="{$id_user}" onclick="return confirmDelete();" title='При удалении пользователя, также удалиться вся зависимая информация представленная внизу в Дополнительной информации'>Удалить пользователя</button>
+                                           <a href="?action=deleteUser&id_user={$id_user}" class="btn btn-primary" name="delete_user"onclick="return confirmDelete();" title="При удалении пользователя, также удалиться вся зависимая информация представленная внизу в Дополнительной информации"><span class="glyphicon glyphicon-trash"></span></a>
                                        </div>
                                     </div>
                                     <div class="row padding-top10">

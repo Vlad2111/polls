@@ -136,7 +136,7 @@ class AuthorizationDAO {
          $result=array();
         $array_group=array('interviewee', 'author_quiz', 'administrator');        
         $ldap=new PhpLDAP($auth);
-        $array_group_user=$ldap->getGroupLDAPUser();
+       /* $array_group_user=$ldap->getGroupLDAPUser();
         for($i=0; $i<count($array_group); $i++){
             $config_role=$this->getConfigRole($array_group[$i]);
             foreach($config_role['group'] as $value){
@@ -146,7 +146,7 @@ class AuthorizationDAO {
                    }
                }
             }
-        }
+        } */
         return $result;        
      }
      
@@ -171,4 +171,3 @@ class AuthorizationDAO {
      
 }
 ?>
-

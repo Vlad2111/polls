@@ -100,7 +100,8 @@ class PhpLDAP {
     }
     //возвращает список групп пользователя
     public function getGroupLDAPUser(){
-        if($this->checkObjectclass($this->auth)){$arr=array('memberof');
+        if($this->checkObjectclass($this->auth)){
+        $arr=array('memberof');
             $arr_temp=array();
             $result = ldap_search($this->ldap, $this->base_dn, "(sAMAccountName={$this->auth->getLogin()})", $arr);
             $result_ent = ldap_get_entries($this->ldap, $result);
