@@ -93,21 +93,8 @@ class AuthorQuizDAO  extends QuizDAO{
         $array_params[]=$id_quiz;
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
-        $mquiz = new MQuiz();
-        $muser = new MUser();
-        $muser->setIdUser($obj->author_test);
-        $mquiz->setIdQuiz($id_quiz);
-        $mquiz->setTopic($obj->topic);
-        $mquiz->setTimeLimit($obj->time_limit);
-        $mquiz->setCommentQuiz($obj->comment_test);
-        $mquiz->setSeeTheResult($obj->see_the_result);
-        $mquiz->setSeeDetails($obj->see_details);
-        $mquiz->setIdStatusQuiz($obj->id_status_test);
-        $mquiz->setAuthorTest($muser);
-        $mquiz->setVasibilityTest($obj->vasibility_test);
-        $mquiz->setDateCreate($obj->date_create);
         if($result){
-             return $mquiz;          
+             return $obj;          
         } 
         else{
             $this->log->ERROR('Ошибка запроса к таблице: test('.pg_last_error().')'); 

@@ -10,10 +10,15 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">	
 		<link href="css/simple-sidebar.css" rel="stylesheet">
 		<link href="css/navbar-fixed-top.css" rel="stylesheet">
+		<link href="css/bootstrap-switch.css" rel="stylesheet">
+		<link href="css/highlight.css" rel="stylesheet">
+		<link href="http://getbootstrap.com/assets/css/docs.min.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
         <script src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/moment-with-locales.min.js"></script>
 		<script type="text/javascript" src="js/autocomplete.js"></script>
+		<script type="text/javascript" src="js/bootstrap-switch.js"></script>
     </head>
     <body>
         <script type="text/javascript">
@@ -145,6 +150,12 @@
                 $("#addNewQuestion").show();*/
                 var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..."></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
                 $(".foraddradio").append(text);
+                if($('[name="switch"]').bootstrapSwitch('state')){
+                    jQuery("input:radio").attr('disabled',false);
+                }
+                else {
+                    jQuery("input:radio").attr('disabled',true);
+                }
                 int++;
 			    document.getElementById("create-question").disabled = true;
                 
@@ -168,6 +179,12 @@
             function addSomeNewAnswer(){
                 var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
                 $(".foraddcheckbox").append(text);
+                if($('[name="switch"]').bootstrapSwitch('state')){
+                    jQuery("input:checkbox").attr('disabled',false);
+                }
+                else {
+                    jQuery("input:checkbox").attr('disabled',true);
+                }
                 intr++;
 			    document.getElementById("create-question").disabled = true;
             }
@@ -186,6 +203,7 @@
 				    document.getElementById("create-question").disabled = false;
                 }
             }
+            
         </script>  
         {include file='header.tpl'}
         <div id="wrapper">
@@ -341,14 +359,44 @@
                                     </select>
                                 </td>
                             </tr>
+                            <tr>
+                                <td class='info'>
+                                    <b>Валидация ответа</b>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="switch">
+                                    <script>
+                                        $(function(argument) {
+                                          $('[name="switch"]').bootstrapSwitch();
+                                        });
+                                        $('input[name="switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
+  //alert(this);
+  //alert(event);
+  //alert(state);
+                                            if(state == true) {
+                                                jQuery("input:radio").attr('disabled',false);
+                                                jQuery("input:checkbox").attr('disabled',false);
+                                                jQuery("input:radio").attr('checked',false);
+                                                jQuery("input:checkbox").attr('checked',false);
+                                            }
+                                            else {
+                                                jQuery("input:radio").attr('disabled',true);
+                                                jQuery("input:checkbox").attr('disabled',true);
+                                                jQuery("input:radio").attr('checked',false);
+                                                jQuery("input:checkbox").attr('checked',false);
+                                            }
+                                        });
+                                    </script>
+                                </td>
+                            </tr>
 							<tr>
 								<td class='info'>
 								</td>
 								<td>
 									<div id='add_answer_type_yorn' style="display: none">
                                         Выберите привильный ответ<br>
-                                        <input type='radio' form="test_passing" name='answer[]' value='Да' checked>Да<br>
-                                        <input type='radio' form="test_passing" name='answer[]' value='Нет'>Нет
+                                        <input type='radio' form="test_passing" id='answer' name='answer[]' value='Да'>Да<br>
+                                        <input type='radio' form="test_passing" id='answer' name='answer[]' value='Нет'>Нет
                                     </div>
 								    <div id='add_answer_type_many_answers' style="display: none">
                                         <form  method='post'>
@@ -358,7 +406,7 @@
                                                     <div class="col-xs-10">
                                                         <div  class="input-group">
                                                             <span class="input-group-addon" id="radios[]">
-                                                                <input type="radio" value="0" name="rad[]" aria-label="..." checked>
+                                                                <input type="radio" value="0" name="rad[]" aria-label="..." >
                                                             </span>
                                                             <input type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)">
                                                         </div>
@@ -376,7 +424,7 @@
                                                     <div class="col-xs-10">
                                                         <div  class="input-group">
                                                             <span class="input-group-addon">
-                                                                <input type="checkbox" form="test_passing" value="0" name="checkbox[]" aria-label="..." checked>
+                                                                <input type="checkbox" form="test_passing" value="0" name="checkbox[]" aria-label="...">
                                                             </span>
                                                             <input type="text" form="test_passing" name="textr[]" id="textr0" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)">
                                                         </div>
@@ -451,7 +499,7 @@
                     
                     <form method="post">
                         <a href='create_quiz.php?action=new_question'>Добавить вопрос</a>
-                        <a href='create_quiz.php?action=add_inteviewee'>Тестируемые</a>
+                        <a href='create_quiz.php?action=add_inteviewee&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'>Тестируемые</a>
                         <a href='create_quiz.php?action=edit_data_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'>Редактировать опрос</a>
                     </form>  
                     <table class='table'>
@@ -757,6 +805,7 @@
 			}
             
             </script>
+             
                                         
                                 {/capture}    
                                     {if {$view_quiz} eq 'new_quiz'}
