@@ -7,6 +7,7 @@ class MQuestion {
     private $comment_question;
     private $question_number;
     private $id_test;
+    private $validation;
     
     
     public function getIdQuestion(){
@@ -51,6 +52,12 @@ class MQuestion {
     }
     public function setIdTest($id_test){
         $this->id_test=$id_test;
+    }
+    public function getValidation(){
+        return $this->validation;
+    }
+    public function setValidation($validation){
+        $this->validation=$validation;
     }
 
 }

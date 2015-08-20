@@ -68,8 +68,10 @@ class AnswerOptionsDAO {
         $array_params[]=$answer_options->getRightAnswer();
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
-        $answer_options->setIdAnswerOption($obj->id_answer_option);
-        return $obj->id_answer_option;
+        if(isset($obj->id_answer_option)){
+            $answer_options->setIdAnswerOption($obj->id_answer_option);
+            return $obj->id_answer_option;
+        }
     }
     public function getListIdAnswerOption($id_question){
         $query="select id_answer_option from answer_options where id_question=$1;";

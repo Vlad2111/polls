@@ -111,6 +111,8 @@ class AnswerDAO {
         $array_params[]=$id_answer;
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
-        return $obj->answer;
+        if(isset($obj->answer)){
+            return $obj->answer;
+        }
     }
 }

@@ -184,8 +184,7 @@ class UserDAO {
            $obj=$this->db->getFetchObject($result_query);
            if(isset($obj->id_user)) {
                 return $obj->id_user;
-           } else
-           return null;
+           }
     }
     public function searchUser($name){
 		$adm = new AdministrationDAO();

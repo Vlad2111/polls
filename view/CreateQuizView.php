@@ -41,6 +41,7 @@ class CreateQuizView{
         $this->link_click = filter_input(INPUT_GET, 'link_click', FILTER_SANITIZE_SPECIAL_CHARS);
         $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);  
         $this->id_question = filter_input(INPUT_GET, 'id_question', FILTER_SANITIZE_SPECIAL_CHARS);     
+        $_SESSION['id_question'] = $this->id_question;
         $this->initialize();
     }
     public function initialize(){
@@ -77,7 +78,7 @@ class CreateQuizView{
             }
             elseif($_GET['action'] == 'deleteUser' && !empty ($_GET['id_user'])){  
                 $this->inter->deleteUser($_SESSION['id_quiz'], $_GET['id_user']);
-                header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee");      
+                header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
 				exit;
             }
             elseif($_GET['action'] == 'add_inteviewee'){                
@@ -114,7 +115,7 @@ class CreateQuizView{
             elseif ($this->button_click == 'addUserIntoTest'){  
                 //var_dump('gf');
                 $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($_POST['inputName']));
-                header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee");      
+                header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
 				exit;
             }
             elseif ($this->button_click == 'edit_data_quiz'){
@@ -188,38 +189,47 @@ class CreateQuizView{
         $_SESSION['id_quiz'] = $quiz->updateQuiz($mquiz);
         $this->id_quiz = $_SESSION['id_quiz'];
     }
-    public function addQuestion(){ 
+    public function addQuestion(){
         unset($_SESSION['id_question']);
         $mquestion= new MQuestion();
         $question= new QuestionDAO();
         $mquestion->setTextQuestion($_POST['text_question']);
         $mquestion->setCommentQuestion($_POST['comment_question']);
         $mquestion->setIdQuestionsType($_POST['question_type']);
-        $mquestion->setIdTest($this->id_quiz);     
+        $mquestion->setIdTest($_SESSION['id_quiz']);   
+        if(isset($_POST['switch'])){
+            $mquestion->setValidation('Y');
+        }
+        else {
+            $mquestion->setValidation('N');
+        }
         $_SESSION['id_question'] = $question->createQuestion($mquestion);
         if ($_POST['question_type'] == 1){
             $manswer_option=new MAnswerOptions();
             $manswer_option->setIdQuestion( $_SESSION['id_question']);
             $manswer_option->setAnswerTheQuestions('Да');
-            if($_POST['answer'][0]=='Да'){
-                $manswer_option->setRightAnswer('Y');
+            if(isset($_POST['switch'])){
+                if($_POST['answer'][0]=='Да'){
+                    $manswer_option->setRightAnswer('Y');
+                }
+                else {
+                    $manswer_option->setRightAnswer('N');
+                }
             }
-            else {
-                $manswer_option->setRightAnswer('N');
-            }
-            
             $this->answer_option->createAnswerOptions($manswer_option);
             $manswer_option=new MAnswerOptions();
             $manswer_option->setIdQuestion( $_SESSION['id_question']);
             $manswer_option->setAnswerTheQuestions('Нет');
-            if($_POST['answer'][0]=='Нет'){
-                $manswer_option->setRightAnswer('Y');
-            }
-            else {
-                $manswer_option->setRightAnswer('N');
+            if(isset($_POST['switch'])){
+                if($_POST['answer'][0]=='Нет'){
+                    $manswer_option->setRightAnswer('Y');
+                }
+                else {
+                    $manswer_option->setRightAnswer('N');
+                }
             }
             $this->answer_option->createAnswerOptions($manswer_option);
-            header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+            header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;
         }
         elseif ($_POST['question_type'] == 2){
@@ -234,14 +244,16 @@ class CreateQuizView{
                         $flag=true;
                     }
                 }
-                if($flag==true){
-                    $manswer_option->setRightAnswer('Y');
-                } else {
-                    $manswer_option->setRightAnswer('N');
+                if(isset($_POST['switch'])){
+                    if($flag==true){
+                        $manswer_option->setRightAnswer('Y');
+                    } else {
+                        $manswer_option->setRightAnswer('N');
+                    }
                 }
                 $this->answer_option->createAnswerOptions($manswer_option);
             }
-            header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+            header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;
         }
         elseif ($_POST['question_type'] == 3){
@@ -256,30 +268,38 @@ class CreateQuizView{
                         $flag=true;
                     }
                 }
-                if($flag==true){
-                    $manswer_option->setRightAnswer('Y');
-                } else {
-                    $manswer_option->setRightAnswer('N');
+                if(isset($_POST['switch'])){
+                    if($flag==true){
+                        $manswer_option->setRightAnswer('Y');
+                    } else {
+                        $manswer_option->setRightAnswer('N');
+                    }
                 }
                 $this->answer_option->createAnswerOptions($manswer_option);
             }
-            header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+            header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;
         }
         elseif ($_POST['question_type'] == 4){
         
-            header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+            header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;
         }
     }
     public function editQuestion(){ 
-        unset($_SESSION['id_question']);
         $mquestion= new MQuestion();
         $question= new QuestionDAO();
+        $mquestion->setIdQuestion($_SESSION['id_question']);
         $mquestion->setTextQuestion($_POST['text_question']);
         $mquestion->setCommentQuestion($_POST['comment_question']);
         $mquestion->setIdQuestionsType($_POST['question_type']);
-        $mquestion->setIdTest($this->id_quiz);     
+        $mquestion->setIdTest($_SESSION['id_quiz']); 
+        if(isset($_POST['switch'])){
+            $mquestion->setValidation('Y');
+        }
+        else {
+            $mquestion->setValidation('N');
+        }
         $_SESSION['id_question'] = $question->updateQuestion($mquestion);
         $manswer_option=new MAnswerOptions();
         $manswer_option->setIdQuestion($_SESSION['id_question']);
@@ -288,24 +308,28 @@ class CreateQuizView{
             $manswer_option=new MAnswerOptions();
             $manswer_option->setIdQuestion($_SESSION['id_question']);
             $manswer_option->setAnswerTheQuestions('Да');
-            if($_POST['answer'][0]=='Да'){
-                $manswer_option->setRightAnswer('Y');
-            }
-            else {
-                $manswer_option->setRightAnswer('N');
+            if(isset($_POST['switch'])){
+                if($_POST['answer'][0]=='Да'){
+                    $manswer_option->setRightAnswer('Y');
+                }
+                else {
+                    $manswer_option->setRightAnswer('N');
+                } 
             }
             $this->answer_option->createAnswerOptions($manswer_option);
             $manswer_option=new MAnswerOptions();
             $manswer_option->setIdQuestion($_SESSION['id_question']);
             $manswer_option->setAnswerTheQuestions('Нет');
-            if($_POST['answer'][0]=='Нет'){
-                $manswer_option->setRightAnswer('Y');
-            }
-            else {
-                $manswer_option->setRightAnswer('N');
+            if(isset($_POST['switch'])){
+                if($_POST['answer'][0]=='Нет'){
+                    $manswer_option->setRightAnswer('Y');
+                }
+                else {
+                    $manswer_option->setRightAnswer('N');
+                }
             }
             $this->answer_option->createAnswerOptions($manswer_option);
-            header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+            header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;
         }
         elseif ($_POST['question_type'] == 2){
@@ -315,19 +339,21 @@ class CreateQuizView{
                 $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($_POST['texting'][$i]);
                 $flag = false;
-                for($j=0;$j<count($_POST['rad']);$j++){
-                    if($_POST['rad'][$j]==$i){
-                        $flag=true;
+                if(isset($_POST['switch'])){
+                    for($j=0;$j<count($_POST['rad']);$j++){
+                        if($_POST['rad'][$j]==$i){
+                            $flag=true;
+                        }
                     }
-                }
-                if($flag==true){
-                    $manswer_option->setRightAnswer('Y');
-                } else {
-                    $manswer_option->setRightAnswer('N');
+                    if($flag==true){
+                        $manswer_option->setRightAnswer('Y');
+                    } else {
+                        $manswer_option->setRightAnswer('N');
+                    }
                 }
                 $this->answer_option->createAnswerOptions($manswer_option);
             }
-            header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+            header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;
         }
         elseif ($_POST['question_type'] == 3){
@@ -337,24 +363,26 @@ class CreateQuizView{
                 $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($_POST['textr'][$i]);
                 $flag = false;
-                for($j=0;$j<count($_POST['checkbox']);$j++){
-                    if($_POST['checkbox'][$j]==$i){
-                        $flag=true;
+                if(isset($_POST['switch'])){
+                    for($j=0;$j<count($_POST['checkbox']);$j++){
+                        if($_POST['checkbox'][$j]==$i){
+                            $flag=true;
+                        }
                     }
-                }
-                if($flag==true){
-                    $manswer_option->setRightAnswer('Y');
-                } else {
-                    $manswer_option->setRightAnswer('N');
+                    if($flag==true){
+                        $manswer_option->setRightAnswer('Y');
+                    } else {
+                        $manswer_option->setRightAnswer('N');
+                    }
                 }
                 $this->answer_option->createAnswerOptions($manswer_option);
             }
-            header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
-			exit;
+            header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
+		    exit;
         }
         elseif ($_POST['question_type'] == 4){
         
-            header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+            header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;
         }
     }
@@ -369,14 +397,14 @@ class CreateQuizView{
     }
     public function getOneDataQuestion(){
         if(isset($this->id_question)){
-            return $this->author->getListObjQuestion($this->id_question);
+            return $this->author->getListObjQuestion($_SESSION['id_question']);
         }
     }
     public function getAnswerOptionsData(){
     /*var_dump($this->id_question);
     var_dump($this->answer_option->getDataAnswerOtions($this->id_question));*/
-        if(isset($this->id_question)){
-            return $this->answer_option->getDataAnswerOtions($this->id_question);    
+        if($_SESSION['id_question']){
+            return $this->answer_option->getDataAnswerOtions($_SESSION['id_question']);    
         }    
     }
     public function getOneDataQuiz(){
@@ -400,11 +428,11 @@ class CreateQuizView{
         if (isset($_POST['value_answer_option']) && !empty($_POST['value_answer_option'])){
             $this->answer_option->addRightAnswerOptions($_POST['value_answer_option']);
         }
-        header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+        header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 		exit;
     }
     public function resetRightAnswer(){
-        $this->answer_option->resetRightAnswerOptions($this->id_question);
+        $this->answer_option->resetRightAnswerOptions($_SESSION['id_question']);
     }
     public function deleteQuestion(){
         $question= new QuestionDAO();
@@ -414,7 +442,7 @@ class CreateQuizView{
         $mquestion= new MQuestion();
         $mquestion->setIdQuestion($this->id_question);
         $question->deleteQuestion($mquestion);
-        header("Location: create_quiz.php?link_click=".$this->link_click."&action=menu_questions");
+        header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 		exit;
     }
     public function getUsers(){

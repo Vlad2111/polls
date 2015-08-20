@@ -76,7 +76,9 @@ elseif($button=="skip_end_question") {
 $testing=new IntervieweeDAO();
 $quiz = new QuizDAO();
 $data_questions=$quiz_view->getArrayQuestions();
-$marker=$testing->getMarker($quiz_view->data_testing);
+if(isset($quiz_view->data_testing)){
+    $marker=$testing->getMarker($quiz_view->data_testing);
+}
 if(isset($marker)){
 	$data_one_question=$quiz->getObjQuestions($marker);
 }

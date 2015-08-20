@@ -24,7 +24,7 @@
         <script type="text/javascript">
             $(document).ready(function()
             {
-               // addAnswerTypeYorn(document.getElementById("question_type").options[document.getElementById("question_type").selectedIndex].value);
+                addAnswerTypeYorn(document.getElementById("question_type").options[document.getElementById("question_type").selectedIndex].value);
                 
 
             });
@@ -364,7 +364,7 @@
                                     <b>Валидация ответа</b>
                                 </td>
                                 <td>
-                                    <input type="checkbox" name="switch">
+                                    <input type="checkbox" id="switch" name="switch" data-off-text="Нет" data-on-text="Да" form="test_passing" checked>
                                     <script>
                                         $(function(argument) {
                                           $('[name="switch"]').bootstrapSwitch();
@@ -395,8 +395,8 @@
 								<td>
 									<div id='add_answer_type_yorn' style="display: none">
                                         Выберите привильный ответ<br>
-                                        <input type='radio' form="test_passing" id='answer' name='answer[]' value='Да'>Да<br>
-                                        <input type='radio' form="test_passing" id='answer' name='answer[]' value='Нет'>Нет
+                                        <input type='radio' form="test_passing" name='answer[]' value='Да'>Да<br>
+                                        <input type='radio' form="test_passing" name='answer[]' value='Нет'>Нет
                                     </div>
 								    <div id='add_answer_type_many_answers' style="display: none">
                                         <form  method='post'>
@@ -456,14 +456,16 @@
                 {foreach $data_answer_option as $one_data_answer_option}                                                
                     <tr>
                         <td>
-                            {if $one_data_answer_option->right_answer == 'Y'}
+                            {if isset($one_data_answer_option->right_answer) && $one_data_answer_option->right_answer == 'Y'}
                                 <input type="radio" name="value_answer_option" value="{$one_data_answer_option->id_answer_option}" checked>
-                            {elseif $one_data_answer_option->right_answer == 'N'}
-                                <input type="radio" name="value_answer_option" value='{$one_data_answer_option->id_answer_option}'>
+                            {elseif isset($one_data_answer_option->right_answer) && $one_data_answer_option->right_answer == 'N'}
+                                <input type="radio" name="value_answer_option" value="{$one_data_answer_option->id_answer_option}">
                             {/if}
                         </td>
                         <td> 
-                            {$one_data_answer_option->answer_the_questions}
+                            {if isset($one_data_answer_option->answer_the_questions)}
+                                {$one_data_answer_option->answer_the_questions}
+                            {/if}
                         </td>
                     </tr>
                 {/foreach}                                        
@@ -498,7 +500,7 @@
                     <!--<div id="quiz" style="display: none">-->
                     
                     <form method="post">
-                        <a href='create_quiz.php?action=new_question'>Добавить вопрос</a>
+                        <a href='create_quiz.php?action=new_question&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'>Добавить вопрос</a>
                         <a href='create_quiz.php?action=add_inteviewee&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'>Тестируемые</a>
                         <a href='create_quiz.php?action=edit_data_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'>Редактировать опрос</a>
                     </form>  
@@ -525,7 +527,7 @@
                                    №
                                </td>
                                <td>
-                                <a href="?action=edit_question&id_question={$data_question_one->id_question}">{$data_question_one->text_question}</a>
+                                <a href="?action=edit_question&id_quiz={$data_one_quiz->id_test}&id_question={$data_question_one->id_question}">{$data_question_one->text_question}</a>
                                </td>
                                 <td>
                                 {if  {$data_question_one->id_questions_type}==1}
@@ -555,6 +557,7 @@
             <div id="page-content-wrapper">
                 <div class="container-fluid">
                     <form method="post" id="test_passing">
+                    <button class="btn btn-primary" id="create-question" form="test_passing" name="button_click" value="edit_question" disabled> Изменить вопрос</button>
                         <table class="table">
                             <tr>
                                 <td class='info' width='35%'>
@@ -587,6 +590,36 @@
                                     </select>
                                 </td>
                             </tr>
+                             <tr>
+                                <td class='info'>
+                                    <b>Валидация ответа</b>
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="switch" name="switch" data-off-text="Нет" data-on-text="Да" form="test_passing"   {if isset($data_one_question->validation) && $data_one_question->validation == 'Y'}checked{/if}>
+                                    <script>
+                                        $(function(argument) {
+                                          $('[name="switch"]').bootstrapSwitch();
+                                        });
+                                        $('input[name="switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
+                                            if(state == true) {
+                                                jQuery("input:radio").attr('disabled',false);
+                                                jQuery("input[name='checkbox[]']").attr('disabled',false);
+                                                jQuery("input:radio").attr('checked',false);
+                                                jQuery("input[name='checkbox[]']").attr('checked',false);
+                                            }
+                                            else {
+                                                jQuery("input:radio").attr('disabled',true);
+                                                jQuery("input[name='checkbox[]']").attr('disabled',true);
+                                                jQuery("input:radio").attr('checked',false);
+                                                jQuery("input[name='checkbox[]']").attr('checked',false);
+                                            }
+                                        });
+                                        /*{if isset($data_one_question->validation) && $data_one_question->validation != 'Y'}
+                                            jQuery('input[name="switch"]').attr('checked',false);
+                                        {/if}*/
+                                    </script>
+                                </td>
+                            </tr>
 							<tr>
 								<td class='info'>
 								</td>
@@ -594,10 +627,10 @@
 									<div id='add_answer_type_yorn' style="display: none">
                                         Выберите привильный ответ<br>
                                         {foreach $data_answer_option as $option_one}
-                                            {if $option_one->answer_the_questions == 'Да'}
-                                            <input type='radio' form="test_passing" name='answer[]' value='Да' {if $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
+                                            {if isset($option_one->answer_the_questions) && $option_one->answer_the_questions == 'Да'}
+                                            <input type='radio' form="test_passing" name='answer[]' value='Да' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
                                             {else}
-                                            <input type='radio' form="test_passing" name='answer[]' value='Нет' {if $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
+                                            <input type='radio' form="test_passing" name='answer[]' value='Нет' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
                                             {/if}
                                         {/foreach}
                                     </div>
@@ -612,19 +645,21 @@
                                                         <div class="col-xs-10">
                                                             <div  class="input-group">
                                                                 <span class="input-group-addon" id="radios[]">
-                                                                    <input type="radio" value="0" name="rad[]" aria-label="..." {if $option_one->right_answer == 'Y'}checked{/if}>
+                                                                    <input type="radio" value="0" name="rad[]" aria-label="..." {if $data_one_question->id_questions_type == 2 && $option_one->right_answer == 'Y'}checked{/if}>
                                                                 </span>
-                                                                <input type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" value="{$option_one->answer_the_questions}">
+                                                                <input type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" value="{if $data_one_question->id_questions_type == 2}{$option_one->answer_the_questions}{/if}">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     {$vars=1}
                                                 {else}
                                                 <script type="text/javascript">
+                                                {if $data_one_question->id_questions_type == 2}
                                                 addRadioAnswer(1);
+                                                {/if}
                                                    function addRadioAnswer(col){
                                                    if(col==1){
-                                                    var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..." {if $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" value="{$option_one->answer_the_questions}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                    var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..." {if $data_one_question->id_questions_type == 2 && $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" value="{if $data_one_question->id_questions_type == 2}{$option_one->answer_the_questions}{/if}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
                                                     }
                                                     else {
                                                     var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..."></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
@@ -634,7 +669,6 @@
 			                                        document.getElementById("create-question").disabled = true;
 			                                        }
                                                 </script>
-                                                
                                                 {/if}
                                             {/foreach}
                                             <script type="text/javascript">
@@ -655,29 +689,31 @@
                                                     <div class="col-xs-10">
                                                         <div  class="input-group">
                                                             <span class="input-group-addon">
-                                                                <input type="checkbox" form="test_passing" value="0" name="checkbox[]" aria-label="..." {if $option_one->right_answer == 'Y'}checked{/if}>
+                                                                <input type="checkbox" form="test_passing" value="0" name="checkbox[]" aria-label="..." {if $data_one_question->id_questions_type == 3 && $option_one->right_answer == 'Y'}checked{/if}>
                                                             </span>
-                                                            <input type="text" form="test_passing" name="textr[]" id="textr0" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" value="{$option_one->answer_the_questions}">
+                                                            <input type="text" form="test_passing" name="textr[]" id="textr0" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" value="{if $data_one_question->id_questions_type == 3}{$option_one->answer_the_questions}{/if}">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 {$vars=1}
                                                 {else}
-                                                <script type="text/javascript">
-                                                addCheckAnswer(1);
-                                                   function addCheckAnswer(col){
-                                                   if(col==1){
-                                                    var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..." {if $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" value="{$option_one->answer_the_questions}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
-                                                    }
-                                                    else {
-                                                    var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
-                                                    }
-			    intr++;         
-                $(".foraddcheckbox").append(text);
-			    document.getElementById("create-question").disabled = true;
-			    }
-                                                </script>
                                                 
+                                                    <script type="text/javascript">
+                                                    {if $data_one_question->id_questions_type == 3}
+                                                    addCheckAnswer(1);
+                                                    {/if}
+                                                       function addCheckAnswer(col){
+                                                       if(col==1){
+                                                        var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..." {if $data_one_question->id_questions_type == 3 && $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" value="{if $data_one_question->id_questions_type == 3}{$option_one->answer_the_questions}{/if}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                        }
+                                                        else {
+                                                        var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                        }
+			        intr++;         
+                    $(".foraddcheckbox").append(text);
+			        document.getElementById("create-question").disabled = true;
+			        }
+                                                    </script>
                                                 {/if}
                                             {/foreach}
                                             <script type="text/javascript">
@@ -691,8 +727,16 @@
 							</tr>
                         </table>
                                               
-                            <button class="btn btn-primary" id="create-question" form="test_passing" name="button_click" value="edit_question" disabled> Создать вопрос</button>
-                        
+                            
+                    <script>
+                    
+                        {if isset($data_one_question->validation) && $data_one_question->validation == 'N'}
+                            jQuery("input:radio").attr('disabled',true);
+                            jQuery("input[name='checkbox[]']").attr('disabled',true);
+                            jQuery("input:radio").attr('checked',false);
+                            jQuery("input[name='checkbox[]']").attr('checked',false);
+                        {/if}
+                    </script>
                         
                     </form>
                 </div>
@@ -744,7 +788,7 @@
                                     {/if}    
                                 </td>
                                 <td>
-                                    <a href="?action=deleteUser&id_user={$one_user_data->getIdUser()}"><span class="glyphicon glyphicon-trash"></span></a>
+                                    <a href="?action=deleteUser&id_user={$one_user_data->getIdUser()}&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}"><span class="glyphicon glyphicon-trash"></span></a>
                                 </td>
                             </tr>
                         {/foreach}

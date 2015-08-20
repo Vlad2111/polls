@@ -90,7 +90,9 @@ class TestingDAO {
         $array_params[]=$interviewee->getIdTesting();
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
-        return $obj->datetime_end_test;
+        if(isset($obj->datetime_end_test)){
+            return $obj->datetime_end_test;
+        }
     }
     public function setIdTesting(MInterviewee $interviewee){
         $query="select * from testing where id_user=$1 and id_test=$2;";
@@ -103,16 +105,17 @@ class TestingDAO {
         return $obj->id_testing;
     }
     public function setAnswers(MInterviewee $interviewee, $result){
-        $query="UPDATE testing SET right_answers=$1,wrong_answers=$2,skip_answers=$3 where id_testing=$4;";
+        $query="UPDATE testing SET right_answers=$1,wrong_answers=$2,skip_answers=$3, unvalidated_answers=$4 where id_testing=$5;";
         $array_params=array();
         $array_params[]=$result['right'];
         $array_params[]=$result['wrong'];
         $array_params[]=$result['skip'];
+        $array_params[]=$result['unvalidated'];
         $array_params[]=$interviewee->getIdTesting();
         $this->db->execute($query,$array_params);
     }
     public function getAnswers($id_testing){
-        $query="select right_answers,wrong_answers,skip_answers from testing where id_testing=$1;";
+        $query="select right_answers,wrong_answers,skip_answers, unvalidated_answers from testing where id_testing=$1;";
         $array_params=array();
         $array_params[]=$id_testing;
         $result=$this->db->execute($query,$array_params);
@@ -131,6 +134,8 @@ class TestingDAO {
         $array_params[]=$id_testing;
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
-        return $obj->datetime_duration_test;
+        if(isset($obj->datetime_duration_test)){
+            return $obj->datetime_duration_test;
+        }
     }
 }

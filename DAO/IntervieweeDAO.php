@@ -29,7 +29,9 @@ class IntervieweeDAO {
         $time = $this->testing->getDatetimeStartTest($interviewee);
         $timer = new DateTime($time);
         $a = split ( ':' , $interval, -1 );
-        $timer->modify('+'.$a[0].' hour +'.$a[1].' minute +'.$a[2].' second');
+        if(isset($a)){
+            $timer->modify('+'.$a[0].' hour +'.$a[1].' minute +'.$a[2].' second');
+        }
         if(isset($interval)) {
             $this->testing->setDatetimeEndTest($interviewee, $timer->format("Y-m-d H:i:s"));
         }
@@ -54,6 +56,7 @@ class IntervieweeDAO {
         $result['wrong']=0;
         $result['right']=0;
         $result['skip']=0;
+        $result['unvalidated']=0;
         $array_id_question=$quiz->getArrayIdQuestion($interviewee->getTest()->getIdQuiz());
         for($i=0; $i<count($array_id_question); $i++){
             for($j=0; $j<count($answers[$array_id_question[$i]]); $j++){
@@ -61,24 +64,32 @@ class IntervieweeDAO {
                 if($que->getIdQuestionType($array_id_question[$i]) != 4){
                     if(isset($answers[$array_id_question[$i]][$j])){
                         $obj=$answeroption->getRightAnswerOptions($answers[$array_id_question[$i]][$j]);
-                        if($obj == 'Y'){
-                            $flag = true;
-                        }
-                        else {
-                            $flag = false;
-                        }
-                        if($j==count($answers[$array_id_question[$i]])-1) {
-                            if($flag) {
-                                $result['right']++;
+                        if($obj != ''){
+                            if($obj == 'Y'){
+                                $flag = true;
                             }
                             else {
-                                $result['wrong']++;
+                                $flag = false;
                             }
+                            if($j==count($answers[$array_id_question[$i]])-1) {
+                                if($flag) {
+                                    $result['right']++;
+                                }
+                                else {
+                                    $result['wrong']++;
+                                }
+                            }
+                        }
+                        else {
+                            $result['unvalidated']++;
                         }
                     }
                     else {
                         $result['skip']++;
                     }
+                }
+                else {
+                    $result['unvalidated']++;
                 }
             }
         }
@@ -93,24 +104,26 @@ class IntervieweeDAO {
         $result=array();
         $array_id_question=$quiz->getArrayIdQuestion($interviewee->getTest()->getIdQuiz());
         for($i=0; $i<count($array_id_question); $i++){
-            
+            if(isset($answers[$array_id_question[$i]])) {
                 for($j=0; $j<count($answers[$array_id_question[$i]]); $j++){
                     $flag = true;
                     if($que->getIdQuestionType($array_id_question[$i]) != 4){
                         if(isset($answers[$array_id_question[$i]][$j])){
                             $obj=$answeroption->getRightAnswerOptions($answers[$array_id_question[$i]][$j]);
-                            if($obj == 'Y'){
-                                $flag = true;
-                            }
-                            else {
-                                $flag = false;
-                            }
-                            if($j==count($answers[$array_id_question[$i]])-1) {
-                                if($flag) {
-                                    $result[$array_id_question[$i]]['value'] = 'success';
+                            if($obj != ''){
+                                if($obj == 'Y'){
+                                    $flag = true;
                                 }
                                 else {
-                                    $result[$array_id_question[$i]]['value'] = 'danger';
+                                    $flag = false;
+                                }
+                                if($j==count($answers[$array_id_question[$i]])-1) {
+                                    if($flag) {
+                                        $result[$array_id_question[$i]]['value'] = 'success';
+                                    }
+                                    else {
+                                        $result[$array_id_question[$i]]['value'] = 'danger';
+                                    }
                                 }
                             }
                         }
@@ -119,6 +132,7 @@ class IntervieweeDAO {
                         }
                     }
                 }
+            }
             
         }
         return $result;
@@ -362,17 +376,23 @@ class IntervieweeDAO {
         return $minterviewee;
     }
     public function getDataOneTest($id_testing){
-        $id_quiz=$this->getObjTest($id_testing)->id_testing;
+        if(isset($this->getObjTest($id_testing)->id_testing)){
+            $id_quiz=$this->getObjTest($id_testing)->id_testing;
+            }
         $admin= new AdministrationDAO();
         $minterviewee=new MInterviewee();
         $quiz=new QuizDAO();
-        $minterviewee->setIdTesting($id_quiz);
+        if(isset($id_quiz)){
+            $minterviewee->setIdTesting($id_quiz);
+        }
         $minterviewee->setUser($admin->getObjDataUser($_SESSION['id_user']));
         $minterviewee->setTest($admin->getObjDataQuiz($id_testing));
-        $minterviewee->setQuestion($quiz->getObjTestQuestion($id_quiz));
-        $minterviewee->setMarkTest($this->getObjTesting($id_quiz)->id_mark_test);
-        $minterviewee->setDatetimeStartTest($this->getObjTesting($id_quiz)->datetime_start_test);
-        $minterviewee->getDatetimeEndTest($this->getObjTesting($id_quiz)->datetime_end_test);
+        if(isset($id_quiz)){
+            $minterviewee->setQuestion($quiz->getObjTestQuestion($id_quiz));
+            $minterviewee->setMarkTest($this->getObjTesting($id_quiz)->id_mark_test);
+            $minterviewee->setDatetimeStartTest($this->getObjTesting($id_quiz)->datetime_start_test);
+            $minterviewee->getDatetimeEndTest($this->getObjTesting($id_quiz)->datetime_end_test);
+        }
         return $minterviewee;
     }
     //возвратить ид всех опросов

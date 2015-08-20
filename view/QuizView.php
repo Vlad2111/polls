@@ -33,18 +33,18 @@ class QuizView {
 		$this->countOfQuestions=count($this->testing->getArrayIdQuestion($id_testing));
 		$this->testing=new IntervieweeDAO();
 		$this->data_testing=$this->testing->getDataOneTest($id_testing);//////////////////testing
-		if($this->data_testing->getIdTesting()){
+		if(isset($this->data_testing)){
 			$this->countOfAnswered=$this->testing->getCountOfAnswered($this->data_testing->getIdTesting());
+            $this->countOfAnswers = $testingDAO->getAnswers($this->data_testing->getIdTesting()); 
+            $this->interval = $testingDAO->getInterval($this->data_testing->getIdTesting());
+            $this->listOfAnswers = $this->testing->getListOfAnswers($this->data_testing);
+            $this->colors = $this->testing->getRightAnswers($this->data_testing);
+            $this->dateinterval = $testingDAO->getDatetimeEndTest($this->data_testing);
 		}
 		else {
 			$this->countOfAnswered=0;
 		}
         $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);
-        $this->countOfAnswers = $testingDAO->getAnswers($this->data_testing->getIdTesting()); 
-        $this->interval = $testingDAO->getInterval($this->data_testing->getIdTesting());
-        $this->listOfAnswers = $this->testing->getListOfAnswers($this->data_testing);
-        $this->colors = $this->testing->getRightAnswers($this->data_testing);
-        $this->dateinterval = $testingDAO->getDatetimeEndTest($this->data_testing);
     }
     public function startQuiz(){
         $this->testing->statusStartQuiz($this->data_testing, $this->data_test->getTimeLimit());
