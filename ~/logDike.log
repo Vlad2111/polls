@@ -1,2 +1,0 @@
-2015-08-18T10:57:33+03:00 ERROR [AnswerOptionsDAO] [/var/www/polls/DAO/AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  
-2015-08-18T10:57:33+03:00 ERROR [AnswerOptionsDAO] [/var/www/polls/DAO/AnswerOptionsDAO.php]: 27: Ошибка добавления строки в таблице: answer_option().  

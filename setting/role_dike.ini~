@@ -1,0 +1,18 @@
+; Настраиваются роли
+[interviewee]
+user[]=porandaykin.a
+group[]='OU=RnD,OU=MainOffice,DC=tecom,DC=nnov,DC=ru'
+group[]='CN=mobile-dev,OU=RnD,OU=MainOffice,DC=tecom,DC=nnov,DC=ru'
+group[]='CN=VPNusers,OU=MainOffice,DC=tecom,DC=nnov,DC=ru'
+
+[author_quiz]
+user[]=porandaykin.a
+group[]='OU=RnD,OU=MainOffice,DC=tecom,DC=nnov,DC=ru'
+group[]='CN=mobile-dev,OU=RnD,OU=MainOffice,DC=tecom,DC=nnov,DC=ru'
+group[]='CN=VPNusers,OU=MainOffice,DC=tecom,DC=nnov,DC=ru'
+
+[administrator]
+user[]=porandaykin.a
+group[]='OU=RnD,OU=MainOffice,DC=tecom,DC=nnov,DC=ru'
+group[]='CN=mobile-dev,OU=RnD,OU=MainOffice,DC=tecom,DC=nnov,DC=ru'
+group[]='CN=VPNusers,OU=MainOffice,DC=tecom,DC=nnov,DC=ru'
