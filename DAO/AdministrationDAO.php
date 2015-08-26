@@ -63,8 +63,7 @@ class AdministrationDAO extends UserDAO{
         $array_params[]=$id_quiz;
         $result_query=$this->db->execute($query, $array_params);
         $obj_quiz= $this->db->getFetchObject($result_query);
-	//echo $id_quiz;
-        //if($obj_quiz){
+        if(isset($obj_quiz->topic)){
             $obj_data_quiz=new MQuiz();
             $obj_data_quiz->setIdQuiz($obj_quiz->id_test);
             $obj_data_quiz->setTopic($obj_quiz->topic);
@@ -78,7 +77,7 @@ class AdministrationDAO extends UserDAO{
             }
             $obj_data_quiz->setVasibilityTest($obj_quiz->vasibility_test);// change reurn statement 
             return $obj_data_quiz;
-        //}
+        }
         //else{
         //    return $obj_quiz;
         //}

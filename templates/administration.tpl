@@ -250,7 +250,7 @@
                                 </th>
                             </thead>
                             <tbody>
-                            {foreach $quizs_data as $one_quiz_data}                                          
+                            {foreach $quizs_data as $one_quiz_data}                    
                                 <tr>
                                     <td class='info'>
                                         <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$one_quiz_data->getIdQuiz()}">{$one_quiz_data->getTopic()}

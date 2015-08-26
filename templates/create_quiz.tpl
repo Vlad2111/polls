@@ -22,13 +22,6 @@
     </head>
     <body>
         <script type="text/javascript">
-            $(document).ready(function()
-            {
-                addAnswerTypeYorn(document.getElementById("question_type").options[document.getElementById("question_type").selectedIndex].value);
-                
-
-            });
-            /**/
             function changeOfResults(){
                 if(ISchecked('see_the_result') && ISchecked('see_details')){
                     checkTopicQuiz($('#topic_quiz').val());
@@ -282,9 +275,14 @@
 					<b>Разрешить смотреть результаты опроса</b>
 				</td>
 				<td>
-					<input type="radio" name="see_the_result" id="see_the_result" value="Y" onchange="changeOfResults()" checked> Да<Br>
-					<input type="radio" name="see_the_result" id="see_the_result" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_the_result)}{if $data_one_quiz->see_the_result == "N"}checked{/if}{/if}> Нет
-					
+					<!--<input type="radio" name="see_the_result" id="see_the_result" value="Y" onchange="changeOfResults()" checked> Да<Br>
+					<input type="radio" name="see_the_result" id="see_the_result" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_the_result)}{if $data_one_quiz->see_the_result == "N"}checked{/if}{/if}> Нет-->
+					<input type="checkbox" id="see_the_result" name="see_the_result" data-off-text="Нет" data-on-text="Да" form="test_passing" {if !isset($data_one_quiz->see_details)} checked {/if}{if $data_one_quiz->see_details == "Y"}checked{/if}>
+                        <script>
+                            $(function(argument) {
+                              $('[name="see_the_result"]').bootstrapSwitch();
+                            });
+                        </script>
 				</td>
 			</tr>
 			<tr>
@@ -292,10 +290,15 @@
 					<b>Разрешить смотреть детальную информацию</b>
 				</td>
 				<td>
-					<input type="radio" name="see_details" id="see_details" value="Y" onchange="changeOfResults()" checked> Да<Br>
-					<input type="radio" name="see_details" id="see_details" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_details)}{if $data_one_quiz->see_details == "N"}checked{/if}{/if}> Нет<Br> 
-					<script>
-					</script>
+					<!--<input type="radio" name="see_details" id="see_details" value="Y" onchange="changeOfResults()" checked> Да<Br>
+					<input type="radio" name="see_details" id="see_details" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_details)}{if $data_one_quiz->see_details == "N"}checked{/if}{/if}> Нет<Br> -->
+					<input type="checkbox" id="see_details" name="see_details" data-off-text="Нет" data-on-text="Да" form="test_passing" {if !isset($data_one_quiz->see_details)} checked {/if}{if $data_one_quiz->see_details == "Y"}checked{/if}>
+                        <script>
+                            $(function(argument) {
+                              $('[name="see_details"]').bootstrapSwitch();
+                              
+                            });
+                        </script>
 				</td>
 			</tr>
 		{/capture}
@@ -398,9 +401,6 @@
                                           $('[name="switch"]').bootstrapSwitch();
                                         });
                                         $('input[name="switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
-  //alert(this);
-  //alert(event);
-  //alert(state);
                                             if(state == true) {
                                                 jQuery("input:radio").attr('disabled',false);
                                                 jQuery("input:checkbox").attr('disabled',false);
@@ -765,10 +765,10 @@
                                         <form  method='post'>
                                             Тип ответа</br>
                                             {foreach $mark_rating_type as $mrt}
-                                                {foreach $data_answer_option as $option_one}
-                                                    <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}" {if $option_one->answer_the_questions == $mrt[0]->option}checked{/if}>
+                                                
+                                                    <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}" {foreach $data_answer_option as $option_one}{if $option_one->answer_the_questions == $mrt[0]->option}checked{/if} {/foreach}>
                                                     <div class="well well-sm"><label for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label></div>                                                    
-                                                {/foreach}
+                                               
                                             {/foreach}
                                         </form>
                                     </div>
@@ -784,6 +784,10 @@
                             jQuery("input:radio").attr('checked',false);
                             jQuery("input[name='checkbox[]']").attr('checked',false);
                         {/if}
+                        $(document).ready(function()
+                        {
+                            addAnswerTypeYorn(document.getElementById("question_type").options[document.getElementById("question_type").selectedIndex].value);
+                        });
                     </script>
                         
                     </form>

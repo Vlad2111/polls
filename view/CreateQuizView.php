@@ -152,8 +152,18 @@ class CreateQuizView{
             return 0;
         }
         $mquiz->setCommentQuiz($_POST['comment_test']);
-        $mquiz->setSeeTheResult($_POST['see_the_result']);
-        $mquiz->setSeeDetails($_POST['see_details']);
+        if(isset($_POST['see_the_result'])){
+            $mquiz->setSeeTheResult('Y');
+        }
+        else {
+            $mquiz->setSeeTheResult('N');
+        }
+        if(isset($_POST['see_details'])){    
+            $mquiz->setSeeTheResult('Y');
+        }
+        else {
+            $mquiz->setSeeTheResult('N');
+        }
         $mquiz->setIdStatusQuiz($_POST['status_test']);
         $_SESSION['id_quiz'] = $quiz->createQuiz($mquiz, $muser);
         $this->id_quiz = $_SESSION['id_quiz'];
@@ -183,8 +193,18 @@ class CreateQuizView{
             return 0;
         }
         $mquiz->setCommentQuiz($_POST['comment_test']);
-        $mquiz->setSeeTheResult($_POST['see_the_result']);
-        $mquiz->setSeeDetails($_POST['see_details']);
+        if(isset($_POST['see_the_result'])){
+            $mquiz->setSeeTheResult('Y');
+        }
+        else {
+            $mquiz->setSeeTheResult('N');
+        }
+        if(isset($_POST['see_details'])){    
+            $mquiz->setSeeTheResult('Y');
+        }
+        else {
+            $mquiz->setSeeTheResult('N');
+        }
         $mquiz->setIdStatusQuiz($_POST['status_test']);
         $_SESSION['id_quiz'] = $quiz->updateQuiz($mquiz);
         $this->id_quiz = $_SESSION['id_quiz'];

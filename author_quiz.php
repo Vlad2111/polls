@@ -11,7 +11,6 @@ $author_view=new AuthorQuizView($_SESSION['id_user']);
     $smarty->assign('title', $title);
     $arr = array();
     $smarty->assign('data_quiz',$author_view->getAuthorQuizs());
-    
     $smarty->display('templates/author_quiz.tpl');
  }
 catch (Exception $e){
