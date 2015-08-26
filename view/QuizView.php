@@ -73,4 +73,8 @@ class QuizView {
         }
         return $data_questions;
     }
+    public function getMarkOfRatingType(){
+        $quizDAO = new QuizDAO();
+        return $quizDAO->getMarkOfRatingType();
+    }
 }

@@ -117,6 +117,7 @@ $smarty->assign("interval", $quiz_view->interval);
 $smarty->assign("listOfAnswers", $quiz_view->listOfAnswers);
 $smarty->assign("colors", $quiz_view->colors);
 $smarty->assign("dateinterval", $quiz_view->dateinterval);
+$smarty->assign('mark_rating_type', $quiz_view->getMarkOfRatingType());
 
 $smarty->display('templates/quiz.tpl');
  }

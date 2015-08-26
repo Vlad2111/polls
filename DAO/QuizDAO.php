@@ -288,6 +288,43 @@ class QuizDAO {
         return $obj->id_test;
        }
    }
-    
+   public function getMarkOfRatingType() {
+        $ids = $this->getIdsOfRatingType();
+        $arr = array();
+        foreach($ids as $idm) {
+            foreach($idm as $id){
+                for($i=0;$i<count($id);$i++) {
+                    $query="select * from mark_type_rating where id=$1";
+                    $array_params=array();
+                    $array_params[]=$id[$i];
+                    $result=$this->db->execute($query, $array_params);
+                    $obj = $this->db->getFetchObject($result);
+                    $arr[$obj->option][]=$obj;
+                }
+            }
+        }
+        return $arr;
+    }
+   public function getTypesOfRatingType() {
+        $query="select option from mark_type_rating GROUP BY option";
+        $result = $this->db->execute($query);
+        $obj=$this->db->getArrayData($result);
+        return $obj;
+  } 
+  public function getIdsOfRatingType() {
+        $count = $this->getTypesOfRatingType();
+        $arr = array();
+        foreach($count as $i) {
+            $query="select id from mark_type_rating where option=$1";
+            $array_params=array();
+            $array_params[]=$i;
+            $result = $this->db->execute($query,$array_params);
+            $obj=$this->db->getArrayData($result);
+            $arr[$i][] = $obj;
+        }
+        return $arr;
+  }
+   
+   
 }
 ?>

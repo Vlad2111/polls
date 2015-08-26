@@ -19,6 +19,7 @@ $smarty->assign('data_one_quiz', $create_quiz_view->getOneDataQuiz());
 if(isset($create_quiz_view->getOneDataQuiz()->time_limit)){
     $smarty->assign('time_array', split( ":", $create_quiz_view->getOneDataQuiz()->time_limit, -1));
 }
+$smarty->assign('mark_rating_type', $create_quiz_view->getMarkOfRatingType());
 $smarty->assign('users_data', $create_quiz_view->getUsers());
 $smarty->assign('max_time', $config_file->array_params["ParamsDike"]["max_time"]);
 

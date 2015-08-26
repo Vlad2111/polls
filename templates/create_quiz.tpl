@@ -60,34 +60,58 @@
             }
             function addAnswerTypeYorn(value){
 				if(parseInt(value) === 0){
+				    $("#trForOptions").hide();
                     $("#add_answer_type_many_answers").hide();
                     $("#add_answer_type_many_answers_some").hide();
                     $("#add_answer_type_yorn").hide();
+                    $("#add_rating_type").hide();
 					document.getElementById("create-question").disabled = true;
+					$("#trForSwitch").hide();
                 }
                 if(parseInt(value) === 1){
+                    $("#trForOptions").show();
                     $("#add_answer_type_yorn").show();
 					document.getElementById("create-question").disabled = false;
                     $("#add_answer_type_many_answers").hide();
                     $("#add_answer_type_many_answers_some").hide();
+                    $("#add_rating_type").hide();
+                    $("#trForSwitch").show();
                 }
                 if(parseInt(value) === 2){
+                    $("#trForOptions").show();
                     $("#add_answer_type_many_answers").show();
                     $("#add_answer_type_yorn").hide();
                     $("#add_answer_type_many_answers_some").hide();
+                    $("#add_rating_type").hide();
                     document.getElementById("create-question").disabled = true;
+                    $("#trForSwitch").show();
                 }
                 if(parseInt(value) === 3) {
+                    $("#trForOptions").show();
                     $("#add_answer_type_many_answers").hide();
                     $("#add_answer_type_yorn").hide();
                     document.getElementById("create-question").disabled = true;
                     $("#add_answer_type_many_answers_some").show();
+                    $("#add_rating_type").hide();
+                    $("#trForSwitch").show();
                 }
                 if(parseInt(value) === 4) {
+                    $("#trForOptions").hide();
                     $("#add_answer_type_many_answers").hide();
                     $("#add_answer_type_many_answers_some").hide();
                     $("#add_answer_type_yorn").hide();
                     document.getElementById("create-question").disabled = false;
+                    $("#add_rating_type").hide();
+                    $("#trForSwitch").hide();
+                }
+                if(parseInt(value) === 5) {
+                    $("#trForOptions").show();
+                    $("#add_answer_type_many_answers").hide();
+                    $("#add_answer_type_many_answers_some").hide();
+                    $("#add_answer_type_yorn").hide();
+                    document.getElementById("create-question").disabled = false;
+                    $("#add_rating_type").show();
+                    $("#trForSwitch").hide();
                 }
             }
             function checkLogin() {
@@ -356,10 +380,11 @@
                                         <option value="2">Один ответа из списка</option>
                                         <option value="3">Выбор одного или более ответов из списка</option>
                                         <option value="4">Произвольный ответ</option>
+                                        <option value="5">Оценочная шкала</option>
                                     </select>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="trForSwitch" style="display: none">
                                 <td class='info'>
                                     <b>Валидация ответа</b>
                                 </td>
@@ -389,7 +414,7 @@
                                     </script>
                                 </td>
                             </tr>
-							<tr>
+							<tr id="trForOptions" style="display:none">
 								<td class='info'>
 								</td>
 								<td>
@@ -432,6 +457,15 @@
                                                 </div>
                                             </div>
                                             <a href="javascript: void(0);" onclick="addSomeNewAnswer();"><span class="glyphicon glyphicon-plus"></span></a>
+                                        </form>
+                                    </div>
+                                    <div id='add_rating_type' style="display: none">
+                                        <form  method='post'>
+                                            Тип ответа</br>
+                                            {foreach $mark_rating_type as $mrt}
+                                                <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}">
+                                                <div class="well well-sm"><label for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label></div>
+                                            {/foreach}
                                         </form>
                                     </div>
 								</td>
@@ -587,10 +621,11 @@
                                         <option value="2" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 2}selected{/if}>Один ответа из списка</option>
                                         <option value="3" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 3}selected{/if}>Выбор одного или более ответов из списка</option>
                                         <option value="4" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 4}selected{/if}>Произвольный ответ</option>
+                                        <option value="5" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 5}selected{/if}>Оценочная шкала</option>
                                     </select>
                                 </td>
                             </tr>
-                             <tr>
+                             <tr id="trForSwitch" style="display: none">
                                 <td class='info'>
                                     <b>Валидация ответа</b>
                                 </td>
@@ -620,7 +655,7 @@
                                     </script>
                                 </td>
                             </tr>
-							<tr>
+							<tr id="trForOptions" style="display:none">
 								<td class='info'>
 								</td>
 								<td>
@@ -709,10 +744,10 @@
                                                         else {
                                                         var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
                                                         }
-			        intr++;         
-                    $(".foraddcheckbox").append(text);
-			        document.getElementById("create-question").disabled = true;
-			        }
+                                                        intr++;         
+                                                        $(".foraddcheckbox").append(text);
+                                                        document.getElementById("create-question").disabled = true;
+                                                        }
                                                     </script>
                                                 {/if}
                                             {/foreach}
@@ -723,13 +758,23 @@
                                             <a href="javascript: void(0);" onclick="addCheckAnswer(0);"><span class="glyphicon glyphicon-plus"></span></a>
                                         </form>
                                     </div>
+                                    <div id='add_rating_type' style="display: none">
+                                        <form  method='post'>
+                                            Тип ответа</br>
+                                            {foreach $mark_rating_type as $mrt}
+                                                {foreach $data_answer_option as $option_one}
+                                                    <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}" {if $option_one->answer_the_questions == $mrt[0]->option}checked{/if}>
+                                                    <div class="well well-sm"><label for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label></div>                                                    
+                                                {/foreach}
+                                            {/foreach}
+                                        </form>
+                                    </div>
 								</td>
 							</tr>
                         </table>
                                               
                             
                     <script>
-                    
                         {if isset($data_one_question->validation) && $data_one_question->validation == 'N'}
                             jQuery("input:radio").attr('disabled',true);
                             jQuery("input[name='checkbox[]']").attr('disabled',true);

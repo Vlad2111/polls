@@ -138,7 +138,7 @@
 					</div>
 					<div class="row quiz-row">
 						{capture name='radio'}   
-						{foreach $data_one_question->getAnswerOption() as $option}                  
+						    {foreach $data_one_question->getAnswerOption() as $option}                  
 							 <div class="radio"><input form="test_passing" type="radio" name="answer[]" value="{$option->getIdAnswerOption()}" checked>{$option->getAnswerTheQuestions()}</div>
 							{/foreach}
 						{/capture}
@@ -160,6 +160,13 @@
 								<textarea class = "form-control" form="test_passing" name="answer[]" action="quiz.php" maxlength="1000" cols="80" rows="10"></textarea>
 							</div>                          
 						{/capture}
+						{capture name='rating'}
+						    {foreach $data_one_question->getAnswerOption() as $option}
+							    <div class="radio">
+								    <input form="test_passing" type="radio" action="quiz.php" name="answer[]" value="{$option->getIdAnswerOption()}" checked>{$option->getAnswerTheQuestions()}
+							    </div>              
+							{/foreach}          
+						{/capture}
 						{if {$data_one_question->getIdQuestionsType()} eq '1'}
 							{$smarty.capture.radio}    
 						{elseif {$data_one_question->getIdQuestionsType()} eq '2'}
@@ -168,6 +175,8 @@
 							{$smarty.capture.checkbox_list}
 						{elseif {$data_one_question->getIdQuestionsType()} eq '4'}
 							{$smarty.capture.textarea}
+						{elseif {$data_one_question->getIdQuestionsType()} eq '5'}
+							{$smarty.capture.rating}
 						{/if} 
 					</div>	
 					<div class="row">
@@ -214,7 +223,7 @@
 						<table class="table">
 							<tbody>
 							    {foreach $data_questions as $one_question}
-							    {if isset($colors[$one_question['data_questions']->getIdQuestion()]['value']) && $one_question['data_questions']->getIdQuestionsType() != '4'}
+							    {if isset($colors[$one_question['data_questions']->getIdQuestion()]['value']) && $one_question['data_questions']->getIdQuestionsType() != '4' && $one_question['data_questions']->getIdQuestionsType() != '5'}
 							        
 								    <tr class="{$colors[$one_question['data_questions']->getIdQuestion()]['value']}">
 								{else}
@@ -250,6 +259,13 @@
 							                        <textarea class = "form-control" form="test_passing" name="answer[]" action="quiz.php" maxlength="1000" cols="80" rows="10" disabled>{if isset($listOfAnswers[$one_question['data_questions']->getIdQuestion()][0])}{$listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]}{/if}</textarea>
 						                        </div>                          
 					                        {/capture}
+					                        {capture name='rating'}
+						                        {foreach $one_question['data_questions']->getAnswerOption() as $option}
+							                        <div class="radio disabled">
+								                        <input form="test_passing" type="radio" action="quiz.php" name="{$one_question['data_questions']->getIdQuestion()}" value="{$option->getIdAnswerOption()}" {if isset($listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]) && $listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]==$option->getIdAnswerOption()} checked{/if} disabled>{$option->getAnswerTheQuestions()}
+							                        </div>              
+							                    {/foreach}          
+						                    {/capture}
 					                        {if {$one_question['data_questions']->getIdQuestionsType()} eq '1'}
 						                        {$smarty.capture.radio}    
 					                        {elseif {$one_question['data_questions']->getIdQuestionsType()} eq '2'}
@@ -258,6 +274,8 @@
 						                        {$smarty.capture.checkbox_list}
 					                        {elseif {$one_question['data_questions']->getIdQuestionsType()} eq '4'}
 						                        {$smarty.capture.textarea}
+					                        {elseif {$one_question['data_questions']->getIdQuestionsType()} eq '5'}
+							                    {$smarty.capture.rating}
 					                        {/if} 
 					                        </div>
 					                        <div class="row quiz-row">
