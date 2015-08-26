@@ -282,8 +282,9 @@
 					<b>Разрешить смотреть результаты опроса</b>
 				</td>
 				<td>
-					<input type="radio" name="see_the_result" id="see_the_result" value="Y" onchange="changeOfResults()" {if isset($data_one_quiz->see_the_result)}{if $data_one_quiz->see_the_result == "Y"}checked{/if}{/if}> Да<Br>
+					<input type="radio" name="see_the_result" id="see_the_result" value="Y" onchange="changeOfResults()" checked> Да<Br>
 					<input type="radio" name="see_the_result" id="see_the_result" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_the_result)}{if $data_one_quiz->see_the_result == "N"}checked{/if}{/if}> Нет
+					
 				</td>
 			</tr>
 			<tr>
@@ -291,8 +292,13 @@
 					<b>Разрешить смотреть детальную информацию</b>
 				</td>
 				<td>
-					<input type="radio" name="see_details" id="see_details" value="Y" onchange="changeOfResults()" {if isset($data_one_quiz->see_details)}{if $data_one_quiz->see_details == "Y"}checked{/if}{/if}> Да<Br>
+					<input type="radio" name="see_details" id="see_details" value="Y" onchange="changeOfResults()" checked> Да<Br>
 					<input type="radio" name="see_details" id="see_details" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_details)}{if $data_one_quiz->see_details == "N"}checked{/if}{/if}> Нет<Br> 
+					<script>
+					    if(!ISchecked('see_details')){
+					        
+					    }
+					</script>
 				</td>
 			</tr>
 		{/capture}
