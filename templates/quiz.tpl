@@ -180,11 +180,13 @@
 						{/if} 
 					</div>	
 					<div class="row">
-						<button class="btn btn-md btn-success" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='end_question'> Ответить</button>
-						<button class="btn btn-md btn-danger" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_question'> Пропустить</button>
+                        <button class="btn btn-md btn-primary col-xs-2" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='end_question'> Ответить</button>
+                    </div>
+                    <div class="row padding-top10">
+					    <button class="btn btn-sm col-xs-2" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_question'> Пропустить</button>
 					</div>
-					<div class="row quiz-padding">
-						<button class="btn btn-md btn-warning" id="skip_end_question" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_end_question'>Закончить тест</button>
+					<div class="row padding-top10">
+					    <button class="btn btn-sm col-xs-2"  id="skip_end_question" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_end_question'>Закончить тест</button>
 					</div>	
 					<div class="row quiz-padding">
 							<div class="progress">

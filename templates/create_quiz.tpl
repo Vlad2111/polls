@@ -295,9 +295,6 @@
 					<input type="radio" name="see_details" id="see_details" value="Y" onchange="changeOfResults()" checked> Да<Br>
 					<input type="radio" name="see_details" id="see_details" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_details)}{if $data_one_quiz->see_details == "N"}checked{/if}{/if}> Нет<Br> 
 					<script>
-					    if(!ISchecked('see_details')){
-					        
-					    }
 					</script>
 				</td>
 			</tr>
