@@ -39,31 +39,7 @@
             function cBack(){
                 $("#skip_end_question").click();
             }
-            function timer() {
-                var nowDate = new Date();
-                var st = '{$dateinterval}';
-                var t = st.split(/[- :]/);
-                var d = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
-                var achiveDate = d;
-                var result = (achiveDate - nowDate)+1000;
-                flag=true;
-                if (result < 0) {
-                    var elmnt = document.getElementById('timer');
-                    elmnt.innerHTML = ' - : - - : - - : - - ';
-                    flag=false;
-                    cBack();
-                }
-                var seconds = Math.floor((result/1000)%60);
-                var minutes = Math.floor((result/1000/60)%60);
-                var hours = Math.floor((result/1000/60/60)%24);
-                //var days = Math.floor(result/1000/60/60/24);
-                if (seconds < 10) seconds = '0' + seconds;
-                if (minutes < 10) minutes = '0' + minutes;
-                if (hours < 10) hours = '0' + hours;
-                var elmnt = document.getElementById('timer');
-                elmnt.innerHTML = hours + ':' + minutes + ':' + seconds;
-                setTimeout(timer, 1000);
-            }
+            
             window.onload = function() {
                 timer();
                 flag=false;
@@ -76,6 +52,12 @@
                 if($('#timer').text() && flag){
                     cBack();  
                 }
+            }
+            function deleteRequired(){
+            alert("ok");
+                flag=false;
+                $("#answer").removeAttr('required');
+
             }
         </script>
     </head>
@@ -139,31 +121,31 @@
 					<div class="row quiz-row">
 						{capture name='radio'}   
 						    {foreach $data_one_question->getAnswerOption() as $option}                  
-							 <div class="radio"><input form="test_passing" type="radio" name="answer[]" value="{$option->getIdAnswerOption()}" checked>{$option->getAnswerTheQuestions()}</div>
+							 <div class="radio"><input form="test_passing" type="radio" name="answer[]" id="answer" value="{$option->getIdAnswerOption()}" required>{$option->getAnswerTheQuestions()}</div>
 							{/foreach}
 						{/capture}
 						{capture name='radio_list'}
 							{foreach $data_one_question->getAnswerOption() as $option}
 							  <div class="radio">
-							  <input form="test_passing" type="radio" action="quiz.php" name="answer[]" value="{$option->getIdAnswerOption()}" checked>{$option->getAnswerTheQuestions()}</div>  
+							  <input form="test_passing" type="radio" action="quiz.php" name="answer[]" id="answer" value="{$option->getIdAnswerOption()}" required>{$option->getAnswerTheQuestions()}</div>  
 							{/foreach}
 						{/capture}
 						{capture name='checkbox_list'} 
 							   {foreach $data_one_question->getAnswerOption() as $option}
 								<div class="checkbox">
-									<input form="test_passing" type="checkbox" action="quiz.php" name="answer[]" value="{$option->getIdAnswerOption()}">{$option->getAnswerTheQuestions()}
+									<input form="test_passing" type="checkbox" action="quiz.php" name="answer[]" id="answer" value="{$option->getIdAnswerOption()}" required>{$option->getAnswerTheQuestions()}
 								</div>  
 							{/foreach}
 						{/capture}
 						{capture name='textarea'}
 							<div class="form-group">
-								<textarea class = "form-control" form="test_passing" name="answer[]" action="quiz.php" maxlength="1000" cols="80" rows="10"></textarea>
+								<textarea class = "form-control" form="test_passing" name="answer[]" id="answer" action="quiz.php" maxlength="1000" cols="80" rows="10"></textarea>
 							</div>                          
 						{/capture}
 						{capture name='rating'}
 						    {foreach $data_one_question->getAnswerOption() as $option}
 							    <div class="radio">
-								    <input form="test_passing" type="radio" action="quiz.php" name="answer[]" value="{$option->getIdAnswerOption()}" checked>{$option->getAnswerTheQuestions()}
+								    <input form="test_passing" type="radio" action="quiz.php" name="answer[]" id="answer" value="{$option->getIdAnswerOption()}" required>{$option->getAnswerTheQuestions()}
 							    </div>              
 							{/foreach}          
 						{/capture}
@@ -183,10 +165,10 @@
                         <button class="btn btn-md btn-primary col-xs-2" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='end_question'> Ответить</button>
                     </div>
                     <div class="row padding-top10">
-					    <button class="btn btn-sm col-xs-2" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_question'> Пропустить</button>
+					    <button class="btn btn-sm col-xs-2" onclick="clicked()" formnovalidate="" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_question'> Пропустить</button>
 					</div>
 					<div class="row padding-top10">
-					    <button class="btn btn-sm col-xs-2"  id="skip_end_question" onclick="clicked()" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_end_question'>Закончить тест</button>
+					    <button class="btn btn-sm col-xs-2"  id="skip_end_question" onclick="clicked()" formnovalidate="" form="test_passing" type="submit" action="quiz.php" name="button_click" value='skip_end_question'>Закончить тест</button>
 					</div>	
 					<div class="row quiz-padding">
 							<div class="progress">
@@ -309,6 +291,35 @@
 				{/if}    
 				</div>
 			</div>
+			<script>
+			    function timer() {
+                var nowDate = new Date();
+                {if isset($dateinterval)}
+                    var st = '{$dateinterval}';
+                    var t = st.split(/[- :]/);
+                    var d = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
+                    var achiveDate = d;
+                    var result = (achiveDate - nowDate)+1000;
+                    flag=true;
+                    if (result < 0) {
+                        var elmnt = document.getElementById('timer');
+                        elmnt.innerHTML = ' - : - - : - - : - - ';
+                        flag=false;
+                        cBack();
+                    }
+                    var seconds = Math.floor((result/1000)%60);
+                    var minutes = Math.floor((result/1000/60)%60);
+                    var hours = Math.floor((result/1000/60/60)%24);
+                    //var days = Math.floor(result/1000/60/60/24);
+                    if (seconds < 10) seconds = '0' + seconds;
+                    if (minutes < 10) minutes = '0' + minutes;
+                    if (hours < 10) hours = '0' + hours;
+                    var elmnt = document.getElementById('timer');
+                    elmnt.innerHTML = hours + ':' + minutes + ':' + seconds;
+                    setTimeout(timer, 1000);
+                {/if}
+            }
+            </script>
         {include file='footer.tpl'}
         </div>   
          

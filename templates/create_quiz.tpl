@@ -128,12 +128,12 @@
                         $("#inp").addClass("has-success");
 					    $("#glyphicon").removeClass("glyphicon-remove");
 					    $("#glyphicon").addClass("glyphicon-ok");
-					    if(ISchecked('see_the_result') && ISchecked('see_details')){
+					    //if(ISchecked('see_the_result') && ISchecked('see_details')){
                             document.getElementById("button-create").disabled = false;
-                        }
-                        else {
-                            document.getElementById("button-create").disabled = true;
-                        } 
+                        //}
+                        //else {
+                        //    document.getElementById("button-create").disabled = true;
+                        //} 
                     }
                     else{
 					    $("#inp").removeClass("has-success");
@@ -277,7 +277,7 @@
 				<td>
 					<!--<input type="radio" name="see_the_result" id="see_the_result" value="Y" onchange="changeOfResults()" checked> Да<Br>
 					<input type="radio" name="see_the_result" id="see_the_result" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_the_result)}{if $data_one_quiz->see_the_result == "N"}checked{/if}{/if}> Нет-->
-					<input type="checkbox" id="see_the_result" name="see_the_result" data-off-text="Нет" data-on-text="Да" form="test_passing" {if !isset($data_one_quiz->see_details)} checked {/if}{if $data_one_quiz->see_details == "Y"}checked{/if}>
+					<input type="checkbox" id="see_the_result" name="see_the_result" data-off-text="Нет" data-on-text="Да" {if !isset($data_one_quiz->see_the_result)} checked {/if}{if isset($data_one_quiz->see_the_result)}{if $data_one_quiz->see_the_result == "Y"}checked{/if}{/if}>
                         <script>
                             $(function(argument) {
                               $('[name="see_the_result"]').bootstrapSwitch();
@@ -292,11 +292,10 @@
 				<td>
 					<!--<input type="radio" name="see_details" id="see_details" value="Y" onchange="changeOfResults()" checked> Да<Br>
 					<input type="radio" name="see_details" id="see_details" value="N" onchange="changeOfResults()" {if isset($data_one_quiz->see_details)}{if $data_one_quiz->see_details == "N"}checked{/if}{/if}> Нет<Br> -->
-					<input type="checkbox" id="see_details" name="see_details" data-off-text="Нет" data-on-text="Да" form="test_passing" {if !isset($data_one_quiz->see_details)} checked {/if}{if $data_one_quiz->see_details == "Y"}checked{/if}>
+					<input type="checkbox" id="see_details" name="see_details" data-off-text="Нет" data-on-text="Да" {if !isset($data_one_quiz->see_details)} checked {/if}{if isset($data_one_quiz->see_details)}{if $data_one_quiz->see_details == "Y"}checked{/if}{/if}>
                         <script>
                             $(function(argument) {
                               $('[name="see_details"]').bootstrapSwitch();
-                              
                             });
                         </script>
 				</td>

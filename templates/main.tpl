@@ -70,7 +70,7 @@
                                 {foreach $data_quiz as $data_one_quiz}
 							<tbody>
                                 <tr>
-                                {if $data_one_quiz['quiz']->topic}
+                                {if isset($data_one_quiz['quiz']->topic)}
                                     <td>
                                         {$data_one_quiz['quiz']->topic}
                                     </td>  

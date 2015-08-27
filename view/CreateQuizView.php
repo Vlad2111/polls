@@ -159,11 +159,12 @@ class CreateQuizView{
             $mquiz->setSeeTheResult('N');
         }
         if(isset($_POST['see_details'])){    
-            $mquiz->setSeeTheResult('Y');
+            $mquiz->setSeeDetails('Y');
         }
         else {
-            $mquiz->setSeeTheResult('N');
+            $mquiz->setSeeDetails('N');
         }
+        var_dump($mquiz);
         $mquiz->setIdStatusQuiz($_POST['status_test']);
         $_SESSION['id_quiz'] = $quiz->createQuiz($mquiz, $muser);
         $this->id_quiz = $_SESSION['id_quiz'];
@@ -200,10 +201,10 @@ class CreateQuizView{
             $mquiz->setSeeTheResult('N');
         }
         if(isset($_POST['see_details'])){    
-            $mquiz->setSeeTheResult('Y');
+            $mquiz->setSeeDetails('Y');
         }
         else {
-            $mquiz->setSeeTheResult('N');
+            $mquiz->setSeeDetails('N');
         }
         $mquiz->setIdStatusQuiz($_POST['status_test']);
         $_SESSION['id_quiz'] = $quiz->updateQuiz($mquiz);
