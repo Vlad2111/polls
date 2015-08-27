@@ -464,10 +464,12 @@
                                     </div>
                                     <div id='add_rating_type' style="display: none">
                                         <form  method='post'>
-                                            Тип ответа</br>
+                                            Выберите вариант ответов</br>
                                             {foreach $mark_rating_type as $mrt}
-                                                <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}">
-                                                <div class="well well-sm"><label for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label></div>
+                                            <div class="row padding-left10">
+                                                    <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}">
+                                                    <label class="well well-sm" for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label>
+                                            </div>
                                             {/foreach}
                                         </form>
                                     </div>
@@ -765,10 +767,8 @@
                                         <form  method='post'>
                                             Тип ответа</br>
                                             {foreach $mark_rating_type as $mrt}
-                                                
-                                                    <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}" {foreach $data_answer_option as $option_one}{if $option_one->answer_the_questions == $mrt[0]->option}checked{/if} {/foreach}>
-                                                    <div class="well well-sm"><label for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label></div>                                                    
-                                               
+                                                    <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}" {foreach $data_answer_option as $option_one}{if $option_one->answer_the_questions == $mrt[0]->text}checked{/if} {/foreach}>
+                                                    <div class="well well-sm"><label for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label></div>
                                             {/foreach}
                                         </form>
                                     </div>

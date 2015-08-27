@@ -234,6 +234,7 @@
                     <div id="page-content-wrapper">
 				            <div class="container-fluid">
                         <form method="POST">
+                        {if isset($quizs_data[0])}
                         <table class="table table-hover">
                             <thead>
                                 <th>
@@ -288,6 +289,9 @@
                             {/foreach}
                             </tbody>
                         </table> 
+                        {else}
+                            Нет созданных опросов
+                        {/if}
                         </form>
                         </div>
                     </div>   

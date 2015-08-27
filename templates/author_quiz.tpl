@@ -51,6 +51,7 @@
             </div>
             <div id="page-content-wrapper">
                 <div class="container-fluid">
+                {if isset($data_quiz[0])}
                     <table class="table table-hover">
                        <thead>                                               
                            <th>
@@ -71,7 +72,6 @@
                        </thead>
                        
                            {foreach $data_quiz as $data_one_quiz}
-                                {if isset($data_one_quiz->id_test)}
                                    <tbody>
                                         <td class="info">
                                             <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">{$data_one_quiz->topic}</a>
@@ -93,9 +93,12 @@
                                            <a class="btn btn-xs btn-primary" href="javascript: void(0);">Заблокировать</a>
                                        </td>                                               
                                    </tbody>
-                                {/if}
                            {/foreach}
                     </table>
+                {else}
+                    Вы еще не создавали опросы</br>
+                {/if}
+                
                     <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
                 </div>
             </div>
