@@ -537,12 +537,6 @@
                 <div class="container-fluid">
                     <h2><a href="javascript: void(0);" onclick="showEditQuiz();"><img src="img/edit.png" width='30' height='30'></a>Опрос: {if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}</h2>
                     <!--<div id="quiz" style="display: none">-->
-                    
-                    <form method="post">
-                        <a href='create_quiz.php?action=new_question&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'>Добавить вопрос</a>
-                        <a href='create_quiz.php?action=add_inteviewee&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'>Тестируемые</a>
-                        <a href='create_quiz.php?action=edit_data_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'>Редактировать опрос</a>
-                    </form>  
                     <table class='table'>
                         <thead>
                             <th>
@@ -577,16 +571,29 @@
                                     Вопрос с возможностью выбора одного или более ответов из списка
                                 {elseif  {$data_question_one->id_questions_type}==4}
                                     Произвольный текст
+                                {elseif  {$data_question_one->id_questions_type}==5}
+                                    Оценочная шкала
                                 {/if} 
                                </td>
                                <td>
-                                   <a class="btn btn-primary btn-xs" href="?action=delete&id_question={$data_question_one->id_question}">Удалить</a>
+                                   <a class="btn btn-primary btn-xs" href="?action=delete&id_question={$data_question_one->id_question}"><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
                                </td>
                            </tr>
                            {/if}
                         {/foreach}
                         </tbody>
                     </table>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <a class="btn btn-md btn-primary" href='create_quiz.php?action=new_question&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'><span class="glyphicon glyphicon-plus"></span>  Добавить вопрос</a>
+                        </div>
+                        <div class="col-xs-4">
+                            <a class="btn btn-md btn-primary" href='create_quiz.php?action=add_inteviewee&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'><span class="glyphicon glyphicon-list"></span>  Тестируемые</a>
+                        </div>
+                        <div class="col-xs-4">
+                            <a class="btn btn-md btn-primary" href='create_quiz.php?action=edit_data_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'><span class="glyphicon glyphicon-pencil"></span>   Редактировать опрос</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             {/capture}
