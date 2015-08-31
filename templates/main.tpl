@@ -67,61 +67,65 @@
 									</th>
                                 </tr>
 							</thead>
-                                {foreach $data_quiz as $data_one_quiz}
 							<tbody>
+							    {if isset($data_quiz[0]['quiz']->topic)}
+							    {foreach $data_quiz as $data_one_quiz}
+							        {if isset($data_one_quiz['quiz']->topic) && $data_one_quiz['quiz']->id_status_test == 2}
+                                        <tr>
+                                            <td>
+                                                {$data_one_quiz['quiz']->topic}
+                                            </td>  
+								            {if $data_one_quiz['testing']}
+									            {if $data_one_quiz['testing']->getMarkTest()==1}
+										            <td>
+											            Доступен
+										            </td>
+										            <td>
+											            <a class="btn btn-xs btn-primary" href="quiz.php?status=available&testing={$data_one_quiz['quiz']->id_test}}" role="button">Пройти тест &raquo;</a>
+										            </td>
+									            {elseif $data_one_quiz['testing']->getMarkTest()==2}
+										            <td>
+											            Неоконченный
+										            </td>
+										            <td>
+											            <a class="btn btn-xs btn-primary" href="quiz.php?status=unfinished&testing={$data_one_quiz['quiz']->id_test}" role="button">Продолжить тест &raquo;</a>
+										            </td>
+									            {elseif $data_one_quiz['testing']->getMarkTest()==3}
+										            <td>
+											            Не доступный
+										            </td>
+										            <td>
+											            No
+										            </td>
+									            {elseif $data_one_quiz['testing']->getMarkTest()==4}
+										            <td>
+											            Завершенный
+										            </td>
+										            <td>
+											            <a class="btn btn-xs btn-primary" href="quiz.php?status=finished&testing={$data_one_quiz['quiz']->id_test}" role="button">Посмотреть результат</a>
+										            </td>
+									            {/if}
+								            {else}
+										            <td>
+											            Вы еще не открывали этот тест
+										            </td>
+										            <td>                                                                
+											            <a class="btn btn-xs btn-primary" href="quiz.php?status=new_test&testing={$data_one_quiz['quiz']->id_test}" role="button">Начать тест &raquo;</a>
+										            </td>
+								            {/if} 
+							            </tr>
+								    {/if}
+                                {/foreach}
+                                {else}
                                 <tr>
-                                {if isset($data_one_quiz['quiz']->topic)}
-                                    <td>
-                                        {$data_one_quiz['quiz']->topic}
-                                    </td>  
-									{if $data_one_quiz['testing']}
-										{if $data_one_quiz['testing']->getMarkTest()==1}
-											<td>
-												Доступен
-											</td>
-											<td>
-												<a class="btn btn-xs btn-primary" href="quiz.php?status=available&testing={$data_one_quiz['quiz']->id_test}}" role="button">Пройти тест &raquo;</a>
-											</td>
-										{elseif $data_one_quiz['testing']->getMarkTest()==2}
-											<td>
-												Неоконченный
-											</td>
-											<td>
-												<a class="btn btn-xs btn-primary" href="quiz.php?status=unfinished&testing={$data_one_quiz['quiz']->id_test}" role="button">Продолжить тест &raquo;</a>
-											</td>
-										{elseif $data_one_quiz['testing']->getMarkTest()==3}
-											<td>
-												Не доступный
-											</td>
-											<td>
-												No
-											</td>
-										{elseif $data_one_quiz['testing']->getMarkTest()==4}
-											<td>
-												Завершенный
-											</td>
-											<td>
-												<a class="btn btn-xs btn-primary" href="quiz.php?status=finished&testing={$data_one_quiz['quiz']->id_test}" role="button">Посмотреть результат</a>
-											</td>
-										{/if}
-									{else}
-											<td>
-												Вы еще не открывали этот тест
-											</td>
-											<td>                                                                
-												<a class="btn btn-xs btn-primary" href="quiz.php?status=new_test&testing={$data_one_quiz['quiz']->id_test}" role="button">Начать тест &raquo;</a>
-											</td>
-									{/if} 
-								{else}
-								    <td>
-								    </td>
-								    <td>
-								        У вас нет доступных тестов
-								    </td>
-								{/if}
+							        <td>
+							        </td>
+							        <td>
+							            У вас нет доступных тестов
+							        </td>
                                 </tr>
+                                {/if}
 							</tbody>
-							{/foreach}
 						</table>
                     </div>
                 </div>

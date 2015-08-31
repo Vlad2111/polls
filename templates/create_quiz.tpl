@@ -224,9 +224,15 @@
 			    $.post("checkForms.php", { action: "update", field: "statusOfTest", status: value, id: {$data_one_quiz->id_test} }, function( data ) {
 			        if(parseInt(value) === 1){
 			            jQuery("a").attr("disabled", false);
+			            $("#testing_users_btn").attr("disabled", false);
+		            }
+		            else if(parseInt(value) === 2){
+		                jQuery("a").attr("disabled", true);
+		                $("#testing_users_btn").attr("disabled", false);
 		            }
 		            else {
 		                jQuery("a").attr("disabled", true);
+		                $("#testing_users_btn").attr("disabled", true);
 		            }
                 });
             }
@@ -601,7 +607,7 @@
                             <a class="btn btn-md btn-primary" id='buttons_disabled[]' href='create_quiz.php?action=new_question&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-plus"></span>  Добавить вопрос</a>
                         </div>
                         <div class="col-xs-4">
-                            <a class="btn btn-md btn-primary" id='buttons_disabled[]' href='create_quiz.php?action=add_inteviewee&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-list"></span>  Тестируемые</a>
+                            <a class="btn btn-md btn-primary" id='testing_users_btn' href='create_quiz.php?action=add_inteviewee&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 3}disabled{/if}{/if}><span class="glyphicon glyphicon-list"></span>  Тестируемые</a>
                         </div>
                         <div class="col-xs-4">
                             <a class="btn btn-md btn-primary" id='buttons_disabled[]' href='create_quiz.php?action=edit_data_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-pencil"></span>   Редактировать опрос</a>
