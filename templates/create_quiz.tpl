@@ -220,6 +220,16 @@
 				    document.getElementById("create-question").disabled = false;
                 }
             }
+            function changeStatusOfTest(value){
+			    $.post("checkForms.php", { action: "update", field: "statusOfTest", status: value, id: {$data_one_quiz->id_test} }, function( data ) {
+			        if(parseInt(value) === 1){
+			            jQuery("a").attr("disabled", false);
+		            }
+		            else {
+		                jQuery("a").attr("disabled", true);
+		            }
+                });
+            }
             
         </script>  
         {include file='header.tpl'}
@@ -536,7 +546,8 @@
                 <div class="container-fluid">
                     <h2><a href="javascript: void(0);" onclick="showEditQuiz();"><img src="img/edit.png" width='30' height='30'></a>Опрос: {if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}</h2>
                     <!--<div id="quiz" style="display: none">-->
-                    <table class='table'>
+                    {if isset($data_questions[0]->text_question)}
+                    <table class='table' >
                         <thead>
                             <th>
                                 Порядок вопроса
@@ -554,44 +565,55 @@
                         <tbody>
                        {foreach $data_questions as $data_question_one}  
                            {if $data_question_one}
-                           <tr>
-                               <td>
-                                   №
-                               </td>
-                               <td>
-                                <a href="?action=edit_question&id_quiz={$data_one_quiz->id_test}&id_question={$data_question_one->id_question}">{$data_question_one->text_question}</a>
-                               </td>
-                                <td>
-                                {if  {$data_question_one->id_questions_type}==1}
-                                    Вопрос типа Да/Нет
-                                {elseif  {$data_question_one->id_questions_type}==2}
-                                      Вопрос с возможностью выбора одного ответа из списка
-                                {elseif  {$data_question_one->id_questions_type}==3}
-                                    Вопрос с возможностью выбора одного или более ответов из списка
-                                {elseif  {$data_question_one->id_questions_type}==4}
-                                    Произвольный текст
-                                {elseif  {$data_question_one->id_questions_type}==5}
-                                    Оценочная шкала
-                                {/if} 
-                               </td>
-                               <td>
-                                   <a class="btn btn-primary btn-xs" href="?action=delete&id_question={$data_question_one->id_question}"><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
-                               </td>
-                           </tr>
+                               <tr>
+                                   <td>
+                                       №
+                                   </td>
+                                   <td>
+                                        <a class="btn" href="?action=edit_question&id_quiz={$data_one_quiz->id_test}&id_question={$data_question_one->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}>{$data_question_one->text_question}</a>
+                                   </td>
+                                    <td>
+                                        {if  {$data_question_one->id_questions_type}==1}
+                                            Вопрос типа Да/Нет
+                                        {elseif  {$data_question_one->id_questions_type}==2}
+                                              Вопрос с возможностью выбора одного ответа из списка
+                                        {elseif  {$data_question_one->id_questions_type}==3}
+                                            Вопрос с возможностью выбора одного или более ответов из списка
+                                        {elseif  {$data_question_one->id_questions_type}==4}
+                                            Произвольный текст
+                                        {elseif  {$data_question_one->id_questions_type}==5}
+                                            Оценочная шкала
+                                        {/if} 
+                                   </td>
+                                   <td>
+                                       <a class="btn btn-primary btn-xs" href="?action=delete&id_question={$data_question_one->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
+                                   </td>
+                               </tr>
                            {/if}
                         {/foreach}
                         </tbody>
                     </table>
+                    {else}
+                        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>   Список вопросов данного теста пуст </div>
+                    {/if}
                     <div class="row">
                         <div class="col-xs-4">
-                            <a class="btn btn-md btn-primary" href='create_quiz.php?action=new_question&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'><span class="glyphicon glyphicon-plus"></span>  Добавить вопрос</a>
+                            <a class="btn btn-md btn-primary" id='buttons_disabled[]' href='create_quiz.php?action=new_question&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-plus"></span>  Добавить вопрос</a>
                         </div>
                         <div class="col-xs-4">
-                            <a class="btn btn-md btn-primary" href='create_quiz.php?action=add_inteviewee&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'><span class="glyphicon glyphicon-list"></span>  Тестируемые</a>
+                            <a class="btn btn-md btn-primary" id='buttons_disabled[]' href='create_quiz.php?action=add_inteviewee&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-list"></span>  Тестируемые</a>
                         </div>
                         <div class="col-xs-4">
-                            <a class="btn btn-md btn-primary" href='create_quiz.php?action=edit_data_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}'><span class="glyphicon glyphicon-pencil"></span>   Редактировать опрос</a>
+                            <a class="btn btn-md btn-primary" id='buttons_disabled[]' href='create_quiz.php?action=edit_data_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-pencil"></span>   Редактировать опрос</a>
                         </div>
+                    </div>
+                    <div class="row">
+                        <label for="change_status_test">Статус опроса:</label>
+                        <select  class="form-control" name="change_status_test" id="change_status_test" onchange ='changeStatusOfTest(this.options[this.selectedIndex].value);'>
+                            <option value="1" {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 1}selected{/if}{/if}>Редактируемый</option>
+                            <option value="2" {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 2}selected{/if}{/if}>Доступный для прохождения</option>
+                            <option value="3" {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 3}selected{/if}{/if}>Завершенный</option>
+                        </select>
                     </div>
                 </div>
             </div>

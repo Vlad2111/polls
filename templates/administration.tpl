@@ -247,7 +247,7 @@
                                     Автор теста
                                 </th>
                                 <th>
-                                    Статус теста
+                                    Дата создания
                                 </th>
                             </thead>
                             <tbody>
@@ -260,11 +260,9 @@
                                         {if $one_quiz_data->getIdStatusQuiz()==1}
                                             Редактируемый
                                         {elseif $one_quiz_data->getIdStatusQuiz()==2}
-                                            Готов к опубликованию
+                                            Доступный для прохождения
                                         {elseif $one_quiz_data->getIdStatusQuiz()==3}
-                                            Активный
-                                        {elseif $one_quiz_data->getIdStatusQuiz()==4}
-                                            Завершённый
+                                            Завершенный
                                         {/if}
                                     </td>
                                     <td>
@@ -272,18 +270,7 @@
                                         {$one_quiz_data->getAuthorTest()->getFirstName()}
                                     </td>                                    
                                     <td>
-                                        {if $one_quiz_data->getVasibilityTest()==1}
-                                            Тест доступен 
-                                        {else}
-                                            Тест заблокирован
-                                        {/if}   
-                                    </td>
-                                    <td>
-                                        {if $one_quiz_data->getVasibilityTest()==1}
-                                            <button class="btn btn-xs btn-primary" type="submit" formaction="administration.php?link_click=show_quiz" name="deactivate_quiz" value="{$one_quiz_data->getIdQuiz()}">Заблокировать тест</button>                                           
-                                        {else}
-                                            <button class="btn btn-xs btn-primary" type="submit" formaction="administration.php?link_click=show_quiz" name="activate_quiz" value="{$one_quiz_data->getIdQuiz()}">Активировать тест</button>
-                                        {/if}
+                                        {$one_quiz_data->getDateCreate()} 
                                     </td>
                                 </tr>
                             {/foreach}

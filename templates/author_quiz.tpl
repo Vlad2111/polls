@@ -85,9 +85,9 @@
                                        <td>
                                            {if $data_one_quiz->vasibility_test==1}
                                                 Тест доступен 
-                                            {else}
-                                                Тест заблокирован
-                                            {/if}
+                                           {else}
+                                               Тест заблокирован
+                                           {/if}
                                        </td>
                                        <td>
                                            <a class="btn btn-xs btn-primary" href="javascript: void(0);">Заблокировать</a>

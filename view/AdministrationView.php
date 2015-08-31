@@ -58,7 +58,7 @@ class AdministrationView{
         return $this->admin->getDataUsers();
     }
     public function getQuizsData(){
-          return $this->admin->getDataQuizs();
+        return $this->admin->getDataQuizs();
     }
     public function createInternalUser (){     
        $role_user = array();

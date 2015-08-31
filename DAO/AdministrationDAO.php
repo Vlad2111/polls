@@ -51,7 +51,7 @@ class AdministrationDAO extends UserDAO{
         $countQuizs=count($listIdQuizs);
         $array_list_data_quizs=array();
         for ($i=0; $i<$countQuizs; $i++){
-        $array_list_data_quizs[$i]=$this->getObjDataQuiz($listIdQuizs[$i]); 
+            $array_list_data_quizs[$i]=$this->getObjDataQuiz($listIdQuizs[$i]); 
         }
         return $array_list_data_quizs;
     }
@@ -76,6 +76,7 @@ class AdministrationDAO extends UserDAO{
                 $obj_data_quiz->setAuthorTest($this->getObjDataUser($obj_quiz->author_test));
             }
             $obj_data_quiz->setVasibilityTest($obj_quiz->vasibility_test);// change reurn statement 
+            $obj_data_quiz->setDateCreate($obj_quiz->date_create);
             return $obj_data_quiz;
         }
         //else{

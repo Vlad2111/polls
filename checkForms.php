@@ -6,6 +6,7 @@ include_once 'lib/PhpLDAP.php';
 include_once 'DAO/AdministrationDAO.php';
 include_once 'DAO/UserDAO.php';
 include_once 'model/MUser.php';
+include_once 'model/MQuiz.php';
 include_once 'DAO/QuestionDAO.php';
 include_once 'model/MQuestion.php';
 include_once 'model/MAnswerOptions.php';
@@ -67,5 +68,13 @@ if(isset($_POST['action']) && $_POST['action']=='getInterviewees'){
 }
 if(isset($_POST['action']) &&  $_POST['action']=='getAnswerOption'){
     echo $_POST['id_question'];
+}
+if(isset($_POST['action']) && $_POST['action']=='update'){
+    if($_POST[ 'field']=="statusOfTest"){
+        $mquiz = new MQuiz();
+        $mquiz->setIdQuiz($_POST['id']);
+        $mquiz->setIdStatusQuiz($_POST['status']);
+        $object_quiz_dao->editStatusQuiz($mquiz);
+    }
 }
 exit;
