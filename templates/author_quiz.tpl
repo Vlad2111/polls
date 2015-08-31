@@ -66,33 +66,28 @@
                            <th>
                                Статус опроса
                            </th>
-                           <th>
-                               Операции
-                           </th>
                        </thead>
                        
                            {foreach $data_quiz as $data_one_quiz}
-                                   <tbody>
-                                        <td class="info">
-                                            <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">{$data_one_quiz->topic}</a>
-                                        </td>
-                                        <td>
-                                           {$data_one_quiz->date_create}
-                                       </td>
-                                       <td>
-                                           ---
-                                       </td>
-                                       <td>
-                                           {if $data_one_quiz->vasibility_test==1}
-                                                Тест доступен 
-                                           {else}
-                                               Тест заблокирован
-                                           {/if}
-                                       </td>
-                                       <td>
-                                           <a class="btn btn-xs btn-primary" href="javascript: void(0);">Заблокировать</a>
-                                       </td>                                               
-                                   </tbody>
+                               <tbody>
+                                    <td class="info">
+                                        <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">{$data_one_quiz->topic}</a>
+                                    </td>
+                                    <td>
+                                       {$data_one_quiz->date_create}
+                                   </td>
+                                   <td>
+                                       ---
+                                   </td>
+                                   <td>
+                                       {if $data_one_quiz->id_status_test == 1}
+                                            Редактируемый 
+                                       {elseif $data_one_quiz->id_status_test == 2}
+                                           Доступный для прохождения
+                                       {elseif $data_one_quiz->id_status_test == 3}
+                                           Завершенный
+                                       {/if}
+                                   </td>
                            {/foreach}
                     </table>
                 {else}
