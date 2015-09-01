@@ -220,17 +220,17 @@
 				    document.getElementById("create-question").disabled = false;
                 }
             }
-            function changeStatusOfTest(value){
-			    $.post("checkForms.php", { action: "update", field: "statusOfTest", status: value, id: {$data_one_quiz->id_test} }, function( data ) {
+            function changeStatusOfTest(value, id_test){
+			    $.post("checkForms.php", { action: "update", field: "statusOfTest", status: value, id: id_test }, function( data ) {
 			        if(parseInt(value) === 1){
 			            jQuery("a").attr("disabled", false);
 			            $("#testing_users_btn").attr("disabled", false);
 		            }
-		            else if(parseInt(value) === 2){
+		            if(parseInt(value) === 2){
 		                jQuery("a").attr("disabled", true);
 		                $("#testing_users_btn").attr("disabled", false);
 		            }
-		            else {
+		            if(parseInt(value) === 3) {
 		                jQuery("a").attr("disabled", true);
 		                $("#testing_users_btn").attr("disabled", true);
 		            }
@@ -615,7 +615,7 @@
                     </div>
                     <div class="row">
                         <label for="change_status_test">Статус опроса:</label>
-                        <select  class="form-control" name="change_status_test" id="change_status_test" onchange ='changeStatusOfTest(this.options[this.selectedIndex].value);'>
+                        <select  class="form-control" name="change_status_test" id="change_status_test" onchange ='changeStatusOfTest(this.options[this.selectedIndex].value, {$data_one_quiz->id_test});'>
                             <option value="1" {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 1}selected{/if}{/if}>Редактируемый</option>
                             <option value="2" {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 2}selected{/if}{/if}>Доступный для прохождения</option>
                             <option value="3" {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 3}selected{/if}{/if}>Завершенный</option>

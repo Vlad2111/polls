@@ -32,26 +32,26 @@ $samaccountname = "ldapquery";
 //    $arr=array('cn', 'mail', 'samaccountname', 'objectclass');
     $arr=array('objectclass');
     $arr2=array();
-                  $result = ldap_search($ldap, $base, "(sAMAccountName={$samaccountname})", $arr);
-                  $result_ent = ldap_get_entries($ldap,$result);
-                  echo "<pre>";
+    $result = ldap_search($ldap, $base, "(sAMAccountName={$samaccountname})", $arr);
+    $result_ent = ldap_get_entries($ldap,$result);
+    echo "<pre>";
 // var_dump($result_ent[0]['objectclass']['count']);
 var_dump(checkGroupLDAP($ldap, $base,$samaccountname, array('CN=VPNusers,OU=MainOffice,DC=tecom,DC=nnov,DC=ru')));
  echo "</pre>";
-// function checkGroupLDAP($ldap, $base, $samaccountname, $array_group){
-//     $arr=array('memberof');
-//     $result = ldap_search($ldap, $base, "(sAMAccountName={$samaccountname})", $arr);
-//     $result_ent = ldap_get_entries($ldap,$result);
-//     $count=$result_ent[0]['memberof']['count'];
-//     for ($b=0; $b<count($array_group); $b++){
-//        for($i=0; $i<$count; $i++){
-//            if ($result_ent[0]['memberof'][$i]==$array_group[$b]){
-//                return true;
-//            }
-//        }
-//     }
-//     return false;
-// }
+ function checkGroupLDAP($ldap, $base, $samaccountname, $array_group){
+     $arr=array('memberof');
+     $result = ldap_search($ldap, $base, "(sAMAccountName={$samaccountname})", $arr);
+     $result_ent = ldap_get_entries($ldap,$result);
+     $count=$result_ent[0]['memberof']['count'];
+     for ($b=0; $b<count($array_group); $b++){
+        for($i=0; $i<$count; $i++){
+            if ($result_ent[0]['memberof'][$i]==$array_group[$b]){
+                return true;
+            }
+        }
+     }
+     return false;
+ }
   function checkGroupLDAP($ldap, $base_dn, $samaccountname, $array_group){
         $arr=array('memberof');
         $result = ldap_search($ldap, $base_dn, "(sAMAccountName={$samaccountname})", $arr);
