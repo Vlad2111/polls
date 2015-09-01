@@ -133,7 +133,7 @@
 						{capture name='checkbox_list'} 
 							   {foreach $data_one_question->getAnswerOption() as $option}
 								<div class="checkbox">
-									<input form="test_passing" type="checkbox" action="quiz.php" name="answer[]" id="answer" value="{$option->getIdAnswerOption()}" required>{$option->getAnswerTheQuestions()}
+									<input form="test_passing" type="checkbox" action="quiz.php" name="answer[]" id="answer" value="{$option->getIdAnswerOption()}" >{$option->getAnswerTheQuestions()}
 								</div>  
 							{/foreach}
 						{/capture}
@@ -293,8 +293,9 @@
 			</div>
 			<script>
 			    function timer() {
-                var nowDate = new Date();
+               /* var nowDate = new Date();
                 {if isset($dateinterval)}
+                    
                     var st = '{$dateinterval}';
                     var t = st.split(/[- :]/);
                     var d = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
@@ -317,7 +318,7 @@
                     var elmnt = document.getElementById('timer');
                     elmnt.innerHTML = hours + ':' + minutes + ':' + seconds;
                     setTimeout(timer, 1000);
-                {/if}
+                {/if}*/
             }
             </script>
         {include file='footer.tpl'}

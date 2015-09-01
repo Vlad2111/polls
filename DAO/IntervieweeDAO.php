@@ -29,12 +29,12 @@ class IntervieweeDAO {
         $time = $this->testing->getDatetimeStartTest($interviewee);
         $timer = new DateTime($time);
         $a = split ( ':' , $interval, -1 );
-        if(isset($a)){
+        /*if(isset($a)){
             $timer->modify('+'.$a[0].' hour +'.$a[1].' minute +'.$a[2].' second');
         }
         if(isset($interval)) {
             $this->testing->setDatetimeEndTest($interviewee, $timer->format("Y-m-d H:i:s"));
-        }
+        }*/
         $this->setMarker($interviewee->getIdTesting(), $this->getFirstQuestion($interviewee->getTest()->getIdQuiz()));
         return $return;
     }
@@ -59,37 +59,39 @@ class IntervieweeDAO {
         $result['unvalidated']=0;
         $array_id_question=$quiz->getArrayIdQuestion($interviewee->getTest()->getIdQuiz());
         for($i=0; $i<count($array_id_question); $i++){
-            for($j=0; $j<count($answers[$array_id_question[$i]]); $j++){
-                $flag = true;
-                if($que->getIdQuestionType($array_id_question[$i]) != 4){
-                    if(isset($answers[$array_id_question[$i]][$j])){
-                        $obj=$answeroption->getRightAnswerOptions($answers[$array_id_question[$i]][$j]);
-                        if($obj != ''){
-                            if($obj == 'Y'){
-                                $flag = true;
-                            }
-                            else {
-                                $flag = false;
-                            }
-                            if($j==count($answers[$array_id_question[$i]])-1) {
-                                if($flag) {
-                                    $result['right']++;
+            if(isset($answers[$array_id_question[$i]])){
+                for($j=0; $j<count($answers[$array_id_question[$i]]); $j++){
+                    $flag = true;
+                    if($que->getIdQuestionType($array_id_question[$i]) != 4){
+                        if(isset($answers[$array_id_question[$i]][$j])){
+                            $obj=$answeroption->getRightAnswerOptions($answers[$array_id_question[$i]][$j]);
+                            if($obj != ''){
+                                if($obj == 'Y'){
+                                    $flag = true;
                                 }
                                 else {
-                                    $result['wrong']++;
+                                    $flag = false;
                                 }
+                                if($j==count($answers[$array_id_question[$i]])-1) {
+                                    if($flag) {
+                                        $result['right']++;
+                                    }
+                                    else {
+                                        $result['wrong']++;
+                                    }
+                                }
+                            }
+                            else {
+                                $result['unvalidated']++;
                             }
                         }
                         else {
-                            $result['unvalidated']++;
+                            $result['skip']++;
                         }
                     }
                     else {
-                        $result['skip']++;
+                        $result['unvalidated']++;
                     }
-                }
-                else {
-                    $result['unvalidated']++;
                 }
             }
         }

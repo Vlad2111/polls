@@ -126,5 +126,3 @@ $smarty->display('templates/quiz.tpl');
     echo $error;                            
 }
 ?>
-
-

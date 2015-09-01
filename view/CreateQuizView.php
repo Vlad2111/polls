@@ -482,10 +482,10 @@ class CreateQuizView{
     public function deleteQuestion(){
         $question= new QuestionDAO();
         $manswer_option=new MAnswerOptions();
-        $manswer_option->setIdQuestion($this->id_question);
+        $manswer_option->setIdQuestion($_SESSION['id_question']);
         $this->answer_option->deleteAnswerOptions($manswer_option);
         $mquestion= new MQuestion();
-        $mquestion->setIdQuestion($this->id_question);
+        $mquestion->setIdQuestion($_SESSION['id_question']);
         $question->deleteQuestion($mquestion);
         header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 		exit;

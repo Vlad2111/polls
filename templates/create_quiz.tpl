@@ -592,7 +592,7 @@
                                         {/if} 
                                    </td>
                                    <td>
-                                       <a class="btn btn-primary btn-xs" href="?action=delete&id_question={$data_question_one->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
+                                       <a class="btn btn-primary btn-xs" href="?action=delete&id_quiz={$data_one_quiz->id_test}&id_question={$data_question_one->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
                                    </td>
                                </tr>
                            {/if}
@@ -615,7 +615,7 @@
                     </div>
                     <div class="row">
                         <label for="change_status_test">Статус опроса:</label>
-                        <select  class="form-control" name="change_status_test" id="change_status_test" onchange ='changeStatusOfTest(this.options[this.selectedIndex].value, {$data_one_quiz->id_test});'>
+                        <select  class="form-control" name="change_status_test" id="change_status_test" onchange ='changeStatusOfTest(this.options[this.selectedIndex].value, {if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if});'>
                             <option value="1" {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 1}selected{/if}{/if}>Редактируемый</option>
                             <option value="2" {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 2}selected{/if}{/if}>Доступный для прохождения</option>
                             <option value="3" {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 3}selected{/if}{/if}>Завершенный</option>
@@ -702,9 +702,9 @@
                                         Выберите привильный ответ<br>
                                         {foreach $data_answer_option as $option_one}
                                             {if isset($option_one->answer_the_questions) && $option_one->answer_the_questions == 'Да'}
-                                            <input type='radio' form="test_passing" name='answer[]' value='Да' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
+                                            <input type='radio' form="test_passing" name='answer[]' value='Да' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{if isset($option_one->answer_the_questions)}{$option_one->answer_the_questions}{/if}<br>
                                             {else}
-                                            <input type='radio' form="test_passing" name='answer[]' value='Нет' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
+                                            <input type='radio' form="test_passing" name='answer[]' value='Нет' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{if isset($option_one->answer_the_questions)}{$option_one->answer_the_questions}{/if}<br>
                                             {/if}
                                         {/foreach}
                                     </div>
@@ -801,7 +801,7 @@
                                         <form  method='post'>
                                             Тип ответа</br>
                                             {foreach $mark_rating_type as $mrt}
-                                                    <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}" {foreach $data_answer_option as $option_one}{if $option_one->answer_the_questions == $mrt[0]->text}checked{/if} {/foreach}>
+                                                    <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}" {foreach $data_answer_option as $option_one}{if isset($option_one->answer_the_questions) && $option_one->answer_the_questions == $mrt[0]->text}checked{/if} {/foreach}>
                                                     <div class="well well-sm"><label for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label></div>
                                             {/foreach}
                                         </form>
