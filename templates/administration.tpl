@@ -277,7 +277,7 @@
                             </tbody>
                         </table> 
                         {else}
-                            Нет созданных опросов
+                           <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Нет созданных опросов </div>
                         {/if}
                         </form>
                         </div>
@@ -397,7 +397,7 @@
                                             <button class="btn btn-primary"  type="submit" formaction="administration.php" name="update_user" value={$id_user}>Изменить пользователя</button>
                                        </div>
                                        <div class="col-lg-6">     
-                                           <a href="?action=deleteUser&id_user={$id_user}" class="btn btn-primary" name="delete_user"onclick="return confirmDelete();" title="При удалении пользователя, также удалиться вся зависимая информация представленная внизу в Дополнительной информации"><span class="glyphicon glyphicon-trash"></span></a>
+                                           <a href="?action=deleteUser&id_user={$id_user}" class="btn btn-primary" name="delete_user" onclick="return confirmDelete();" title="При удалении пользователя, также удалиться вся зависимая информация представленная внизу в Дополнительной информации"><span class="glyphicon glyphicon-trash"></span></a>
                                        </div>
                                     </div>
                                     <div class="row padding-top10">
@@ -410,12 +410,12 @@
                                         </div>
                                         <div class="col-lg-6">
                                            <div id="show_other_information_user">
-                                                <input class="btn btn-primary" type="button" name="other_information" value="Показать дополнительную информацию" onclick = 'otherInformation("show");'>                                                         
+                                                <input class="btn btn-primary" type="button" name="other_information" value="Показать дополнительную информацию" onclick='otherInformation("show");'>                                                         
                                            </div>
                                        </div>
                                        <div class="col-lg-6">
                                            <div id="hide_other_information_user" style="display: none">
-                                                <input class="btn btn-primary" type="button" name="other_information" value="Скрыть дополнительную информацию" onclick = 'otherInformation("hide");'>   
+                                                <input class="btn btn-primary" type="button" name="other_information" value="Скрыть дополнительную информацию" onclick='otherInformation("hide");'>   
                                            </div>
                                        </div>
                                    </div>
