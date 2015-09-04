@@ -91,7 +91,7 @@
                            {/foreach}
                     </table>
                 {else}
-                    Вы еще не создавали опросы</br>
+                   <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>   Вы еще не создавали опросы</div></br>
                 {/if}
                 
                     <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=new_quiz">Создать опрос</a>

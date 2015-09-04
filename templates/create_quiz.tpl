@@ -372,6 +372,7 @@
         {include file='menu.tpl'}
             <div id="page-content-wrapper">
                 <div class="container-fluid">
+                     {if $data_one_quiz->id_status_test == 1}
                     <form method="post" id="test_passing">
                         <table class="table">
                             <tr>
@@ -493,9 +494,10 @@
                         </table>
                                               
                             <button class="btn btn-primary" id="create-question" form="test_passing" name="button_click" value="add_question" disabled> Создать вопрос</button>
-                        
-                        
                     </form>
+                    {else}
+                        <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span>     Вопрос не в статусе редактируемый</div>
+                    {/if}
                 </div>
             </div>
         {/capture}
@@ -533,18 +535,22 @@
                                 
             {capture name='edit_data_quiz'}
             {include file='menu.tpl'}
-            <div id="page-content-wrapper">
-                <div class="container-fluid">
-                    <form method="post">
-                        <input type="hidden" name="id_quiz" value="{if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">
-                        <table width="60%" align="center" bgcolor="#87CEFA" class="table">
-			                {$smarty.capture.form_for_quiz}
-                        </table>
-                        <input type="hidden" name="status_test" value="1">
-                        <button class="btn btn-primary" name='button_click' value='edit_data_quiz'>Изменить опрос</button>
-                    </form>
+                <div id="page-content-wrapper">
+                    <div class="container-fluid">
+                     {if $data_one_quiz->id_status_test == 1}
+                        <form method="post">
+                            <input type="hidden" name="id_quiz" value="{if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">
+                            <table width="60%" align="center" bgcolor="#87CEFA" class="table">
+			                    {$smarty.capture.form_for_quiz}
+                            </table>
+                            <input type="hidden" name="status_test" value="1">
+                            <button class="btn btn-primary" name='button_click' value='edit_data_quiz'>Изменить опрос</button>
+                        </form>
+                    {else}
+                        <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span>     Вопрос не в статусе редактируемый</div>
+                    {/if}
+                    </div>
                 </div>
-            </div>
             {/capture}                    
             {capture name='edit_quiz'}
             {include file='menu.tpl'}
