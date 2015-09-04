@@ -62,8 +62,8 @@ class IntervieweeDAO {
             if(isset($answers[$array_id_question[$i]])){
                 for($j=0; $j<count($answers[$array_id_question[$i]]); $j++){
                     $flag = true;
-                    if($que->getIdQuestionType($array_id_question[$i]) != 4){
-                        if(isset($answers[$array_id_question[$i]][$j])){
+                    if(isset($answers[$array_id_question[$i]][$j])){
+                        if($que->getIdQuestionType($array_id_question[$i]) != 4 && $que->getIdQuestionType($array_id_question[$i]) != 5){
                             $obj=$answeroption->getRightAnswerOptions($answers[$array_id_question[$i]][$j]);
                             if($obj != ''){
                                 if($obj == 'Y'){
@@ -87,11 +87,11 @@ class IntervieweeDAO {
                             }
                         }
                         else {
-                            $result['skip']++;
+                            $result['unvalidated']++;
                         }
                     }
                     else {
-                        $result['unvalidated']++;
+                        $result['skip']++;
                     }
                 }
             }
@@ -110,30 +110,27 @@ class IntervieweeDAO {
             if(isset($answers[$array_id_question[$i]])) {
                 for($j=0; $j<count($answers[$array_id_question[$i]]); $j++){
                     $flag = true;
-                    if($que->getIdQuestionType($array_id_question[$i]) != 4){
-                        if(isset($answers[$array_id_question[$i]][$j])){
+                    if(isset($answers[$array_id_question[$i]][$j])){
+                        if($que->getIdQuestionType($array_id_question[$i]) != 4 && $que->getIdQuestionType($array_id_question[$i]) != 5){
                             $obj=$answeroption->getRightAnswerOptions($answers[$array_id_question[$i]][$j]);
                             if($obj != ''){
-                                if($obj == 'Y'){
+                                if($obj == 'Y') {
                                     $flag = true;
-                                }
-                                else {
+                                } else {
                                     $flag = false;
                                 }
                                 if($j==count($answers[$array_id_question[$i]])-1) {
                                    $countOfRight = $answeroption->getCountOfRightAnswers($array_id_question[$i]);
                                     if($flag && $countOfRight == count($answers[$array_id_question[$i]])) {
                                         $result[$array_id_question[$i]]['value'] = 'success';
-                                    }
-                                    else {
+                                    } else {
                                         $result[$array_id_question[$i]]['value'] = 'danger';
                                     }
                                 }
                             }
                         }
-                        else {
-                            $result[$array_id_question[$i]]['value'] = 'warning';
-                        }
+                    } else {
+                        $result[$array_id_question[$i]]['value'] = 'warning';
                     }
                 }
             }

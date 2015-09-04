@@ -29,8 +29,8 @@ if($button=="start_quiz"){
 elseif($button=="end_quiz"){
     $_SESSION['status_testing']='finished';
     $quiz_view->endQuiz();
-	//header("Location:quiz.php?status=finished&testing=".$_SESSION['id_testing']);
-	//exit;
+	header("Location:quiz.php?status=finished&testing=".$_SESSION['id_testing']);
+	exit;
 }
 
 elseif($button=="end_question"){
@@ -43,8 +43,8 @@ elseif($button=="end_question"){
     else {
         $_SESSION['status_testing']='finished';
         $quiz_view->endQuiz();
-		//header("Location:quiz.php?status=finished&testing=".$_SESSION['id_testing']);
-		//exit;
+		header("Location:quiz.php?status=finished&testing=".$_SESSION['id_testing']);
+		exit;
     }
 }
 elseif($button=="skip_question") {
