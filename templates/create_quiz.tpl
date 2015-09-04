@@ -613,6 +613,8 @@
                             <a class="btn btn-md btn-primary" id='buttons_disabled[]' href='create_quiz.php?action=edit_data_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-pencil"></span>   Редактировать опрос</a>
                         </div>
                     </div>
+                    <br>
+                    <br>
                     <div class="row">
                         <label for="change_status_test">Статус опроса:</label>
                         <select  class="form-control" name="change_status_test" id="change_status_test" onchange ='changeStatusOfTest(this.options[this.selectedIndex].value, {if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if});'>

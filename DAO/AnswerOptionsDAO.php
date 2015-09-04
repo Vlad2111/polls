@@ -119,4 +119,16 @@ class AnswerOptionsDAO {
             return $obj->right_answer;
         }
     }
+    
+    public function getCountOfRightAnswers($id_question){
+        $query="select count(*) from answer_options where id_question = $1 and right_answer = 'Y'";
+        $array_params=array();
+        $array_params[]=$id_question;
+        $this->db->execute($query,$array_params);  
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        if(isset($obj->count)) {
+            return $obj->count;
+        }
+    }
 }

@@ -73,7 +73,8 @@ class IntervieweeDAO {
                                     $flag = false;
                                 }
                                 if($j==count($answers[$array_id_question[$i]])-1) {
-                                    if($flag) {
+                                    $countOfRight = $answeroption->getCountOfRightAnswers($array_id_question[$i]);
+                                    if($flag && $countOfRight == count($answers[$array_id_question[$i]])) {
                                         $result['right']++;
                                     }
                                     else {
@@ -120,7 +121,8 @@ class IntervieweeDAO {
                                     $flag = false;
                                 }
                                 if($j==count($answers[$array_id_question[$i]])-1) {
-                                    if($flag) {
+                                   $countOfRight = $answeroption->getCountOfRightAnswers($array_id_question[$i]);
+                                    if($flag && $countOfRight == count($answers[$array_id_question[$i]])) {
                                         $result[$array_id_question[$i]]['value'] = 'success';
                                     }
                                     else {
