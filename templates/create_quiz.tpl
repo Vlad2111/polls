@@ -119,6 +119,18 @@
                     });
                 }
             }
+            function checkGroup() {
+                var value = $('#inputGroup').val();
+			    if(value != ""){
+                    $.post("checkForms.php", { action: "check", field: "group", name: value }, function( data ) {
+                        if (data == 1) {
+                            $('#btnGroup').click();
+                        } else {
+                            alert("Wrong group");
+                        }
+                    });
+                }
+            }
             function checkTopicQuiz(value){
 			    if(value != ""){
                     $.post("checkForms.php", { action: "check", field: "topic quiz", name: value }, function( data ) {
@@ -840,6 +852,7 @@
             {include file='menu.tpl'}
             <div id="page-content-wrapper">
                 <div class="container-fluid">
+                    {if isset($users_data[0])}  
                     Тестируемые пользователи
                     <table class="table">
                         <thead>
@@ -887,6 +900,9 @@
                             </tr>
                         {/foreach}
                     </table>
+                    {else}
+                        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>   Нет добавленных пользователей</div></br>
+                    {/if}
                                     <h2>Добавить опрашиваемых</h2>
                                     <form method="post" id="test_passing">
                                         <table>                                            
@@ -901,29 +917,39 @@
                                             <tr>
                                                 <td>
 												    <div class="input_container">
-													    <input id="inputName" name="inputName" form="test_passing" type="text" size="50%" onkeyup="autocomplet()">
-													    <ul id="country_list_id"></ul>
+												        <div class="input-append">
+													        <input id="inputName" name="inputName" form="test_passing" type="text" size="50%" onkeyup="autocomplet()">
+													        <ul id="country_list_id"></ul>
+													        <a onclick="checkLogin();"><span class="glyphicon glyphicon-plus"></span></a>
+													    </div>
 												    </div>
                                                 </td>
                                                 <td>
-                                                    <input type="text" size="50%">
+                                                    <div class="input_container">
+                                                        <div class="input-append">
+                                                            <input id="inputGroup" name="inputGroup" form="test_passing" type="text" size="50%" onkeyup="autocompleteGroup()">
+                                                            <ul id="group_list_id"></ul>
+                                                            <a onclick="checkGroup();"><span class="glyphicon glyphicon-plus"></span></a>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </table>
-                                        <a onclick="checkLogin();"><span class="glyphicon glyphicon-plus"></span></a>
+                                        
                                         <button style="display: none" id="btn" form="test_passing" name='button_click' value='addUserIntoTest'></button>
+                                        <button style="display: none" id="btnGroup" form="test_passing" name='button_click' value='addGroupIntoTest'></button>
                                     </form>   
                 </div>
             </div>        
             <script type="text/javascript">
 			function autocomplet() {
-				var min_length = 0; // min caracters to display the autocomplete
+				var min_length = 1; // min caracters to display the autocomplete
 				var keyword = $('#inputName').val();
 				if (keyword.length > min_length) {
 					$.ajax({
 						url: 'search.php',
 						type: 'POST',
-						data: { keyword: keyword},
+						data: { keyword: keyword, field: "user"},
 						success:function(data){
 							$('#country_list_id').show();
 							$('#country_list_id').html(data);
@@ -940,6 +966,29 @@
 				$('#inputName').val(item);
 				// hide proposition list
 				$('#country_list_id').hide();
+			}
+			
+			function autocompleteGroup() {
+				var min_length = 0; // min caracters to display the autocomplete
+				var keyword = $('#inputGroup').val();
+				if (keyword.length > min_length) {
+					$.ajax({
+						url: 'search.php',
+						type: 'POST',
+						data: { keyword: keyword, field: "group"},
+						success:function(data){
+							$('#group_list_id').show();
+							$('#group_list_id').html(data);
+						}
+					});
+				} else {
+					$('#group_list_id').hide();
+				}
+			}
+
+			function set_item_group(item) {
+				$('#inputGroup').val(item);
+				$('#group_list_id').hide();
 			}
             
             </script>

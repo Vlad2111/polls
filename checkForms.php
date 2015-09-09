@@ -20,11 +20,13 @@ include_once 'model/MQuestion.php';
 include_once 'view/QuizView.php';
 include_once 'model/MAnswerUser.php';
 include_once 'DAO/TestingDAO.php';
-include_once 'view/CreateQuizView.php';   
+include_once 'view/CreateQuizView.php'; 
+include_once 'LdapOperations.php';  
 
 $create_quiz_view = new CreateQuizView();
 $object_quiz_dao=new QuizDAO();
 $object_user_dao=new UserDAO();
+$ldapOperations=new LdapOperations();
 if(isset($_POST['action']) && $_POST['action']=='check'){
     if($_POST[ 'field']=="topic quiz"){
       if($object_quiz_dao->checkNameTopicQuiz($_POST['name'])){
@@ -43,13 +45,30 @@ if(isset($_POST['action']) && $_POST['action']=='check'){
         }  
     }
     if($_POST[ 'field']=="login user"){
-      if($object_user_dao->checkLoginUser($_POST['name'])){
+        if($object_user_dao->checkLoginUser($_POST['name'])){
+            echo 1;
+        }
+        else{
+            $ldapOperations->connect();
+            $result = $ldapOperations->getLDAPAccountNamesByPrefix($_POST['name']);
+            if($result[0]['sAMAccountName'] == $_POST['name']){
+                echo 1;
+            }
+            else{
+                echo 0;
+            }
+        } 
+    } 
+    if($_POST[ 'field']=="group"){
+        $ldapOperations->connect();
+        $result = $ldapOperations->getLDAPGroupNamesByPrefix($_POST['name']);
+        if($result[0]['sAMAccountName'] == $_POST['name']){
             echo 1;
         }
         else{
             echo 0;
-        }  
-    }    
+        }
+    }   
 }
 if(isset($_POST['action']) && $_POST['action']=='getInterviewees'){
     $user = new UserDAO();

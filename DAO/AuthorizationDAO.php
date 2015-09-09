@@ -74,10 +74,10 @@ class AuthorizationDAO {
             $this->log->info('Неправильно введены логин и пароль пользователем '.$auth->getLogin());
             return false;
         }
-     }     
+    }     
     public function getObjUser(MAuthorization $auth){
-         $query="select * from alluser where id_user=$1;";
-         $array_params=array();
+        $query="select * from alluser where id_user=$1;";
+        $array_params=array();
         $array_params[]=$this->getIdUser($auth);
         $result=$this->db->execute($query,$array_params);
         $data=$this->db->getFetchObject($result);
@@ -90,7 +90,7 @@ class AuthorizationDAO {
         $muser->setLogin($data->login);
         $muser->setLdapUser(1);
         return $muser;         
-     }
+    }
     public function getRole(MAuthorization $auth, $id_user=null){
          if($this->user=="ldap"){
              $result= $this->getRoleLDAP($auth);

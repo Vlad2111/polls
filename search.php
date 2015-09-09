@@ -1,23 +1,39 @@
 <?php
 include_once 'DAO/UserDAO.php';
+include_once 'LdapOperations.php';
 $adm = new AdministrationDAO();
 $user_dao=new UserDAO();
-$elements = $user_dao->searchUser($_POST['keyword']);
-$response = array(); 
-//while($row = $res->fetch()){
-//for($i=0;$i<count($elements);$i++){
-  //  $response[] = array(
-    //    'login' => $elements[$i]->getLogin(),//$row['title_ru'],
-//        'plink' => itemPath('fgdf') //itemPath($row['item_id']) // тут у меня функция формирует ссылку
-        /* добавлять можно всё, что угодно. Хоть маму с папой впихнуть ;) */
-    //);
-//}
-//echo json_encode($response);
-foreach ($elements as $rs) {
-	// put in bold the written text
-	$country_name = str_replace($_POST['keyword'], '<b>'.$_POST['keyword'].'</b>', $rs->getLogin());
-	// add new option
-    echo '<li onclick="set_item(\''.str_replace("'", "\'", $rs->getLogin()).'\')">'.$country_name.'</li>';
+$ldapOperations=new LdapOperations();
+
+if($_POST[ 'field']=="user"){
+    $elements = $user_dao->searchUser($_POST['keyword']);
+    $ldapOperations->connect();
+    $ldap_users = $ldapOperations->getLDAPAccountNamesByPrefix($_POST['keyword']);
+    //$result = array_merge($elements ,$ldap_users);
+    $result = $ldap_users;
+    //var_dump($result);
+
+    foreach ($result as $rs) {
+	    // put in bold the written text
+	    $country_name = str_replace($_POST['keyword'], '<b>'.$_POST['keyword'].'</b>', $rs['sAMAccountName']);
+	    // add new option
+        echo '<li onclick="set_item(\''.str_replace("'", "\'", $rs['sAMAccountName']).'\')">'.$country_name.'</li>';
+    }
+}
+
+if($_POST[ 'field']=="group"){
+    $ldapOperations->connect();
+    $ldap_users = $ldapOperations->getLDAPGroupNamesByPrefix($_POST['keyword']);
+    //$result = array_merge($elements ,$ldap_users);
+    $result = $ldap_users;
+    //var_dump($result);
+
+    foreach ($result as $rs) {
+	    // put in bold the written text
+	    $country_name = str_replace($_POST['keyword'], '<b>'.$_POST['keyword'].'</b>', $rs['sAMAccountName']);
+	    // add new option
+        echo '<li onclick="set_item_group(\''.str_replace("'", "\'", $rs['sAMAccountName']).'\')">'.$country_name.'</li>';
+    }
 }
 exit;
 

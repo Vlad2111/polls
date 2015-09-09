@@ -8,6 +8,7 @@ include_once 'model/MUser.php';
 include_once 'DAO/UserDAO.php';
 include_once 'DAO/AnswerOptionsDAO.php';
 include_once 'model/MAnswerOptions.php';
+include_once 'LdapOperations.php';
 class CreateQuizView{
     public $id_author; //ид составителя опроса
     public $id_quiz; // Ид опроса: создавемого или редактируемого
@@ -20,6 +21,7 @@ class CreateQuizView{
     private $mauthor; 
     private $author;
     private $answer_option;
+    public $ldapOperations;
     public function __construct() {
         if(isset($_SESSION['id_quiz'])) {
             unset($_SESSION['id_quiz']);
@@ -38,6 +40,7 @@ class CreateQuizView{
         $this->author = new AuthorQuizDAO();
         $this->inter = new IntervieweeDAO();
         $this->answer_option = new AnswerOptionsDAO();
+        $this->ldapOperations=new LdapOperations();
         $this->link_click = filter_input(INPUT_GET, 'link_click', FILTER_SANITIZE_SPECIAL_CHARS);
         $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);  
         $this->id_question = filter_input(INPUT_GET, 'id_question', FILTER_SANITIZE_SPECIAL_CHARS);     
@@ -112,9 +115,42 @@ class CreateQuizView{
             elseif ($this->button_click == 'add_answer_option_one'){  
                 $this->addAnswerQuestion();
             }
-            elseif ($this->button_click == 'addUserIntoTest'){  
-                //var_dump('gf');
-                $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($_POST['inputName']));
+            elseif ($this->button_click == 'addUserIntoTest'){
+                if($this->user->checkLoginUser($_POST['inputName'])){
+                    $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($_POST['inputName']));
+                }
+                else {
+                    $this->ldapOperations->connect();
+                    $name = $this->ldapOperations->getLDAPAccountNamesByPrefix($_POST['inputName']);
+                    $userDAO= new UserDAO();
+                    $muser= new Muser();
+                    $muser->setFirstName($name[0]['givenName']);
+                    $muser->setLastName($name[0]['sn']);
+                    $muser->setEmail($name[0]['mail']);
+                    $muser->setLogin($name[0]['sAMAccountName']);
+                    $muser->setLdapUser(1);
+                    $userDAO->createUser($muser);
+                    $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($_POST['inputName']));
+                }
+                header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
+				exit;
+            }
+            elseif ($this->button_click == 'addGroupIntoTest'){
+                $this->ldapOperations->connect();
+                $group = $this->ldapOperations->getGroupMembers($_POST['inputGroup']);
+                foreach($group as $user){
+                    if(!$this->user->checkLoginUser($user['sAMAccountName'])){
+                        $userDAO= new UserDAO();
+                        $muser= new Muser();
+                        $muser->setFirstName($user['givenName']);
+                        $muser->setLastName($user['sn']);
+                        $muser->setEmail($user['mail']);
+                        $muser->setLogin($user['sAMAccountName']);
+                        $muser->setLdapUser(1);
+                        $userDAO->createUser($muser);
+                    }
+                    $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($user['sAMAccountName']));
+                }
                 header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
 				exit;
             }
