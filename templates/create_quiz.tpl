@@ -866,9 +866,6 @@
                                 Тип пользователя
                             </th>
                             <th>
-                                Статус пользователя
-                            </th>
-                            <th>
                                 
                             </th>
                         </thead>
@@ -886,13 +883,6 @@
                                     {elseif $one_user_data->getLdapUser()==1}
                                         Пользователь LDAP
                                     {/if}
-                                </td>
-                                <td>
-                                    {if $one_user_data->getUserVasibility()==1}
-                                        Активный
-                                    {else}
-                                        Неактивный
-                                    {/if}    
                                 </td>
                                 <td>
                                     <a href="?action=deleteUser&id_user={$one_user_data->getIdUser()}&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}"><span class="glyphicon glyphicon-trash"></span></a>

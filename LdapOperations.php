@@ -171,7 +171,7 @@ class LdapOperations
 
 		$result_ent=$this->searchLDAP("(&(objectClass=person)(memberOf=$groupDN))", 
 			array('name', 'sAMAccountName', 'useraccountcontrol', 'sn', 'givenName', 'mail'));
-
+        var_dump($result_ent);
 		$names = array();
 		$iter = function($value, $key) use (&$names)
 		{
