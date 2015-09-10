@@ -55,15 +55,21 @@
 	border: 1px solid #eaeaea;
 	position: absolute;
 	z-index: 9;
-	background: #f3f3f3;
+	background: #E2E3E4;
 	list-style: none;
+	padding-left:20px;
 }
 .input_container ul li {
 	padding: 2px;
 }
 .input_container ul li:hover {
-	background: #eaeaea;
+	background: #0078B8;
+	text-decoration: none;
+    color: #fff;
 }
 #country_list_id {
+	display: none;
+}
+#group_list_id {
 	display: none;
 }
