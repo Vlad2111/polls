@@ -31,6 +31,10 @@ if($_POST[ 'field']=="group"){
     foreach ($result as $rs) {
 	    // put in bold the written text
 	    $country_name = str_replace($_POST['keyword'], '<b>'.$_POST['keyword'].'</b>', $rs['sAMAccountName']);
+	    if(strlen($country_name) > 40){
+	        $country_name = substr($country_name, 0, 40);
+	        $country_name = $country_name.'...';
+	    }
 	    // add new option
         echo '<li onclick="set_item_group(\''.str_replace("'", "\'", $rs['sAMAccountName']).'\')">'.$country_name.'</li>';
     }
