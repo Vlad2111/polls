@@ -188,7 +188,7 @@ class UserDAO {
     }
     public function searchUser($name){
 		$adm = new AdministrationDAO();
-        $query = "select id_user from alluser where login like '%".strtolower($name)."%' OR login like '%".strtoupper($name)."%'";
+        $query = "select id_user from alluser where ldap_user=0 and (login like '%".strtolower($name)."%' OR login like '%".strtoupper($name)."%')";
 		$array_params=array();
         //$array_params[]=$name;
         $result=$this->db->execute($query);

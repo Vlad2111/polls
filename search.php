@@ -11,7 +11,9 @@ if($_POST[ 'field']=="user"){
     $ldap_users = $ldapOperations->getLDAPAccountNamesByPrefix($_POST['keyword']);
     //$result = array_merge($elements ,$ldap_users);
     $result = $ldap_users;
-    //var_dump($result);
+    foreach($elements as $elem) {
+        array_push($result, array('name'=>$elem->getLogin(), 'sAMAccountName'=>$elem->getLogin(), 'sn'=>$elem->getLastName(), 'givenName'=>$elem->getFirstName(), 'mail'=>$elem->getEmail()));
+    }
 
     foreach ($result as $rs) {
 	    // put in bold the written text
