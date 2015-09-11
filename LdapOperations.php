@@ -90,6 +90,7 @@ class LdapOperations
 	*/
 	const UF_ACCOUNT_DISABLED=2;
 	const UF_WORKSTATION_TRUST_ACCOUNT=4096;
+	const TECH_ACCOUNT='OU=service connections users';
 	public function getLDAPAccountNamesByPrefix($prefix) 
 	{
 		if (!$this->ldap) {
@@ -106,7 +107,8 @@ class LdapOperations
 			if (is_array($value) && 
 				isset($value['useraccountcontrol']) &&
 				($value['useraccountcontrol'][0] & self::UF_ACCOUNT_DISABLED) != self::UF_ACCOUNT_DISABLED && 
-				($value['useraccountcontrol'][0] & self::UF_WORKSTATION_TRUST_ACCOUNT) != self::UF_WORKSTATION_TRUST_ACCOUNT) 
+				($value['useraccountcontrol'][0] & self::UF_WORKSTATION_TRUST_ACCOUNT) != self::UF_WORKSTATION_TRUST_ACCOUNT &&
+				!stristr($value['dn'], self::TECH_ACCOUNT)) 
 			{
 				array_push($names, array('name'=>$value['name'][0], 'sAMAccountName'=>$value['samaccountname'][0], 'sn'=>$value['sn'][0],       'givenName'=>$value['givenname'][0], 'mail'=>$value['mail'][0]));
 			}
@@ -177,7 +179,8 @@ class LdapOperations
 			if (is_array($value) &&
 				$value['useraccountcontrol'][0] != null &&
 				($value['useraccountcontrol'][0] & self::UF_ACCOUNT_DISABLED) != self::UF_ACCOUNT_DISABLED &&
-				($value['useraccountcontrol'][0] & self::UF_WORKSTATION_TRUST_ACCOUNT) != self::UF_WORKSTATION_TRUST_ACCOUNT)
+				($value['useraccountcontrol'][0] & self::UF_WORKSTATION_TRUST_ACCOUNT) != self::UF_WORKSTATION_TRUST_ACCOUNT &&
+				!stristr($value['dn'], self::TECH_ACCOUNT))
 			{
 				// array_push($names, array('cn' => $value['cn'][0], 'useraccountcontrol' => $value['useraccountcontrol'][0]));
 				array_push($names, array('name'=>$value['name'][0], 'sAMAccountName'=>$value['samaccountname'][0], 'sn'=>$value['sn'][0], 'givenName'=>$value['givenname'][0], 'mail'=>$value['mail'][0]));
@@ -235,7 +238,7 @@ class LdapOperations
 		var_dump($ldap->getLDAPGroupNamesByPrefix('rnd'));
 */
 		echo "Members of group RND-Builds: ";
-		var_dump($ldap->getGroupMembers('Engineering'));
+		var_dump($ldap->getGroupMembers('BCD-S'));
 	}
 }
 

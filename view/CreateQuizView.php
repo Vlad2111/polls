@@ -160,8 +160,8 @@ class CreateQuizView{
                         $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($user['sAMAccountName']));
                     }
                 }
-                //header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
-				//exit;
+                header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
+				exit;
             }
             elseif ($this->button_click == 'edit_data_quiz'){
                 $this->editQuiz();
