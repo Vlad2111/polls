@@ -138,6 +138,13 @@ class CreateQuizView{
             elseif ($this->button_click == 'addGroupIntoTest'){
                 $this->ldapOperations->connect();
                 $group = $this->ldapOperations->getGroupMembers($_POST['inputGroup']);
+                $subGroups = $this->ldapOperations->getSubGroups($_POST['inputGroup']);
+                foreach($subGroups as $oneGroup){
+                    $arr = $this->ldapOperations->getGroupMembers($oneGroup['sAMAccountName']);
+                    foreach($arr as $oneUser){
+                        array_push($group, $oneUser);
+                    }
+                }
                 foreach($group as $user){
                     if(!$this->user->checkLoginUser($user['sAMAccountName'])){
                         $userDAO= new UserDAO();
@@ -149,10 +156,12 @@ class CreateQuizView{
                         $muser->setLdapUser(1);
                         $userDAO->createUser($muser);
                     }
-                    $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($user['sAMAccountName']));
+                    if(!$this->inter->checkUserInTest($_SESSION['id_quiz'], $this->user->checkLoginUser($user['sAMAccountName']))){
+                        $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($user['sAMAccountName']));
+                    }
                 }
-                header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
-				exit;
+                //header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
+				//exit;
             }
             elseif ($this->button_click == 'edit_data_quiz'){
                 $this->editQuiz();

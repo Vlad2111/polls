@@ -108,7 +108,7 @@ class LdapOperations
 				($value['useraccountcontrol'][0] & self::UF_ACCOUNT_DISABLED) != self::UF_ACCOUNT_DISABLED && 
 				($value['useraccountcontrol'][0] & self::UF_WORKSTATION_TRUST_ACCOUNT) != self::UF_WORKSTATION_TRUST_ACCOUNT) 
 			{
-				array_push($names, array('name'=>$value['name'][0], 'sAMAccountName'=>$value['samaccountname'][0], 'sn'=>$value['sn'][0], 'givenName'=>$value['givenname'][0], 'mail'=>$value['mail'][0]));
+				array_push($names, array('name'=>$value['name'][0], 'sAMAccountName'=>$value['samaccountname'][0], 'sn'=>$value['sn'][0],       'givenName'=>$value['givenname'][0], 'mail'=>$value['mail'][0]));
 			}
 		};
 
@@ -171,7 +171,6 @@ class LdapOperations
 
 		$result_ent=$this->searchLDAP("(&(objectClass=person)(memberOf=$groupDN))", 
 			array('name', 'sAMAccountName', 'useraccountcontrol', 'sn', 'givenName', 'mail'));
-        var_dump($result_ent);
 		$names = array();
 		$iter = function($value, $key) use (&$names)
 		{
@@ -188,6 +187,29 @@ class LdapOperations
 		array_walk($result_ent, $iter);
 		return $names;
 	}
+	
+	public function getSubGroups($group)
+	{
+		if (!$this->ldap) {
+			throw new Exception("Not connected to LDAP server");
+		}
+
+		$result_ent=$this->searchLDAP("(&(objectClass=group)(sAMAccountName=$group))", array('dn'));
+		$groupDN = $result_ent[0]['dn'];
+		$result_ent=$this->searchLDAP("(&(objectClass=group)(memberOf=$groupDN))", 
+			array('name', 'sAMAccountName'));
+		$names = array();
+
+		$iter = function($value, $key) use (&$names)
+		{
+			if (is_array($value)) {
+				array_push($names, array('name'=>$value['name'][0], 'sAMAccountName'=>$value['samaccountname'][0]));
+			}
+		};
+
+		array_walk($result_ent, $iter);
+		return $names;
+	}
 
 	public function usageExamples()
 	{
@@ -197,7 +219,7 @@ class LdapOperations
 		$ldap = new LdapOperations();
 		$ldap->connect();
 
-		echo "Подтверждение принадлежности пользователя к группе unixusers: ";
+		/*echo "Подтверждение принадлежности пользователя к группе unixusers: ";
 		var_dump($ldap->checkLDAPGroupMembership($samaccountname, 'unixusers'));
 
 		echo "Подтверждение принадлежности пользователя к группе Managers: ";
@@ -211,9 +233,9 @@ class LdapOperations
 
 		echo "Groups with names starting with rnd: ";
 		var_dump($ldap->getLDAPGroupNamesByPrefix('rnd'));
-
+*/
 		echo "Members of group RND-Builds: ";
-		var_dump($ldap->getGroupMembers('RND-Builds'));
+		var_dump($ldap->getGroupMembers('Engineering'));
 	}
 }
 

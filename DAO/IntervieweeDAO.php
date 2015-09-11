@@ -475,6 +475,17 @@ class IntervieweeDAO {
 //            throw new Exception('Ошибка удаления строки в таблице: alluser( '.pg_last_error().')'); 
         }  
     }
+    public function checkUserInTest($test, $user){
+        $query="select * from interviewees where id_test=$1 and id_user=$2"; 
+        $array_params=array();
+        $array_params[]=$test;
+        $array_params[]=$user;
+        $result=$this->db->execute($query,$array_params);
+        $obj= $this->db->getFetchObject($result);
+        if(isset($obj->id_test)){
+            return $obj->id_test;
+        }  
+    }
 }
     
 
