@@ -108,7 +108,7 @@ class LdapOperations
 				isset($value['useraccountcontrol']) &&
 				($value['useraccountcontrol'][0] & self::UF_ACCOUNT_DISABLED) != self::UF_ACCOUNT_DISABLED && 
 				($value['useraccountcontrol'][0] & self::UF_WORKSTATION_TRUST_ACCOUNT) != self::UF_WORKSTATION_TRUST_ACCOUNT &&
-				!stristr($value['dn'], self::TECH_ACCOUNT)) 
+				!stristr($value['dn'], self::TECH_ACCOUNT) && (isset($value['distinguishedName']) && !stristr($value['distinguishedName'], self::TECH_ACCOUNT))) 
 			{
 				array_push($names, array('name'=>$value['name'][0], 'sAMAccountName'=>$value['samaccountname'][0], 'sn'=>$value['sn'][0],       'givenName'=>$value['givenname'][0], 'mail'=>$value['mail'][0]));
 			}
@@ -180,7 +180,8 @@ class LdapOperations
 				$value['useraccountcontrol'][0] != null &&
 				($value['useraccountcontrol'][0] & self::UF_ACCOUNT_DISABLED) != self::UF_ACCOUNT_DISABLED &&
 				($value['useraccountcontrol'][0] & self::UF_WORKSTATION_TRUST_ACCOUNT) != self::UF_WORKSTATION_TRUST_ACCOUNT &&
-				!stristr($value['dn'], self::TECH_ACCOUNT))
+				!stristr($value['dn'], self::TECH_ACCOUNT) && (isset($value['distinguishedName']) && !stristr($value['distinguishedName'], self::TECH_ACCOUNT)))
+				
 			{
 				// array_push($names, array('cn' => $value['cn'][0], 'useraccountcontrol' => $value['useraccountcontrol'][0]));
 				array_push($names, array('name'=>$value['name'][0], 'sAMAccountName'=>$value['samaccountname'][0], 'sn'=>$value['sn'][0], 'givenName'=>$value['givenname'][0], 'mail'=>$value['mail'][0]));
