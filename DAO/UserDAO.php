@@ -201,7 +201,14 @@ class UserDAO {
         }
         return $array_result;
     }
-	
+	public function getEmailUser($id_user){
+        $query="select email from alluser where id_user=$1;";
+        $array_params=array();          
+        $array_params[]=$id_user;     
+        $result=$this->db->execute($query,$array_params);
+        $obj = $this->db->getFetchObject($result);
+        return $obj->email;
+    }
 }
 ?>
 

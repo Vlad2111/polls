@@ -4,8 +4,10 @@ session_start();
 include_once 'view/checkOnPage.php';
 include_once 'view/CreateQuizView.php'; 
 include_once 'lib/ConfigFile.php';
+include_once 'DAO/UserDAO.php';
 $config_file=  ConfigFile::getInstance();
 $create_quiz_view = new CreateQuizView();
+$userDAO = new UserDAO();
 // echo "<pre>";
 // var_dump($create_quiz_view->getDataQuestions());
 // echo "</pre>";
@@ -22,6 +24,10 @@ if(isset($create_quiz_view->getOneDataQuiz()->time_limit)){
 $smarty->assign('mark_rating_type', $create_quiz_view->getMarkOfRatingType());
 $smarty->assign('users_data', $create_quiz_view->getUsers());
 $smarty->assign('max_time', $config_file->array_params["ParamsDike"]["max_time"]);
+if(isset($_SESSION['rowcheckboxes'])){
+    $smarty->assign('mails', $_SESSION['rowcheckboxes']);
+}
+$smarty->assign('emailFrom', $userDAO->getEmailUser($_SESSION['id_user']));
 
 $smarty->display('templates/create_quiz.tpl');
 

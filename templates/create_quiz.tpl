@@ -248,7 +248,38 @@
 		            }
                 });
             }
-            
+            function selectAll(){
+                var inputList = document.getElementsByName("rowcheckboxes[]");
+                if(document.getElementById("allcheckboxes").checked == true){
+                    for ( var i = 0, elem; (elem = inputList[i++] ); ) {
+                        if ( elem.type == 'checkbox') {
+                            elem.checked = 'checked';
+                        }
+                    }
+                }
+                else {
+                    for ( var i = 0, elem; (elem = inputList[i++] ); ) {
+                        if ( elem.type == 'checkbox') {
+                            elem.checked = '';
+                        }
+                    }
+                }
+            }
+            function SendEmails(){
+            var incrimentSendEmail = 0;
+                {foreach $mails as $ma}
+                    var to = '{$ma}';
+                    $.post("sendEmails.php", { subject: $('#head').val(), message: $('#testOfMale').val(), to: to, from: '{$emailFrom}' }, function( data ) {
+                        if(data == 1) {
+                            $("#Email"+incrimentSendEmail).addClass("success");
+                        } else {
+                            $("#Email"+incrimentSendEmail).addClass("danger");
+                        }
+                        incrimentSendEmail++;
+                    });
+                {/foreach}
+            }
+            var incrimentFroEmail = 0
         </script>  
         {include file='header.tpl'}
         <div id="wrapper">
@@ -857,6 +888,9 @@
                     <table class="table">
                         <thead>
                             <th>
+                                <input type="checkbox" id="allcheckboxes"  onclick="selectAll();"> 
+                            </th>
+                            <th>
                                 Фамилия пользователя
                             </th>
                             <th>
@@ -871,6 +905,9 @@
                         </thead>
                         {foreach $users_data as $one_user_data}                                          
                             <tr>
+                                <td>
+                                    <input type="checkbox" name="rowcheckboxes[]" form="test_passing" value="{$one_user_data->getemail()}"> 
+                                </td>
                                 <td class='info'>
                                     {$one_user_data->getLastName()}
                                 </td>
@@ -890,45 +927,47 @@
                             </tr>
                         {/foreach}
                     </table>
+                    <button name="button_click" form="test_passing" value="sendListOfMail" ><span class="glyphicon glyphicon-envelope"></span></button>
+                    <!--<a href="?action=sendEmail&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}"><span class="glyphicon glyphicon-trash"></span></a>-->
                     {else}
                         <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>   Нет добавленных пользователей</div></br>
                     {/if}
-                                    <h2>Добавить опрашиваемых</h2>
-                                    <form method="post" id="test_passing">
-                                        <table>                                            
-                                            <tr>
-                                                <td>
-                                                    <h3>Добавить пользователя</h3>
-                                                </td>
-                                                <td>
-                                                    <h3>Добавить группу</h3>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-												    <div class="input_container">
-												        <div class="input-append">
-													        <input id="inputName" name="inputName" form="test_passing" type="text" size="50%" onkeyup="autocomplet()">
-													        <ul id="country_list_id"></ul>
-													        <a onclick="checkLogin();"><span class="glyphicon glyphicon-plus"></span></a>
-													    </div>
-												    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="input_container">
-                                                        <div class="input-append">
-                                                            <input id="inputGroup" name="inputGroup" form="test_passing" type="text" size="50%" onkeyup="autocompleteGroup()">
-                                                            <ul id="group_list_id"></ul>
-                                                            <a onclick="checkGroup();"><span class="glyphicon glyphicon-plus"></span></a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        
-                                        <button style="display: none" id="btn" form="test_passing" name='button_click' value='addUserIntoTest'></button>
-                                        <button style="display: none" id="btnGroup" form="test_passing" name='button_click' value='addGroupIntoTest'></button>
-                                    </form>   
+                    <h2>Добавить опрашиваемых</h2>
+                    <form method="post" id="test_passing">
+                        <table>                                            
+                            <tr>
+                                <td>
+                                    <h3>Добавить пользователя</h3>
+                                </td>
+                                <td>
+                                    <h3>Добавить группу</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+								    <div class="input_container">
+								        <div class="input-append">
+									        <input id="inputName" name="inputName" form="test_passing" type="text" size="50%" onkeyup="autocomplet()">
+									        <ul id="country_list_id"></ul>
+									        <a onclick="checkLogin();"><span class="glyphicon glyphicon-plus"></span></a>
+									    </div>
+								    </div>
+                                </td>
+                                <td>
+                                    <div class="input_container">
+                                        <div class="input-append">
+                                            <input id="inputGroup" name="inputGroup" form="test_passing" type="text" size="50%" onkeyup="autocompleteGroup()">
+                                            <ul id="group_list_id"></ul>
+                                            <a onclick="checkGroup();"><span class="glyphicon glyphicon-plus"></span></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <button style="display: none" id="btn" form="test_passing" name='button_click' value='addUserIntoTest'></button>
+                        <button style="display: none" id="btnGroup" form="test_passing" name='button_click' value='addGroupIntoTest'></button>
+                    </form>   
                 </div>
             </div>        
             <script type="text/javascript">
@@ -982,9 +1021,28 @@
 			}
             
             </script>
-             
-                                        
-                                {/capture}    
+            {/capture}    
+            {capture name=sendEmail}
+            {include file='menu.tpl'}
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                <label for="head">Заголовок</label>
+                <input id="head" type="text" class="form-control" value="Testing system">
+                <label for="testOfMale">Текст письма</label>
+                <textarea id="testOfMale" rows="5" cols="40" name="comment_test" class="form-control" >Hello</textarea>
+                <table class="table" id="mailsTable">
+                    {foreach $mails as $ma}
+                        
+                        <script>
+                         var text = '<tr id="Email'+incrimentFroEmail+'" class=""><td>{$ma}</td><td></td></tr>';
+                            $("#mailsTable").append(text);
+                         incrimentFroEmail++;</script>
+                    {/foreach}
+                </table>
+                <a onclick="SendEmails();"><span class="glyphicon glyphicon-envelope"></span>  Отправить письма</a>
+                </div>
+            </div>
+            {/capture}
                                     {if {$view_quiz} eq 'new_quiz'}
                                         {$smarty.capture.new_quiz}   
 									{elseif {$view_quiz} eq 'form_for_quiz'}
@@ -1003,6 +1061,8 @@
                                         {$smarty.capture.edit_question}    
                                     {elseif {$view_quiz} eq 'add_inteviewee'}
                                         {$smarty.capture.add_inteviewee}     
+                                    {elseif {$view_quiz} eq 'sendEmail'}
+                                        {$smarty.capture.sendEmail}     
                                      {/if}
          </div>
     </body>

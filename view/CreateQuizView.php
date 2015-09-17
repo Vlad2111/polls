@@ -53,9 +53,12 @@ class CreateQuizView{
              $this->title = 'Создание опроса';
         }
         elseif($this->link_click=='edit_quiz'){
-            
             $this->view_quiz='edit_quiz';
             $this->title = 'Редактирование опроса';
+        }
+        elseif($this->link_click=='sendEmail'){
+            $this->view_quiz='sendEmail';
+            $this->title = 'Отправка е-майл';
         }
         if(isset($_GET['action']) && !empty($_GET['action'])){
            if($_GET['action'] == 'new_question'){
@@ -168,6 +171,11 @@ class CreateQuizView{
                 header("Location: create_quiz.php?link_click=edit_quiz&id_quiz=".$_SESSION['id_quiz']);      
 				exit;
             }  
+            elseif ($this->button_click == 'sendListOfMail'){
+                $_SESSION['rowcheckboxes'] = $_POST['rowcheckboxes'];
+                header("Location: create_quiz.php?link_click=sendEmail&id_quiz=".$_SESSION['id_quiz']);      
+				exit;
+            }
         }
     }    
     public function createQuiz(){
@@ -209,7 +217,6 @@ class CreateQuizView{
         else {
             $mquiz->setSeeDetails('N');
         }
-        var_dump($mquiz);
         $mquiz->setIdStatusQuiz($_POST['status_test']);
         $_SESSION['id_quiz'] = $quiz->createQuiz($mquiz, $muser);
         $this->id_quiz = $_SESSION['id_quiz'];
@@ -545,6 +552,22 @@ class CreateQuizView{
     public function getMarkOfRatingType(){
         $quizDAO = new QuizDAO();
         return $quizDAO->getMarkOfRatingType();
+    }
+    public function sendEmail(){
+        var_dump('enter');
+                /*$to= "<galochkin.a@tecomgroup.ru>";
+
+                $subject = "Birthday Reminders for August";
+
+                $message = 'hello';
+
+                $headers= "MIME-Version: 1.0\r\n";
+                $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+
+                $headers .= "From: <galochkin.a@tecomgroup.ru>\r\n";
+                $var = mail($to, $subject, $message, $headers);
+                var_dump($var);*/
+                var_dump($_POST['rowcheckboxes']);
     }
 }?>
 

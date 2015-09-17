@@ -98,7 +98,7 @@ class LdapOperations
 		}
 
 		$result_ent = $this->searchLDAP("(&(objectClass=person)(sAMAccountName={$prefix}*))", 
-			array('name', 'useraccountcontrol', 'sAMAccountName', 'sn', 'givenName', 'mail'));
+			array('name', 'useraccountcontrol', 'sAMAccountName', 'sn', 'givenName', 'mail', 'distinguishedName'));
         
 		$names = array();
         //var_dump($result_ent);
@@ -108,7 +108,7 @@ class LdapOperations
 				isset($value['useraccountcontrol']) &&
 				($value['useraccountcontrol'][0] & self::UF_ACCOUNT_DISABLED) != self::UF_ACCOUNT_DISABLED && 
 				($value['useraccountcontrol'][0] & self::UF_WORKSTATION_TRUST_ACCOUNT) != self::UF_WORKSTATION_TRUST_ACCOUNT &&
-				!stristr($value['dn'], self::TECH_ACCOUNT) && (isset($value['distinguishedName']) && !stristr($value['distinguishedName'], self::TECH_ACCOUNT))) 
+				!stristr($value['dn'], self::TECH_ACCOUNT)) 
 			{
 				array_push($names, array('name'=>$value['name'][0], 'sAMAccountName'=>$value['samaccountname'][0], 'sn'=>$value['sn'][0],       'givenName'=>$value['givenname'][0], 'mail'=>$value['mail'][0]));
 			}
@@ -168,11 +168,11 @@ class LdapOperations
 			throw new Exception("Not connected to LDAP server");
 		}
 
-		$result_ent=$this->searchLDAP("(&(objectClass=group)(sAMAccountName=$group))", array('dn'));
+		$result_ent=$this->searchLDAP("(&(objectClass=group)(sAMAccountName=$group))", array('dn', 'distinguishedName'));
 		$groupDN = $result_ent[0]['dn'];
 
 		$result_ent=$this->searchLDAP("(&(objectClass=person)(memberOf=$groupDN))", 
-			array('name', 'sAMAccountName', 'useraccountcontrol', 'sn', 'givenName', 'mail'));
+			array('name', 'sAMAccountName', 'useraccountcontrol', 'sn', 'givenName', 'mail', 'distinguishedName'));
 		$names = array();
 		$iter = function($value, $key) use (&$names)
 		{
@@ -180,7 +180,7 @@ class LdapOperations
 				$value['useraccountcontrol'][0] != null &&
 				($value['useraccountcontrol'][0] & self::UF_ACCOUNT_DISABLED) != self::UF_ACCOUNT_DISABLED &&
 				($value['useraccountcontrol'][0] & self::UF_WORKSTATION_TRUST_ACCOUNT) != self::UF_WORKSTATION_TRUST_ACCOUNT &&
-				!stristr($value['dn'], self::TECH_ACCOUNT) && (isset($value['distinguishedName']) && !stristr($value['distinguishedName'], self::TECH_ACCOUNT)))
+				!stristr($value['dn'], self::TECH_ACCOUNT))
 				
 			{
 				// array_push($names, array('cn' => $value['cn'][0], 'useraccountcontrol' => $value['useraccountcontrol'][0]));
