@@ -27,6 +27,12 @@ $smarty->assign('max_time', $config_file->array_params["ParamsDike"]["max_time"]
 if(isset($_SESSION['rowcheckboxes'])){
     $smarty->assign('mails', $_SESSION['rowcheckboxes']);
 }
+if(isset($_SESSION['head'])){
+    $smarty->assign('subject', $_SESSION['head']);
+}
+if(isset($_SESSION['testOfMale'])){
+    $smarty->assign('message', $_SESSION['testOfMale']);
+}
 $smarty->assign('emailFrom', $userDAO->getEmailUser($_SESSION['id_user']));
 
 $smarty->display('templates/create_quiz.tpl');

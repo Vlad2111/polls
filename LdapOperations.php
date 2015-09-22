@@ -45,6 +45,13 @@ class LdapOperations
 		}
 	}
 	
+	public function checkUser(MAuthorization $auth){
+        $bind=ldap_bind($this->ldap, "TECOM\\".$auth->getLogin(), $auth->getPasswordLDAP());
+        if ($bind) {
+            return true;
+        }
+    }
+	
 	/** Вспомогательный метод для работы с поиском в LDAP */
 	private function searchLDAP($query, $returnProperties)
 	{
@@ -74,6 +81,21 @@ class LdapOperations
 
 		return count(preg_grep("/^CN=$groupName/", array_values($result_ent[0]['memberof']))) !=0;
 	}
+	
+	//возвращает список групп пользователя
+    public function getGroupLDAPUser($samaccountname){
+        if (!$this->ldap) {
+			throw new Exception("Not connected to LDAP server");
+		}
+
+		$result_ent = $this->searchLDAP("(sAMAccountName={$samaccountname})", array('memberof'));
+		$count=$result_ent[0]['memberof']['count'];
+                for($i=0; $i<$count; $i++){
+                    $arr_temp[$i]=$result_ent[0]['memberof'][$i];
+            }
+            
+            return $arr_temp;
+    }
 
 
 	/** Возвращает список аккаунтов, начинающихся с заданного префикса как список массивов следующего вида:
@@ -239,7 +261,7 @@ class LdapOperations
 		var_dump($ldap->getLDAPGroupNamesByPrefix('rnd'));
 */
 		echo "Members of group RND-Builds: ";
-		var_dump($ldap->getGroupMembers('BCD-S'));
+		var_dump($ldap->getGroupLdapUser('galochkin.a'));
 	}
 }
 

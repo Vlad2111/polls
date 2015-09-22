@@ -267,9 +267,11 @@
             }
             function SendEmails(){
             var incrimentSendEmail = 0;
+            {if isset($mails[0])}
                 {foreach $mails as $ma}
                     var to = '{$ma}';
-                    $.post("sendEmails.php", { subject: $('#head').val(), message: $('#testOfMale').val(), to: to, from: '{$emailFrom}' }, function( data ) {
+                    var message = '{$message}';
+                    $.post("sendEmails.php", { subject: '{$subject}', message: message, to: to, from: '{$emailFrom}' }, function( data ) {
                         if(data == 1) {
                             $("#Email"+incrimentSendEmail).addClass("success");
                         } else {
@@ -278,8 +280,9 @@
                         incrimentSendEmail++;
                     });
                 {/foreach}
+            {/if}
             }
-            var incrimentFroEmail = 0
+            var incrimentFroEmail = 0;
         </script>  
         {include file='header.tpl'}
         <div id="wrapper">
@@ -927,7 +930,7 @@
                             </tr>
                         {/foreach}
                     </table>
-                    <button name="button_click" form="test_passing" value="sendListOfMail" ><span class="glyphicon glyphicon-envelope"></span></button>
+                    <button class="btn btn-md btn-primary" name="button_click" form="test_passing" value="sendListOfMail" ><span class="glyphicon glyphicon-envelope"></span>  Отправить напоминания</button>
                     <!--<a href="?action=sendEmail&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}"><span class="glyphicon glyphicon-trash"></span></a>-->
                     {else}
                         <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>   Нет добавленных пользователей</div></br>
@@ -1026,22 +1029,46 @@
             {include file='menu.tpl'}
             <div id="page-content-wrapper">
                 <div class="container-fluid">
-                <label for="head">Заголовок</label>
-                <input id="head" type="text" class="form-control" value="Testing system">
-                <label for="testOfMale">Текст письма</label>
-                <textarea id="testOfMale" rows="5" cols="40" name="comment_test" class="form-control" >Hello</textarea>
-                <table class="table" id="mailsTable">
-                    {foreach $mails as $ma}
-                        
-                        <script>
-                         var text = '<tr id="Email'+incrimentFroEmail+'" class=""><td>{$ma}</td><td></td></tr>';
-                            $("#mailsTable").append(text);
-                         incrimentFroEmail++;</script>
-                    {/foreach}
-                </table>
-                <a onclick="SendEmails();"><span class="glyphicon glyphicon-envelope"></span>  Отправить письма</a>
+                <form method="post" id="test_passing">
+                    <label for="head">Заголовок</label>
+                    <input id="head" name="head" type="text" class="form-control" value="Прохождение опроса: {$data_one_quiz->topic}">
+                    <label for="testOfMale">Текст письма</label>
+                    <textarea id="testOfMale" rows="5" cols="40" name="testOfMale" class="form-control">Приглашаем вас пройти тест {$data_one_quiz->topic}<br> Прохождение теста доступно по адресу: <a href="http://rnd-dev-polls/quiz.php?status=new_test&testing={$data_one_quiz->id_test}">http://rnd-dev-polls/</a></textarea>
+                    {if isset($mails[0])}
+                    <table class="table" id="mailsTable">
+                        {foreach $mails as $ma}
+                            <script>
+                             var text = '<tr id="Email'+incrimentFroEmail+'" class=""><td>{$ma}</td><td></td></tr>';
+                                $("#mailsTable").append(text);
+                             incrimentFroEmail++;</script>
+                        {/foreach}
+                    </table>
+                    <button class="btn btn-md btn-primary" name="button_click" value="checkMailStatus" ><span class="glyphicon glyphicon-envelope"></span>  Отправить напоминания</button>
+                    {else}
+                        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Пользователи для отправки напоминаний не были выбраны </div>
+                    {/if}
+                    </form>
                 </div>
             </div>
+            {/capture}
+            {capture name=checkEmail}
+            {include file='menu.tpl'}
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <table class="table" id="mailsTable">
+                        {foreach $mails as $ma}
+                            <script>
+                             var text = '<tr id="Email'+incrimentFroEmail+'" class=""><td>{$ma}</td><td></td></tr>';
+                                $("#mailsTable").append(text);
+                             incrimentFroEmail++;</script>
+                        {/foreach}
+                    </table>
+                    <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">Вернуться</a>
+                </div>
+            </div>
+            <script>
+            SendEmails();
+            </script>
             {/capture}
                                     {if {$view_quiz} eq 'new_quiz'}
                                         {$smarty.capture.new_quiz}   
@@ -1062,7 +1089,9 @@
                                     {elseif {$view_quiz} eq 'add_inteviewee'}
                                         {$smarty.capture.add_inteviewee}     
                                     {elseif {$view_quiz} eq 'sendEmail'}
-                                        {$smarty.capture.sendEmail}     
+                                        {$smarty.capture.sendEmail}    
+                                    {elseif {$view_quiz} eq 'checkEmail'}
+                                        {$smarty.capture.checkEmail}     
                                      {/if}
          </div>
     </body>

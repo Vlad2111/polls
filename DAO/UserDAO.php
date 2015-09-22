@@ -83,6 +83,17 @@ class UserDAO {
         }
         return true;
     }
+    public function addFirstRole($idUser){
+        $query="insert into role_user(id_role, id_user) values(1, $1);";
+        $array_params=array();       
+        $array_params[]=$idUser;
+        $result=$this->db->execute($query,$array_params);
+        if(!$result){
+            $this->log->ERROR('Ошибка добавления строки в таблицу: role_user( '.pg_last_error().')');  
+//              throw new Exception('Ошибка добавления строки в таблицу: role_user( '.pg_last_error().')');
+        }
+        return true;
+    }
     public function deleteRole(MUser $user){
         $array_roles=$user->getRoles();
         for($i=0; $i<count($array_roles); $i++){

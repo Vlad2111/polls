@@ -60,6 +60,9 @@ class CreateQuizView{
             $this->view_quiz='sendEmail';
             $this->title = 'Отправка е-майл';
         }
+        elseif($this->link_click=='checkEmail'){
+            $this->view_quiz='checkEmail';
+        }
         if(isset($_GET['action']) && !empty($_GET['action'])){
            if($_GET['action'] == 'new_question'){
                 $this->view_quiz="new_question";
@@ -133,6 +136,7 @@ class CreateQuizView{
                     $muser->setLogin($name[0]['sAMAccountName']);
                     $muser->setLdapUser(1);
                     $userDAO->createUser($muser);
+                    $userDAO->addFirstRole($this->user->checkLoginUser($_POST['inputName']));
                     $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($_POST['inputName']));
                 }
                 header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
@@ -158,6 +162,7 @@ class CreateQuizView{
                         $muser->setLogin($user['sAMAccountName']);
                         $muser->setLdapUser(1);
                         $userDAO->createUser($muser);
+                        $userDAO->addFirstRole($this->user->checkLoginUser($_POST['inputName']));
                     }
                     if(!$this->inter->checkUserInTest($_SESSION['id_quiz'], $this->user->checkLoginUser($user['sAMAccountName']))){
                         $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($user['sAMAccountName']));
@@ -172,8 +177,16 @@ class CreateQuizView{
 				exit;
             }  
             elseif ($this->button_click == 'sendListOfMail'){
-                $_SESSION['rowcheckboxes'] = $_POST['rowcheckboxes'];
+                if(isset($_POST['rowcheckboxes'])){
+                    $_SESSION['rowcheckboxes'] = $_POST['rowcheckboxes'];
+                }
                 header("Location: create_quiz.php?link_click=sendEmail&id_quiz=".$_SESSION['id_quiz']);      
+				exit;
+            }
+            elseif($this->button_click == 'checkMailStatus'){
+                $_SESSION['head'] = $_POST['head'];
+                $_SESSION['testOfMale'] = $_POST['testOfMale'];
+                header("Location: create_quiz.php?link_click=checkEmail&id_quiz=".$_SESSION['id_quiz']);      
 				exit;
             }
         }
@@ -552,22 +565,6 @@ class CreateQuizView{
     public function getMarkOfRatingType(){
         $quizDAO = new QuizDAO();
         return $quizDAO->getMarkOfRatingType();
-    }
-    public function sendEmail(){
-        var_dump('enter');
-                /*$to= "<galochkin.a@tecomgroup.ru>";
-
-                $subject = "Birthday Reminders for August";
-
-                $message = 'hello';
-
-                $headers= "MIME-Version: 1.0\r\n";
-                $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-
-                $headers .= "From: <galochkin.a@tecomgroup.ru>\r\n";
-                $var = mail($to, $subject, $message, $headers);
-                var_dump($var);*/
-                var_dump($_POST['rowcheckboxes']);
     }
 }?>
 
