@@ -34,7 +34,6 @@ class AuthorizationDAO {
     }
     public function checkUserLDAP(MAuthorization $auth){
         $ldap=new LdapOperations();
-        $ldap->connect();
         if ($ldap->checkUser($auth)){ //проверяем пользователя ldap
             $this->user='ldap';
             $userDAO= new UserDAO();
@@ -66,7 +65,7 @@ class AuthorizationDAO {
             }
         }
         else {
-                return $ldap->user_ldap;                
+                               
         }
     }
     public function getIdUser(MAuthorization $auth){

@@ -40,7 +40,7 @@ class AuthorizationView {
             header('Location: main.php');
             exit();
         }
-        $this->error="Такой пользователь не найден";
+        $this->error="Неправальный пользователь либо пароль";
     }
     private function destroyParamUser(){
         $_SESSION=array();

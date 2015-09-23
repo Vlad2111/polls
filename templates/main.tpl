@@ -52,6 +52,7 @@
         </div>
         <div id="page-content-wrapper">
             <div class="container-fluid">
+                {if isset($data_role[0]) && $data_role[0] eq 1}
                 <div class="row">
                     <div class="col-lg-12">
 					    {if isset($data_quiz[0]['quiz']->topic) && $data_quiz[0]['quiz']->id_status_test == 2}
@@ -123,8 +124,12 @@
                         {/if}
                     </div>
                 </div>
+                {else}
+                    <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Недостаточно прав </div>
+                {/if}
             </div>
         </div>
+           
     </div>
 	<footer>
 	

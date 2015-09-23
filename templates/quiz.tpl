@@ -69,6 +69,7 @@
 				{include file='menu.tpl'}
 				<div id="page-content-wrapper">
 				<div class="container-fluid">
+                {if isset($data_role[0]) && $data_role[0] eq 1}
 				{capture name='new_testing'}
 					<h1>{$data_test->getTopic()}</h1>
 					<h4 style="color:Gray">{$data_test->getCommentQuiz()}</h4>
@@ -289,6 +290,9 @@
 				{elseif {$status_testing} eq 'end_quiz'}    
 					{$smarty.capture.end_quiz}    
 				{/if}    
+				{else}
+                    <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Недостаточно прав </div>
+                {/if}
 				</div>
 			</div>
 			<script>

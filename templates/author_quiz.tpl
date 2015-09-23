@@ -51,6 +51,7 @@
             </div>
             <div id="page-content-wrapper">
                 <div class="container-fluid">
+                {if {$data_role[1]} eq 2}
                 {if isset($data_quiz[0])}
                     <table class="table table-hover">
                        <thead>                                               
@@ -95,6 +96,9 @@
                 {/if}
                 
                     <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
+                {else}
+                    <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Недостаточно прав </div>
+                {/if}
                 </div>
             </div>
         </div>                      

@@ -143,6 +143,7 @@
                     </div>
                     <div id="page-content-wrapper">
 				            <div class="container-fluid">
+				            {if {$data_role[2]} eq 3}
                                 <table class="table table-hover">
                                     <thead>
                                         <th>
@@ -192,6 +193,9 @@
                                     {/foreach}
                                 </table>
                                 <a href="administration.php?link_click=new_internal_user" title="Создать внутреннего пользователя"><img class="icon_on_page" src="img/add-user.png">Создать внутреннего пользователя</a>
+                                {else}
+                                    <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Недостаточно прав </div>
+                                {/if}
                             </div>
                     </div>   
                     {/capture}
@@ -232,7 +236,8 @@
                         </ul>
                     </div>
                     <div id="page-content-wrapper">
-				            <div class="container-fluid">
+			            <div class="container-fluid">
+			            {if {$data_role[2]} eq 3}
                         <form method="POST">
                         {if isset($quizs_data[0])}
                         <table class="table table-hover">
@@ -280,6 +285,9 @@
                            <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Нет созданных опросов </div>
                         {/if}
                         </form>
+                        {else}
+                            <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Недостаточно прав </div>
+                        {/if}
                         </div>
                     </div>   
                     {/capture}
@@ -287,6 +295,7 @@
                     {include file='menu.tpl'}
 				    <div id="page-content-wrapper">
 				        <div class="container-fluid">
+				        {if {$data_role[2]} eq 3}
                             <form method="POST">
                                 <input type="hidden" name="button_click" value="create_internal_user">
                                 <table class="table">
@@ -337,6 +346,9 @@
                                     </tr>
                                 </table>
                             </form>
+                            {else}
+                                <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Недостаточно прав </div>
+                            {/if}
                         </div>
                     </div>
                     {/capture}
@@ -345,6 +357,7 @@
                             {include file='menu.tpl'}
                             <div id="page-content-wrapper">
 				                <div class="container-fluid">
+				                {if {$data_role[2]} eq 3}
                                 <form action="administration.php" method="POST">
                                     <input type="hidden" name="button_click" value="edit_user">
                                     <input type="hidden" name="id_user" value="{$id_user}">
@@ -472,6 +485,9 @@
                                         {else} Пользователь не активировал тесты
                                     {/if} 
                                 </div> 
+                                {else}
+                                    <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Недостаточно прав </div>
+                                 {/if}
                                 </div>
                         </div>     
                         {/if}                    
