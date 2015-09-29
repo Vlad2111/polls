@@ -86,10 +86,6 @@ else {
 	$data_one_question=$quiz->getObjQuestions($data_questions[0]['data_questions']->getIdQuestion());
 }
 
-//echo "<pre>";
-//    var_dump($tr);
-//echo "</pre>";
-
 
 if ($_SESSION['status_testing']=='new_test'){
     $status_testing='new_testing';

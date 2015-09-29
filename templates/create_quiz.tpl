@@ -271,7 +271,7 @@
                     {foreach $mails as $ma}
                         var to = '{$ma}';
                         var message = '{$message}';
-                        $.post("sendEmails.php", { subject: '{$subject}', message: message, to: to, from: '{$emailFrom}' }, function( data ) {
+                        $.post("sendEmails.php", { subject: '{$subject}', message: message, to: to, from: '{$emailFrom->getEmail()}', name: '{$emailFrom->getFirstName()}', lastname: '{$emailFrom->getLastName()}' }, function( data ) {
                             if(data == 1) {
                                 $("#Email"+incrimentSendEmail).addClass("success");
                             } else {
@@ -284,15 +284,6 @@
             }
             var incrimentFroEmail = 0;
             
-            function getReport() {
-            alert('ok');
-                $.post("ExcelReport.php", { }, function( data ) {
-                    alert(data);
-                        });
-                $.post("Download.php", { }, function( data ) {
-                    alert(data);
-                        });
-            }
         </script>  
         {include file='header.tpl'}
         <div id="wrapper">
@@ -1046,7 +1037,7 @@
                     <label for="head">Заголовок</label>
                     <input id="head" name="head" type="text" class="form-control" value="Прохождение опроса: {$data_one_quiz->topic}">
                     <label for="testOfMale">Текст письма</label>
-                    <textarea id="testOfMale" rows="5" cols="40" name="testOfMale" class="form-control">Приглашаем вас пройти тест {$data_one_quiz->topic}<br> Прохождение теста доступно по адресу: <a href="http://rnd-dev-polls/quiz.php?status=new_test&testing={$data_one_quiz->id_test}">http://rnd-dev-polls/</a></textarea>
+                    <textarea id="testOfMale" rows="5" cols="40" name="testOfMale" class="form-control">Приглашаем вас пройти тест {$data_one_quiz->topic}<br> Прохождение теста доступно по адресу: <a href="http://rnd-dev-polls/quiz.php?status=new_test&testing={$data_one_quiz->id_test}">http://rnd-dev-polls/quiz.php?status=new_test&testing={$data_one_quiz->id_test}</a></textarea>
                     {if isset($mails[0])}
                     <table class="table" id="mailsTable">
                         {foreach $mails as $ma}

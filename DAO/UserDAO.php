@@ -4,6 +4,7 @@ include_once 'IntervieweeDAO.php';
 include_once 'lib/DB.php';
 include_once 'log4php/Logger.php';
 include_once 'DAO/AdministrationDAO.php';
+include_once 'model/MUser.php';
     Logger::configure(CheckOS::getConfigLogger());
 class UserDAO {
     protected $db;
@@ -212,14 +213,17 @@ class UserDAO {
         }
         return $array_result;
     }
-	public function getEmailUser($id_user){
-        $query="select email from alluser where id_user=$1;";
+	public function getUserById($id_user){
+        $query="select last_name, first_name, email from alluser where id_user=$1;";
         $array_params=array();          
         $array_params[]=$id_user;     
         $result=$this->db->execute($query,$array_params);
         $obj = $this->db->getFetchObject($result);
-        return $obj->email;
+        $muser = new MUser();
+        $muser->setLastName($obj->last_name);
+        $muser->setFirstName($obj->first_name);
+        $muser->setEmail($obj->email);
+        return $muser;
     }
 }
 ?>
-

@@ -39,4 +39,4 @@ class CheckOS {
        return $config_path;
    }
 }
-
+?>

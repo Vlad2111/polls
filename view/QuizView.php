@@ -39,7 +39,6 @@ class QuizView {
             $this->interval = $testingDAO->getInterval($this->data_testing->getIdTesting());
             $this->listOfAnswers = $this->testing->getListOfAnswers($this->data_testing);
             $this->colors = $this->testing->getRightAnswers($this->data_testing);
-            var_dump($this->listOfAnswers);
             $this->dateinterval = $testingDAO->getDatetimeEndTest($this->data_testing);
 		}
 		else {

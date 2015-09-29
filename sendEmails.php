@@ -8,6 +8,6 @@
     $headers= "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=utf-8\r\n";
 
-    $headers .= "From: <".$_POST['from'].">\r\n";
+    $headers .= "From: ".$_POST['lastname']." ".$_POST['name']." <".$_POST['from'].">\r\n";
     $var = mail($to, $subject, $message, $headers);
     echo $var;

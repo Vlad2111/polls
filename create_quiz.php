@@ -33,7 +33,7 @@ if(isset($_SESSION['head'])){
 if(isset($_SESSION['testOfMale'])){
     $smarty->assign('message', $_SESSION['testOfMale']);
 }
-$smarty->assign('emailFrom', $userDAO->getEmailUser($_SESSION['id_user']));
+$smarty->assign('emailFrom', $userDAO->getUserById($_SESSION['id_user']));
 
 $smarty->display('templates/create_quiz.tpl');
 

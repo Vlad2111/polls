@@ -180,6 +180,5 @@ class AuthorizationDAO {
            return $id_user; 
         }
     }
-     
 }
 ?>
