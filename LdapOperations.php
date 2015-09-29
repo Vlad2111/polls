@@ -45,19 +45,21 @@ class LdapOperations
 		}
 	}
 	
+	/** Проверка данных пользователя входящего в систему
+	@return Boolean
+	*/
 	public function checkUser(MAuthorization $auth)
 	{
-	    $this->ldap=ldap_connect($this->ldaphost, $this->ldapport);
-		if (!$this->ldap) {
+	    $ldap = ldap_connect($this->ldaphost, $this->ldapport);
+		if (!$ldap) {
 			throw new Exception("Cant connect to ldap Server");
 		}
-        @$bind=ldap_bind($this->ldap, "TECOM\\".$auth->getLogin(), $auth->getPasswordLDAP());
-        if (!$bind) {
-            return false;
-        }
-        else {
-            return true;   
-        }    
+		
+        @$bind = ldap_bind($ldap, "TECOM\\".$auth->getLogin(), $auth->getPasswordLDAP());
+        
+        ldap_unbind($ldap); 
+        return $bind;   
+        
     }
 	
 	/** Вспомогательный метод для работы с поиском в LDAP */
