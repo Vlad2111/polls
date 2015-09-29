@@ -57,7 +57,6 @@ class AdministrationDAO extends UserDAO{
     }
     //Возращает данные о тесте типа MQuiz
     public function getObjDataQuiz($id_quiz){
-	
         $query="select * from test where id_test=$1;";
         $array_params=array();
         $array_params[]=$id_quiz;

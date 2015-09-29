@@ -104,6 +104,17 @@ class TestingDAO {
         $interviewee->setIdTesting($obj->id_testing);
         return $obj->id_testing;
     }
+    public function getIdTesting($id_user, $id_quiz){
+        $query="select * from testing where id_user=$1 and id_test=$2;";
+        $array_params=array();
+        $array_params[]=$id_user;
+        $array_params[]=$id_quiz;
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        if(isset($obj->id_testing)){
+            return $obj->id_testing;
+        }
+    }
     public function setAnswers(MInterviewee $interviewee, $result){
         $query="UPDATE testing SET right_answers=$1,wrong_answers=$2,skip_answers=$3, unvalidated_answers=$4 where id_testing=$5;";
         $array_params=array();

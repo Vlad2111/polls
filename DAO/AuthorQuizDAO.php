@@ -138,5 +138,21 @@ class AuthorQuizDAO  extends QuizDAO{
         return $result;
     }
     
+    public function getTestingUsers($id_test){
+        $query="select id_user from interviewees where id_test=$1;";
+        $array_params=array();
+        $array_params[]=$id_test;
+        $result=$this->db->execute($query, $array_params);
+        $arr = $this->db->getArrayData($result); 
+        return $arr;
+    }
+    public function getUserData($id_user){
+        $query="select * from alluser where id_user=$1;";
+        $array_params=array();
+        $array_params[]=$id_user;
+        $result=$this->db->execute($query, $array_params);
+        $arr = $this->db->getFetchObject($result); 
+        return $arr;
+    }
 }
 ?>

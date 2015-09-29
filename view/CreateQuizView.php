@@ -189,6 +189,10 @@ class CreateQuizView{
                 header("Location: create_quiz.php?link_click=checkEmail&id_quiz=".$_SESSION['id_quiz']);      
 				exit;
             }
+            elseif($this->button_click == 'getExcel'){
+                header("Location: ExcelReport.php?id_quiz=".$_SESSION['id_quiz']);  
+                exit;
+            }
         }
     }    
     public function createQuiz(){

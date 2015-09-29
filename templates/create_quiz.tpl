@@ -266,23 +266,33 @@
                 }
             }
             function SendEmails(){
-            var incrimentSendEmail = 0;
-            {if isset($mails[0])}
-                {foreach $mails as $ma}
-                    var to = '{$ma}';
-                    var message = '{$message}';
-                    $.post("sendEmails.php", { subject: '{$subject}', message: message, to: to, from: '{$emailFrom}' }, function( data ) {
-                        if(data == 1) {
-                            $("#Email"+incrimentSendEmail).addClass("success");
-                        } else {
-                            $("#Email"+incrimentSendEmail).addClass("danger");
-                        }
-                        incrimentSendEmail++;
-                    });
-                {/foreach}
-            {/if}
+                var incrimentSendEmail = 0;
+                {if isset($mails[0])}
+                    {foreach $mails as $ma}
+                        var to = '{$ma}';
+                        var message = '{$message}';
+                        $.post("sendEmails.php", { subject: '{$subject}', message: message, to: to, from: '{$emailFrom}' }, function( data ) {
+                            if(data == 1) {
+                                $("#Email"+incrimentSendEmail).addClass("success");
+                            } else {
+                                $("#Email"+incrimentSendEmail).addClass("danger");
+                            }
+                            incrimentSendEmail++;
+                        });
+                    {/foreach}
+                {/if}
             }
             var incrimentFroEmail = 0;
+            
+            function getReport() {
+            alert('ok');
+                $.post("ExcelReport.php", { }, function( data ) {
+                    alert(data);
+                        });
+                $.post("Download.php", { }, function( data ) {
+                    alert(data);
+                        });
+            }
         </script>  
         {include file='header.tpl'}
         <div id="wrapper">
@@ -675,6 +685,9 @@
                             <option value="3" {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test == 3}selected{/if}{/if}>Завершенный</option>
                         </select>
                     </div>
+                    <form method="post" id="test_passing">
+                    <button class="btn btn-md btn-primary" name="button_click" value="getExcel" ><span class="glyphicon glyphicon-list-alt"></span>  Report</button>
+                    </form>
                 </div>
             </div>
             {/capture}
@@ -1055,6 +1068,7 @@
             {include file='menu.tpl'}
             <div id="page-content-wrapper">
                 <div class="container-fluid">
+                    {if isset($mails[0])}
                     <table class="table" id="mailsTable">
                         {foreach $mails as $ma}
                             <script>
@@ -1064,6 +1078,9 @@
                         {/foreach}
                     </table>
                     <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">Вернуться</a>
+                    {else}
+                        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Пользователи для отправки напоминаний не были выбраны </div>
+                    {/if}
                 </div>
             </div>
             <script>
