@@ -52,49 +52,49 @@
             <div id="page-content-wrapper">
                 <div class="container-fluid">
                 {if {$data_role[1]} eq 2}
-                {if isset($data_quiz[0])}
-                    <table class="table table-hover">
-                       <thead>                                               
-                           <th>
-                               Тема теста
-                           </th>
-                           <th>
-                               Дата создания
-                           </th>
-                           <th>
-                               Последние изменения
-                           </th>
-                           <th>
-                               Статус опроса
-                           </th>
-                       </thead>
-                       
-                           {foreach $data_quiz as $data_one_quiz}
-                               <tbody>
-                                    <td class="info">
-                                        <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">{$data_one_quiz->topic}</a>
-                                    </td>
-                                    <td>
-                                       {$data_one_quiz->date_create}
-                                   </td>
-                                   <td>
-                                       ---
-                                   </td>
-                                   <td>
-                                       {if $data_one_quiz->id_status_test == 1}
-                                            Редактируемый 
-                                       {elseif $data_one_quiz->id_status_test == 2}
-                                           Доступный для прохождения
-                                       {elseif $data_one_quiz->id_status_test == 3}
-                                           Завершенный
-                                       {/if}
-                                   </td>
-                           {/foreach}
-                    </table>
-                {else}
-                   <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>   Вы еще не создавали опросы</div></br>
-                {/if}
-                
+                    {if isset($data_quiz[0]->id_status_test)}
+                        <table class="table table-hover">
+                           <thead>                                               
+                               <th>
+                                   Тема теста
+                               </th>
+                               <th>
+                                   Дата создания
+                               </th>
+                               <th>
+                                   Последние изменения
+                               </th>
+                               <th>
+                                   Статус опроса
+                               </th>
+                           </thead>
+                           
+                               {foreach $data_quiz as $data_one_quiz}
+                                   <tbody>
+                                        <td class="info">
+                                            <a href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">{$data_one_quiz->topic}</a>
+                                        </td>
+                                        <td>
+                                           {$data_one_quiz->date_create}
+                                       </td>
+                                       <td>
+                                           ---
+                                       </td>
+                                       <td>
+                                           {if $data_one_quiz->id_status_test == 1}
+                                                Редактируемый 
+                                           {elseif $data_one_quiz->id_status_test == 2}
+                                               Доступный для прохождения
+                                           {elseif $data_one_quiz->id_status_test == 3}
+                                               Завершенный
+                                           {/if}
+                                       </td>
+                               {/foreach}
+                        </table>
+                    {else}
+                       <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>   Вы еще не создавали опросы</div></br>
+                    {/if}
+                    
                     <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
                 {else}
                     <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Недостаточно прав </div>

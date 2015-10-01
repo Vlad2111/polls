@@ -267,7 +267,7 @@
             }
             function SendEmails(){
                 var incrimentSendEmail = 0;
-                {if isset($mails[0])}
+                {if isset($mails[0]) && isset($message)}
                     {foreach $mails as $ma}
                         var to = '{$ma}';
                         var message = '{$message}';

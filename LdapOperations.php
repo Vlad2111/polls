@@ -93,18 +93,19 @@ class LdapOperations
 	}
 	
 	//возвращает список групп пользователя
-    public function getGroupLDAPUser($samaccountname){
+    public function getGroupLDAPUser($samaccountname)
+    {
         if (!$this->ldap) {
 			throw new Exception("Not connected to LDAP server");
 		}
 
 		$result_ent = $this->searchLDAP("(sAMAccountName={$samaccountname})", array('memberof'));
 		$count=$result_ent[0]['memberof']['count'];
-                for($i=0; $i<$count; $i++){
-                    $arr_temp[$i]=$result_ent[0]['memberof'][$i];
-            }
+        for($i=0; $i<$count; $i++){
+            $arr_temp[$i]=$result_ent[0]['memberof'][$i];
+        }
             
-            return $arr_temp;
+        return $arr_temp;
     }
 
 
@@ -271,7 +272,8 @@ class LdapOperations
 		var_dump($ldap->getLDAPGroupNamesByPrefix('rnd'));
 */
 		echo "Members of group RND-Builds: ";
-		var_dump($ldap->getGroupLdapUser('galochkin.a'));
+		var_dump($ldap->getGroupLdapUser('andrianov.a'));
+		
 	}
 }
 

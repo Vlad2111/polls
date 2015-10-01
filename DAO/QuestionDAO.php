@@ -139,5 +139,12 @@ class QuestionDAO {
         $obj=$this->db->getFetchObject($result);
         return $obj->id_questions_type;
     }
+    public function getQuestionType() {
+        $query="select description_questions_type from type_the_questions";
+        $array_params=array();
+        $result=$this->db->execute($query);
+        $obj=$this->db->getArrayData($result);
+        return $obj;
+    }
 }
 ?>
