@@ -100,12 +100,16 @@ class LdapOperations
 		}
 
 		$result_ent = $this->searchLDAP("(sAMAccountName={$samaccountname})", array('memberof'));
-		$count=$result_ent[0]['memberof']['count'];
-        for($i=0; $i<$count; $i++){
-            $arr_temp[$i]=$result_ent[0]['memberof'][$i];
+		if(isset($result_ent[0])){
+		    if(isset($result_ent[0]['memberof'])){
+		        $count=$result_ent[0]['memberof']['count'];
+                for($i=0; $i<$count; $i++){
+                    $arr_temp[$i]=$result_ent[0]['memberof'][$i];
+                }
+                    
+                return $arr_temp;
+            }
         }
-            
-        return $arr_temp;
     }
 
 

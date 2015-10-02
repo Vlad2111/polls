@@ -310,8 +310,8 @@ class QuizDAO {
         $result = $this->db->execute($query);
         $obj=$this->db->getArrayData($result);
         return $obj;
-  } 
-  public function getIdsOfRatingType() {
+    } 
+    public function getIdsOfRatingType() {
         $count = $this->getTypesOfRatingType();
         $arr = array();
         foreach($count as $i) {

@@ -419,7 +419,7 @@
         {include file='menu.tpl'}
             <div id="page-content-wrapper">
                 <div class="container-fluid">
-                     {if $data_one_quiz->id_status_test == 1}
+                     {if isset($data_one_quiz->id_status_test) && $data_one_quiz->id_status_test == 1}
                     <form method="post" id="test_passing">
                         <table class="table">
                             <tr>
@@ -584,7 +584,7 @@
             {include file='menu.tpl'}
                 <div id="page-content-wrapper">
                     <div class="container-fluid">
-                     {if $data_one_quiz->id_status_test == 1}
+                     {if isset($data_one_quiz->id_status_test) && $data_one_quiz->id_status_test == 1}
                         <form method="post">
                             <input type="hidden" name="id_quiz" value="{if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">
                             <table width="60%" align="center" bgcolor="#87CEFA" class="table">
@@ -1035,9 +1035,9 @@
                 <div class="container-fluid">
                 <form method="post" id="test_passing">
                     <label for="head">Заголовок</label>
-                    <input id="head" name="head" type="text" class="form-control" value="Прохождение опроса: {$data_one_quiz->topic}">
+                    <input id="head" name="head" type="text" class="form-control" value="Прохождение опроса: {if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}">
                     <label for="testOfMale">Текст письма</label>
-                    <textarea id="testOfMale" rows="5" cols="40" name="testOfMale" class="form-control">Приглашаем вас пройти тест {$data_one_quiz->topic}<br> Прохождение теста доступно по адресу: <a href="http://rnd-dev-polls/quiz.php?status=new_test&testing={$data_one_quiz->id_test}">http://rnd-dev-polls/quiz.php?status=new_test&testing={$data_one_quiz->id_test}</a></textarea>
+                    <textarea id="testOfMale" rows="5" cols="40" name="testOfMale" class="form-control">Приглашаем вас пройти тест {if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}<br> Прохождение теста доступно по адресу: <a href="http://rnd-dev-polls/quiz.php?status=new_test&testing={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">http://rnd-dev-polls/quiz.php?status=new_test&testing={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}</a></textarea>
                     {if isset($mails[0])}
                     <table class="table" id="mailsTable">
                         {foreach $mails as $ma}

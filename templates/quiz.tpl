@@ -210,7 +210,7 @@
 							    {foreach $data_questions as $one_question}
 							    {if isset($colors[$one_question['data_questions']->getIdQuestion()]['value'])}
 							        
-								    <tr class="{$colors[$one_question['data_questions']->getIdQuestion()]['value']}">
+                                    <tr class="{$colors[$one_question['data_questions']->getIdQuestion()]['value']}">
 								{else}
 								    <tr>
 								{/if}

@@ -160,7 +160,6 @@ class IntervieweeDAO {
 	    $answer = new AnswerDAO();
 	    $manswer = new MAnswer();
 		$skipFlag = true;
-		
 		for ( $i=0; $i < count($answers); $i++){
 		    $manswer->setIdTesting($interviewee->getIdTesting());
 		    $manswer->setAnswer($answers[$i]);
@@ -377,8 +376,8 @@ class IntervieweeDAO {
         return $minterviewee;
     }
     public function getDataOneTest($id_testing){
-        if(isset($this->getObjTest($id_testing)->id_testing)){
-            $id_quiz=$this->getObjTest($id_testing)->id_testing;
+        if(isset($this->getObjTest($id_testing, $_SESSION['id_user'])->id_testing)){
+            $id_quiz=$this->getObjTest($id_testing, $_SESSION['id_user'])->id_testing;
             }
         $admin= new AdministrationDAO();
         $minterviewee=new MInterviewee();
@@ -411,10 +410,11 @@ class IntervieweeDAO {
         $result=$this->db->execute($query, $array_params);
         return $this->db->getFetchObject($result);
     }
-    private function getObjTest($id_testing){
-        $query="select * from testing where id_test=$1;";
+    private function getObjTest($id_testing, $id_user){
+        $query="select * from testing where id_test=$1 and id_user=$2;";
         $array_params=array();
         $array_params[]=$id_testing;
+        $array_params[]=$id_user;
         $result=$this->db->execute($query, $array_params);
         return $this->db->getFetchObject($result);
     }
