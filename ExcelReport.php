@@ -288,7 +288,6 @@ $i=2;
 $iterator = 0;
 foreach($questions as $question) {
     $iterator++;
-    $sheet->getRowDimension($iterator)->setRowHeight(-1);
     $answerOption = $answerOptionsDAO->getDataAnswerOtions($question->id_question);
     $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
     $sheet->setCellValueByColumnAndRow(0, $i, $iterator);
@@ -296,11 +295,14 @@ foreach($questions as $question) {
     $sheet->setCellValueByColumnAndRow(2, $i, $typeQuestions[$question->id_questions_type-1]);
     $sheet->setCellValueByColumnAndRow(3, $i, " ".$question->comment_question);
     $str = '';
+    $height = 15;
     foreach($answerOption as $oneOption){
         if(isset($oneOption->right_answer) && $oneOption->right_answer == 'Y') {
             $str = $str." \n".$oneOption->answer_the_questions;
+            $height = $height + 10;
         }
     }
+    $sheet->getRowDimension($i)->setRowHeight($height);
     $sheet->setCellValueByColumnAndRow(4, $i, $str);
     $i++;
 }   
