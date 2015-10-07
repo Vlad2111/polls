@@ -620,36 +620,48 @@
                             <th>
                                 Удалить вопрос
                             </th>
+                            <th>
+                            </th>
                         </thead>
                         <tbody>
-                       {foreach $data_questions as $data_question_one}  
-                           {if $data_question_one}
-                               <tr>
-                                   <td>
-                                       №
-                                   </td>
-                                   <td>
-                                        <a class="btn" href="?action=edit_question&id_quiz={$data_one_quiz->id_test}&id_question={$data_question_one->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}>{$data_question_one->text_question}</a>
-                                   </td>
-                                    <td>
-                                        {if  {$data_question_one->id_questions_type}==1}
-                                            Вопрос типа Да/Нет
-                                        {elseif  {$data_question_one->id_questions_type}==2}
-                                              Вопрос с возможностью выбора одного ответа из списка
-                                        {elseif  {$data_question_one->id_questions_type}==3}
-                                            Вопрос с возможностью выбора одного или более ответов из списка
-                                        {elseif  {$data_question_one->id_questions_type}==4}
-                                            Произвольный текст
-                                        {elseif  {$data_question_one->id_questions_type}==5}
-                                            Оценочная шкала
-                                        {/if} 
-                                   </td>
-                                   <td>
-                                       <a class="btn btn-primary btn-xs" href="?action=delete&id_quiz={$data_one_quiz->id_test}&id_question={$data_question_one->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
-                                   </td>
-                               </tr>
-                           {/if}
-                        {/foreach}
+                        {for $i=0;$i<count($data_questions);$i++}  
+                            <tr>
+                                <td>
+                                   № {$i+1} 
+                                </td>
+                                <td>
+                                    <a class="btn" href="?action=edit_question&id_quiz={$data_questions[$i]->id_test}&id_question={$data_questions[$i]->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}>{$data_questions[$i]->text_question}</a>
+                                </td>
+                                <td>
+                                    {if  {$data_questions[$i]->id_questions_type}==1}
+                                        Вопрос типа Да/Нет
+                                    {elseif  {$data_questions[$i]->id_questions_type}==2}
+                                          Вопрос с возможностью выбора одного ответа из списка
+                                    {elseif  {$data_questions[$i]->id_questions_type}==3}
+                                        Вопрос с возможностью выбора одного или более ответов из списка
+                                    {elseif  {$data_questions[$i]->id_questions_type}==4}
+                                        Произвольный текст
+                                    {elseif  {$data_questions[$i]->id_questions_type}==5}
+                                        Оценочная шкала
+                                    {/if} 
+                                </td>
+                                <td>
+                                   <a class="btn btn-primary btn-xs" href="?action=delete&id_quiz={$data_one_quiz->id_test}&id_question={$data_questions[$i]->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
+                                </td>
+                                <td>
+                                {if $i != 0 }
+                                    <a class="btn" href="?action=upQuestion&id_quiz={$data_one_quiz->id_test}&id_question={$data_questions[$i]->id_question}&first={if isset($data_questions[$i-1])}{$data_questions[$i-1]->question_number}{else}0{/if}&second={if isset($data_questions[$i-2])}{$data_questions[$i-2]->question_number}{else}0{/if}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-chevron-up"></span></a>
+                                {else}
+                                    <a class="btn" disabled><span class="glyphicon glyphicon-chevron-up"></span></a>
+                                {/if}
+                                {if $i != count($data_questions)-1}
+                                    <a class="btn" href="?action=upQuestion&id_quiz={$data_one_quiz->id_test}&id_question={$data_questions[$i]->id_question}&first={$data_questions[$i+1]->question_number}&second={if isset($data_questions[$i+2])}{$data_questions[$i+2]->question_number}{else}{$data_questions[$i+1]->question_number+1}{/if}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-chevron-down"></span></a>
+                                {else}
+                                <a class="btn"disabled><span class="glyphicon glyphicon-chevron-down"></span></a>
+                                {/if}
+                                </td>
+                            </tr>
+                        {/for}
                         </tbody>
                     </table>
                     {else}

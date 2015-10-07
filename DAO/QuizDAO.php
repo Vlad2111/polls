@@ -258,7 +258,7 @@ class QuizDAO {
         return $mquestion;
    }
    public function getArrayIdQuestion($id_quiz){
-       $query="select id_question from questions where id_test=$1;";
+       $query="select id_question from questions where id_test=$1 order by question_number;";
         $array_params=array();
         $array_params[]=$id_quiz;
         $result=$this->db->execute($query, $array_params);

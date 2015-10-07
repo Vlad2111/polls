@@ -134,7 +134,6 @@ foreach($users as $user) {
     $minterviewee = new MInterviewee();
     $minterviewee->setIdTesting($id_testing);
     $listOfAnswers = $intervieweeDAO->getListOfAnswers($minterviewee);
-    var_dump($listOfAnswers);
     $sheet->getStyleByColumnAndRow(0, $hor)->applyFromArray($arHeadStyle);
     $sheet->setCellValueByColumnAndRow(0, $hor, $obj->last_name." ".$obj->first_name);
     foreach($questions as $question) {
@@ -260,7 +259,7 @@ foreach($questions as $question) {
     $str = '';
     foreach($answerOption as $oneOption){
         if(isset($oneOption->right_answer) && $oneOption->right_answer == 'Y') {
-            $str = $str." ".$oneOption->answer_the_questions;
+            $str = $str." \n".$oneOption->answer_the_questions;
         }
     }
     $sheet->setCellValueByColumnAndRow(4, $i, $str);

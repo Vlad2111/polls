@@ -9,6 +9,7 @@ include_once 'DAO/UserDAO.php';
 include_once 'DAO/AnswerOptionsDAO.php';
 include_once 'model/MAnswerOptions.php';
 include_once 'LdapOperations.php';
+include_once 'DAO/QuestionDAO.php';
 class CreateQuizView{
     public $id_author; //ид составителя опроса
     public $id_quiz; // Ид опроса: создавемого или редактируемого
@@ -18,6 +19,7 @@ class CreateQuizView{
     public $title; // Заголовок страницы
     public $user;
     public $inter;
+    public $questionDAO;
     private $mauthor; 
     private $author;
     private $answer_option;
@@ -41,6 +43,7 @@ class CreateQuizView{
         $this->inter = new IntervieweeDAO();
         $this->answer_option = new AnswerOptionsDAO();
         $this->ldapOperations=new LdapOperations();
+        $this->questionDAO = new QuestionDAO();
         $this->link_click = filter_input(INPUT_GET, 'link_click', FILTER_SANITIZE_SPECIAL_CHARS);
         $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);  
         $this->id_question = filter_input(INPUT_GET, 'id_question', FILTER_SANITIZE_SPECIAL_CHARS);     
@@ -95,6 +98,11 @@ class CreateQuizView{
             }
             elseif($_GET['action'] == 'edit_data_quiz'){                
                 $this->view_quiz = 'edit_data_quiz';
+            }
+            elseif($_GET['action'] == 'upQuestion'){
+                $this->questionDAO->upQuestion($_GET['id_question'],$_GET['first'],$_GET['second']);
+                header("Location: create_quiz.php?link_click=edit_quiz&id_quiz=".$_SESSION['id_quiz']);      
+				exit;
             }
         }
         if(isset($this->button_click) && !empty($this->button_click)){
@@ -287,6 +295,13 @@ class CreateQuizView{
         $mquestion->setTextQuestion($_POST['text_question']);
         $mquestion->setCommentQuestion($_POST['comment_question']);
         $mquestion->setIdQuestionsType($_POST['question_type']);
+        $question_number = $question->getNextQuestionNumber($_SESSION['id_quiz']);
+        if(isset($question_number)){
+            $mquestion->setQuestionNumber($question->getNextQuestionNumber($_SESSION['id_quiz'])+1);
+        }
+        else {
+            $mquestion->setQuestionNumber(1);
+        }
         $mquestion->setIdTest($_SESSION['id_quiz']);  
         if($_POST['question_type'] != 4 && $_POST['question_type'] != 5){
             if(isset($_POST['switch'])){

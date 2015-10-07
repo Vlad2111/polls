@@ -83,7 +83,7 @@ if(isset($marker)){
 	$data_one_question=$quiz->getObjQuestions($marker);
 }
 else {
-	$data_one_question=$quiz->getObjQuestions($data_questions[0]['data_questions']->getIdQuestion());
+    $data_one_question=$quiz->getObjQuestions($testing->getNextQuestion($quiz_view->data_testing->getTest()->getIdQuiz(),0));
 }
 
 

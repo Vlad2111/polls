@@ -35,7 +35,7 @@ class IntervieweeDAO {
         if(isset($interval)) {
             $this->testing->setDatetimeEndTest($interviewee, $timer->format("Y-m-d H:i:s"));
         }*/
-        $this->setMarker($interviewee->getIdTesting(), $this->getFirstQuestion($interviewee->getTest()->getIdQuiz()));
+        $this->setMarker($interviewee->getIdTesting(), $this->getNextQuestion($interviewee->getTest()->getIdQuiz(), 0));
         return $return;
     }
     //Закончить тест
@@ -159,6 +159,7 @@ class IntervieweeDAO {
 	public function statusNextQuestion(MInterviewee $interviewee, $answers){
 	    $answer = new AnswerDAO();
 	    $manswer = new MAnswer();
+        $que = new QuestionDAO();
 		$skipFlag = true;
 		for ( $i=0; $i < count($answers); $i++){
 		    $manswer->setIdTesting($interviewee->getIdTesting());
@@ -173,10 +174,12 @@ class IntervieweeDAO {
 		else {
 			$this->setSkipAnswer($interviewee->getIdTesting(), $this->getMarker($interviewee), 'N');
 		}
-        $this->removeMarker($interviewee->getIdTesting(), $this->getMarker($interviewee));
-		if($this->getNextQuestion($interviewee->getTest()->getIdQuiz()) != null) {
-            $this->setMarker($interviewee->getIdTesting(), $this->getNextQuestion($interviewee->getTest()->getIdQuiz()));
-            return "true";
+		$marker = $this->getMarker($interviewee);
+        $this->removeMarker($interviewee->getIdTesting(), $marker);
+        $question_number = $que->getQuestionNumber($marker);
+		if($this->getNextQuestion($interviewee->getTest()->getIdQuiz(), $question_number) != null) {
+            $this->setMarker($interviewee->getIdTesting(), $this->getNextQuestion($interviewee->getTest()->getIdQuiz(), $question_number));
+            return true;
         }
         else {
 		    return null;
@@ -316,17 +319,15 @@ class IntervieweeDAO {
            return false;
        }
    }
-   public function getNextQuestion($id_quiz){
-       $query="select min(q.id_question) as question from questions as q
-			left join answer_users
-			on q.id_question = answer_users.id_question
-			where q.id_test = $1 AND answer_users.id_question is NULL;";
+   public function getNextQuestion($id_quiz, $question_number){
+       $query="select id_question from questions where id_test=$1 and question_number > $2 order by question_number limit 1";
        $array_params=array();
        $array_params[]=$id_quiz;
+       $array_params[]=$question_number;
        $result=$this->db->execute($query,$array_params);
        $obj=$this->db->getFetchObject($result);
-       if($obj->question!=null){
-           return $obj->question;
+       if(isset($obj->id_question)){
+           return $obj->id_question;
        }
        else{
            return false;

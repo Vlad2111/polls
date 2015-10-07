@@ -14,12 +14,13 @@ class QuestionDAO {
     }
        //Создаёт описание теста в таблице questions
     public function createQuestion(MQuestion $questions){
-        $query="INSERT INTO questions(text_question, id_questions_type, comment_question, id_test, validation)
-        VALUES ($1, $2, $3, $4, $5);"; 
+        $query="INSERT INTO questions(text_question, id_questions_type, comment_question, question_number, id_test, validation)
+        VALUES ($1, $2, $3, $4, $5, $6);"; 
         $array_params=array();
         $array_params[]=$questions->getTextQuestion();
         $array_params[]=$questions->getIdQuestionsType();
         $array_params[]=$questions->getCommentQuestion();
+        $array_params[]=$questions->getQuestionNumber();
         $array_params[]=$questions->getIdTest();
         $array_params[]=$questions->getValidation();
         $this->db->execute($query,$array_params);
@@ -45,7 +46,6 @@ class QuestionDAO {
         $array_params[]=$questions->getIdTest();
         $array_params[]=$questions->getValidation();
         $array_params[]=$questions->getIdQuestion();
-        var_dump($questions->getValidation());
         $result=$this->db->execute($query,$array_params);
         $result=$this->setIdQuestion($questions); 
         if($result){
@@ -145,6 +145,31 @@ class QuestionDAO {
         $result=$this->db->execute($query);
         $obj=$this->db->getArrayData($result);
         return $obj;
+    }
+    public function upQuestion($id_question, $first, $second) {
+        $query="UPDATE questions SET question_number=(CAST($2 AS float)+CAST($3 AS float))/2  where id_question=$1";
+        $array_params=array();
+        $array_params[]=$id_question;
+        $array_params[]=$first;
+        $array_params[]=$second;
+        $result=$this->db->execute($query, $array_params);
+        return $result;
+    }
+    public function getNextQuestionNumber($id_quiz) {
+        $query="Select ceil(max(question_number)) from questions where id_test=$1";
+        $array_params=array();
+        $array_params[]=$id_quiz;
+        $result=$this->db->execute($query, $array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj->ceil;
+    }
+    public function getQuestionNumber($id_question) {
+        $query="Select question_number from questions where id_question=$1";
+        $array_params=array();
+        $array_params[]=$id_question;
+        $result=$this->db->execute($query, $array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj->question_number;
     }
 }
 ?>
