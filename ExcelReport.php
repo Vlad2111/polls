@@ -38,6 +38,10 @@ $sheet->setTitle('Ответы');
 
 $sheet->getColumnDimension('A')->setAutoSize(true);
 
+function coordinates($x,$y){
+    return PHPExcel_Cell::stringFromColumnIndex($x).$y;
+}
+
 $arHeadStyle = array(
     'font'  => array(
         'color' =>array(
@@ -122,7 +126,7 @@ $skip = array(
             'rgb' => 'f56e00'
         )
     )
-);        
+);
 
 $hor = 6;
 foreach($users as $user) {
@@ -136,51 +140,83 @@ foreach($users as $user) {
     $listOfAnswers = $intervieweeDAO->getListOfAnswers($minterviewee);
     $sheet->getStyleByColumnAndRow(0, $hor)->applyFromArray($arHeadStyle);
     $sheet->setCellValueByColumnAndRow(0, $hor, $obj->last_name." ".$obj->first_name);
+    $iterator = 0;
     foreach($questions as $question) {
+        $iterator++;
         $answerOption = $answerOptionsDAO->getDataAnswerOtions($question->id_question);
         if(isset($listOfAnswers[$question->id_question])) {
             for($j=0; $j<count($listOfAnswers[$question->id_question]); $j++){
                 $flag = true;
                 if(isset($listOfAnswers[$question->id_question][$j])){
-                    if($question->id_questions_type != 4 && $question->id_questions_type != 5){
-                        $obj=$answerOptionsDAO->getRightAnswerOptions($listOfAnswers[$question->id_question][$j]);
-                        if($obj != ''){
-                            if($obj == 'Y') {
-                                $flag = true;
-                            } else {
-                                $flag = false;
-                            }
-                            if($j==count($listOfAnswers[$question->id_question])-1) {
-                               $countOfRight = $answerOptionsDAO->getCountOfRightAnswers($question->id_question);
-                                if($flag && $countOfRight == count($listOfAnswers[$question->id_question])) {
-                                    $sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($success);
-                                    $rightAnswers++;
+                    if($question->id_questions_type != 4){
+                        if($question->id_questions_type != 5){
+                            $obj=$answerOptionsDAO->getRightAnswerOptions($listOfAnswers[$question->id_question][$j]);
+                            if($obj != ''){
+                                if($obj == 'Y') {
+                                    $flag = true;
                                 } else {
-                                    $sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($danger);
+                                    $flag = false;
+                                }
+                                if($j==count($listOfAnswers[$question->id_question])-1) {
+                                   $countOfRight = $answerOptionsDAO->getCountOfRightAnswers($question->id_question);
+                                    if($flag && $countOfRight == count($listOfAnswers[$question->id_question])) {
+                                        //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($success);
+                                        $str = '';
+                                        foreach($listOfAnswers[$question->id_question] as $id) {
+                                        if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                            $str = $str.' '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                        }
+                                        }   
+                                        $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
+                                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Y');
+                                        $rightAnswers++;
+                                    } else {
+                                        //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($danger);
+                                        $str = '';
+                                        foreach($listOfAnswers[$question->id_question] as $id) {
+                                        if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                        $str = $str.' '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                        }
+                                        }
+                                        $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
+                                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'N');
+                                    }
                                 }
                             }
                         }
+                        else {
+                            $str = '';
+                            foreach($listOfAnswers[$question->id_question] as $id) {
+                                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                    $str = $str.' '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                }
+                            }
+                            $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
+                            $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' ');       
+                        }
+                    }
+                    else {
+                        $str = ''.$listOfAnswers[$question->id_question][0];
+                        $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
+                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' ');       
                     }
                 } 
                 else {
-                    $sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($skip);
-                    
+                    //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($skip);
+                    $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'S');
                 }
             }
-            $str = '';
-            foreach($listOfAnswers[$question->id_question] as $id) {
-                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
-                    $str = $str.' '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
-                }
-            }
-            $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
+            
         }
         $sheet->getStyleByColumnAndRow($ver, 5)->applyFromArray($arHeadStyle);
-        $sheet->setCellValueByColumnAndRow($ver, 5, $question->id_question);
+        $sheet->getStyleByColumnAndRow($ver, 5)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyleByColumnAndRow($ver+1, 5)->applyFromArray($arHeadStyle);
+        $sheet->mergeCells(coordinates($ver, 5).':'.coordinates($ver+1, 5));
+        $sheet->setCellValueByColumnAndRow($ver, 5, $iterator);
         /*if(isset($listOfAnswers[$question->id_question][0])) {
             $sheet->setCellValueByColumnAndRow($ver, $hor, $listOfAnswers[$question->id_question][0]);
         }*/
-        $ver++;
+        $ver = $ver+2;
     }   
     $sheet->setCellValueByColumnAndRow($ver, $hor, $rightAnswers);
     $sheet->setCellValueByColumnAndRow($ver, 5, 'Верных ответов');
@@ -249,10 +285,13 @@ $sheet->getStyle('D1')->applyFromArray($arHeadStyle);
 $sheet->getStyle('E1')->applyFromArray($arHeadStyle);
 
 $i=2;
+$iterator = 0;
 foreach($questions as $question) {
+    $iterator++;
+    $sheet->getRowDimension($iterator)->setRowHeight(-1);
     $answerOption = $answerOptionsDAO->getDataAnswerOtions($question->id_question);
     $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-    $sheet->setCellValueByColumnAndRow(0, $i, $question->id_question);
+    $sheet->setCellValueByColumnAndRow(0, $i, $iterator);
     $sheet->setCellValueByColumnAndRow(1, $i, $question->text_question);
     $sheet->setCellValueByColumnAndRow(2, $i, $typeQuestions[$question->id_questions_type-1]);
     $sheet->setCellValueByColumnAndRow(3, $i, " ".$question->comment_question);

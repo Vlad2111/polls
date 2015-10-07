@@ -69,7 +69,7 @@
 				{include file='menu.tpl'}
 				<div id="page-content-wrapper">
 				<div class="container-fluid">
-                {if isset($data_role[0]) && $data_role[0] eq 1}
+                {if isset($data_role[0]) && $data_role[0] eq 1 && $data_test->getIdStatusQuiz() == 2}
 				{capture name='new_testing'}
 					<h1>{$data_test->getTopic()}</h1>
 					<h4 style="color:Gray">{$data_test->getCommentQuiz()}</h4>
