@@ -37,6 +37,9 @@ $sheet = $xls->getActiveSheet();
 $sheet->setTitle('Ответы');
 
 $sheet->getColumnDimension('A')->setAutoSize(true);
+for($i=1;$i<8;$i++){
+    $sheet->getRowDimension($i)->setRowHeight(15);
+}
 
 function coordinates($x,$y){
     return PHPExcel_Cell::stringFromColumnIndex($x).$y;
@@ -46,7 +49,8 @@ $arHeadStyle = array(
     'font'  => array(
         'color' =>array(
             'rgb' => 'ffffff'), 
-        'name'  => 'Verdana'
+        'name'  => 'Verdana', 
+        'size'     	=> 11,
     ),
     'fill' => array(
         'type' => PHPExcel_STYLE_FILL::FILL_SOLID,
@@ -84,6 +88,7 @@ $arHeadStyle = array(
 $sheet->getStyle('A1')->applyFromArray($arHeadStyle);
 $sheet->getStyle('A2')->applyFromArray($arHeadStyle);
 $sheet->getStyle('A3')->applyFromArray($arHeadStyle);
+$sheet->getStyle('A4')->applyFromArray($arHeadStyle);
 
 // Вставляем текст в ячейку A1
 $sheet->setCellValue("A1", 'Тема');
@@ -92,47 +97,40 @@ $sheet->setCellValue("A2", 'Комментарии');
 $sheet->setCellValue("B2", $quiz->comment_test);
 $sheet->setCellValue("A3", 'Временное ограничение');
 $sheet->setCellValue("B3", $quiz->time_limit);
+$sheet->setCellValue("A4", 'Экспортировано');
+$sheet->setCellValue("B4", date("d.m.y H:i:s"));
 //$sheet->getStyle('A1')->getFill()->setFillType(
 //    PHPExcel_Style_Fill::FILL_SOLID);
 //$sheet->getStyle('A1')->getFill()->getStartColor()->setRGB('EEEEEE');
 
 // Объединяем ячейки
-//$sheet->mergeCells('A1:C1');
-//$sheet->mergeCells('A2:C2');
-//$sheet->mergeCells('A3:C3');
+$sheet->mergeCells('B1:E1');
+$sheet->mergeCells('B2:E2');
+$sheet->mergeCells('B3:E3');
+$sheet->mergeCells('B4:E4');
 
 //Style of cell in user answers
 
-$success = array(
-    'fill' => array(
-        'type' => PHPExcel_STYLE_FILL::FILL_SOLID,
-        'color'=>array(
-            'rgb' => '40a808'
-        )
-    )
-);
-$danger = array(
-    'fill' => array(
-        'type' => PHPExcel_STYLE_FILL::FILL_SOLID,
-        'color'=>array(
-            'rgb' => 'a80808'
-        )
-    )
-);
-$skip = array(
-    'fill' => array(
-        'type' => PHPExcel_STYLE_FILL::FILL_SOLID,
-        'color'=>array(
-            'rgb' => 'f56e00'
+$rightBorder = array(
+    'borders'=>array(
+        'right'=>array(
+            'style'=>PHPExcel_Style_Border::BORDER_THIN,
+            'color' => array(
+                'rgb'=>'000000'
+            )
         )
     )
 );
 
-$hor = 6;
+$hor = 8;
 foreach($users as $user) {
     $rightAnswers = 0;
     $ver = 1;
-    $sheet->getStyleByColumnAndRow(0, 5)->applyFromArray($arHeadStyle);
+    $sheet->getRowDimension($hor)->setRowHeight(17);
+    $sheet->setCellValueByColumnAndRow(0, 6, 'Номер вопроса');
+    $sheet->getStyleByColumnAndRow(0, 6)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+    $sheet->getStyleByColumnAndRow(0, 6)->applyFromArray($arHeadStyle);
+    $sheet->getStyleByColumnAndRow(0, 7)->applyFromArray($arHeadStyle);
     $obj = $authorDAO->getUserData($user);
     $id_testing = $testingDAO->getIdTesting($user, $_GET['id_quiz']);
     $minterviewee = new MInterviewee();
@@ -163,23 +161,39 @@ foreach($users as $user) {
                                         //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($success);
                                         $str = '';
                                         foreach($listOfAnswers[$question->id_question] as $id) {
-                                        if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
-                                            $str = $str.' '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
-                                        }
+                                            if($str == ''){
+                                                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                                    $str = $str.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                                }
+                                            }
+                                            else {
+                                                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                                    $str = $str.'; '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                                }
+                                            }
                                         }   
                                         $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
-                                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Y');
+                                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Правильно');
+                                        $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
                                         $rightAnswers++;
                                     } else {
                                         //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($danger);
                                         $str = '';
                                         foreach($listOfAnswers[$question->id_question] as $id) {
-                                        if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
-                                        $str = $str.' '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
-                                        }
+                                            if($str == ''){
+                                                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                                    $str = $str.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                                }
+                                            }
+                                            else {
+                                                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                                    $str = $str.'; '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                                }
+                                            }
                                         }
                                         $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
-                                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'N');
+                                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Неправильно');
+                                        $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
                                     }
                                 }
                             }
@@ -188,38 +202,52 @@ foreach($users as $user) {
                             $str = '';
                             foreach($listOfAnswers[$question->id_question] as $id) {
                                 if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
-                                    $str = $str.' '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                    $str = ' '.$questionDAO->getRate($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions);
                                 }
                             }
                             $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
-                            $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' ');       
+                            $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' '); 
+                            $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);      
                         }
                     }
                     else {
                         $str = ''.$listOfAnswers[$question->id_question][0];
                         $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
-                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' ');       
+                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' ');
+                        $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
+                        
+                        if($listOfAnswers[$question->id_question][0]!=''){
+                        $height = substr_count($listOfAnswers[$question->id_question][0], PHP_EOL)*15+15;
+                            $sheet->getRowDimension($hor)->setRowHeight($height);
+                        }
                     }
                 } 
                 else {
                     //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($skip);
-                    $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'S');
+                    $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Пропущено');
+                    $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
                 }
             }
             
         }
-        $sheet->getStyleByColumnAndRow($ver, 5)->applyFromArray($arHeadStyle);
-        $sheet->getStyleByColumnAndRow($ver, 5)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyleByColumnAndRow($ver+1, 5)->applyFromArray($arHeadStyle);
-        $sheet->mergeCells(coordinates($ver, 5).':'.coordinates($ver+1, 5));
-        $sheet->setCellValueByColumnAndRow($ver, 5, $iterator);
+        $sheet->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex($ver))->setAutoSize(true);
+        $sheet->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex($ver+1))->setAutoSize(true);
+        $sheet->getStyleByColumnAndRow($ver, 6)->applyFromArray($arHeadStyle);
+        $sheet->getStyleByColumnAndRow($ver, 6)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyleByColumnAndRow($ver+1, 6)->applyFromArray($arHeadStyle);
+        $sheet->mergeCells(coordinates($ver, 6).':'.coordinates($ver+1, 6));
+        $sheet->setCellValueByColumnAndRow($ver, 6, $iterator);
+        $sheet->setCellValueByColumnAndRow($ver, 7, 'Ответ');
+        $sheet->getStyleByColumnAndRow($ver, 7)->applyFromArray($arHeadStyle);
+        $sheet->setCellValueByColumnAndRow($ver+1, 7, 'Правильность');
+        $sheet->getStyleByColumnAndRow($ver+1, 7)->applyFromArray($arHeadStyle);
         /*if(isset($listOfAnswers[$question->id_question][0])) {
             $sheet->setCellValueByColumnAndRow($ver, $hor, $listOfAnswers[$question->id_question][0]);
         }*/
         $ver = $ver+2;
     }   
     $sheet->setCellValueByColumnAndRow($ver, $hor, $rightAnswers);
-    $sheet->setCellValueByColumnAndRow($ver, 5, 'Верных ответов');
+    $sheet->setCellValueByColumnAndRow($ver, 6, 'Верных ответов');
     $hor++;
 }
 // Выравнивание текста
@@ -308,6 +336,7 @@ foreach($questions as $question) {
 }   
 
 
+
 $xls->setActiveSheetIndex(0);
 // Выводим HTTP-заголовки
  header ( "Expires: Mon, 1 Apr 1974 05:00:00 GMT" );
@@ -315,7 +344,7 @@ $xls->setActiveSheetIndex(0);
  header ( "Cache-Control: no-cache, must-revalidate" );
  header ( "Pragma: no-cache" );
  header ( "Content-type: application/vnd.ms-excel" );
- header ( "Content-Disposition: attachment; filename=matrix".$_GET['id_quiz'].".xls" );
+ header ( "Content-Disposition: attachment; filename=".$quiz->topic." - ".date("d.m.y H:i:s").".xls" );
 
 // Выводим содержимое файла
  $objWriter = new PHPExcel_Writer_Excel5($xls);

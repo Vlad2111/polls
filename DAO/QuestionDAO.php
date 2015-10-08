@@ -171,5 +171,14 @@ class QuestionDAO {
         $obj=$this->db->getFetchObject($result);
         return $obj->question_number;
     }
+    
+    public function getRate($text) {
+        $query="Select rate from mark_type_rating where text=$1";
+        $array_params=array();
+        $array_params[]=$text;
+        $result=$this->db->execute($query, $array_params);
+        $obj=$this->db->getFetchObject($result);
+        return $obj->rate;
+    }
 }
 ?>
