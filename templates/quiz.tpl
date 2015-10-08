@@ -14,7 +14,7 @@
          <script src="js/kk.js"></script>
         <link rel="stylesheet" href="http://hilios.github.io/jQuery.countdown/css/syntax.css">
         <script type="text/javascript">
-           /* $(document).ready(function(){
+            /*$(document).ready(function(){
 
                 	var secs = $("#secs").val(),
                         cdBox = $(".kkcountdown-2");
@@ -297,9 +297,8 @@
 			</div>
 			<script>
 			    function timer() {
-               /* var nowDate = new Date();
+                var nowDate = new Date();
                 {if isset($dateinterval)}
-                    
                     var st = '{$dateinterval}';
                     var t = st.split(/[- :]/);
                     var d = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
@@ -322,7 +321,7 @@
                     var elmnt = document.getElementById('timer');
                     elmnt.innerHTML = hours + ':' + minutes + ':' + seconds;
                     setTimeout(timer, 1000);
-                {/if}*/
+                {/if}
             }
             </script>
         {include file='footer.tpl'}

@@ -689,7 +689,7 @@
                         </select>
                     </div>
                     <form method="post" id="test_passing">
-                    <button class="btn btn-md btn-primary" name="button_click" value="getExcel" ><span class="glyphicon glyphicon-list-alt"></span>  Report</button>
+                    <button class="btn btn-md btn-primary margin-top" name="button_click" value="getExcel" ><span class="glyphicon glyphicon-list-alt"></span>  Скачать отчет</button>
                     </form>
                 </div>
             </div>
@@ -1080,7 +1080,7 @@
                              incrimentFroEmail++;</script>
                         {/foreach}
                     </table>
-                    <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=edit_quiz&id_quiz={$data_one_quiz->id_test}">Вернуться</a>
+                    <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=edit_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">Вернуться</a>
                     {else}
                         <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Пользователи для отправки напоминаний не были выбраны </div>
                     {/if}

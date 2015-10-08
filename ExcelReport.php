@@ -123,132 +123,134 @@ $rightBorder = array(
 );
 
 $hor = 8;
-foreach($users as $user) {
-    $rightAnswers = 0;
-    $ver = 1;
-    $sheet->getRowDimension($hor)->setRowHeight(17);
-    $sheet->setCellValueByColumnAndRow(0, 6, 'Номер вопроса');
-    $sheet->getStyleByColumnAndRow(0, 6)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-    $sheet->getStyleByColumnAndRow(0, 6)->applyFromArray($arHeadStyle);
-    $sheet->getStyleByColumnAndRow(0, 7)->applyFromArray($arHeadStyle);
-    $obj = $authorDAO->getUserData($user);
-    $id_testing = $testingDAO->getIdTesting($user, $_GET['id_quiz']);
-    $minterviewee = new MInterviewee();
-    $minterviewee->setIdTesting($id_testing);
-    $listOfAnswers = $intervieweeDAO->getListOfAnswers($minterviewee);
-    $sheet->getStyleByColumnAndRow(0, $hor)->applyFromArray($arHeadStyle);
-    $sheet->setCellValueByColumnAndRow(0, $hor, $obj->last_name." ".$obj->first_name);
-    $iterator = 0;
-    foreach($questions as $question) {
-        $iterator++;
-        $answerOption = $answerOptionsDAO->getDataAnswerOtions($question->id_question);
-        if(isset($listOfAnswers[$question->id_question])) {
-            for($j=0; $j<count($listOfAnswers[$question->id_question]); $j++){
-                $flag = true;
-                if(isset($listOfAnswers[$question->id_question][$j])){
-                    if($question->id_questions_type != 4){
-                        if($question->id_questions_type != 5){
-                            $obj=$answerOptionsDAO->getRightAnswerOptions($listOfAnswers[$question->id_question][$j]);
-                            if($obj != ''){
-                                if($obj == 'Y') {
-                                    $flag = true;
-                                } else {
-                                    $flag = false;
-                                }
-                                if($j==count($listOfAnswers[$question->id_question])-1) {
-                                   $countOfRight = $answerOptionsDAO->getCountOfRightAnswers($question->id_question);
-                                    if($flag && $countOfRight == count($listOfAnswers[$question->id_question])) {
-                                        //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($success);
-                                        $str = '';
-                                        foreach($listOfAnswers[$question->id_question] as $id) {
-                                            if($str == ''){
-                                                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
-                                                    $str = $str.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
-                                                }
-                                            }
-                                            else {
-                                                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
-                                                    $str = $str.'; '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
-                                                }
-                                            }
-                                        }   
-                                        $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
-                                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Правильно');
-                                        $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
-                                        $rightAnswers++;
+if(isset($users[0])){
+    foreach($users as $user) {
+        $rightAnswers = 0;
+        $ver = 1;
+        $sheet->getRowDimension($hor)->setRowHeight(17);
+        $sheet->setCellValueByColumnAndRow(0, 6, 'Номер вопроса');
+        $sheet->getStyleByColumnAndRow(0, 6)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+        $sheet->getStyleByColumnAndRow(0, 6)->applyFromArray($arHeadStyle);
+        $sheet->getStyleByColumnAndRow(0, 7)->applyFromArray($arHeadStyle);
+        $obj = $authorDAO->getUserData($user);
+        $id_testing = $testingDAO->getIdTesting($user, $_GET['id_quiz']);
+        $minterviewee = new MInterviewee();
+        $minterviewee->setIdTesting($id_testing);
+        $listOfAnswers = $intervieweeDAO->getListOfAnswers($minterviewee);
+        $sheet->getStyleByColumnAndRow(0, $hor)->applyFromArray($arHeadStyle);
+        $sheet->setCellValueByColumnAndRow(0, $hor, $obj->last_name." ".$obj->first_name);
+        $iterator = 0;
+        foreach($questions as $question) {
+            $iterator++;
+            $answerOption = $answerOptionsDAO->getDataAnswerOtions($question->id_question);
+            if(isset($listOfAnswers[$question->id_question])) {
+                for($j=0; $j<count($listOfAnswers[$question->id_question]); $j++){
+                    $flag = true;
+                    if(isset($listOfAnswers[$question->id_question][$j])){
+                        if($question->id_questions_type != 4){
+                            if($question->id_questions_type != 5){
+                                $obj=$answerOptionsDAO->getRightAnswerOptions($listOfAnswers[$question->id_question][$j]);
+                                if($obj != ''){
+                                    if($obj == 'Y') {
+                                        $flag = true;
                                     } else {
-                                        //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($danger);
-                                        $str = '';
-                                        foreach($listOfAnswers[$question->id_question] as $id) {
-                                            if($str == ''){
-                                                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
-                                                    $str = $str.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                        $flag = false;
+                                    }
+                                    if($j==count($listOfAnswers[$question->id_question])-1) {
+                                       $countOfRight = $answerOptionsDAO->getCountOfRightAnswers($question->id_question);
+                                        if($flag && $countOfRight == count($listOfAnswers[$question->id_question])) {
+                                            //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($success);
+                                            $str = '';
+                                            foreach($listOfAnswers[$question->id_question] as $id) {
+                                                if($str == ''){
+                                                    if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                                        $str = $str.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                                    }
+                                                }
+                                                else {
+                                                    if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                                        $str = $str.'; '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                                    }
+                                                }
+                                            }   
+                                            $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
+                                            $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Правильно');
+                                            $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
+                                            $rightAnswers++;
+                                        } else {
+                                            //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($danger);
+                                            $str = '';
+                                            foreach($listOfAnswers[$question->id_question] as $id) {
+                                                if($str == ''){
+                                                    if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                                        $str = $str.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                                    }
+                                                }
+                                                else {
+                                                    if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                                        $str = $str.'; '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                                    }
                                                 }
                                             }
-                                            else {
-                                                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
-                                                    $str = $str.'; '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
-                                                }
-                                            }
+                                            $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
+                                            $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Неправильно');
+                                            $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
                                         }
-                                        $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
-                                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Неправильно');
-                                        $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
                                     }
                                 }
                             }
+                            else {
+                                $str = '';
+                                foreach($listOfAnswers[$question->id_question] as $id) {
+                                    if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                        $str = ' '.$questionDAO->getRate($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions);
+                                    }
+                                }
+                                $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
+                                $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' '); 
+                                $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);      
+                            }
                         }
                         else {
-                            $str = '';
-                            foreach($listOfAnswers[$question->id_question] as $id) {
-                                if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
-                                    $str = ' '.$questionDAO->getRate($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions);
-                                }
-                            }
+                            $str = ''.$listOfAnswers[$question->id_question][0];
                             $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
-                            $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' '); 
-                            $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);      
+                            $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' ');
+                            $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
+                            
+                            if($listOfAnswers[$question->id_question][0]!=''){
+                            $height = substr_count($listOfAnswers[$question->id_question][0], PHP_EOL)*15+15;
+                                $sheet->getRowDimension($hor)->setRowHeight($height);
+                            }
                         }
-                    }
+                    } 
                     else {
-                        $str = ''.$listOfAnswers[$question->id_question][0];
-                        $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
-                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' ');
+                        //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($skip);
+                        $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Пропущено');
                         $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
-                        
-                        if($listOfAnswers[$question->id_question][0]!=''){
-                        $height = substr_count($listOfAnswers[$question->id_question][0], PHP_EOL)*15+15;
-                            $sheet->getRowDimension($hor)->setRowHeight($height);
-                        }
                     }
-                } 
-                else {
-                    //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($skip);
-                    $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Пропущено');
-                    $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
                 }
+                
             }
-            
-        }
-        $sheet->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex($ver))->setAutoSize(true);
-        $sheet->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex($ver+1))->setAutoSize(true);
-        $sheet->getStyleByColumnAndRow($ver, 6)->applyFromArray($arHeadStyle);
-        $sheet->getStyleByColumnAndRow($ver, 6)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyleByColumnAndRow($ver+1, 6)->applyFromArray($arHeadStyle);
-        $sheet->mergeCells(coordinates($ver, 6).':'.coordinates($ver+1, 6));
-        $sheet->setCellValueByColumnAndRow($ver, 6, $iterator);
-        $sheet->setCellValueByColumnAndRow($ver, 7, 'Ответ');
-        $sheet->getStyleByColumnAndRow($ver, 7)->applyFromArray($arHeadStyle);
-        $sheet->setCellValueByColumnAndRow($ver+1, 7, 'Правильность');
-        $sheet->getStyleByColumnAndRow($ver+1, 7)->applyFromArray($arHeadStyle);
-        /*if(isset($listOfAnswers[$question->id_question][0])) {
-            $sheet->setCellValueByColumnAndRow($ver, $hor, $listOfAnswers[$question->id_question][0]);
-        }*/
-        $ver = $ver+2;
-    }   
-    $sheet->setCellValueByColumnAndRow($ver, $hor, $rightAnswers);
-    $sheet->setCellValueByColumnAndRow($ver, 6, 'Верных ответов');
-    $hor++;
+            $sheet->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex($ver))->setAutoSize(true);
+            $sheet->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex($ver+1))->setAutoSize(true);
+            $sheet->getStyleByColumnAndRow($ver, 6)->applyFromArray($arHeadStyle);
+            $sheet->getStyleByColumnAndRow($ver, 6)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyleByColumnAndRow($ver+1, 6)->applyFromArray($arHeadStyle);
+            $sheet->mergeCells(coordinates($ver, 6).':'.coordinates($ver+1, 6));
+            $sheet->setCellValueByColumnAndRow($ver, 6, $iterator);
+            $sheet->setCellValueByColumnAndRow($ver, 7, 'Ответ');
+            $sheet->getStyleByColumnAndRow($ver, 7)->applyFromArray($arHeadStyle);
+            $sheet->setCellValueByColumnAndRow($ver+1, 7, 'Правильность');
+            $sheet->getStyleByColumnAndRow($ver+1, 7)->applyFromArray($arHeadStyle);
+            /*if(isset($listOfAnswers[$question->id_question][0])) {
+                $sheet->setCellValueByColumnAndRow($ver, $hor, $listOfAnswers[$question->id_question][0]);
+            }*/
+            $ver = $ver+2;
+        }   
+        $sheet->setCellValueByColumnAndRow($ver, $hor, $rightAnswers);
+        $sheet->setCellValueByColumnAndRow($ver, 6, 'Верных ответов');
+        $hor++;
+    }
 }
 // Выравнивание текста
 //$sheet->getStyle('A1')->getAlignment()->setHorizontal(
@@ -315,24 +317,26 @@ $sheet->getStyle('E1')->applyFromArray($arHeadStyle);
 $i=2;
 $iterator = 0;
 foreach($questions as $question) {
-    $iterator++;
-    $answerOption = $answerOptionsDAO->getDataAnswerOtions($question->id_question);
-    $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-    $sheet->setCellValueByColumnAndRow(0, $i, $iterator);
-    $sheet->setCellValueByColumnAndRow(1, $i, $question->text_question);
-    $sheet->setCellValueByColumnAndRow(2, $i, $typeQuestions[$question->id_questions_type-1]);
-    $sheet->setCellValueByColumnAndRow(3, $i, " ".$question->comment_question);
-    $str = '';
-    $height = 15;
-    foreach($answerOption as $oneOption){
-        if(isset($oneOption->right_answer) && $oneOption->right_answer == 'Y') {
-            $str = $str." \n".$oneOption->answer_the_questions;
-            $height = $height + 10;
+    if(isset($question->id_question)) {
+        $iterator++;
+        $answerOption = $answerOptionsDAO->getDataAnswerOtions($question->id_question);
+        $sheet->getStyleByColumnAndRow(0, $i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+        $sheet->setCellValueByColumnAndRow(0, $i, $iterator);
+        $sheet->setCellValueByColumnAndRow(1, $i, $question->text_question);
+        $sheet->setCellValueByColumnAndRow(2, $i, $typeQuestions[$question->id_questions_type-1]);
+        $sheet->setCellValueByColumnAndRow(3, $i, " ".$question->comment_question);
+        $str = '';
+        $height = 15;
+        foreach($answerOption as $oneOption){
+            if(isset($oneOption->right_answer) && $oneOption->right_answer == 'Y') {
+                $str = $str." \n".$oneOption->answer_the_questions;
+                $height = $height + 10;
+            }
         }
+        $sheet->getRowDimension($i)->setRowHeight($height);
+        $sheet->setCellValueByColumnAndRow(4, $i, $str);
+        $i++;
     }
-    $sheet->getRowDimension($i)->setRowHeight($height);
-    $sheet->setCellValueByColumnAndRow(4, $i, $str);
-    $i++;
 }   
 
 

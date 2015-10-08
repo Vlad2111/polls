@@ -29,12 +29,12 @@ class IntervieweeDAO {
         $time = $this->testing->getDatetimeStartTest($interviewee);
         $timer = new DateTime($time);
         $a = split ( ':' , $interval, -1 );
-        /*if(isset($a)){
+        if(isset($a)){
             $timer->modify('+'.$a[0].' hour +'.$a[1].' minute +'.$a[2].' second');
         }
         if(isset($interval)) {
             $this->testing->setDatetimeEndTest($interviewee, $timer->format("Y-m-d H:i:s"));
-        }*/
+        }
         $this->setMarker($interviewee->getIdTesting(), $this->getNextQuestion($interviewee->getTest()->getIdQuiz(), 0));
         return $return;
     }
