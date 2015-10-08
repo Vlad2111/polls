@@ -36,9 +36,17 @@ class AuthorizationView {
             $_SESSION['id_user']=$dao_auth->getIdUser($mauth);
             $_SESSION['fio_user']=$obj_user->getFirstName()." ".$obj_user->getLastName(); 
             $_SESSION['role_user']=$dao_auth->getRole($mauth);
-            header('HTTP/1.1 200 OK');
-            header('Location: main.php');
-            exit();
+            if(isset($_GET['re'])) {
+                $_GET['re'] = str_replace('%', '&', $_GET['re']);
+                header('HTTP/1.1 200 OK');
+                header('Location: '.$_GET['re']);
+                exit();
+            }
+            else {
+                header('HTTP/1.1 200 OK');
+                header('Location: main.php');
+                exit();
+            }
         }
         $this->error="Неправильный пользователь или пароль";
     }

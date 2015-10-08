@@ -1049,7 +1049,7 @@
                     <label for="head">Заголовок</label>
                     <input id="head" name="head" type="text" class="form-control" value="Прохождение опроса: {if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}">
                     <label for="testOfMale">Текст письма</label>
-                    <textarea id="testOfMale" rows="5" cols="40" name="testOfMale" class="form-control">Приглашаем вас пройти тест "{if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}"<br> Прохождение теста доступно по адресу: <a href="http://rnd-dev-polls/quiz.php?status=new_test&testing={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">http://rnd-dev-polls/quiz.php?status=new_test&testing={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}</a></textarea>
+                    <textarea id="testOfMale" rows="5" cols="40" name="testOfMale" class="form-control">Приглашаем вас пройти тест "{if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}"<br> Прохождение теста доступно по адресу: <a href="http://rnd-dev-polls/authorization.php?re=quiz.php?status=new_test%testing={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">http://rnd-dev-polls/authorization.php?re=quiz.php?status=new_test%testing={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}</a></textarea>
                     {if isset($mails[0])}
                     <table class="table" id="mailsTable">
                         {foreach $mails as $ma}
