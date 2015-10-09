@@ -40,8 +40,8 @@ class IntervieweeDAO {
     }
     //Закончить тест
     public function statusEndQuiz(MInterviewee $interviewee){
-        $this->testing->editMarkTest($interviewee, 4);
         $this->testing->setDatetimeEndTest($interviewee, date("Y-m-d H:i:s"));
+        $this->testing->editMarkTest($interviewee, 4);
         $result = $this->getCountofRightAnswers($interviewee);
         $this->testing->setAnswers($interviewee, $result);
         $this->testing->setInterval($interviewee->getIdTesting());

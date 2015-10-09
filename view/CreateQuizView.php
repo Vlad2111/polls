@@ -212,6 +212,12 @@ class CreateQuizView{
         
         $muser->setIdUser($this->id_author);
         $mquiz->setTopic($_POST['topic_quiz']);
+        if($_POST['hour']=='0') {
+            $_POST['hour']='00';
+        }
+        if($_POST['minutes']=='0') {
+            $_POST['minutes']='00';
+        }
         if(preg_match("/[0-9]*/",$_POST['hour']) && preg_match("/[0-9]*/",$_POST['minutes']) && $_POST['minutes']<60 && !$_POST['hour']=='' && !$_POST['minutes']==''){
            $mquiz->setTimeLimit($_POST['hour'].':'.$_POST['minutes'].':00');
            
@@ -225,8 +231,7 @@ class CreateQuizView{
         elseif(!$_POST['hour']=='' && $_POST['minutes']==''){
             $mquiz->setTimeLimit($_POST['hour'].':00:00');
         }   
-        else
-        {      
+        else {      
             return 0;
         }
         $mquiz->setCommentQuiz($_POST['comment_test']);
@@ -532,7 +537,7 @@ class CreateQuizView{
     public function getAnswerOptionsData(){
     /*var_dump($this->id_question);
     var_dump($this->answer_option->getDataAnswerOtions($this->id_question));*/
-        if($_SESSION['id_question']){
+        if(isset($_SESSION['id_question'])){
             return $this->answer_option->getDataAnswerOtions($_SESSION['id_question']);    
         }    
     }
