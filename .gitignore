@@ -1,5 +1,6 @@
 *.php~
 *.tpl~
+*.txt~
 temlates_c/*
 *.tpl.php
 *s~
@@ -8,4 +9,4 @@ temlates_c/*
 *i~
 *.log
 *swp
-
+lib/CheckOS.php

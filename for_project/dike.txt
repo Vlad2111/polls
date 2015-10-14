@@ -9,12 +9,12 @@ CREATE TYPE yorn AS enum('N', 'Y');
 CREATE TYPE markerAU AS enum('latest');
 
 create table alluser(
-	id_user integer DEFAULT NEXTVAL('id_user'),
-	last_name character(50),
-	first_name character(50),
-	email character(50),
-	login character(50) NOT NULL CONSTRAINT must_be_different_login UNIQUE,
-	password character(50) NULL,
+	id_user serial,
+	last_name character varying (50),
+	first_name character varying (50),
+	email character varying (50),
+	login character varying (50) NOT NULL CONSTRAINT must_be_different_login UNIQUE,
+	password character varying (50) NULL,
 	ldap_user integer DEFAULT 0,
         user_vasibility integer DEFAULT 1,
 CONSTRAINT must_be_different_lastName_firstName UNIQUE(last_name, first_name),
@@ -22,31 +22,39 @@ constraint user_pkeys primary key (id_user));
 
 create table role (
 	id_role integer not null,
-	description_role character (50) NOT NULL CONSTRAINT must_be_different_description_role UNIQUE,
+	description_role character varying (50) NOT NULL,
+	 CONSTRAINT must_be_different_description_role UNIQUE (description_role),
 constraint role_pkey primary key (id_role)
 );
 
 create table role_user (
 	id_role integer not null,
-	id_user integer not null,
-CONSTRAINT must_be_different_role_user UNIQUE(id_role, id_user),
-constraint role_user_fkey foreign key (id_role) references role(id_role),
-constraint user_role_fkey foreign key (id_user) references alluser(id_user));
+	id_user integer not null, 
+	CONSTRAINT role_user_pkey PRIMARY KEY (id_role, id_user),
+    CONSTRAINT role_user_fkey FOREIGN KEY (id_role)
+      REFERENCES role (id_role) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT user_role_fkey FOREIGN KEY (id_user)
+      REFERENCES alluser (id_user) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
 create table status_test(
 	id_status_test integer not null,
-	description_status_test character(50) not null,
+	description_status_test character varying NOT NULL,
 constraint status_test_pkey primary key (id_status_test)
 );
 create table test (
-	id_test integer DEFAULT NEXTVAL('id_test'),
-	topic character(150) not null,
+	id_test serial,
+	topic character varying (150) not null,
 	time_limit interval null,
-	comment_test character(150) null,
+	comment_test character varying (150) null,
 	see_the_result yorn not null,
 	see_details yorn not null,
 	id_status_test integer not null,
 	author_test integer not null,
         vasibility_test integer DEFAULT 1,
+        date_create timestamp without time zone,
 CONSTRAINT must_be_different_test UNIQUE(topic, time_limit, comment_test, see_the_result, see_details, id_status_test, author_test),
 constraint author_test_fkey foreign key (author_test) references alluser(id_user),
 constraint status_test_fkey foreign key (id_status_test) references status_test(id_status_test),
@@ -56,62 +64,119 @@ constraint test_pkey primary key(id_test)
 create table interviewees (
 	id_test integer not null,
 	id_user integer null,
-	group_ldap character(1000) null,
-CONSTRAINT test_interviewees_fkey foreign key(id_test) references test(id_test),
-CONSTRAINT user_interviewees_fkey foreign key (id_user) references alluser (id_user)
+	CONSTRAINT interviewees_pkey PRIMARY KEY (id_test, id_user),
+  CONSTRAINT test_interviewees_fkey FOREIGN KEY (id_test)
+      REFERENCES test (id_test) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT user_interviewees_fkey FOREIGN KEY (id_user)
+      REFERENCES alluser (id_user) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+
 create table type_the_questions (
 	id_questions_type integer not null,
-	description_questions_type character(100) NOT NULL CONSTRAINT must_be_different_answer_type UNIQUE,
+	description_questions_type character varying(100) NOT NULL,
 constraint answer_type_pkey primary key (id_questions_type)
 );
 create table questions (
-	id_question integer DEFAULT NEXTVAL('id_question'),
+	id_question serial,
 	text_question text not null,
 	id_questions_type integer not null,	
-	comment_question character(100) null,
+	comment_question character varying (100) null,
 	question_number integer null,
 	id_test integer not null,
+	validation yorn not null,
 constraint question_pkey primary key (id_question),
 constraint test_questions_fkey foreign key (id_test) references test (id_test),
 constraint answer_type_fkey foreign key (id_questions_type) references type_the_questions(id_questions_type)
 );
 create table answer_options(
-	id_answer_option integer DEFAULT NEXTVAL('id_answer_option'),
+	id_answer_option serial,
         id_question integer not null,
-	answer_the_questions character(1000) NULL,
-	right_answer yorn not null,
+	answer_the_questions character varying (1000) NULL,
+	right_answer yorn,
 constraint answer_the_questions_pkey primary key (id_answer_option),
 constraint question_answer_fkey foreign key (id_question) references questions(id_question)
 );
 create table mark_test(
 	id_mark_test integer not null,
-	description_mark_test character(50) not null,
+	description_mark_test character varying (50) not null,
 constraint mark_test_pkey primary key (id_mark_test)
 );
 
+CREATE TABLE mark_type_rating
+(
+  id serial,
+  sequence integer NOT NULL,
+  text character varying(1000) NOT NULL,
+  option integer NOT NULL,
+  rate integer,
+  CONSTRAINT mark_type_five_pkey PRIMARY KEY (id)
+);
+
 create table testing (
-	id_testing integer DEFAULT NEXTVAL('id_testing'),
-	id_user integer not null,
-	id_test integer not null,
-	id_mark_test integer not null,
-	datetime_start_test timestamp null,
-	datetime_end_test timestamp null,
-constraint testing_pkeys primary key (id_testing),
-CONSTRAINT must_be_different_testing UNIQUE(id_user, id_test),
-constraint user_testing_fkey foreign key (id_user) references alluser(id_user),
-constraint test_testing_fkey foreign key (id_test) references test (id_test),
-constraint mark_test_testing_fkey foreign key (id_mark_test) references mark_test (id_mark_test)
+	id_testing serial,
+	id_user integer NOT NULL,
+    id_test integer NOT NULL,
+    id_mark_test integer NOT NULL,
+    datetime_start_test timestamp without time zone,
+    datetime_end_test timestamp without time zone,
+    right_answers integer,
+    wrong_answers integer,
+     datetime_duration_test interval,
+    skip_answers integer,
+    unvalidated_answers integer,
+    CONSTRAINT testing_pkeys PRIMARY KEY (id_testing),
+    CONSTRAINT mark_test_testing_fkey FOREIGN KEY (id_mark_test)
+      REFERENCES mark_test (id_mark_test) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT test_testing_fkey FOREIGN KEY (id_test)
+      REFERENCES test (id_test) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT user_testing_fkey FOREIGN KEY (id_user)
+      REFERENCES alluser (id_user) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT must_be_different_testing UNIQUE (id_user, id_test)
 );
 create table answer_users (
-	id_testing integer not null,
-	id_question integer not null,	
-	answer_user character(1000) null,
-	marker_quiz markerAU null,
-CONSTRAINT must_be_different_answer_users UNIQUE(id_testing, id_question),
-constraint question_answer_users_fkey foreign key (id_question) references questions(id_question),
-constraint testing_answer_fkey foreign key (id_testing) references testing (id_testing)
+    id_testing integer NOT NULL,
+  id_question integer NOT NULL,
+  id_answer_users serial NOT NULL,
+  marker_quiz markerau,
+  skip_answer yorn,
+  CONSTRAINT answer_users_pkey PRIMARY KEY (id_answer_users),
+  CONSTRAINT question_answer_users_fkey FOREIGN KEY (id_question)
+      REFERENCES questions (id_question) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT testing_answer_fkey FOREIGN KEY (id_testing)
+      REFERENCES testing (id_testing) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+
+CREATE TABLE answers
+(
+  id_answer serial NOT NULL,
+  answer character varying(1000) NOT NULL,
+  id_testing integer,
+  CONSTRAINT answers_pkey PRIMARY KEY (id_answer),
+  CONSTRAINT testing FOREIGN KEY (id_testing)
+      REFERENCES testing (id_testing) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE answers_answer_user
+(
+  id_answer integer NOT NULL,
+  id_answer_user integer NOT NULL,
+  CONSTRAINT "answers/answer_user_pkey" PRIMARY KEY (id_answer, id_answer_user),
+  CONSTRAINT "answer_user->answers" FOREIGN KEY (id_answer_user)
+      REFERENCES answer_users (id_answer_users) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT "answers/answer_user_id_answer_fkey" FOREIGN KEY (id_answer)
+      REFERENCES answers (id_answer) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
 create table result(
 	id_testing integer not null,
 	percent_of_right_answers integer null,
@@ -127,9 +192,8 @@ insert into role values
 
 insert into status_test values
 	(1, 'Редактируемый'),
-	(2, 'Готов к опубликованию'),
-	(3, 'Активный'),
-	(4, 'Завершённый');
+	(2, 'Доступный для прохождения'),
+	(3, 'Завершённый');
 
 insert into type_the_questions values
 	(1, 'Вопрос, предлогающий ответ типа Да/Нет/Не знаю'),

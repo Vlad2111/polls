@@ -51,10 +51,15 @@ if(isset($_POST['action']) && $_POST['action']=='check'){
         else{
             $ldapOperations->connect();
             $result = $ldapOperations->getLDAPAccountNamesByPrefix($_POST['name']);
-            if($result[0]['sAMAccountName'] == $_POST['name']){
-                echo 1;
+            if(isset($result[0])) {
+                if($result[0]['sAMAccountName'] == $_POST['name']){
+                    echo 1;
+                }
+                else{
+                    echo 0;
+                }
             }
-            else{
+            else {
                 echo 0;
             }
         } 

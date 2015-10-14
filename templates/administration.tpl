@@ -69,7 +69,7 @@
             function checkLoginUser(value){
                 if(value != "") {
                     $.post("checkForms.php", { action: "check", field: "login user", name: value }, function( data ) {
-                    if(data == 1){
+                    if(data == 0){
 					    $("#inpLog").removeClass("has-error");
                         $("#inpLog").addClass("has-success");
 					    $("#glyphiconLog").removeClass("glyphicon-remove");
