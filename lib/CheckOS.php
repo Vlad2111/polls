@@ -8,7 +8,7 @@ class CheckOS {
    public static function getConfigLogger(){
        switch (PHP_OS) {
            case 'Linux': 
-               $config_path='/etc/config_log4php_dev.xml';
+               $config_path='/etc/config_log4php.xml';
                break;
        }
        return $config_path;
@@ -16,7 +16,7 @@ class CheckOS {
    public static function getConfigConnectDb(){
        switch (PHP_OS) {
            case 'Linux': 
-               $config_path="/etc/config_dike_dev.ini";
+               $config_path="/etc/config_dike.ini";
                break;
        }
        return $config_path;
@@ -24,7 +24,7 @@ class CheckOS {
    public static function getConfigRole(){
        switch (PHP_OS) {
            case 'Linux': 
-               $config_path="/etc/role_dike_dev.ini";
+               $config_path="/etc/role_dike.ini";
                break;
        }
        return $config_path;

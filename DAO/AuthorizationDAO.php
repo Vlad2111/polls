@@ -158,7 +158,12 @@ class AuthorizationDAO {
                    }
                }
             }
-        } 
+            foreach($config_role['user'] as $value){
+                if($value == $auth->getLogin()) {
+                    $result[]=$i+1;
+                }
+            }
+        }
         return $result;      
      }
      
