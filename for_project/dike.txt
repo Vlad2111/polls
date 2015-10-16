@@ -83,9 +83,9 @@ create table questions (
 	text_question text not null,
 	id_questions_type integer not null,	
 	comment_question character varying (100) null,
-	question_number integer null,
+	question_number double precision null,
 	id_test integer not null,
-	validation yorn not null,
+	validation yorn,
 constraint question_pkey primary key (id_question),
 constraint test_questions_fkey foreign key (id_test) references test (id_test),
 constraint answer_type_fkey foreign key (id_questions_type) references type_the_questions(id_questions_type)
@@ -199,13 +199,25 @@ insert into type_the_questions values
 	(1, 'Вопрос, предлогающий ответ типа Да/Нет/Не знаю'),
 	(2, 'Вопрос с возможностью выбора одного ответа из списка'),
 	(3, 'Вопрос с возможностью выбора одного или более ответов из списка'),
-	(4, 'Вопрос, предполагающий написание ответа в виде произвольного текста длиной до 1000 символов');
+	(4, 'Вопрос, предполагающий написание ответа в виде произвольного текста длиной до 1000 символов'),
+	(5, 'Вопрос, предполагающий ответ по шкале от 1 до 5');
 insert into mark_test values
 		(1, 'Доступный'),
 		(2, 'Неоконченный'),
 		(3, 'Не доступный'),
 		(4, 'Законченный');
 
+insert into mark_type_rating values
+  (1, "Очень хорошо",1,5),
+  (2, "Хорошо",1,4),
+  (3, "Средне",1,3),
+  (4, "Плохо",1,2),
+  (5, "Очень плохо",1,1),
+  (1, "Очень доволен(-льна)",2,5),
+  (2, "Доволен(-льна)", 2, 4),
+  (3, "Средне", 2, 3),
+  (4, "Не доволен(-льна)", 2, 2),
+  (5, "Очень не доволен(-льна)", 2, 1);
 insert into alluser(last_name, first_name, email, login, password) values
 	('Иван', 'Иванов', 'admin@mail.ru', 'Иван', 'c4ca4238a0b923820dcc509a6f75849b'),
 	('Михаил', 'Тюбиков', 'compiler@mail.ru', 'Михаил', 'c81e728d9d4c2f636f067f89cc14862c'),

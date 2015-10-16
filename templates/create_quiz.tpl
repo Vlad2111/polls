@@ -2,6 +2,7 @@
     <head>
         <title>{$title}</title>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script src="js/jquery-2.1.3.min.js"></script>
@@ -445,7 +446,7 @@
                                 <td>
                                     <select  name="question_type" id="question_type"  onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
 										<option value="0" selected>--/--</option>
-                                        <option value="1">Да/Нет/Не знаю</option>
+                                        <option value="1">Да/Нет</option>
                                         <option value="2">Один ответа из списка</option>
                                         <option value="3">Выбор одного или более ответов из списка</option>
                                         <option value="4">Произвольный ответ</option>
@@ -726,7 +727,7 @@
                                     
                                     <select  name="question_type" id="question_type" onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
 										<option value="0">--/--</option>
-                                        <option value="1" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 1}selected{/if}>Да/Нет/Не знаю</option>
+                                        <option value="1" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 1}selected{/if}>Да/Нет</option>
                                         <option value="2" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 2}selected{/if}>Один ответа из списка</option>
                                         <option value="3" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 3}selected{/if}>Выбор одного или более ответов из списка</option>
                                         <option value="4" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 4}selected{/if}>Произвольный ответ</option>
