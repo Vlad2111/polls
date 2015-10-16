@@ -86,6 +86,7 @@ create table questions (
 	question_number double precision null,
 	id_test integer not null,
 	validation yorn,
+	weight integer,
 constraint question_pkey primary key (id_question),
 constraint test_questions_fkey foreign key (id_test) references test (id_test),
 constraint answer_type_fkey foreign key (id_questions_type) references type_the_questions(id_questions_type)

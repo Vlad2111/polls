@@ -36,7 +36,7 @@
             {
               var elements = document.getElementsByName(name);
               for (var i=0; i<elements.length; i++)  {
-              if  (elements[i].checked) return true
+                if  (elements[i].checked) return true
               }
               return false
             }
@@ -70,6 +70,7 @@
                     $("#add_answer_type_many_answers_some").hide();
                     $("#add_rating_type").hide();
                     $("#trForSwitch").show();
+                    $("#trForWeight").show();
                 }
                 if(parseInt(value) === 2){
                     $("#trForOptions").show();
@@ -79,6 +80,7 @@
                     $("#add_rating_type").hide();
                     document.getElementById("create-question").disabled = true;
                     $("#trForSwitch").show();
+                    $("#trForWeight").show();
                 }
                 if(parseInt(value) === 3) {
                     $("#trForOptions").show();
@@ -88,6 +90,7 @@
                     $("#add_answer_type_many_answers_some").show();
                     $("#add_rating_type").hide();
                     $("#trForSwitch").show();
+                    $("#trForWeight").show();
                 }
                 if(parseInt(value) === 4) {
                     $("#trForOptions").hide();
@@ -130,6 +133,25 @@
                             alert("Wrong group");
                         }
                     });
+                }
+            }
+            function checkNumber(value){
+                if(value != "" && value >= 0 && value <= 100){
+                    $("#weightDiv").addClass("has-success");
+                    $("#weightGli").addClass("glyphicon-ok");
+                    document.getElementById("create-question").disabled = false;
+                }
+                else {
+                    $("#weightDiv").addClass("has-error");
+                    $("#weightGli").addClass("glyphicon-remove");
+                    document.getElementById("create-question").disabled = true;
+                }
+                if(value == ""){
+                    $("#weightDiv").removeClass("has-success");
+                    $("#weightGli").removeClass("glyphicon-ok");
+                    $("#weightDiv").removeClass("has-error");
+                    $("#weightGli").removeClass("glyphicon-remove");
+                    document.getElementById("create-question").disabled = false;
                 }
             }
             function checkTopicQuiz(value){
@@ -365,7 +387,7 @@
 				</td>
 			</tr>
 		{/capture}
-            {capture name='new_quiz'}
+        {capture name='new_quiz'}
             <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
 			{if {$data_role[2]} eq 3}
@@ -399,22 +421,22 @@
                 </li>
 			{/if}
             </ul>
-        </div>
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <form method="post">
-                    <table class="table">
-                        <tbody>
-						    {$smarty.capture.form_for_quiz}
-                        </tbody>
-                    </table>                                       
-                    <input type="hidden" name="status_test" value="1">
-                    <span class="unsuitable">
-                        <input class="btn btn-primary" id="button-create" type="submit" value="Создать опрос" disabled>
-                    </span>         
-                </form> 
             </div>
-        </div>
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <form method="post">
+                        <table class="table">
+                            <tbody>
+						        {$smarty.capture.form_for_quiz}
+                            </tbody>
+                        </table>                                       
+                        <input type="hidden" name="status_test" value="1">
+                        <span class="unsuitable">
+                            <input class="btn btn-primary" id="button-create" type="submit" value="Создать опрос" disabled>
+                        </span>         
+                    </form> 
+                </div>
+            </div>
         {/capture}
         {capture name='new_question'}
         {include file='menu.tpl'}
@@ -444,7 +466,7 @@
                                     <b>Тип вопроса</b>
                                 </td>
                                 <td>
-                                    <select  name="question_type" id="question_type"  onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
+                                    <select class="form-control" name="question_type" id="question_type"  onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
 										<option value="0" selected>--/--</option>
                                         <option value="1">Да/Нет</option>
                                         <option value="2">Один ответа из списка</option>
@@ -470,15 +492,29 @@
                                                 jQuery("input:checkbox").attr('disabled',false);
                                                 jQuery("input:radio").attr('checked',false);
                                                 jQuery("input:checkbox").attr('checked',false);
+                                                $("#trForWeight").show();
                                             }
                                             else {
                                                 jQuery("input:radio").attr('disabled',true);
                                                 jQuery("input:checkbox").attr('disabled',true);
                                                 jQuery("input:radio").attr('checked',false);
                                                 jQuery("input:checkbox").attr('checked',false);
+                                                $("#trForWeight").hide();
                                             }
                                         });
                                     </script>
+                                </td>
+                            </tr>
+                            <tr id="trForWeight" style="display:none">
+                                <td class='info'>
+                                    <b>Вес вопроса</b>
+                                </td>
+                                <td>
+                                <div class="form-group has-feedback" id="weightDiv">
+                                    <input class="form-control" type="number" id="weight" name="weight" form="test_passing" onchange="checkNumber(this.value)" >
+                                    
+				                    <span class="glyphicon form-control-feedback" id="weightGli"></span>
+                                </div>
                                 </td>
                             </tr>
 							<tr id="trForOptions" style="display:none">
@@ -486,7 +522,7 @@
 								</td>
 								<td>
 									<div id='add_answer_type_yorn' style="display: none">
-                                        Выберите привильный ответ<br>
+                                        Выберите правильный ответ<br>
                                         <input type='radio' form="test_passing" name='answer[]' value='Да'>Да<br>
                                         <input type='radio' form="test_passing" name='answer[]' value='Нет'>Нет
                                     </div>
@@ -619,6 +655,9 @@
                                 Тип вопроса
                             </th>
                             <th>
+                                Вес вопроса
+                            </th>
+                            <th>
                                 Удалить вопрос
                             </th>
                             <th>
@@ -645,6 +684,9 @@
                                     {elseif  {$data_questions[$i]->id_questions_type}==5}
                                         Оценочная шкала
                                     {/if} 
+                                </td>
+                                <td>
+                                    {$data_questions[$i]->weight}
                                 </td>
                                 <td>
                                    <a class="btn btn-primary btn-xs" href="?action=delete&id_quiz={$data_one_quiz->id_test}&id_question={$data_questions[$i]->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
@@ -751,12 +793,14 @@
                                                 jQuery("input[name='checkbox[]']").attr('disabled',false);
                                                 jQuery("input:radio").attr('checked',false);
                                                 jQuery("input[name='checkbox[]']").attr('checked',false);
+                                                $("#trForWeight").show();
                                             }
                                             else {
                                                 jQuery("input:radio").attr('disabled',true);
                                                 jQuery("input[name='checkbox[]']").attr('disabled',true);
                                                 jQuery("input:radio").attr('checked',false);
                                                 jQuery("input[name='checkbox[]']").attr('checked',false);
+                                                $("#trForWeight").hide();
                                             }
                                         });
                                         /*{if isset($data_one_question->validation) && $data_one_question->validation != 'Y'}
@@ -765,12 +809,23 @@
                                     </script>
                                 </td>
                             </tr>
+                            <tr id="trForWeight" style="display:none">
+                                <td class='info'>
+                                    <b>Вес вопроса</b>
+                                </td>
+                                <td>
+                                <div class="form-group has-feedback" id="weightDiv">
+                                    <input class="form-control" type="number" id="weight" name="weight" value="{if isset($data_one_question->weight)}{$data_one_question->weight}{/if}" form="test_passing" onchange="checkNumber(this.value)" >
+				                    <span class="glyphicon form-control-feedback" id="weightGli"></span>
+                                </div>
+                                </td>
+                            </tr>
 							<tr id="trForOptions" style="display:none">
 								<td class='info'>
 								</td>
 								<td>
 									<div id='add_answer_type_yorn' style="display: none">
-                                        Выберите привильный ответ<br>
+                                        Выберите правильный ответ<br>
                                         {foreach $data_answer_option as $option_one}
                                             {if isset($option_one->answer_the_questions) && $option_one->answer_the_questions == 'Да'}
                                             <input type='radio' form="test_passing" name='answer[]' value='Да' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{if isset($option_one->answer_the_questions)}{$option_one->answer_the_questions}{/if}<br>

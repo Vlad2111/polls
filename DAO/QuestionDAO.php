@@ -14,8 +14,8 @@ class QuestionDAO {
     }
        //Создаёт описание теста в таблице questions
     public function createQuestion(MQuestion $questions){
-        $query="INSERT INTO questions(text_question, id_questions_type, comment_question, question_number, id_test, validation)
-        VALUES ($1, $2, $3, $4, $5, $6);"; 
+        $query="INSERT INTO questions(text_question, id_questions_type, comment_question, question_number, id_test, validation, weight)
+        VALUES ($1, $2, $3, $4, $5, $6, $7);"; 
         $array_params=array();
         $array_params[]=$questions->getTextQuestion();
         $array_params[]=$questions->getIdQuestionsType();
@@ -23,6 +23,7 @@ class QuestionDAO {
         $array_params[]=$questions->getQuestionNumber();
         $array_params[]=$questions->getIdTest();
         $array_params[]=$questions->getValidation();
+        $array_params[]=$questions->getWeight();
         $this->db->execute($query,$array_params);
         $result=$this->setIdQuestion($questions); 
         if($result){            
@@ -37,7 +38,7 @@ class QuestionDAO {
     public function updateQuestion(MQuestion $questions){
         $query="UPDATE questions SET text_question=$1, id_questions_type=$2,"
                 . " comment_question=$3, question_number=$4,"
-                . " id_test=$5, validation=$6 where id_question=$7;";
+                . " id_test=$5, validation=$6, weight=$7 where id_question=$8;";
         $array_params=array();
         $array_params[]=$questions->getTextQuestion();
         $array_params[]=$questions->getIdQuestionsType();
@@ -45,6 +46,7 @@ class QuestionDAO {
         $array_params[]=$questions->getQuestionNumber();       
         $array_params[]=$questions->getIdTest();
         $array_params[]=$questions->getValidation();
+        $array_params[]=$questions->getWeight();
         $array_params[]=$questions->getIdQuestion();
         $result=$this->db->execute($query,$array_params);
         $result=$this->setIdQuestion($questions); 
