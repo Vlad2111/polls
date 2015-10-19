@@ -151,16 +151,24 @@ class AuthorizationDAO {
         $array_group_user=$ldap->getGroupLDAPUser($auth->getLogin());
         for($i=0; $i<count($array_group); $i++){
             $config_role=$this->getConfigRole($array_group[$i]);
-            foreach($config_role['group'] as $value){
-               for($b=0; $b<count($array_group_user); $b++){
-                   if($array_group_user[$b]==$value){
-                       $result[]=$i+1;
+            if(isset($config_role['group'][0])){
+                foreach($config_role['group'] as $value){
+                   for($b=0; $b<count($array_group_user); $b++){
+                       $value = strtolower($value);
+                       $array_group_user[$b] = strtolower($array_group_user[$b]);
+                       if($array_group_user[$b]==$value){
+                           $result[]=$i+1;
+                       }
                    }
-               }
+                }
             }
-            foreach($config_role['user'] as $value){
-                if($value == $auth->getLogin()) {
-                    $result[]=$i+1;
+            if(isset($config_role['user'][0])){
+                foreach($config_role['user'] as $value){
+                    $value = strtolower($value);
+                    $auth->setLogin(strtolower($auth->getLogin()));
+                    if($value == $auth->getLogin()) {
+                        $result[]=$i+1;
+                    }
                 }
             }
         }
