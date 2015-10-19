@@ -56,7 +56,7 @@
                 {if isset($data_role[0]) && $data_role[0] eq 1}
                 <div class="row">
                     <div class="col-lg-12">
-					    {if isset($data_quiz[0]['quiz']->topic) && $data_quiz[0]['quiz']->id_status_test == 2}
+					    {if $count!=0}
                             <table class="table table-hover">
 							    <thead>
                                     <tr>
