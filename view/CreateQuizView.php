@@ -411,6 +411,7 @@ class CreateQuizView{
         }
     }
     public function editQuestion(){ 
+        $mark_of_rating = $this->getMarkOfRatingType();
         $mquestion= new MQuestion();
         $question= new QuestionDAO();
         $mquestion->setIdQuestion($_SESSION['id_question']);
@@ -418,7 +419,12 @@ class CreateQuizView{
         $mquestion->setCommentQuestion($_POST['comment_question']);
         $mquestion->setIdQuestionsType($_POST['question_type']);
         $mquestion->setIdTest($_SESSION['id_quiz']); 
-        $mquestion->setWeight($_POST['weight']);
+        if(isset($_POST['switch'])){
+            $mquestion->setWeight($_POST['weight']);
+        }
+        else {
+            $mquestion->setWeight(null);
+        }
         if($_POST['question_type'] != 4 && $_POST['question_type'] != 5){
             if(isset($_POST['switch'])){
                 $mquestion->setValidation('Y');
@@ -513,11 +519,12 @@ class CreateQuizView{
 			exit;
         }
         elseif ($_POST['question_type'] == 5){
-            $manswer_option=new MAnswerOptions();
-            $manswer_option->setIdQuestion($_SESSION['id_question']);
-            $manswer_option->setAnswerTheQuestions($_POST['rating']);
-            $this->answer_option->createAnswerOptions($manswer_option);
-            
+            foreach($mark_of_rating[$_POST['rating']] as $mrt) {
+                $manswer_option=new MAnswerOptions();
+                $manswer_option->setIdQuestion($_SESSION['id_question']);
+                $manswer_option->setAnswerTheQuestions($mrt->text);
+                $this->answer_option->createAnswerOptions($manswer_option);
+            }
             header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;
         }

@@ -71,6 +71,7 @@
                     $("#add_rating_type").hide();
                     $("#trForSwitch").show();
                     $("#trForWeight").show();
+                    $("#weight").val(null);
                 }
                 if(parseInt(value) === 2){
                     $("#trForOptions").show();
@@ -100,6 +101,8 @@
                     document.getElementById("create-question").disabled = false;
                     $("#add_rating_type").hide();
                     $("#trForSwitch").hide();
+                    $("#trForWeight").hide();
+                    $("#weight").val(null);
                 }
                 if(parseInt(value) === 5) {
                     $("#trForOptions").show();
@@ -109,6 +112,8 @@
                     document.getElementById("create-question").disabled = false;
                     $("#add_rating_type").show();
                     $("#trForSwitch").hide();
+                    $("#trForWeight").hide();
+                    $("#weight").val(null);
                 }
             }
             function checkLogin() {
@@ -207,6 +212,7 @@
                 }
                 else {
                     jQuery("input:radio").attr('disabled',true);
+                    $("#trForWeight").hide();
                 }
                 int++;
 			    document.getElementById("create-question").disabled = true;
@@ -236,6 +242,7 @@
                 }
                 else {
                     jQuery("input:checkbox").attr('disabled',true);
+                    $("#trForWeight").hide();
                 }
                 intr++;
 			    document.getElementById("create-question").disabled = true;
@@ -767,7 +774,7 @@
                                 </td>
                                 <td>
                                     
-                                    <select  name="question_type" id="question_type" onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
+                                    <select class="form-control" name="question_type" id="question_type" onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
 										<option value="0">--/--</option>
                                         <option value="1" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 1}selected{/if}>Да/Нет</option>
                                         <option value="2" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 2}selected{/if}>Один ответа из списка</option>
@@ -782,7 +789,7 @@
                                     <b>Валидация ответа</b>
                                 </td>
                                 <td>
-                                    <input type="checkbox" id="switch" name="switch" data-off-text="Нет" data-on-text="Да" form="test_passing"   {if isset($data_one_question->validation) && $data_one_question->validation == 'Y'}checked{/if}>
+                                    <input type="checkbox" id="switch" name="switch" data-off-text="Нет" data-on-text="Да" form="test_passing" {if isset($data_one_question->validation) && $data_one_question->validation == 'Y'}checked{/if}>
                                     <script>
                                         $(function(argument) {
                                           $('[name="switch"]').bootstrapSwitch();
@@ -803,9 +810,7 @@
                                                 $("#trForWeight").hide();
                                             }
                                         });
-                                        /*{if isset($data_one_question->validation) && $data_one_question->validation != 'Y'}
-                                            jQuery('input[name="switch"]').attr('checked',false);
-                                        {/if}*/
+                                            jQuery('input[name="switch"]').attr('checked',true);
                                     </script>
                                 </td>
                             </tr>
@@ -826,13 +831,14 @@
 								<td>
 									<div id='add_answer_type_yorn' style="display: none">
                                         Выберите правильный ответ<br>
-                                        {foreach $data_answer_option as $option_one}
-                                            {if isset($option_one->answer_the_questions) && $option_one->answer_the_questions == 'Да'}
-                                            <input type='radio' form="test_passing" name='answer[]' value='Да' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{if isset($option_one->answer_the_questions)}{$option_one->answer_the_questions}{/if}<br>
-                                            {else}
-                                            <input type='radio' form="test_passing" name='answer[]' value='Нет' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{if isset($option_one->answer_the_questions)}{$option_one->answer_the_questions}{/if}<br>
-                                            {/if}
-                                        {/foreach}
+                                        {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 1}
+                                            {foreach $data_answer_option as $option_one}
+                                                <input type='radio' form="test_passing" name='answer[]' value='{$option_one->answer_the_questions}' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
+                                            {/foreach}
+                                        {else}
+                                            <input type='radio' form="test_passing" name='answer[]' value='Да'>Да<br>
+                                            <input type='radio' form="test_passing" name='answer[]' value='Нет'>Нет<br>
+                                        {/if}
                                     </div>
 								    <div id='add_answer_type_many_answers' style="display: none">
                                         <form  method='post'>
@@ -943,6 +949,7 @@
                             jQuery("input[name='checkbox[]']").attr('disabled',true);
                             jQuery("input:radio").attr('checked',false);
                             jQuery("input[name='checkbox[]']").attr('checked',false);
+                            $("#trForWeight").hide();
                         {/if}
                         $(document).ready(function()
                         {
