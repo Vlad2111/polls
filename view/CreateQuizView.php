@@ -300,7 +300,12 @@ class CreateQuizView{
         $mquestion->setTextQuestion($_POST['text_question']);
         $mquestion->setCommentQuestion($_POST['comment_question']);
         $mquestion->setIdQuestionsType($_POST['question_type']);
-        $mquestion->setWeight($_POST['weight']);
+        if(isset($_POST['switch']) && $_POST['weight'] != ''){
+            $mquestion->setWeight($_POST['weight']);
+        }
+        else {
+            $mquestion->setWeight(null);
+        }
         $question_number = $question->getNextQuestionNumber($_SESSION['id_quiz']);
         if(isset($question_number)){
             $mquestion->setQuestionNumber($question->getNextQuestionNumber($_SESSION['id_quiz'])+1);
@@ -419,7 +424,7 @@ class CreateQuizView{
         $mquestion->setCommentQuestion($_POST['comment_question']);
         $mquestion->setIdQuestionsType($_POST['question_type']);
         $mquestion->setIdTest($_SESSION['id_quiz']); 
-        if(isset($_POST['switch'])){
+        if(isset($_POST['switch']) && $_POST['weight'] != ''){
             $mquestion->setWeight($_POST['weight']);
         }
         else {

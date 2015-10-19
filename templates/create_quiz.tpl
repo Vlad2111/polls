@@ -70,8 +70,13 @@
                     $("#add_answer_type_many_answers_some").hide();
                     $("#add_rating_type").hide();
                     $("#trForSwitch").show();
-                    $("#trForWeight").show();
-                    $("#weight").val(null);
+                    if($('[name="switch"]').bootstrapSwitch('state')){
+                        $("#trForWeight").show();
+                    }
+                    else {
+                        $("#trForWeight").hide();
+                        $("#weight").val(null);
+                    }
                 }
                 if(parseInt(value) === 2){
                     $("#trForOptions").show();
@@ -81,7 +86,13 @@
                     $("#add_rating_type").hide();
                     document.getElementById("create-question").disabled = true;
                     $("#trForSwitch").show();
-                    $("#trForWeight").show();
+                    if($('[name="switch"]').bootstrapSwitch('state')){
+                        $("#trForWeight").show();
+                    }
+                    else {
+                        $("#trForWeight").hide();
+                        $("#weight").val(null);
+                    }
                 }
                 if(parseInt(value) === 3) {
                     $("#trForOptions").show();
@@ -91,7 +102,13 @@
                     $("#add_answer_type_many_answers_some").show();
                     $("#add_rating_type").hide();
                     $("#trForSwitch").show();
-                    $("#trForWeight").show();
+                    if($('[name="switch"]').bootstrapSwitch('state')){
+                        $("#trForWeight").show();
+                    }
+                    else {
+                        $("#trForWeight").hide();
+                        $("#weight").val(null);
+                    }
                 }
                 if(parseInt(value) === 4) {
                     $("#trForOptions").hide();
@@ -784,7 +801,7 @@
                                     </select>
                                 </td>
                             </tr>
-                             <tr id="trForSwitch" style="display: none">
+                             <tr  id="trForSwitch" style="display: none">
                                 <td class='info'>
                                     <b>Валидация ответа</b>
                                 </td>
@@ -810,7 +827,7 @@
                                                 $("#trForWeight").hide();
                                             }
                                         });
-                                            jQuery('input[name="switch"]').attr('checked',true);
+                                            //jQuery('input[name="switch"]').attr('checked',true);
                                     </script>
                                 </td>
                             </tr>
@@ -833,7 +850,7 @@
                                         Выберите правильный ответ<br>
                                         {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 1}
                                             {foreach $data_answer_option as $option_one}
-                                                <input type='radio' form="test_passing" name='answer[]' value='{$option_one->answer_the_questions}' {if $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
+                                                <input type='radio' form="test_passing" name='answer[]' value='{$option_one->answer_the_questions}' {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 1 && $option_one->right_answer == 'Y'}checked{/if}>{$option_one->answer_the_questions}<br>
                                             {/foreach}
                                         {else}
                                             <input type='radio' form="test_passing" name='answer[]' value='Да'>Да<br>

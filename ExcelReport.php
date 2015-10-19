@@ -176,7 +176,7 @@ if(isset($users[0])){
                                             $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
                                             $sheet->setCellValueByColumnAndRow($ver+1, $hor, 'Правильно');
                                             $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
-                                            $rightAnswers++;
+                                            $rightAnswers = $rightAnswers + $question->weight;
                                         } else {
                                             //$sheet->getStyleByColumnAndRow($ver, $hor)->applyFromArray($danger);
                                             $str = '';
@@ -248,7 +248,13 @@ if(isset($users[0])){
             $ver = $ver+2;
         }   
         $sheet->setCellValueByColumnAndRow($ver, $hor, $rightAnswers);
-        $sheet->setCellValueByColumnAndRow($ver, 6, 'Верных ответов');
+        $sheet->setCellValueByColumnAndRow($ver+1, $hor, $testingDAO->getInterval($id_testing));
+        $sheet->setCellValueByColumnAndRow($ver, 6, 'Баллы');
+        $sheet->setCellValueByColumnAndRow($ver+1, 6, 'Время');
+        $sheet->getStyleByColumnAndRow($ver, 6)->applyFromArray($arHeadStyle);
+        $sheet->getStyleByColumnAndRow($ver+1, 6)->applyFromArray($arHeadStyle);
+        $sheet->getStyleByColumnAndRow($ver, 7)->applyFromArray($arHeadStyle);
+        $sheet->getStyleByColumnAndRow($ver+1, 7)->applyFromArray($arHeadStyle);
         $hor++;
     }
 }
@@ -280,12 +286,14 @@ $sheet->getColumnDimension('B')->setAutoSize(true);
 $sheet->getColumnDimension('C')->setWidth(40);
 $sheet->getColumnDimension('D')->setAutoSize(true);
 $sheet->getColumnDimension('E')->setAutoSize(true);
+$sheet->getColumnDimension('F')->setAutoSize(true);
 
 $sheet->setCellValueByColumnAndRow(0, 1, 'Порядок вопроса');
 $sheet->setCellValueByColumnAndRow(1, 1, 'Текст');
 $sheet->setCellValueByColumnAndRow(2, 1, 'Тип вопроса');
 $sheet->setCellValueByColumnAndRow(3, 1, 'Доп. Информация');
 $sheet->setCellValueByColumnAndRow(4, 1, 'Правильные ответы');
+$sheet->setCellValueByColumnAndRow(5, 1, 'Вес');
 
 $arHeadStyle = array(
     'font'  => array(
@@ -313,6 +321,7 @@ $sheet->getStyle('B1')->applyFromArray($arHeadStyle);
 $sheet->getStyle('C1')->applyFromArray($arHeadStyle);
 $sheet->getStyle('D1')->applyFromArray($arHeadStyle);
 $sheet->getStyle('E1')->applyFromArray($arHeadStyle);
+$sheet->getStyle('F1')->applyFromArray($arHeadStyle);
 
 $i=2;
 $iterator = 0;
@@ -335,6 +344,7 @@ foreach($questions as $question) {
         }
         $sheet->getRowDimension($i)->setRowHeight($height);
         $sheet->setCellValueByColumnAndRow(4, $i, $str);
+        $sheet->setCellValueByColumnAndRow(5, $i, $question->weight);
         $i++;
     }
 }   
