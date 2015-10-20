@@ -438,6 +438,7 @@ class CreateQuizView{
                 $mquestion->setValidation('N');
             }
         }
+        $mquestion->setQuestionNumber($question->getQuestionNumber($_SESSION['id_question']));
         $_SESSION['id_question'] = $question->updateQuestion($mquestion);
         $manswer_option=new MAnswerOptions();
         $manswer_option->setIdQuestion($_SESSION['id_question']);
