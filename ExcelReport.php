@@ -198,6 +198,24 @@ if(isset($users[0])){
                                         }
                                     }
                                 }
+                                else {
+                                    $str = '';
+                                    foreach($listOfAnswers[$question->id_question] as $id) {
+                                        if($str == ''){
+                                            if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                                $str = $str.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                            }
+                                        }
+                                        else {
+                                            if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
+                                                $str = $str.'; '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
+                                            }
+                                        }
+                                    }  
+                                    $sheet->setCellValueByColumnAndRow($ver, $hor, $str);
+                                    $sheet->setCellValueByColumnAndRow($ver+1, $hor, ' ');
+                                    $sheet->getStyleByColumnAndRow($ver+1, $hor)->applyFromArray($rightBorder);
+                                }
                             }
                             else {
                                 $str = '';
