@@ -76,6 +76,10 @@
                     else {
                         $("#trForWeight").hide();
                         $("#weight").val(null);
+                        jQuery("input:radio").attr('disabled',true);
+                        jQuery("input[name='checkbox[]']").attr('disabled',true);
+                        jQuery("input:radio").attr('checked',false);
+                        jQuery("input[name='checkbox[]']").attr('checked',false);
                     }
                 }
                 if(parseInt(value) === 2){
@@ -92,6 +96,10 @@
                     else {
                         $("#trForWeight").hide();
                         $("#weight").val(null);
+                        jQuery("input:radio").attr('disabled',true);
+                        jQuery("input[name='checkbox[]']").attr('disabled',true);
+                        jQuery("input:radio").attr('checked',false);
+                        jQuery("input[name='checkbox[]']").attr('checked',false);
                     }
                 }
                 if(parseInt(value) === 3) {
@@ -108,6 +116,10 @@
                     else {
                         $("#trForWeight").hide();
                         $("#weight").val(null);
+                        jQuery("input:radio").attr('disabled',true);
+                        jQuery("input[name='checkbox[]']").attr('disabled',true);
+                        jQuery("input:radio").attr('checked',false);
+                        jQuery("input[name='checkbox[]']").attr('checked',false);
                     }
                 }
                 if(parseInt(value) === 4) {
@@ -120,6 +132,10 @@
                     $("#trForSwitch").hide();
                     $("#trForWeight").hide();
                     $("#weight").val(null);
+                    jQuery("input:radio").attr('disabled',false);
+                    jQuery("input[name='checkbox[]']").attr('disabled',false);
+                    jQuery("input:radio").attr('checked',false);
+                    jQuery("input[name='checkbox[]']").attr('checked',false);
                 }
                 if(parseInt(value) === 5) {
                     $("#trForOptions").show();
@@ -131,6 +147,10 @@
                     $("#trForSwitch").hide();
                     $("#trForWeight").hide();
                     $("#weight").val(null);
+                    jQuery("input:radio").attr('disabled',false);
+                    jQuery("input[name='checkbox[]']").attr('disabled',false);
+                    jQuery("input:radio").attr('checked',false);
+                    jQuery("input[name='checkbox[]']").attr('checked',false);
                 }
             }
             function checkLogin() {
@@ -331,6 +351,38 @@
             }
             var incrimentFroEmail = 0;
             
+            function checkRadio() {
+                if(document.getElementById("question_type").selectedIndex == 1) {
+                    var checked = ISchecked("answer[]");
+                    if(checked == false){
+                        alert("Выберите вариант ответа");
+                    }
+                    else {
+                        $("#create-question_hide").click();
+                    }
+                }
+                else if(document.getElementById("question_type").selectedIndex == 2) {
+                    var checked = ISchecked("rad[]");
+                    if(checked == false){
+                        alert("Выберите вариант ответа");
+                    }
+                    else {
+                        $("#create-question_hide").click();
+                    }
+                }
+                else if(document.getElementById("question_type").selectedIndex == 5) {
+                    var checked = ISchecked("rating");
+                    if(checked == false){
+                        alert("Выберите вариант ответа");
+                    }
+                    else {
+                        $("#create-question_hide").click();
+                    }
+                }
+                else {
+                    $("#create-question_hide").click();
+                }
+            }
         </script>  
         {include file='header.tpl'}
         <div id="wrapper">
@@ -558,7 +610,7 @@
                                                     <div class="col-xs-10">
                                                         <div  class="input-group">
                                                             <span class="input-group-addon" id="radios[]">
-                                                                <input type="radio" value="0" name="rad[]" aria-label="..." >
+                                                                <input type="radio" value="0" name="rad[]" aria-label="...">
                                                             </span>
                                                             <input type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)">
                                                         </div>
@@ -591,8 +643,8 @@
                                             Выберите вариант ответов</br>
                                             {foreach $mark_rating_type as $mrt}
                                             <div class="row padding-left10">
-                                                    <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}">
-                                                    <label class="well well-sm" for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label>
+                                                <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}">
+                                                <label class="well well-sm" for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label>
                                             </div>
                                             {/foreach}
                                         </form>
@@ -600,8 +652,8 @@
 								</td>
 							</tr>
                         </table>
-                                              
-                            <button class="btn btn-primary" id="create-question" form="test_passing" name="button_click" value="add_question" disabled> Создать вопрос</button>
+                        <input onclick="checkRadio()" class="btn btn-primary" id="create-question" value="Создать вопрос" disabled> 
+                         <button style="display: none" class="btn btn-primary" id="create-question_hide" form="test_passing" name="button_click" value="add_question" > Создать вопрос</button>
                     </form>
                     {else}
                         <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span>     Вопрос не в статусе редактируемый</div>
@@ -767,7 +819,8 @@
             <div id="page-content-wrapper">
                 <div class="container-fluid">
                     <form method="post" id="test_passing">
-                    <button class="btn btn-primary" id="create-question" form="test_passing" name="button_click" value="edit_question" disabled> Изменить вопрос</button>
+                    <input onclick="checkRadio()" class="btn btn-primary" id="create-question" value="Изменить вопрос" disabled> 
+                    <button style="display: none" class="btn btn-primary" id="create-question_hide" form="test_passing" name="button_click" value="edit_question"> Изменить вопрос</button>
                         <table class="table">
                             <tr>
                                 <td class='info' width='35%'>
