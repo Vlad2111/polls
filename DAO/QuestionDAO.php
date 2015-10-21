@@ -122,7 +122,7 @@ class QuestionDAO {
    }
        
     public function setIdQuestion(MQuestion $questions){
-        $query="select id_question from questions where "
+        /*$query="select id_question from questions where "
                 . "text_question=$1 and id_questions_type=$2 and id_test=$3;";
         $array_params=array();
         $array_params[]=$questions->getTextQuestion();
@@ -131,7 +131,17 @@ class QuestionDAO {
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
         $questions->setIdQuestion($obj->id_question);
-        return $obj->id_question;
+        return $obj->id_question;*/
+        $query="select max(id_question) from questions where "
+                . "text_question=$1 and id_questions_type=$2 and id_test=$3;";
+        $array_params=array();
+        $array_params[]=$questions->getTextQuestion();
+        $array_params[]=$questions->getIdQuestionsType();
+        $array_params[]=$questions->getIdTest();
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getFetchObject($result);
+        $questions->setIdQuestion($obj->id_question);
+        return $obj->max;
     } 
     public function getIdQuestionType($id_question) {
         $query="select id_questions_type from questions where id_question=$1;";
