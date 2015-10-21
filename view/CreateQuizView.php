@@ -311,7 +311,7 @@ class CreateQuizView{
             $mquestion->setWeight($_POST['weight']);
         }
         else {
-            $mquestion->setWeight(null);
+            $mquestion->setWeight(1);
         }
         $question_number = $question->getNextQuestionNumber($_SESSION['id_quiz']);
         if(isset($question_number)){
@@ -435,7 +435,7 @@ class CreateQuizView{
             $mquestion->setWeight($_POST['weight']);
         }
         else {
-            $mquestion->setWeight(null);
+            $mquestion->setWeight(1);
         }
         if($_POST['question_type'] != 4 && $_POST['question_type'] != 5){
             if(isset($_POST['switch'])){

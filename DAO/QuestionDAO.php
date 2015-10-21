@@ -140,7 +140,7 @@ class QuestionDAO {
         $array_params[]=$questions->getIdTest();
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
-        $questions->setIdQuestion($obj->id_question);
+        $questions->setIdQuestion($obj->max);
         return $obj->max;
     } 
     public function getIdQuestionType($id_question) {
