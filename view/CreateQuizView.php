@@ -193,7 +193,14 @@ class CreateQuizView{
             }
             elseif($this->button_click == 'checkMailStatus'){
                 $_SESSION['head'] = $_POST['head'];
-                $_SESSION['testOfMale'] = $_POST['testOfMale'];
+                //$_SESSION['testOfMale'] = str_replace(PHP_EOL, "<br>", $_POST['testOfMale']);
+                
+               
+                $order   = array("\r\n", "\n", "\r", PHP_EOL);
+                $replace = '<br />';
+                $_SESSION['testOfMale'] = str_replace($order, $replace, $_POST['testOfMale']);
+                $_SESSION['testOfMale'] = addslashes($_SESSION['testOfMale']);
+                
                 header("Location: create_quiz.php?link_click=checkEmail&id_quiz=".$_SESSION['id_quiz']);      
 				exit;
             }

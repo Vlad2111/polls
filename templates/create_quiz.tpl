@@ -317,7 +317,7 @@
                 {if isset($mails[0]) && isset($message)}
                     {foreach $mails as $ma}
                         var to = '{$ma}';
-                        var message = '{$message}';
+                        var message = "{$message}";
                         $.post("sendEmails.php", { subject: '{$subject}', message: message, to: to, from: '{$emailFrom->getEmail()}', name: '{$emailFrom->getFirstName()}', lastname: '{$emailFrom->getLastName()}' }, function( data ) {
                             if(data == 1) {
                                 $("#Email"+incrimentSendEmail).addClass("success");
@@ -1152,15 +1152,15 @@
             <div id="page-content-wrapper">
                 <div class="container-fluid">
                     {if isset($mails[0])}
-                    <table class="table" id="mailsTable">
+                        <table class="table" id="mailsTable">
                         {foreach $mails as $ma}
                             <script>
                              var text = '<tr id="Email'+incrimentFroEmail+'" class=""><td>{$ma}</td><td></td></tr>';
                                 $("#mailsTable").append(text);
                              incrimentFroEmail++;</script>
                         {/foreach}
-                    </table>
-                    <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=edit_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">Вернуться</a>
+                        </table>
+                        <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=edit_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">Вернуться</a>
                     {else}
                         <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Пользователи для отправки напоминаний не были выбраны </div>
                     {/if}
