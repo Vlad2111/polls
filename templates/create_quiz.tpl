@@ -526,7 +526,7 @@
                                     <b>Текст вопроса</b> 
                                 </td>
                                 <td>
-                                    <textarea class="form-control" rows="5" cols="40" name="text_question" placeholder="Ваш вопрос" required></textarea><br>
+                                    <textarea class="form-control" rows="3" cols="40" name="text_question" placeholder="Ваш вопрос" maxlength="150" required></textarea><br>
                                 </td>
                             </tr>
                             <tr>
@@ -534,7 +534,7 @@
                                     <b>Дополнительная информация</b>
                                 </td>
                                 <td>
-                                    <textarea class="form-control" rows="5" cols="40" name="comment_question"></textarea><br>
+                                    <textarea class="form-control" rows="5" cols="40" maxlength="1000" name="comment_question"></textarea><br>
                                 </td>
                             </tr>
                             <tr>
