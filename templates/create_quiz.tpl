@@ -242,7 +242,7 @@
                 $(".new_answer").append(text);
                 $('textarea[name = "answer_the_question"]').val("");
                 $("#addNewQuestion").show();*/
-                var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..."></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..."></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" size="30" maxlength="1000" aria-label="..." onblur="checkAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
                 $(".foraddradio").append(text);
                 if($('[name="switch"]').bootstrapSwitch('state')){
                     jQuery("input:radio").attr('disabled',false);
@@ -272,7 +272,7 @@
             }
             var intr = 1;
             function addSomeNewAnswer(){
-                var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" size="30" maxlength="1000" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
                 $(".foraddcheckbox").append(text);
                 if($('[name="switch"]').bootstrapSwitch('state')){
                     jQuery("input:checkbox").attr('disabled',false);
@@ -394,8 +394,8 @@
 				</td>
 				<td>
 					<div class="form-group has-feedback" id="inp">
-					<input class="form-control" type="text" value="{if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}" name="topic_quiz" id="topic_quiz" placeholder="Ваша тема" required onblur="checkTopicQuiz(this.value)">
-					<span class="glyphicon form-control-feedback" id="glyphicon"></span>
+					    <input class="form-control" type="text" size="30" maxlength="150" value="{if isset($data_one_quiz->topic)}{$data_one_quiz->topic}{/if}" name="topic_quiz" id="topic_quiz" placeholder="Ваша тема" required onblur="checkTopicQuiz(this.value)">
+					    <span class="glyphicon form-control-feedback" id="glyphicon"></span>
 					</div>
 				</td>
 			</tr>
@@ -429,7 +429,7 @@
 					<b>Дополнительная информация</b>
 				</td>
 				<td>
-					<textarea rows="5" cols="40" name="comment_test" class="form-control" placeholder="Информация, которая необходима для прохождения теста" >{if isset($data_one_quiz->comment_test)}{$data_one_quiz->comment_test}{/if}</textarea>
+					<textarea rows="5" cols="40" maxlength="1000" name="comment_test" class="form-control" placeholder="Информация, которая необходима для прохождения теста" >{if isset($data_one_quiz->comment_test)}{$data_one_quiz->comment_test}{/if}</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -587,7 +587,7 @@
                                 </td>
                                 <td>
                                 <div class="form-group has-feedback" id="weightDiv">
-                                    <input class="form-control" type="number" id="weight" name="weight" form="test_passing" onchange="checkNumber(this.value)" >
+                                    <input  class="form-control" type="number" id="weight" name="weight" form="test_passing" onchange="checkNumber(this.value)" >
                                     
 				                    <span class="glyphicon form-control-feedback" id="weightGli"></span>
                                 </div>
@@ -612,7 +612,7 @@
                                                             <span class="input-group-addon" id="radios[]">
                                                                 <input type="radio" value="0" name="rad[]" aria-label="...">
                                                             </span>
-                                                            <input type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)">
+                                                            <input  type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" size="30" maxlength="1000">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -630,7 +630,7 @@
                                                             <span class="input-group-addon">
                                                                 <input type="checkbox" form="test_passing" value="0" name="checkbox[]" aria-label="...">
                                                             </span>
-                                                            <input type="text" form="test_passing" name="textr[]" id="textr0" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)">
+                                                            <input type="text" form="test_passing" name="textr[]" id="textr0" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" size="30" maxlength="1000">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -827,7 +827,7 @@
                                     <b>Текст вопроса</b> 
                                 </td>
                                 <td>
-                                    <textarea class="form-control" rows="5" cols="40" name="text_question" placeholder="Ваш вопрос" required>{if isset($data_one_question->text_question)}{$data_one_question->text_question}{/if}</textarea><br>
+                                    <textarea class="form-control" rows="3" cols="40" maxlength="150" name="text_question" placeholder="Ваш вопрос" required>{if isset($data_one_question->text_question)}{$data_one_question->text_question}{/if}</textarea><br>
                                 </td>
                             </tr>
                             <tr>
@@ -835,7 +835,7 @@
                                     <b>Дополнительная информация</b>
                                 </td>
                                 <td>
-                                    <textarea class="form-control" rows="5" cols="40" name="comment_question">{if isset($data_one_question->comment_question)}{$data_one_question->comment_question}{/if}</textarea><br>
+                                    <textarea class="form-control" rows="5" cols="40" maxlength="1000" name="comment_question">{if isset($data_one_question->comment_question)}{$data_one_question->comment_question}{/if}</textarea><br>
                                 </td>
                             </tr>
                             <tr>
@@ -923,7 +923,7 @@
                                                                 <span class="input-group-addon" id="radios[]">
                                                                     <input type="radio" value="0" name="rad[]" aria-label="..." {if $data_one_question->id_questions_type == 2 && $option_one->right_answer == 'Y'}checked{/if}>
                                                                 </span>
-                                                                <input type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" value="{if $data_one_question->id_questions_type == 2}{$option_one->answer_the_questions}{/if}">
+                                                                <input type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" size="30" maxlength="1000" value="{if $data_one_question->id_questions_type == 2}{$option_one->answer_the_questions}{/if}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -935,10 +935,10 @@
                                                 {/if}
                                                    function addRadioAnswer(col){
                                                    if(col==1){
-                                                    var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..." {if $data_one_question->id_questions_type == 2 && $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" value="{if $data_one_question->id_questions_type == 2}{$option_one->answer_the_questions}{/if}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                    var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..." {if $data_one_question->id_questions_type == 2 && $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" size="30" maxlength="1000" value="{if $data_one_question->id_questions_type == 2}{$option_one->answer_the_questions}{/if}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
                                                     }
                                                     else {
-                                                    var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..."></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                    var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..."></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" size="30" maxlength="1000" aria-label="..." onblur="checkAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
                                                     }
 			                                        int++;
                                                     $(".foraddradio").append(text);
@@ -967,7 +967,7 @@
                                                             <span class="input-group-addon">
                                                                 <input type="checkbox" form="test_passing" value="0" name="checkbox[]" aria-label="..." {if $data_one_question->id_questions_type == 3 && $option_one->right_answer == 'Y'}checked{/if}>
                                                             </span>
-                                                            <input type="text" form="test_passing" name="textr[]" id="textr0" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" value="{if $data_one_question->id_questions_type == 3}{$option_one->answer_the_questions}{/if}">
+                                                            <input type="text" form="test_passing" name="textr[]" id="textr0" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" size="30" maxlength="1000" value="{if $data_one_question->id_questions_type == 3}{$option_one->answer_the_questions}{/if}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -980,10 +980,10 @@
                                                     {/if}
                                                        function addCheckAnswer(col){
                                                        if(col==1){
-                                                        var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..." {if $data_one_question->id_questions_type == 3 && $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" value="{if $data_one_question->id_questions_type == 3}{$option_one->answer_the_questions}{/if}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                        var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..." {if $data_one_question->id_questions_type == 3 && $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" size="30" maxlength="1000" aria-label="..." onblur="checkSomeAnswer(this.value)" value="{if $data_one_question->id_questions_type == 3}{$option_one->answer_the_questions}{/if}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
                                                         }
                                                         else {
-                                                        var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                        var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" size="30" maxlength="1000" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
                                                         }
                                                         intr++;         
                                                         $(".foraddcheckbox").append(text);
