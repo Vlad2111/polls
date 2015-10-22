@@ -59,6 +59,19 @@ class AnswerOptionsDAO {
 //            throw new Exception('Ошибка удаления строки в таблице: answer_option('.pg_last_error().')'); 
         }
     }
+    public function deleteAnswerOptionsForQuestion($id_question){
+        $query="DELETE FROM answer_options WHERE id_question=$1;";
+        $array_params=array();
+        $array_params[]=$id_question;
+        $result=$this->db->execute($query,$array_params);
+        if($result){
+            return $result;            
+        } 
+        else{
+            $this->log->ERROR('Ошибка удаления строки в таблице: answer_option('.pg_last_error().')'); 
+//            throw new Exception('Ошибка удаления строки в таблице: answer_option('.pg_last_error().')'); 
+        }
+    }
     public function setIdAnswerOptions(MAnswerOptions $answer_options){
         $query="select id_answer_option from answer_options"
                 . " where id_question=$1 and answer_the_questions=$2 and right_answer=$3;";

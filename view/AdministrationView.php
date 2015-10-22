@@ -4,6 +4,8 @@ include_once 'DAO/QuizDAO.php';
 include_once 'model/MUser.php';
 include_once 'lib/DB.php';
 include_once 'log4php/Logger.php';
+include_once 'DAO/QuizDAO.php';
+
     Logger::configure('setting/config.xml');
 class AdministrationView{
     public $id_user;
@@ -43,6 +45,11 @@ class AdministrationView{
             if($_GET['action'] == 'deleteUser' && !empty ($_GET['id_user'])){  
                 $this->deleteUser($_GET['id_user']);
                 header("Location: administration.php?link_click=show_users");      
+				exit;
+            }
+            if($_GET['action'] == 'deleteQuiz' && !empty ($_GET['id_quiz'])){  
+                $this->deleteQuiz($_GET['id_quiz']);
+                header("Location: administration.php?link_click=show_quiz");      
 				exit;
             }
         }
@@ -106,6 +113,10 @@ class AdministrationView{
         $muser->setIdUser($id_user);
         $this->admin->deleteAllRoleUser($muser);
         $this->admin->deleteUser($muser);
+    }
+    public function deleteQuiz($id_quiz) {
+        $QuizDAO = new QuizDAO();
+        $QuizDAO->deleteCascadeQuiz($id_quiz);
     }
     public function setStatusUser($id_user, $status){
         $this->admin->setStatusUser($id_user, $status);

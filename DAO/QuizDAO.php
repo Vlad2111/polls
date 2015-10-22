@@ -3,7 +3,12 @@ include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'log4php/Logger.php';
 include_once 'model/MQuestion.php';
+include_once 'model/MQuiz.php';
 include_once 'DAO/QuestionDAO.php';
+include_once 'DAO/IntervieweeDAO.php';
+include_once 'DAO/TestingDAO.php';
+include_once 'DAO/AnswerDAO.php';
+include_once 'DAO/AnswerOptionsDAO.php';
 Logger::configure(CheckOS::getConfigLogger());
 class QuizDAO {
     protected $db;
@@ -324,7 +329,40 @@ class QuizDAO {
         }
         return $arr;
   }
-   
+   public function deleteCascadeQuiz($id_quiz) {
+        $IntervieweeDAO = new IntervieweeDAO();
+        $TestingDAO = new TestingDAO();
+        $AnswerDAO = new AnswerDAO();
+        $AnswerOptionsDAO = new AnswerOptionsDAO();
+        $QuestionDAO = new QuestionDAO();
+        $MQuestion = new MQuestion();
+        $IntervieweeDAO->deleteForQuiz($id_quiz);
+        $testingArray = $TestingDAO->getIdTestingForQuiz($id_quiz);
+        if(isset($testingArray[0])){
+            foreach($testingArray as $ta){
+                $arrayAnswer = $AnswerDAO->getArrayIdAnswer_user($ta);
+                if(isset($arrayAnswer[0])){
+                    foreach($arrayAnswer as $aa){
+                        $AnswerDAO->deleteAAUForQuiz($aa);
+                    }
+                    $AnswerDAO->deleteAnswers($ta);
+                    $AnswerDAO->deleteAnswerUsers($ta);
+                }
+            }
+        }
+        $TestingDAO->deleteForQuiz($id_quiz);
+        $questionsArray = $this->getArrayIdQuestion($id_quiz);
+        if(isset($questionsArray[0])){
+            foreach($questionsArray as $qa){
+                $AnswerOptionsDAO->deleteAnswerOptionsForQuestion($qa);
+                $MQuestion->setIdQuestion($qa);
+                $QuestionDAO->deleteQuestion($MQuestion);  
+            }
+        }
+        $Mquiz = new MQuiz();
+        $Mquiz->setIdQuiz($id_quiz);
+        $this->deleteQuiz($Mquiz);
+    }
    
 }
 ?>

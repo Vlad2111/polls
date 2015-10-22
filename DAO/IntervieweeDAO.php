@@ -476,6 +476,19 @@ class IntervieweeDAO {
 //            throw new Exception('Ошибка удаления строки в таблице: alluser( '.pg_last_error().')'); 
         }  
     }
+    public function deleteForQuiz($id_test){
+        $query="DELETE FROM interviewees WHERE id_test=$1;";
+        $array_params=array();
+        $array_params[]=$id_test;
+        $result=$this->db->execute($query,$array_params);
+        if($result){
+            return $result;            
+        }
+        else{
+            $this->log->ERROR('Ошибка удаления строки в таблице: interviewees( '.pg_last_error().')');  
+//            throw new Exception('Ошибка удаления строки в таблице: alluser( '.pg_last_error().')'); 
+        }  
+    }
     public function checkUserInTest($test, $user){
         $query="select * from interviewees where id_test=$1 and id_user=$2"; 
         $array_params=array();

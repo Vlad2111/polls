@@ -99,8 +99,8 @@
                         return true;
                 } else {
                         return false;
+                }
             }
-}
         </script> 
         {include file='header.tpl'}
         <div id="wrapper">
@@ -255,6 +255,9 @@
                                 <th>
                                     Дата создания
                                 </th>
+                                <th>
+                                    Удалить
+                                </th>
                             </thead>
                             <tbody>
                             {foreach $quizs_data as $one_quiz_data}                    
@@ -277,6 +280,9 @@
                                     </td>                                    
                                     <td>
                                         {$one_quiz_data->getDateCreate()} 
+                                    </td>
+                                    <td>
+                                         <a class="btn btn-primary btn-xs" href="?action=deleteQuiz&id_quiz={$one_quiz_data->getIdQuiz()}" id='delete_quiz'><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
                                     </td>
                                 </tr>
                             {/foreach}

@@ -50,7 +50,7 @@ class AnswerDAO {
         $manswer->setSkipAnswer($obj->skip_answer);
         return $manswer;
     }
-    private function getArrayIdAnswer_user($id_testing){
+    public function getArrayIdAnswer_user($id_testing){
         $query="select id_answer_users from answer_users where id_testing=$1;";
         $array_params=array();
         $array_params[]=$id_testing;
@@ -113,6 +113,45 @@ class AnswerDAO {
         $obj=$this->db->getFetchObject($result);
         if(isset($obj->answer)){
             return $obj->answer;
+        }
+    }
+    public function deleteAAUForQuiz($id_answer_users){
+        $query="DELETE FROM answers_answer_user WHERE id_answer_user=$1;";
+        $array_params=array();
+        $array_params[]=$id_answer_users;
+        $result=$this->db->execute($query,$array_params);
+        if($result){
+            return $result;            
+        }
+        else{
+            $this->log->ERROR('Ошибка удаления строки в таблице: answers_answer_user( '.pg_last_error().')'); 
+//            throw new Exception('Ошибка удаления строки в таблице: testing( '.pg_last_error().')');  
+        }
+    }
+    public function deleteAnswers($id_testing){
+        $query="DELETE FROM answers WHERE id_testing=$1;";
+        $array_params=array();
+        $array_params[]=$id_testing;
+        $result=$this->db->execute($query,$array_params);
+        if($result){
+            return $result;            
+        }
+        else{
+            $this->log->ERROR('Ошибка удаления строки в таблице: answers( '.pg_last_error().')'); 
+//            throw new Exception('Ошибка удаления строки в таблице: testing( '.pg_last_error().')');  
+        }
+    }
+    public function deleteAnswerUsers($id_testing){
+        $query="DELETE FROM answer_users WHERE id_testing=$1;";
+        $array_params=array();
+        $array_params[]=$id_testing;
+        $result=$this->db->execute($query,$array_params);
+        if($result){
+            return $result;            
+        }
+        else{
+            $this->log->ERROR('Ошибка удаления строки в таблице: answer_users( '.pg_last_error().')'); 
+//            throw new Exception('Ошибка удаления строки в таблице: testing( '.pg_last_error().')');  
         }
     }
 }

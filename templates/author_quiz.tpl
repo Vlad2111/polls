@@ -63,10 +63,10 @@
                                    Дата создания
                                </th>
                                <th>
-                                   Последние изменения
+                                   Статус опроса
                                </th>
                                <th>
-                                   Статус опроса
+                                   Удалить
                                </th>
                            </thead>
                            
@@ -79,9 +79,6 @@
                                            {$data_one_quiz->date_create}
                                        </td>
                                        <td>
-                                           ---
-                                       </td>
-                                       <td>
                                            {if $data_one_quiz->id_status_test == 1}
                                                 Редактируемый 
                                            {elseif $data_one_quiz->id_status_test == 2}
@@ -90,6 +87,9 @@
                                                Завершенный
                                            {/if}
                                        </td>
+                                       <td>
+                                         <a class="btn btn-primary btn-xs" href="?action=deleteQuiz&id_quiz={$data_one_quiz->id_test}" id='delete_quiz'><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
+                                    </td>
                                {/foreach}
                         </table>
                     {else}

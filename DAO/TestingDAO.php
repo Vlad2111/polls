@@ -55,6 +55,19 @@ class TestingDAO {
 //            throw new Exception('Ошибка удаления строки в таблице: testing( '.pg_last_error().')');  
         }
     }
+    public function deleteForQuiz($id_test){
+        $query="DELETE FROM testing WHERE id_test=$1;";
+        $array_params=array();
+        $array_params[]=$id_test;
+        $result=$this->db->execute($query,$array_params);
+        if($result){
+            return $result;            
+        }
+        else{
+            $this->log->ERROR('Ошибка удаления строки в таблице: testing( '.pg_last_error().')'); 
+//            throw new Exception('Ошибка удаления строки в таблице: testing( '.pg_last_error().')');  
+        }
+    }
     public function editMarkTest(MInterviewee $interviewee, $id_mark_test){
         $query="UPDATE testing SET id_mark_test=$1 where id_testing=$2;";
         $array_params=array();
@@ -114,6 +127,14 @@ class TestingDAO {
         if(isset($obj->id_testing)){
             return $obj->id_testing;
         }
+    }
+    public function getIdTestingForQuiz($id_quiz){
+        $query="select * from testing where id_test=$1;";
+        $array_params=array();
+        $array_params[]=$id_quiz;
+        $result=$this->db->execute($query,$array_params);
+        $obj=$this->db->getArrayData($result);
+        return $obj;
     }
     public function setAnswers(MInterviewee $interviewee, $result){
         $query="UPDATE testing SET right_answers=$1,wrong_answers=$2,skip_answers=$3, unvalidated_answers=$4 where id_testing=$5;";
