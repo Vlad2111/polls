@@ -8,8 +8,6 @@ include 'Excel/PHPExcel.php';
 /** PHPExcel_Writer_Excel2007 */
 include 'Excel/PHPExcel/Writer/Excel2007.php';
 include 'DAO/AuthorQuizDAO.php';
-include 'DAO/TestingDAO.php';
-include 'DAO/IntervieweeDAO.php';
 //include 'DAO/QuestionDAO.php';
 //include 'DAO/AnswerOptionsDAO.php';
 //include 'model/MInterviewee.php';

@@ -320,7 +320,7 @@ class QuizDAO {
         $count = $this->getTypesOfRatingType();
         $arr = array();
         foreach($count as $i) {
-            $query="select id from mark_type_rating where option=$1";
+            $query="select id from mark_type_rating where option=$1 order by id";
             $array_params=array();
             $array_params[]=$i;
             $result = $this->db->execute($query,$array_params);

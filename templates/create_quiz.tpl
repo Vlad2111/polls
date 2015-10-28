@@ -149,7 +149,6 @@
                     $("#weight").val(null);
                     jQuery("input:radio").attr('disabled',false);
                     jQuery("input[name='checkbox[]']").attr('disabled',false);
-                    jQuery("input:radio").attr('checked',false);
                     jQuery("input[name='checkbox[]']").attr('checked',false);
                 }
             }
@@ -354,7 +353,7 @@
             function checkRadio() {
                 if(document.getElementById("question_type").selectedIndex == 1) {
                     var checked = ISchecked("answer[]");
-                    if(checked == false){
+                    if($('[name="switch"]').bootstrapSwitch('state') && checked == false){
                         alert("Выберите вариант ответа");
                     }
                     else {
@@ -363,7 +362,7 @@
                 }
                 else if(document.getElementById("question_type").selectedIndex == 2) {
                     var checked = ISchecked("rad[]");
-                    if(checked == false){
+                    if($('[name="switch"]').bootstrapSwitch('state') &&  checked == false){
                         alert("Выберите вариант ответа");
                     }
                     else {
@@ -643,8 +642,8 @@
                                             Выберите вариант ответов</br>
                                             {foreach $mark_rating_type as $mrt}
                                             <div class="row padding-left10">
-                                                <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}">
-                                                <label class="well well-sm" for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label>
+                                                    <input form="test_passing" type="radio" value="{$mrt[0]->option}" name="rating" id="{$mrt[0]->option}">
+                                                    <label class="well well-sm" for="{$mrt[0]->option}">{$mrt[0]->text}</br> {$mrt[1]->text}</br> {$mrt[2]->text}</br> {$mrt[3]->text}</br> {$mrt[4]->text}</label>
                                             </div>
                                             {/foreach}
                                         </form>
