@@ -3,7 +3,7 @@
         <title>{$title}</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script src="js/jquery-2.1.3.min.js"></script>
         <link rel="stylesheet" href="css/styles.css">
@@ -833,6 +833,7 @@
                     </div>
                     <form method="post" id="test_passing">
                     <button class="btn btn-md btn-primary margin-top" name="button_click" value="getExcel" ><span class="glyphicon glyphicon-list-alt"></span>  Скачать отчет</button>
+                    <button class="btn btn-md btn-primary margin-top" name="button_click" value="showReport" ><span class="glyphicon glyphicon-picture"></span>  Графики</button>
                     </form>
                 </div>
             </div>
@@ -1262,6 +1263,67 @@
             SendEmails();
             </script>
             {/capture}
+            {capture name=showReport}
+            {include file='menu.tpl'}
+                <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <script type="text/javascript">
+                   /*   google.load("visualization", "1.1", { packages: ["table"] });
+                      google.setOnLoadCallback(drawTable);
+                        var users = {json_encode($users_data)};
+                      function drawTable() {
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Name');
+                        data.addColumn('number', 'Salary');
+                        data.addColumn('boolean', 'Full Time Employee');
+                        data.addColumn('number', 'Salary');
+                        {foreach $users_data as $ua}
+                           data.addRow([
+                              '{$ua->getLastName()}',  { v: 10000, f: '$10,000'}, true, 0
+                            ]);
+                            {/foreach}
+                         
+                            
+                        var table = new google.visualization.Table(document.getElementById('table_div'));
+
+                        table.draw(data, { showRowNumber: true, width: '100%', height: '100%'});
+                      }*/
+                    </script>
+                     <div id="table_div"></div>
+            {foreach $questions as $one_question}
+            <div class="row">
+            {if $one_question['data_questions']->getShowChart() == 'Y'}
+                <div id="{$one_question['data_questions']->getIdQuestion()}" style="width:400; height:300"></div>
+                
+                <script>
+                    google.load('visualization', '1', { 'packages': ['corechart'] });
+
+                    google.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Topping');
+                    data.addColumn('number', 'Slices');
+                    {foreach $one_question['data_questions']->getAnswerOption() as $option}
+                        data.addRow([{if isset({$option->getAnswerTheQuestions()})} '{$option->getAnswerTheQuestions()}'{/if}, {if isset($countOfAnswersAboutAllUsers[$one_question['data_questions']->getIdQuestion()][$option->getAnswerTheQuestions()])} {$countOfAnswersAboutAllUsers[$one_question['data_questions']->getIdQuestion()][$option->getAnswerTheQuestions()]} {else} 0 {/if}]);
+                    {/foreach}
+                    var options = { 'title': "{$one_question['data_questions']->getTextQuestion()}",
+                    'width':400,
+                    'height':300};
+
+                    var chart = new google.visualization.PieChart(document.getElementById("{$one_question['data_questions']->getIdQuestion()}"));
+                    chart.draw(data, options);
+                    }
+                </script>
+                </div>
+            {/if}
+            </div>
+            {/foreach}
+            <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=edit_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">Вернуться</a>
+            </div>
+            </div>
+            {/capture}
                                     {if {$view_quiz} eq 'new_quiz'}
                                         {$smarty.capture.new_quiz}   
 									{elseif {$view_quiz} eq 'form_for_quiz'}
@@ -1283,7 +1345,9 @@
                                     {elseif {$view_quiz} eq 'sendEmail'}
                                         {$smarty.capture.sendEmail}    
                                     {elseif {$view_quiz} eq 'checkEmail'}
-                                        {$smarty.capture.checkEmail}     
+                                        {$smarty.capture.checkEmail}
+                                    {elseif {$view_quiz} eq 'showReport'}
+                                        {$smarty.capture.showReport}     
                                      {/if}
          </div>
     </body>

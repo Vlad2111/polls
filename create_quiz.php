@@ -14,6 +14,7 @@ $userDAO = new UserDAO();
 $smarty->assign('title', $create_quiz_view->title); 
 $smarty->assign('view_quiz', $create_quiz_view->view_quiz); 
 $smarty->assign('data_questions', $create_quiz_view->getDataQuestions());
+$smarty->assign('questions', $data_questions=$create_quiz_view->getArrayQuestions());
 $smarty->assign('data_one_question', $create_quiz_view->getOneDataQuestion());
 $smarty->assign('data_answer_option', $create_quiz_view->getAnswerOptionsData());
 $smarty->assign('id_question', $create_quiz_view->id_question);
@@ -34,6 +35,7 @@ if(isset($_SESSION['testOfMale'])){
     $smarty->assign('message', $_SESSION['testOfMale']);
 }
 $smarty->assign('emailFrom', $userDAO->getUserById($_SESSION['id_user']));
+$smarty->assign('countOfAnswersAboutAllUsers', $create_quiz_view->countOfAnswersAboutAllUsers);
 
 $smarty->display('templates/create_quiz.tpl');
 

@@ -10,6 +10,8 @@ include_once 'DAO/AnswerOptionsDAO.php';
 include_once 'model/MAnswerOptions.php';
 include_once 'LdapOperations.php';
 include_once 'DAO/QuestionDAO.php';
+include_once 'DAO/AnswerDAO.php';
+include_once 'DAO/AnswerOptionsDAO.php';
 class CreateQuizView{
     public $id_author; //ид составителя опроса
     public $id_quiz; // Ид опроса: создавемого или редактируемого
@@ -44,10 +46,28 @@ class CreateQuizView{
         $this->answer_option = new AnswerOptionsDAO();
         $this->ldapOperations=new LdapOperations();
         $this->questionDAO = new QuestionDAO();
+        $this->quizDAO = new QuizDAO();
+        $answerDAO = new AnswerDAO();
+        $answerOptionsDAO = new AnswerOptionsDAO();
         $this->link_click = filter_input(INPUT_GET, 'link_click', FILTER_SANITIZE_SPECIAL_CHARS);
         $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);  
         $this->id_question = filter_input(INPUT_GET, 'id_question', FILTER_SANITIZE_SPECIAL_CHARS);     
         $_SESSION['id_question'] = $this->id_question;
+        $this->countOfAnswersAboutAllUsers = array();
+        $this->array_question=$this->quizDAO->getObjTestQuestion($_SESSION['id_quiz']);
+		foreach($this->array_question as $aq) {
+		    $answer = $answerDAO->getAnswersForQuestion($aq->getIdQuestion());
+		    foreach($answer as $answerId){
+		        $answerIds = $answerDAO->getIdAnswer_user($answerId);
+		        if( isset($answerIds)){
+		            foreach($answerIds as $id) {
+		                $answer = $answerDAO->getAnswer($id);
+	                    $this->answers[$aq->getIdQuestion()][] = $answerOptionsDAO->getListObjAnswerOption($answer)->answer_the_questions;
+		            }
+		        }
+		    }
+		    $this->countOfAnswersAboutAllUsers[$aq->getIdQuestion()] = array_count_values($this->answers[$aq->getIdQuestion()]);
+		}
         $this->initialize();
     }
     public function initialize(){
@@ -98,6 +118,9 @@ class CreateQuizView{
             }
             elseif($_GET['action'] == 'edit_data_quiz'){                
                 $this->view_quiz = 'edit_data_quiz';
+            }
+            elseif($_GET['action'] == 'showReport'){                
+                $this->view_quiz = 'showReport';
             }
             elseif($_GET['action'] == 'upQuestion'){
                 $this->questionDAO->upQuestion($_GET['id_question'],$_GET['first'],$_GET['second']);
@@ -207,6 +230,10 @@ class CreateQuizView{
             elseif($this->button_click == 'getExcel'){
                 header("Location: ExcelReport.php?id_quiz=".$_SESSION['id_quiz']);  
                 exit;
+            }
+            elseif($this->button_click == 'showReport'){
+                header("Location: create_quiz.php?action=showReport&id_quiz=".$_SESSION['id_quiz']);      
+				exit;
             }
         }
     }    
@@ -623,5 +650,14 @@ class CreateQuizView{
     public function getMarkOfRatingType(){
         $quizDAO = new QuizDAO();
         return $quizDAO->getMarkOfRatingType();
+    }
+    public function getArrayQuestions(){
+        $data_questions=array();
+        $temp_array_question=$this->array_question;
+        for($i=0; $i<count($this->array_question); $i++){
+            $data_questions[$i]['number']=$i+1;
+            $data_questions[$i]['data_questions']=$temp_array_question[$i];            
+        }
+        return $data_questions;
     }
 }?>

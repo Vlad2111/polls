@@ -286,7 +286,7 @@
                                                     {foreach $one_question['data_questions']->getAnswerOption() as $option}
                                                         data.addRow([{if isset({$option->getAnswerTheQuestions()})} '{$option->getAnswerTheQuestions()}'{/if}, {if isset($countOfAnswersAboutAllUsers[$one_question['data_questions']->getIdQuestion()][$option->getAnswerTheQuestions()])} {$countOfAnswersAboutAllUsers[$one_question['data_questions']->getIdQuestion()][$option->getAnswerTheQuestions()]} {else} 0 {/if}]);
                                                     {/foreach}
-                                                    var options = { 'title': "{$one_question['data_questions']->getTextQuestion()}",
+                                                    var options = { 'title': "Общие результаты",
                                                     'width':400,
                                                     'height':300};
 
