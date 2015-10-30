@@ -3,6 +3,7 @@ include_once 'lib/CheckOS.php';
 include_once 'lib/DB.php';
 include_once 'log4php/Logger.php';
 include_once 'DAO/QuizDAO.php';
+include_once 'DAO/AnswerDAO.php';
 include_once 'model/MQuiz.php';
 include_once 'model/MUser.php';
     Logger::configure(CheckOS::getConfigLogger());
@@ -121,7 +122,9 @@ class AuthorQuizDAO  extends QuizDAO{
         $result=$this->db->execute($query,$array_params);
         $obj=$this->db->getFetchObject($result);
         if($result){
-             return $obj;          
+            $answerDAO = new AnswerDAO();
+            $obj->isAnswered = $answerDAO->isAnswered($obj->id_question);
+            return $obj;          
         } 
         else{
             $this->log->ERROR('Ошибка запроса к таблице: test('.pg_last_error().')'); 

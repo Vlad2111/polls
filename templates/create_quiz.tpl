@@ -765,12 +765,12 @@
                         </thead>
                         <tbody>
                         {for $i=0;$i<count($data_questions);$i++}  
-                            <tr>
+                            <tr {if isset($data_questions[$i]->isAnswered[0])}title='Измениние либо удаление не возможно! Пользователи уже отвечали на этот вопрос.'{/if}>
                                 <td>
                                    № {$i+1} 
                                 </td>
                                 <td>
-                                    <a class="btn" href="?action=edit_question&id_quiz={$data_questions[$i]->id_test}&id_question={$data_questions[$i]->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}>{$data_questions[$i]->text_question}</a>
+                                    <a class="btn" href="?action=edit_question&id_quiz={$data_questions[$i]->id_test}&id_question={$data_questions[$i]->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{if isset($data_questions[$i]->isAnswered[0])}disabled {/if}{/if}>{$data_questions[$i]->text_question}</a>
                                 </td>
                                 <td>
                                     {if  {$data_questions[$i]->id_questions_type}==1}
@@ -789,7 +789,7 @@
                                     {$data_questions[$i]->weight}
                                 </td>
                                 <td>
-                                   <a class="btn btn-primary btn-xs" href="?action=delete&id_quiz={$data_one_quiz->id_test}&id_question={$data_questions[$i]->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
+                                   <a class="btn btn-primary btn-xs" href="?action=delete&id_quiz={$data_one_quiz->id_test}&id_question={$data_questions[$i]->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{if isset($data_questions[$i]->isAnswered[0])}disabled {/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
                                 </td>
                                 <td>
                                 {if $i != 0 }
