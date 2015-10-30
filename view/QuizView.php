@@ -27,6 +27,8 @@ class QuizView {
         $this->testing=new QuizDAO();
 		$this->admini = new AdministrationDAO();
 		$testingDAO = new TestingDAO();
+		$answerOptionsDAO=new AnswerOptionsDAO();
+		$answerDAO = new AnswerDAO();
         $this->data_test=$this->admini->getObjDataQuiz($id_testing);
 //        shuffle($array_question); //Случайный порядок вопросов
         $this->array_question=$this->testing->getObjTestQuestion($id_testing);
@@ -43,6 +45,21 @@ class QuizView {
 		}
 		else {
 			$this->countOfAnswered=0;
+		}
+		$this->answers = array();
+		$this->countOfAnswersAboutAllUsers = array();
+		foreach($this->array_question as $aq) {
+		    $answer = $answerDAO->getAnswersForQuestion($aq->getIdQuestion());
+		    foreach($answer as $answerId){
+		        $answerIds = $answerDAO->getIdAnswer_user($answerId);
+		        if( isset($answerIds)){
+		            foreach($answerIds as $id) {
+		                $answer = $answerDAO->getAnswer($id);
+	                    $this->answers[$aq->getIdQuestion()][] = $answerOptionsDAO->getListObjAnswerOption($answer)->answer_the_questions;
+		            }
+		        }
+		    }
+		    $this->countOfAnswersAboutAllUsers[$aq->getIdQuestion()] = array_count_values($this->answers[$aq->getIdQuestion()]);
 		}
         $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);
     }

@@ -259,6 +259,7 @@ class QuizDAO {
         $mquestion->setAnswerOption($question->getListAnswerOptions($obj_status->id_question));
         $mquestion->setCommentQuestion($obj_status->comment_question);
         $mquestion->setQuestionNumber($obj_status->question_number);
+        $mquestion->setShowChart($obj_status->show_chart);
         $mquestion->setIdTest($obj_status->id_test);
         return $mquestion;
    }

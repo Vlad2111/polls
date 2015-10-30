@@ -154,4 +154,11 @@ class AnswerDAO {
 //            throw new Exception('Ошибка удаления строки в таблице: testing( '.pg_last_error().')');  
         }
     }
+    public function getAnswersForQuestion($id_question){
+        $query="select id_answer_users from answer_users where id_question=$1;"; 
+        $array_params=array();
+        $array_params[]=$id_question;
+        $result=$this->db->execute($query,$array_params);
+        return $this->db->getArrayData($result);
+    }
 }

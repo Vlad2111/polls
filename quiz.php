@@ -114,6 +114,8 @@ $smarty->assign("listOfAnswers", $quiz_view->listOfAnswers);
 $smarty->assign("colors", $quiz_view->colors);
 $smarty->assign("dateinterval", $quiz_view->dateinterval);
 $smarty->assign('mark_rating_type', $quiz_view->getMarkOfRatingType());
+$smarty->assign('answersArray', $quiz_view->answers);
+$smarty->assign('countOfAnswersAboutAllUsers', $quiz_view->countOfAnswersAboutAllUsers);
 
 $smarty->display('templates/quiz.tpl');
  }

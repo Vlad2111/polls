@@ -72,9 +72,11 @@
                     $("#trForSwitch").show();
                     if($('[name="switch"]').bootstrapSwitch('state')){
                         $("#trForWeight").show();
+                        $("#trForChart").hide();
                     }
                     else {
                         $("#trForWeight").hide();
+                        $("#trForChart").show();
                         $("#weight").val(null);
                         jQuery("input:radio").attr('disabled',true);
                         jQuery("input[name='checkbox[]']").attr('disabled',true);
@@ -92,9 +94,11 @@
                     $("#trForSwitch").show();
                     if($('[name="switch"]').bootstrapSwitch('state')){
                         $("#trForWeight").show();
+                        $("#trForChart").hide();
                     }
                     else {
                         $("#trForWeight").hide();
+                        $("#trForChart").show();
                         $("#weight").val(null);
                         jQuery("input:radio").attr('disabled',true);
                         jQuery("input[name='checkbox[]']").attr('disabled',true);
@@ -112,9 +116,11 @@
                     $("#trForSwitch").show();
                     if($('[name="switch"]').bootstrapSwitch('state')){
                         $("#trForWeight").show();
+                        $("#trForChart").hide();
                     }
                     else {
                         $("#trForWeight").hide();
+                        $("#trForChart").show();
                         $("#weight").val(null);
                         jQuery("input:radio").attr('disabled',true);
                         jQuery("input[name='checkbox[]']").attr('disabled',true);
@@ -131,6 +137,7 @@
                     $("#add_rating_type").hide();
                     $("#trForSwitch").hide();
                     $("#trForWeight").hide();
+                    $("#trForChart").hide();
                     $("#weight").val(null);
                     jQuery("input:radio").attr('disabled',false);
                     jQuery("input[name='checkbox[]']").attr('disabled',false);
@@ -146,6 +153,7 @@
                     $("#add_rating_type").show();
                     $("#trForSwitch").hide();
                     $("#trForWeight").hide();
+                    $("#trForChart").show();
                     $("#weight").val(null);
                     jQuery("input:radio").attr('disabled',false);
                     jQuery("input[name='checkbox[]']").attr('disabled',false);
@@ -564,17 +572,19 @@
                                         $('input[name="switch"]').on('switchChange.bootstrapSwitch', function(event, state) {
                                             if(state == true) {
                                                 jQuery("input:radio").attr('disabled',false);
-                                                jQuery("input:checkbox").attr('disabled',false);
+                                                jQuery("input[name='checkbox[]']").attr('disabled',false);
                                                 jQuery("input:radio").attr('checked',false);
-                                                jQuery("input:checkbox").attr('checked',false);
+                                                jQuery("input[name='checkbox[]']").attr('checked',false);
                                                 $("#trForWeight").show();
+                                                $("#trForChart").hide();
                                             }
                                             else {
                                                 jQuery("input:radio").attr('disabled',true);
-                                                jQuery("input:checkbox").attr('disabled',true);
+                                                jQuery("input[name='checkbox[]']").attr('disabled',true);
                                                 jQuery("input:radio").attr('checked',false);
-                                                jQuery("input:checkbox").attr('checked',false);
+                                                jQuery("input[name='checkbox[]']").attr('checked',false);
                                                 $("#trForWeight").hide();
+                                                $("#trForChart").show();
                                             }
                                         });
                                     </script>
@@ -650,6 +660,21 @@
                                     </div>
 								</td>
 							</tr>
+							<tr id="trForChart" >
+							    <form method='post'>
+                                    <td class='info' width='35%'>
+                                        <b>Показывать график</b> 
+                                    </td>
+                                    <td>
+                                       <input type="checkbox" id="show_chart" form="test_passing" name="show_chart" data-off-text="Нет" data-on-text="Да" checked>
+                                        <script>
+                                            $(function(argument) {
+                                              $('[name="show_chart"]').bootstrapSwitch();
+                                            });
+                                        </script> 
+                                    </td>
+                                 </form>
+                            </tr>
                         </table>
                         <input onclick="checkRadio()" class="btn btn-primary" id="create-question" value="Создать вопрос" disabled> 
                          <button style="display: none" class="btn btn-primary" id="create-question_hide" form="test_passing" name="button_click" value="add_question" > Создать вопрос</button>
@@ -870,6 +895,7 @@
                                                 jQuery("input:radio").attr('checked',false);
                                                 jQuery("input[name='checkbox[]']").attr('checked',false);
                                                 $("#trForWeight").show();
+                                                $("#trForChart").hide();
                                             }
                                             else {
                                                 jQuery("input:radio").attr('disabled',true);
@@ -877,6 +903,7 @@
                                                 jQuery("input:radio").attr('checked',false);
                                                 jQuery("input[name='checkbox[]']").attr('checked',false);
                                                 $("#trForWeight").hide();
+                                                $("#trForChart").show();
                                             }
                                         });
                                             //jQuery('input[name="switch"]').attr('checked',true);
@@ -1009,6 +1036,19 @@
                                     </div>
 								</td>
 							</tr>
+							<tr id="trForChart" style="display:none">
+                                <td class='info' width='35%'>
+                                    <b>Показывать график</b> 
+                                </td>
+                                <td>
+                                   <input type="checkbox" form="test_passing" id="show_chart" name="show_chart" data-off-text="Нет" data-on-text="Да"  {if isset($data_one_question->show_chart) && $data_one_question->show_chart == 'Y'}checked{/if}>
+                                    <script>
+                                        $(function(argument) {
+                                          $('[name="show_chart"]').bootstrapSwitch();
+                                        });
+                                    </script> 
+                                </td>
+                            </tr>
                         </table>
                                               
                             

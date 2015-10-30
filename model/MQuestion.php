@@ -8,6 +8,8 @@ class MQuestion {
     private $question_number;
     private $id_test;
     private $validation;
+    private $weight;
+    private $showChart;
     
     
     public function getIdQuestion(){
@@ -65,6 +67,11 @@ class MQuestion {
     public function setWeight($weight){
         $this->weight=$weight;
     }
-
+    public function getShowChart(){
+        return $this->showChart;
+    }
+    public function setShowChart($showChart){
+        $this->showChart=$showChart;
+    }
 }
 ?>

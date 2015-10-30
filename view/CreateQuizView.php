@@ -313,6 +313,12 @@ class CreateQuizView{
         else {
             $mquestion->setWeight(1);
         }
+        if(isset($_POST['show_chart'])){
+            $mquestion->setShowChart('Y');
+        }
+        else {
+            $mquestion->setShowChart('N');
+        }
         $question_number = $question->getNextQuestionNumber($_SESSION['id_quiz']);
         if(isset($question_number)){
             $mquestion->setQuestionNumber($question->getNextQuestionNumber($_SESSION['id_quiz'])+1);
@@ -436,6 +442,12 @@ class CreateQuizView{
         }
         else {
             $mquestion->setWeight(1);
+        }
+        if(isset($_POST['show_chart'])){
+            $mquestion->setShowChart('Y');
+        }
+        else {
+            $mquestion->setShowChart('N');
         }
         if($_POST['question_type'] != 4 && $_POST['question_type'] != 5){
             if(isset($_POST['switch'])){
