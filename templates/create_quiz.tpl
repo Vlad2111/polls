@@ -1308,36 +1308,46 @@
                       }*/
                     </script>
                      <div id="table_div"></div>
+                     <script>
+                        var isEmpty = null;
+                    </script>
             {foreach $questions as $one_question}
-            <div class="row">
-            {if $one_question['data_questions']->getShowChart() == 'Y'}
-                <div id="{$one_question['data_questions']->getIdQuestion()}" style="width:400; height:300"></div>
-                
-                <script>
-                    google.load('visualization', '1', { 'packages': ['corechart'] });
+                <div class="row">
+                {if $one_question['data_questions']->getShowChart() == 'Y'}
+                    <div id="{$one_question['data_questions']->getIdQuestion()}" style="width:400; height:300"></div>
+                    
+                    <script>
+                        var isEmpty = 1;
+                        google.load('visualization', '1', { 'packages': ['corechart'] });
 
-                    google.setOnLoadCallback(drawChart);
+                        google.setOnLoadCallback(drawChart);
 
-                    function drawChart() {
+                        function drawChart() {
 
-                    var data = new google.visualization.DataTable();
-                    data.addColumn('string', 'Topping');
-                    data.addColumn('number', 'Slices');
-                    {foreach $one_question['data_questions']->getAnswerOption() as $option}
-                        data.addRow([{if isset({$option->getAnswerTheQuestions()})} '{$option->getAnswerTheQuestions()}'{/if}, {if isset($countOfAnswersAboutAllUsers[$one_question['data_questions']->getIdQuestion()][$option->getAnswerTheQuestions()])} {$countOfAnswersAboutAllUsers[$one_question['data_questions']->getIdQuestion()][$option->getAnswerTheQuestions()]} {else} 0 {/if}]);
-                    {/foreach}
-                    var options = { 'title': "{$one_question['data_questions']->getTextQuestion()}",
-                    'width':400,
-                    'height':300};
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Topping');
+                        data.addColumn('number', 'Slices');
+                        {foreach $one_question['data_questions']->getAnswerOption() as $option}
+                            data.addRow([{if isset({$option->getAnswerTheQuestions()})} '{$option->getAnswerTheQuestions()}'{/if}, {if isset($countOfAnswersAboutAllUsers[$one_question['data_questions']->getIdQuestion()][$option->getAnswerTheQuestions()])} {$countOfAnswersAboutAllUsers[$one_question['data_questions']->getIdQuestion()][$option->getAnswerTheQuestions()]} {else} 0 {/if}]);
+                        {/foreach}
+                        var options = { 'title': "{$one_question['data_questions']->getTextQuestion()}",
+                        'width':400,
+                        'height':300};
 
-                    var chart = new google.visualization.PieChart(document.getElementById("{$one_question['data_questions']->getIdQuestion()}"));
-                    chart.draw(data, options);
-                    }
-                </script>
+                        var chart = new google.visualization.PieChart(document.getElementById("{$one_question['data_questions']->getIdQuestion()}"));
+                        chart.draw(data, options);
+                        }
+                    </script>
+                    </div>
+                {/if}
                 </div>
-            {/if}
-            </div>
             {/foreach}
+            <div style="display:none" id="isEmptyReport" class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>  Графики отсутствуют </div>
+            <script>
+                if(isEmpty == null){
+                    $('#isEmptyReport').show();
+                }
+            </script>
             <a class="btn btn-lg btn-primary" href="create_quiz.php?link_click=edit_quiz&id_quiz={if isset($data_one_quiz->id_test)}{$data_one_quiz->id_test}{/if}">Вернуться</a>
             </div>
             </div>
