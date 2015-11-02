@@ -83,6 +83,7 @@
                         jQuery("input:radio").attr('checked',false);
                         jQuery("input[name='checkbox[]']").attr('checked',false);
                     }
+                    jQuery("input[name='show_chart']").attr('checked',false);
                 }
                 if(parseInt(value) === 2){
                     $("#trForOptions").show();
@@ -105,6 +106,7 @@
                         jQuery("input:radio").attr('checked',false);
                         jQuery("input[name='checkbox[]']").attr('checked',false);
                     }
+                    jQuery("input[name='show_chart']").attr('checked',false);
                 }
                 if(parseInt(value) === 3) {
                     $("#trForOptions").show();
@@ -127,6 +129,7 @@
                         jQuery("input:radio").attr('checked',false);
                         jQuery("input[name='checkbox[]']").attr('checked',false);
                     }
+                    jQuery("input[name='show_chart']").attr('checked',false);
                 }
                 if(parseInt(value) === 4) {
                     $("#trForOptions").hide();
@@ -143,6 +146,7 @@
                     jQuery("input[name='checkbox[]']").attr('disabled',false);
                     jQuery("input:radio").attr('checked',false);
                     jQuery("input[name='checkbox[]']").attr('checked',false);
+                    jQuery("input[name='show_chart']").attr('checked',false);
                 }
                 if(parseInt(value) === 5) {
                     $("#trForOptions").show();
@@ -158,6 +162,7 @@
                     jQuery("input:radio").attr('disabled',false);
                     jQuery("input[name='checkbox[]']").attr('disabled',false);
                     jQuery("input[name='checkbox[]']").attr('checked',false);
+                    jQuery("input[name='show_chart']").attr('checked',false);
                 }
             }
             function checkLogin() {
@@ -682,7 +687,7 @@
                                         <b>Показывать график</b> 
                                     </td>
                                     <td>
-                                       <input type="checkbox" id="show_chart" form="test_passing" name="show_chart" data-off-text="Нет" data-on-text="Да" checked>
+                                       <input type="checkbox" id="show_chart" form="test_passing" name="show_chart" data-off-text="Нет" data-on-text="Да">
                                         <script>
                                             $(function(argument) {
                                               $('[name="show_chart"]').bootstrapSwitch();

@@ -59,7 +59,9 @@ class QuizView {
 		            }
 		        }
 		    }
-		    $this->countOfAnswersAboutAllUsers[$aq->getIdQuestion()] = array_count_values($this->answers[$aq->getIdQuestion()]);
+		    if(isset($this->answers[$aq->getIdQuestion()])){
+		        $this->countOfAnswersAboutAllUsers[$aq->getIdQuestion()] = array_count_values($this->answers[$aq->getIdQuestion()]);
+		    }
 		}
         $this->button_click = filter_input(INPUT_POST, 'button_click', FILTER_SANITIZE_SPECIAL_CHARS);
     }
