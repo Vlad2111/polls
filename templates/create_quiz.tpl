@@ -390,6 +390,22 @@
                     $("#create-question_hide").click();
                 }
             }
+            function checkEdit(question, isAnswered) {
+                if(isAnswered == null){
+                     document.getElementById('edit'+question).click();
+                }
+                else {
+                    alert("Измениние либо удаление не возможно! Пользователи уже отвечали на этот вопрос.");
+                }
+            }
+            function checkDelete(question, isAnswered) {
+                if(isAnswered == null){
+                     document.getElementById('delete'+question).click();
+                }
+                else {
+                    alert("Измениние либо удаление не возможно! Пользователи уже отвечали на этот вопрос.");
+                }
+            }
         </script>  
         {include file='header.tpl'}
         <div id="wrapper">
@@ -765,12 +781,13 @@
                         </thead>
                         <tbody>
                         {for $i=0;$i<count($data_questions);$i++}  
-                            <tr {if isset($data_questions[$i]->isAnswered[0])}title='Измениние либо удаление не возможно! Пользователи уже отвечали на этот вопрос.'{/if}>
+                            <tr>
                                 <td>
                                    № {$i+1} 
                                 </td>
                                 <td>
-                                    <a class="btn" href="?action=edit_question&id_quiz={$data_questions[$i]->id_test}&id_question={$data_questions[$i]->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{if isset($data_questions[$i]->isAnswered[0])}disabled {/if}{/if}>{$data_questions[$i]->text_question}</a>
+                                    <a class="btn" onclick="checkEdit({$data_questions[$i]->id_question}, {if isset($data_questions[$i]->isAnswered[0])} 1 {else} null{/if})" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}>{$data_questions[$i]->text_question}</a>
+                                    <a style="display:none" class="btn" href="?action=edit_question&id_quiz={$data_questions[$i]->id_test}&id_question={$data_questions[$i]->id_question}" id="edit{$data_questions[$i]->id_question}"> </a>
                                 </td>
                                 <td>
                                     {if  {$data_questions[$i]->id_questions_type}==1}
@@ -789,7 +806,8 @@
                                     {$data_questions[$i]->weight}
                                 </td>
                                 <td>
-                                   <a class="btn btn-primary btn-xs" href="?action=delete&id_quiz={$data_one_quiz->id_test}&id_question={$data_questions[$i]->id_question}" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{if isset($data_questions[$i]->isAnswered[0])}disabled {/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
+                                    <a class="btn btn-primary btn-xs" onclick="checkDelete({$data_questions[$i]->id_question}, {if isset($data_questions[$i]->isAnswered[0])} 1 {else} null{/if})" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
+                                   <a style="display:none" class="btn btn-primary btn-xs" href="?action=delete&id_quiz={$data_one_quiz->id_test}&id_question={$data_questions[$i]->id_question}" id="delete{$data_questions[$i]->id_question}"><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
                                 </td>
                                 <td>
                                 {if $i != 0 }
