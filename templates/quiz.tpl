@@ -122,6 +122,11 @@
 							<h3>{$data_one_question->getTextQuestion()}</h3>                                          
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<h4 style="color:Gray">{$data_one_question->getCommentQuestion()}</h4>                                        
+						</div>
+					</div>
 					<div class="row quiz-row">
 						{capture name='radio'}   
 						    {foreach $data_one_question->getAnswerOption() as $option}                  
@@ -299,7 +304,7 @@
 					                        </div>
 				                        </div>
 				                        <div class="row quiz-row">
-				                            <p class="quiz-end-com">Пояснения: {$one_question['data_questions']->getCommentQuestion()}</p>
+				                            <p class="quiz-end-com">{$one_question['data_questions']->getCommentQuestion()}</p>
 			                            </div>
 					               </td>
 								</tr>
