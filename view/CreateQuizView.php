@@ -54,22 +54,24 @@ class CreateQuizView{
         $this->id_question = filter_input(INPUT_GET, 'id_question', FILTER_SANITIZE_SPECIAL_CHARS);     
         $_SESSION['id_question'] = $this->id_question;
         $this->countOfAnswersAboutAllUsers = array();
-        $this->array_question=$this->quizDAO->getObjTestQuestion($_SESSION['id_quiz']);
-		foreach($this->array_question as $aq) {
-		    $answer = $answerDAO->getAnswersForQuestion($aq->getIdQuestion());
-		    if(isset($answer[0])) {
-		        foreach($answer as $answerId){
-		            $answerIds = $answerDAO->getIdAnswer_user($answerId);
-		            if(isset($answerIds)){
-		                foreach($answerIds as $id) {
-		                    $answer = $answerDAO->getAnswer($id);
-	                        $this->answers[$aq->getIdQuestion()][] = $answerOptionsDAO->getListObjAnswerOption($answer)->answer_the_questions;
+        if(isset($_SESSION['id_quiz'])) {
+            $this->array_question=$this->quizDAO->getObjTestQuestion($_SESSION['id_quiz']);
+		    foreach($this->array_question as $aq) {
+		        $answer = $answerDAO->getAnswersForQuestion($aq->getIdQuestion());
+		        if(isset($answer[0])) {
+		            foreach($answer as $answerId){
+		                $answerIds = $answerDAO->getIdAnswer_user($answerId);
+		                if(isset($answerIds)){
+		                    foreach($answerIds as $id) {
+		                        $answer = $answerDAO->getAnswer($id);
+	                            $this->answers[$aq->getIdQuestion()][] = $answerOptionsDAO->getListObjAnswerOption($answer)->answer_the_questions;
+		                    }
 		                }
 		            }
+	            }   
+	            if(isset($this->answers[$aq->getIdQuestion()])){
+		            $this->countOfAnswersAboutAllUsers[$aq->getIdQuestion()] = array_count_values($this->answers[$aq->getIdQuestion()]);
 		        }
-	        }   
-	        if(isset($this->answers[$aq->getIdQuestion()])){
-		        $this->countOfAnswersAboutAllUsers[$aq->getIdQuestion()] = array_count_values($this->answers[$aq->getIdQuestion()]);
 		    }
 		}
         $this->initialize();
@@ -402,9 +404,11 @@ class CreateQuizView{
                 $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($_POST['texting'][$i]);
                 $flag = false;
-                for($j=0;$j<count($_POST['rad']);$j++){
-                    if($_POST['rad'][$j]==$i){
-                        $flag=true;
+                if(isset($_POST['rad'])) {
+                    for($j=0;$j<count($_POST['rad']);$j++){
+                        if($_POST['rad'][$j]==$i){
+                            $flag=true;
+                        }
                     }
                 }
                 if(isset($_POST['switch'])){
@@ -426,9 +430,11 @@ class CreateQuizView{
                 $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($_POST['textr'][$i]);
                 $flag = false;
-                for($j=0;$j<count($_POST['checkbox']);$j++){
-                    if($_POST['checkbox'][$j]==$i){
-                        $flag=true;
+                if(isset($_POST['checkbox'])){
+                    for($j=0;$j<count($_POST['checkbox']);$j++){
+                        if($_POST['checkbox'][$j]==$i){
+                            $flag=true;
+                        }
                     }
                 }
                 if(isset($_POST['switch'])){
@@ -528,7 +534,7 @@ class CreateQuizView{
                 $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($_POST['texting'][$i]);
                 $flag = false;
-                if(isset($_POST['switch'])){
+                if(isset($_POST['switch']) && isset($_POST['rad'])){
                     for($j=0;$j<count($_POST['rad']);$j++){
                         if($_POST['rad'][$j]==$i){
                             $flag=true;
@@ -552,7 +558,7 @@ class CreateQuizView{
                 $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($_POST['textr'][$i]);
                 $flag = false;
-                if(isset($_POST['switch'])){
+                if(isset($_POST['switch']) && isset($_POST['checkbox'])){
                     for($j=0;$j<count($_POST['checkbox']);$j++){
                         if($_POST['checkbox'][$j]==$i){
                             $flag=true;
@@ -657,11 +663,13 @@ class CreateQuizView{
     }
     public function getArrayQuestions(){
         $data_questions=array();
-        $temp_array_question=$this->array_question;
-        for($i=0; $i<count($this->array_question); $i++){
-            $data_questions[$i]['number']=$i+1;
-            $data_questions[$i]['data_questions']=$temp_array_question[$i];            
+        if(isset($this->array_question)) {
+            $temp_array_question=$this->array_question;
+            for($i=0; $i<count($this->array_question); $i++){
+                $data_questions[$i]['number']=$i+1;
+                $data_questions[$i]['data_questions']=$temp_array_question[$i];            
+            }
+            return $data_questions;
         }
-        return $data_questions;
     }
 }?>

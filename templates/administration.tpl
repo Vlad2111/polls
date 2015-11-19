@@ -110,7 +110,7 @@
                     <!-- MENU -->
                     <div id="sidebar-wrapper">
                         <ul class="sidebar-nav">
-			            {if {$data_role[2]} eq 3}
+			            {if isset($data_role[2]) && $data_role[2] eq 3}
                             <li class="sidebar-brand">
                                     Меню администратора
                             </li>
@@ -121,7 +121,7 @@
 					            <a href="administration.php?link_click=show_users" class="foc">Пользователи</a>
 				            </li>
 			            {/if}
-			            {if {$data_role[1]} eq 2}
+			            {if isset($data_role[1]) && $data_role[1] eq 2}
                             <li class="sidebar-brand">
                                 Меню автора теста
                             </li>
@@ -132,7 +132,7 @@
                                 <a href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
                             </li>
 			            {/if}
-			            {if  {$data_role[0]} eq 1}
+			            {if isset($data_role[0]) && $data_role[0] eq 1}
                             <li class="sidebar-brand">
                                 Меню тестируемого
                             </li>
@@ -204,7 +204,7 @@
                                         <!-- MENU -->
                     <div id="sidebar-wrapper">
                         <ul class="sidebar-nav">
-			            {if {$data_role[2]} eq 3}
+			            {if isset($data_role[2]) && $data_role[2] eq 3}
                             <li class="sidebar-brand">
                                     Меню администратора
                             </li>
@@ -215,7 +215,7 @@
 					            <a href="administration.php?link_click=show_users">Пользователи</a>
 				            </li>
 			            {/if}
-			            {if {$data_role[1]} eq 2}
+			            {if isset($data_role[1]) && $data_role[1] eq 2}
                             <li class="sidebar-brand">
                                 Меню автора теста
                             </li>
@@ -226,7 +226,7 @@
                                 <a href="create_quiz.php?link_click=new_quiz">Создать опрос</a>
                             </li>
 			            {/if}
-			            {if  {$data_role[0]} eq 1}
+			            {if isset($data_role[0]) && $data_role[0] eq 1}
                             <li class="sidebar-brand">
                                 Меню тестируемого
                             </li>
@@ -238,7 +238,7 @@
                     </div>
                     <div id="page-content-wrapper">
 			            <div class="container-fluid">
-			            {if {$data_role[2]} eq 3}
+			            {if isset($data_role[2]) && $data_role[2] eq 3}
                         <form method="POST">
                         {if isset($quizs_data[0])}
                         <table class="table table-hover">

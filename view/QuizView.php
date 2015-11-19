@@ -50,15 +50,17 @@ class QuizView {
 		$this->countOfAnswersAboutAllUsers = array();
 		foreach($this->array_question as $aq) {
 		    $answer = $answerDAO->getAnswersForQuestion($aq->getIdQuestion());
-		    foreach($answer as $answerId){
-		        $answerIds = $answerDAO->getIdAnswer_user($answerId);
-		        if( isset($answerIds)){
-		            foreach($answerIds as $id) {
-		                $answer = $answerDAO->getAnswer($id);
-	                    $this->answers[$aq->getIdQuestion()][] = $answerOptionsDAO->getListObjAnswerOption($answer)->answer_the_questions;
+		    if(isset($answer[0])){
+		        foreach($answer as $answerId){
+		            $answerIds = $answerDAO->getIdAnswer_user($answerId);
+		            if(isset($answerIds[0])){
+		                foreach($answerIds as $id) {
+		                    $answer = $answerDAO->getAnswer($id);
+	                        $this->answers[$aq->getIdQuestion()][] = $answerOptionsDAO->getListObjAnswerOption($answer)->answer_the_questions;
+		                }
 		            }
 		        }
-		    }
+	        }
 		    if(isset($this->answers[$aq->getIdQuestion()])){
 		        $this->countOfAnswersAboutAllUsers[$aq->getIdQuestion()] = array_count_values($this->answers[$aq->getIdQuestion()]);
 		    }

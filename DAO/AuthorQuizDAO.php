@@ -123,8 +123,10 @@ class AuthorQuizDAO  extends QuizDAO{
         $obj=$this->db->getFetchObject($result);
         if($result){
             $answerDAO = new AnswerDAO();
-            $obj->isAnswered = $answerDAO->isAnswered($obj->id_question);
-            return $obj;          
+            if(isset($obj->id_question)){
+                $obj->isAnswered = $answerDAO->isAnswered($obj->id_question);
+                return $obj;    
+            }      
         } 
         else{
             $this->log->ERROR('Ошибка запроса к таблице: test('.pg_last_error().')'); 
