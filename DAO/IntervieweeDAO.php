@@ -29,7 +29,7 @@ class IntervieweeDAO {
         $time = $this->testing->getDatetimeStartTest($interviewee);
         $timer = new DateTime($time);
         $a = split ( ':' , $interval, -1 );
-        if(isset($a[0])){
+        if(isset($a[1])){
             $timer->modify('+'.$a[0].' hour +'.$a[1].' minute +'.$a[2].' second');
         }
         if(isset($interval)) {

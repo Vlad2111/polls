@@ -61,10 +61,14 @@ class CreateQuizView{
 		        if(isset($answer[0])) {
 		            foreach($answer as $answerId){
 		                $answerIds = $answerDAO->getIdAnswer_user($answerId);
-		                if(isset($answerIds)){
+		                if(isset($answerIds[0])){
 		                    foreach($answerIds as $id) {
 		                        $answer = $answerDAO->getAnswer($id);
-	                            $this->answers[$aq->getIdQuestion()][] = $answerOptionsDAO->getListObjAnswerOption($answer)->answer_the_questions;
+		                        if($this->quizDAO->getObjQuestions($aq->getIdQuestion())->getIdQuestionsType() == 4) {
+		                            $this->answers[$aq->getIdQuestion()][] = $answer;
+		                        } else {
+	                                $this->answers[$aq->getIdQuestion()][] = $answerOptionsDAO->getListObjAnswerOption($answer)->answer_the_questions;
+		                        }
 		                    }
 		                }
 		            }

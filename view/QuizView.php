@@ -24,15 +24,15 @@ class QuizView {
         $this->id_testing = $id_testing;
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
-        $this->testing=new QuizDAO();
+        $this->quizDAO=new QuizDAO();
 		$this->admini = new AdministrationDAO();
 		$testingDAO = new TestingDAO();
 		$answerOptionsDAO=new AnswerOptionsDAO();
 		$answerDAO = new AnswerDAO();
         $this->data_test=$this->admini->getObjDataQuiz($id_testing);
 //        shuffle($array_question); //Случайный порядок вопросов
-        $this->array_question=$this->testing->getObjTestQuestion($id_testing);
-		$this->countOfQuestions=count($this->testing->getArrayIdQuestion($id_testing));
+        $this->array_question=$this->quizDAO->getObjTestQuestion($id_testing);
+		$this->countOfQuestions=count($this->quizDAO->getArrayIdQuestion($id_testing));
 		$this->testing=new IntervieweeDAO();
 		$this->data_testing=$this->testing->getDataOneTest($id_testing);//////////////////testing
 		if(isset($this->data_testing)){
@@ -56,7 +56,11 @@ class QuizView {
 		            if(isset($answerIds[0])){
 		                foreach($answerIds as $id) {
 		                    $answer = $answerDAO->getAnswer($id);
-	                        $this->answers[$aq->getIdQuestion()][] = $answerOptionsDAO->getListObjAnswerOption($answer)->answer_the_questions;
+		                    if($this->quizDAO->getObjQuestions($aq->getIdQuestion())->getIdQuestionsType() == 4) {
+                                $this->answers[$aq->getIdQuestion()][] = $answer;
+                            } else {
+                                $this->answers[$aq->getIdQuestion()][] = $answerOptionsDAO->getListObjAnswerOption($answer)->answer_the_questions;
+                            }
 		                }
 		            }
 		        }
