@@ -219,7 +219,7 @@ if(isset($users[0])){
                                 $str = '';
                                 foreach($listOfAnswers[$question->id_question] as $id) {
                                     if(isset($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions)) {
-                                        $str = ' '.$questionDAO->getRate($answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions);
+                                        $str = ' '.$answerOptionsDAO->getListObjAnswerOption($id)->answer_the_questions;
                                     }
                                 }
                                 $sheet->setCellValueByColumnAndRow($ver, $hor, $str);

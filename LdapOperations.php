@@ -273,10 +273,12 @@ class LdapOperations
 		var_dump($ldap->getLDAPAccountNamesByPrefix('smi'));
 
 		echo "Groups with names starting with rnd: ";
-		var_dump($ldap->getLDAPGroupNamesByPrefix('rnd'));
-*/
+		var_dump($ldap->getLDAPGroupNamesByPrefix('Interns.nn'));
+		*/
 		echo "Members of group RND-Builds: ";
-		var_dump($ldap->getGroupLdapUser('andrianov.a'));
+		var_dump($ldap->getGroupMembers('Employees'));
+		
+		//var_dump($ldap->getSubGroups('Employees'));
 		
 	}
 }
