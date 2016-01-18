@@ -134,7 +134,7 @@ class LdapOperations
 			throw new Exception("Not connected to LDAP server");
 		}
 
-		$result_ent = $this->searchLDAP("(&(objectClass=person)(sAMAccountName={$prefix}*))", 
+		$result_ent = $this->searchLDAP("(&(objectClass=person)(sAMAccountName=*{$prefix}*))", 
 			array('name', 'useraccountcontrol', 'sAMAccountName', 'sn', 'givenName', 'mail', 'distinguishedName'));
         
 		$names = array();
@@ -173,9 +173,8 @@ class LdapOperations
 			throw new Exception("Not connected to LDAP server");
 		}
 
-		$result_ent = $this->searchLDAP("(&(objectClass=group)(sAMAccountName={$prefix}*))", array('name', 'sAMAccountName'));
+		$result_ent = $this->searchLDAP("(&(objectClass=group)(sAMAccountName=*{$prefix}*))", array('name', 'sAMAccountName'));
 		$names = array();
-
 		$iter = function($value, $key) use (&$names)
 		{
 			if (is_array($value)) {
@@ -275,12 +274,11 @@ class LdapOperations
 		echo "Groups with names starting with rnd: ";
 		var_dump($ldap->getLDAPGroupNamesByPrefix('Interns.nn'));
 		*/
-		echo "Members of group RND-Builds: ";
-		var_dump($ldap->getGroupMembers('Employees'));
+		echo "Members of group Employees: ";
+		var_dump($ldap->getGroupLDAPUser('kolchanov_adm'));
 		
 		//var_dump($ldap->getSubGroups('Employees'));
-		
-	}
+			}
 }
 
 //LdapOperations::usageExamples();

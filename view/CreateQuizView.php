@@ -177,11 +177,11 @@ class CreateQuizView{
                     $muser->setLogin($name[0]['sAMAccountName']);
                     $muser->setLdapUser(1);
                     $userDAO->createUser($muser);
-                    $userDAO->addFirstRole($this->user->checkLoginUser($_POST['inputName']));
+                    //$userDAO->addFirstRole($this->user->checkLoginUser($_POST['inputName']));
                     $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($_POST['inputName']));
                 }
-                header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
-				exit;
+                //header("Location: create_quiz.php?link_click=".$this->link_click."&action=add_inteviewee&id_quiz=".$_SESSION['id_quiz']);      
+				//exit;
             }
             elseif ($this->button_click == 'addGroupIntoTest'){
                 $this->ldapOperations->connect();
@@ -203,7 +203,7 @@ class CreateQuizView{
                         $muser->setLogin($user['sAMAccountName']);
                         $muser->setLdapUser(1);
                         $userDAO->createUser($muser);
-                        $userDAO->addFirstRole($this->user->checkLoginUser($_POST['inputName']));
+                        //$userDAO->addFirstRole($this->user->checkLoginUser($_POST['inputName']));
                     }
                     if(!$this->inter->checkUserInTest($_SESSION['id_quiz'], $this->user->checkLoginUser($user['sAMAccountName']))){
                         $this->inter->addUserIntoTest($_SESSION['id_quiz'], $this->user->checkLoginUser($user['sAMAccountName']));

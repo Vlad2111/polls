@@ -1099,7 +1099,7 @@
             <div id="page-content-wrapper">
                 <div class="container-fluid">
                     {if isset($users_data[0])}  
-                    Тестируемые пользователи
+                    <h3>Тестируемые пользователи</h3>
                     <table class="table">
                         <thead>
                             <th>
@@ -1147,15 +1147,15 @@
                     {else}
                         <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>   Нет добавленных пользователей</div></br>
                     {/if}
-                    <h2>Добавить опрашиваемых</h2>
+                    <h3>Добавить опрашиваемых</h3>
                     <form method="post" id="test_passing">
                         <table>                                            
                             <tr>
                                 <td>
-                                    <h3>Добавить пользователя</h3>
+                                    Добавить пользователя
                                 </td>
                                 <td>
-                                    <h3>Добавить группу</h3>
+                                    Добавить группу
                                 </td>
                             </tr>
                             <tr>

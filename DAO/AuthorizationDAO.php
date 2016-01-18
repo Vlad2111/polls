@@ -17,22 +17,27 @@ class AuthorizationDAO {
         $this->db=DB::getInstance();
         $this->log= Logger::getLogger($this->nameclass);
     }
-    public function checkUserDB(MAuthorization $auth){
-        $query="SELECT id_user FROM alluser WHERE login=$1 and password=$2;"; 
-        $array_params=array();
-        $array_params[]=$auth->getLogin();
-        $array_params[]=$auth->getPassword();      
-        $result=$this->db->execute($query,$array_params);
-        $data=$this->db->getFetchObject($result);
-        if($data){
-            $this->user='db';
-            return $data->id_user;
-        }
-        else{
-            return false;
-        }
+    public function checkUserDB(MAuthorization $auth) {
+        try {
+            $query="SELECT id_user FROM alluser WHERE login=$1 and password=$2;"; 
+            $array_params=array();
+            $array_params[]=$auth->getLogin();
+            $array_params[]=$auth->getPassword();      
+            $result=$this->db->executeAsync($query,$array_params);
+            $data=$this->db->getFetchObject($result);
+            if($data){
+                $this->user='db';
+                return $data->id_user;
+            }
+            else{
+                return false;
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка получения данных пользователя БД '.$e->getMessage().$e->getTraceAsString());
+        }  
     }
-    public function checkUserLDAP(MAuthorization $auth){
+    public function checkUserLDAP(MAuthorization $auth) {
         $ldap=new LdapOperations();
         if ($ldap->checkUser($auth)){ //проверяем пользователя ldap
             $this->user='ldap';
@@ -64,9 +69,6 @@ class AuthorizationDAO {
                 return $idUser;
             }
         }
-        else {
-                               
-        }
     }
     public function getIdUser(MAuthorization $auth){
         $temp=$this->checkUserDB($auth);
@@ -86,21 +88,26 @@ class AuthorizationDAO {
             return false;
         }
     }     
-    public function getObjUser(MAuthorization $auth){
-        $query="select * from alluser where id_user=$1;";
-        $array_params=array();
-        $array_params[]=$this->getIdUser($auth);
-        $result=$this->db->execute($query,$array_params);
-        $data=$this->db->getFetchObject($result);
-        $muser=new MUser();
-        $muser->setFirstName($data->first_name);
-        $muser->setEmail($data->email);
-        $muser->setRoles($this->getRole($auth));
-        $muser->setIdUser($data->id_user);
-        $muser->setLastName($data->last_name);
-        $muser->setLogin($data->login);
-        $muser->setLdapUser(1);
-        return $muser;         
+    public function getObjUser(MAuthorization $auth) {
+        try {
+            $query="select * from alluser where id_user=$1;";
+            $array_params=array();
+            $array_params[]=$this->getIdUser($auth);
+            $result=$this->db->executeAsync($query,$array_params);
+            $data=$this->db->getFetchObject($result);
+            $muser=new MUser();
+            $muser->setFirstName($data->first_name);
+            $muser->setEmail($data->email);
+            $muser->setRoles($this->getRole($auth));
+            $muser->setIdUser($data->id_user);
+            $muser->setLastName($data->last_name);
+            $muser->setLogin($data->login);
+            $muser->setLdapUser(1);
+            return $muser;      
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка получения данных пользователя '.$e->getMessage().$e->getTraceAsString());
+        }     
     }
     public function getRole(MAuthorization $auth, $id_user=null){
          if($this->user=="ldap"){
@@ -130,17 +137,22 @@ class AuthorizationDAO {
          }   
      }
     public function getRoleDB(MAuthorization $auth, $id_user=null){
-         $query="select id_role from role_user where id_user=$1";
-         $array_params=array();
-         if($id_user==null){
-            $array_params[]=$this->getIdUser($auth);
-         }
-         else{
-             $array_params[]=$id_user;
-         }
-        $result=$this->db->execute($query,$array_params);
-        $data=$this->db->getArrayData($result);
-        return $data; 
+        try {
+            $query="select id_role from role_user where id_user=$1";
+            $array_params=array();
+            if($id_user==null){
+                $array_params[]=$this->getIdUser($auth);
+            }
+            else{
+                $array_params[]=$id_user;
+            }
+            $result=$this->db->executeAsync($query,$array_params);
+            $data=$this->db->getArrayData($result);
+            return $data; 
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка получения роли пользователя '.$e->getMessage().$e->getTraceAsString());
+        } 
      }
      //Возвращает массив ролей пользователя
     public function getRoleLDAP(MAuthorization $auth){

@@ -187,152 +187,209 @@ class IntervieweeDAO {
     }
 	
 	public function getCountOfAnswered($id_testing){
-        $query="select count(id_question) as id_question from answer_users where  marker_quiz is null and id_testing=$1";
-        $array_params=array();
-        $array_params[]=$id_testing;
-        $result=$this->db->execute($query,$array_params);
-        $obj=$this->db->getFetchObject($result);
-        return $obj->id_question;
-        
+	    try {
+            $query="select count(id_question) as id_question from answer_users where  marker_quiz is null and id_testing=$1";
+            $array_params=array();
+            $array_params[]=$id_testing;
+            $result=$this->db->executeAsync($query,$array_params);
+            $obj=$this->db->getFetchObject($result);
+            return $obj->id_question;
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка получения количества отвеченных вопросов таблицы answer_users '.$e->getMessage().$e->getTraceAsString());
+        } 
     }
   
-	 public function setSkipAnswer($id_testing, $id_question, $skip){
-        $query="UPDATE answer_users SET skip_answer=$3 where id_testing=$1 and id_question=$2;";
-        
-		$array_params=array();
-        $array_params[]=$id_testing;
-        $array_params[]=$id_question;
-		$array_params[]=$skip;
-        $result=$this->db->execute($query,$array_params);
-        
+    public function setSkipAnswer($id_testing, $id_question, $skip){
+	    try {
+            $query="UPDATE answer_users SET skip_answer=$3 where id_testing=$1 and id_question=$2;";
+            
+		    $array_params=array();
+            $array_params[]=$id_testing;
+            $array_params[]=$id_question;
+		    $array_params[]=$skip;
+            $result=$this->db->executeAsync($query,$array_params);
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка установки пропущенного вопроса таблицы answer_users '.$e->getMessage().$e->getTraceAsString());
+        } 
     }
   
     //Вставить "маяк"(помечается вопрос на котором остановился пользователь)
-    public function setMarker($id_testing, $id_question){
-        if($this->checkMarker($id_testing, $id_question)){
-            $query="UPDATE answer_users SET marker_quiz='latest' where id_testing=$1 and id_question=$2;";
-        }
-        else {
-            $query="insert into answer_users(id_testing, id_question, marker_quiz) values
-                ($1, $2, 'latest');"; 
-        }
-        $array_params=array();
-        $array_params[]=$id_testing;
-        $array_params[]=$id_question;
-        $result=$this->db->execute($query,$array_params);
-        
+    public function setMarker($id_testing, $id_question) {
+        try {
+            if($this->checkMarker($id_testing, $id_question)){
+                $query="UPDATE answer_users SET marker_quiz='latest' where id_testing=$1 and id_question=$2;";
+            }
+            else {
+                $query="insert into answer_users(id_testing, id_question, marker_quiz) values
+                    ($1, $2, 'latest');"; 
+            }
+            $array_params=array();
+            $array_params[]=$id_testing;
+            $array_params[]=$id_question;
+            $result=$this->db->executeAsync($query,$array_params);
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка установки маяка таблицы answer_users '.$e->getMessage().$e->getTraceAsString());
+        } 
     }
-    private function checkMarker($id_testing, $id_question){
-        $query="select * from answer_users where id_testing=$1 and id_question=$2;";
-        $array_params=array();
-        $array_params[]=$id_testing;
-        $array_params[]=$id_question;
-        $result=$this->db->execute($query,$array_params);
-        $obj=$this->db->getFetchObject($result);
-        if ($obj){
-            return $obj->id_testing;
-        }
-        else{
-            return false;
-        }
+    private function checkMarker($id_testing, $id_question) {
+        try {
+            $query="select * from answer_users where id_testing=$1 and id_question=$2;";
+            $array_params=array();
+            $array_params[]=$id_testing;
+            $array_params[]=$id_question;
+            $result=$this->db->executeAsync($query,$array_params);
+            $obj=$this->db->getFetchObject($result);
+            if ($obj) {
+                return $obj->id_testing;
+            }
+            else {
+                return false;
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка проверки вопроса таблицы answer_users '.$e->getMessage().$e->getTraceAsString());
+        } 
     }
     //Вернуть вопрос в котором установлен маяк
-    public function getMarker(MInterviewee $interviewee){
-        $query="select id_question from answer_users where marker_quiz='latest' and id_testing=$1;";
-        $array_params=array();
-        $array_params[]=$interviewee->getIdTesting();
-        $result=$this->db->execute($query,$array_params);
-        $obj=$this->db->getFetchObject($result);
-        if(isset($obj->id_question)){
-            return $obj->id_question;
-        }
+    public function getMarker(MInterviewee $interviewee) {
+        try {
+            $query="select id_question from answer_users where marker_quiz='latest' and id_testing=$1;";
+            $array_params=array();
+            $array_params[]=$interviewee->getIdTesting();
+            $result=$this->db->executeAsync($query,$array_params);
+            $obj=$this->db->getFetchObject($result);
+            if(isset($obj->id_question)){
+                return $obj->id_question;
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка получения последнего вопроса таблицы answer_users '.$e->getMessage().$e->getTraceAsString());
+        } 
     }
-    public function getMarkerId(MInterviewee $interviewee){
-        $query="select id_answer_users from answer_users where marker_quiz='latest' and id_testing=$1;";
-        $array_params=array();
-        $array_params[]=$interviewee->getIdTesting();
-        $result=$this->db->execute($query,$array_params);
-        $obj=$this->db->getFetchObject($result);
-        return $obj->id_answer_users;
+    public function getMarkerId(MInterviewee $interviewee) {
+        try {
+            $query="select id_answer_users from answer_users where marker_quiz='latest' and id_testing=$1;";
+            $array_params=array();
+            $array_params[]=$interviewee->getIdTesting();
+            $result=$this->db->executeAsync($query,$array_params);
+            $obj=$this->db->getFetchObject($result);
+            return $obj->id_answer_users;
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка получения ид последнего вопроса таблицы answer_users '.$e->getMessage().$e->getTraceAsString());
+        } 
     }
     //Удалить "маяк"
-    public function removeMarker($id_testing, $id_question){
-        $query="UPDATE answer_users SET marker_quiz=null where id_testing=$1 and id_question=$2;";
-        $array_params=array();
-        $array_params[]=$id_testing;
-        $array_params[]=$id_question;
-        $this->db->execute($query,$array_params);              
+    public function removeMarker($id_testing, $id_question) {
+        try {
+            $query="UPDATE answer_users SET marker_quiz=null where id_testing=$1 and id_question=$2;";
+            $array_params=array();
+            $array_params[]=$id_testing;
+            $array_params[]=$id_question;
+            $this->db->executeAsync($query,$array_params);   
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка удаления маркера таблицы answer_users '.$e->getMessage().$e->getTraceAsString());
+        }           
     }
     //Проверить ограничение по времени, возращает true если нет ограничений
-    private function checkTimeLimit(MInterviewee $interviewee){
-        $query="select time_limit from test where id_test=$1;";
-        $array_params=array();
-        $array_params[]=$interviewee->getTest()->getIdQuiz();
-        $resurs_check_time_limit=$this->db->execute($query,$array_params);
-        $result_check_time_limit= $this->db->getFetchObject($resurs_check_time_limit);
-        if ($result_check_time_limit->time_limit=='null' || $result_check_time_limit->time_limit==''){
-            return $result_check_time_limit->time_limit;
-        }
-        else {
-            return $result_check_time_limit->time_limit;
+    private function checkTimeLimit(MInterviewee $interviewee) {
+        try {
+            $query="select time_limit from test where id_test=$1;";
+            $array_params=array();
+            $array_params[]=$interviewee->getTest()->getIdQuiz();
+            $resurs_check_time_limit=$this->db->executeAsync($query,$array_params);
+            $result_check_time_limit= $this->db->getFetchObject($resurs_check_time_limit);
+            if ($result_check_time_limit->time_limit=='null' || $result_check_time_limit->time_limit==''){
+                return $result_check_time_limit->time_limit;
+            }
+            else {
+                return $result_check_time_limit->time_limit;
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка проверки ограничение по времени '.$e->getMessage().$e->getTraceAsString());
         }
     }  
     //Проверить статус теста, возращает true если доступ открыт
-    private function checkMarkTest(MInterviewee $interviewee){
-        $query="select id_user from testing where id_testing=$1 and mark_test='available' or mark_test='unfinished';";
-        $array_params=array();
-        $array_params[]=$interviewee->getIdTesting();
-        $resurs_check_time_limit=$this->db->execute($query,$array_params);
-        $result_check_time_limit= $this->db->getArrayData($resurs_check_time_limit);
-        if (count($result_check_time_limit)>0){
-            return true;
-        }
-        else {
-            return false;
+    private function checkMarkTest(MInterviewee $interviewee) {
+        try {
+            $query="select id_user from testing where id_testing=$1 and mark_test='available' or mark_test='unfinished';";
+            $array_params=array();
+            $array_params[]=$interviewee->getIdTesting();
+            $resurs_check_time_limit=$this->db->executeAsync($query,$array_params);
+            $result_check_time_limit= $this->db->getArrayData($resurs_check_time_limit);
+            if (count($result_check_time_limit)>0){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка проверки статус теста '.$e->getMessage().$e->getTraceAsString());
         }
     }  
-    public function checkTime(MInterviewee $interviewee){
-        $query="select datetime_start_test from testing where id_testing=$1;";
-        $array_params=array();
-        $array_params[]=$interviewee->getIdTesting();
-        $result=$this->db->execute($query,$array_params);
-        $obj=$this->db->getFetchObject($result);
-        $datetime= $obj->datetime_start_test;
-        if($datetime+$this->checkTimeLimit($interviewee)<=date("Y-m-d H:i:s")){
-            return true;
-        }
-        else {
-            return false;
+    public function checkTime(MInterviewee $interviewee) {
+        try {
+            $query="select datetime_start_test from testing where id_testing=$1;";
+            $array_params=array();
+            $array_params[]=$interviewee->getIdTesting();
+            $result=$this->db->executeAsync($query,$array_params);
+            $obj=$this->db->getFetchObject($result);
+            $datetime= $obj->datetime_start_test;
+            if($datetime+$this->checkTimeLimit($interviewee)<=date("Y-m-d H:i:s")){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка проверки времени '.$e->getMessage().$e->getTraceAsString());
         }
     }
     //Возвращает ид самого первого вопроса
     public function getFirstQuestion($id_quiz){
-       $query="select min(id_question) as first_question from questions where id_test=$1;";
-       $array_params=array();
-       $array_params[]=$id_quiz;
-       $result=$this->db->execute($query,$array_params);
-       $obj=$this->db->getFetchObject($result);
-       if($obj->first_question!=null){
-           return $obj->first_question;
-       }
-       else{
-           return false;
-       }
-   }
-   public function getNextQuestion($id_quiz, $question_number){
-       $query="select id_question from questions where id_test=$1 and question_number > $2 order by question_number limit 1";
-       $array_params=array();
-       $array_params[]=$id_quiz;
-       $array_params[]=$question_number;
-       $result=$this->db->execute($query,$array_params);
-       $obj=$this->db->getFetchObject($result);
-       if(isset($obj->id_question)){
-           return $obj->id_question;
-       }
-       else{
-           return false;
-       }
-   }
+        try {
+            $query="select min(id_question) as first_question from questions where id_test=$1;";
+            $array_params=array();
+            $array_params[]=$id_quiz;
+            $result=$this->db->executeAsync($query,$array_params);
+            $obj=$this->db->getFetchObject($result);
+            if($obj->first_question!=null){
+                return $obj->first_question;
+            }
+            else{
+                return false;
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка получения первого вопроса '.$e->getMessage().$e->getTraceAsString());
+        }
+    }
+    public function getNextQuestion($id_quiz, $question_number){
+        try {
+            $query="select id_question from questions where id_test=$1 and question_number > $2 order by question_number limit 1";
+            $array_params=array();
+            $array_params[]=$id_quiz;
+            $array_params[]=$question_number;
+            $result=$this->db->executeAsync($query,$array_params);
+            $obj=$this->db->getFetchObject($result);
+            if(isset($obj->id_question)){
+                return $obj->id_question;
+            }
+            else{
+                return false;
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка получения следующего вопроса '.$e->getMessage().$e->getTraceAsString());
+        }
+    }
     ////////////////////////////////////////////////////////////////////////////
     //Возвратить инфо. о всех опроса для данного пользователя
     public function getDataTesting($id_user){
@@ -398,106 +455,132 @@ class IntervieweeDAO {
     }
     //возвратить ид всех опросов
     private function getArrayIdTesting($id_user){
-        $query="select id_testing from testing where id_user=$1;";
-        $array_params=array();
-        $array_params[]=$id_user;
-        $result=$this->db->execute($query, $array_params);
-        return $this->db->getArrayData($result);
+        try {
+            $query="select id_testing from testing where id_user=$1;";
+            $array_params=array();
+            $array_params[]=$id_user;
+            $result=$this->db->executeAsync($query, $array_params);
+            return $this->db->getArrayData($result);
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка запроса к таблице: testing '.$e->getMessage().$e->getTraceAsString());
+        }
     }
     private function getObjTesting($id_testing){
-        $query="select * from testing where id_testing=$1;";
-        $array_params=array();
-        $array_params[]=$id_testing;
-        $result=$this->db->execute($query, $array_params);
-        return $this->db->getFetchObject($result);
+        try {
+            $query="select * from testing where id_testing=$1;";
+            $array_params=array();
+            $array_params[]=$id_testing;
+            $result=$this->db->executeAsync($query, $array_params);
+            return $this->db->getFetchObject($result);
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка запроса к таблице: testing '.$e->getMessage().$e->getTraceAsString());
+        }
     }
     private function getObjTest($id_testing, $id_user){
-        $query="select * from testing where id_test=$1 and id_user=$2;";
-        $array_params=array();
-        $array_params[]=$id_testing;
-        $array_params[]=$id_user;
-        $result=$this->db->execute($query, $array_params);
-        return $this->db->getFetchObject($result);
+        try {
+            $query="select * from testing where id_test=$1 and id_user=$2;";
+            $array_params=array();
+            $array_params[]=$id_testing;
+            $array_params[]=$id_user;
+            $result=$this->db->executeAsync($query, $array_params);
+            return $this->db->getFetchObject($result);
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка запроса к таблице: testing '.$e->getMessage().$e->getTraceAsString());
+        }
     }
     //Отображаем список доступных тестов для данного пользователя
     public function getListQuiz($id_user){
-        $query="select id_test from interviewees where id_user=$1;";
-        $array_params=array();
-        $array_params[]=$id_user;
-        $result=$this->db->execute($query,$array_params);
-        if($result){
-             return $this->db->getArrayData($result);            
-        } 
-        else{
-            $this->log->ERROR('Ошибка запроса к таблице: testing('.pg_last_error().')'); 
-//            throw new Exception('Ошибка запроса к таблице: testing('.pg_last_error().')'); 
-        }   
+        try {
+            $query="select id_test from interviewees where id_user=$1;";
+            $array_params=array();
+            $array_params[]=$id_user;
+            $result=$this->db->executeAsync($query,$array_params);
+            if($result){
+                 return $this->db->getArrayData($result);            
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка запроса к таблице: testing '.$e->getMessage().$e->getTraceAsString());
+        }
     }
     public function getIdTesting($id_user,$id_quiz){
-        $query="select id_testing from testing where id_user=$1 and id_test=$2;";
-        $array_params=array();
-        $array_params[]=$id_user;
-        $array_params[]=$id_quiz;
-        $result=$this->db->execute($query, $array_params);
-        $obj= $this->db->getFetchObject($result);
-        if ($obj){
-            return $obj->id_testing;
-        }
-        else {
-            return false;
+        try {
+            $query="select id_testing from testing where id_user=$1 and id_test=$2;";
+            $array_params=array();
+            $array_params[]=$id_user;
+            $array_params[]=$id_quiz;
+            $result=$this->db->executeAsync($query, $array_params);
+            $obj= $this->db->getFetchObject($result);
+            if ($obj){
+                return $obj->id_testing;
+            }
+            else {
+                return false;
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка получения ID тестирования '.$e->getMessage().$e->getTraceAsString());
         }
     } 
     public function addUserIntoTest($test, $user){
-        $query="INSERT INTO interviewees(id_test, id_user)
-                VALUES ($1, $2);"; 
-        $array_params=array();
-        $array_params[]=$test;
-        $array_params[]=$user;
-        $result=$this->db->execute($query,$array_params);
-        if($result){
-            return $result;            
-        }
-        else{
-            $this->log->ERROR('Ошибка добавления строки в таблицу: interviewees( '.pg_last_error().')'); 
-//            throw new Exception('Ошибка добавления строки в таблицу: alluser( '.pg_last_error().')');  
-        }   
+        try {
+            $query="INSERT INTO interviewees(id_test, id_user)
+                    VALUES ($1, $2);"; 
+            $array_params=array();
+            $array_params[]=$test;
+            $array_params[]=$user;
+            $this->db->executeAsync($query,$array_params);
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка добавления пользователя к тесту '.$e->getMessage().$e->getTraceAsString());
+        }     
     }
     public function deleteUser($id_test, $id_user){
-        $query="DELETE FROM interviewees WHERE id_user=$1 AND id_test=$2;";
-        $array_params=array();
-        $array_params[]=$id_user;
-        $array_params[]=$id_test;
-        $result=$this->db->execute($query,$array_params);
-        if($result){
-            return $result;            
+        try {
+            $query="DELETE FROM interviewees WHERE id_user=$1 AND id_test=$2;";
+            $array_params=array();
+            $array_params[]=$id_user;
+            $array_params[]=$id_test;
+            $result=$this->db->executeAsync($query,$array_params);
+            if($result){
+                return $result;            
+            }
         }
-        else{
-            $this->log->ERROR('Ошибка удаления строки в таблице: interviewees( '.pg_last_error().')');  
-//            throw new Exception('Ошибка удаления строки в таблице: alluser( '.pg_last_error().')'); 
-        }  
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка удаления строки из таблицы: interwees '.$e->getMessage().$e->getTraceAsString());
+        }
     }
     public function deleteForQuiz($id_test){
-        $query="DELETE FROM interviewees WHERE id_test=$1;";
-        $array_params=array();
-        $array_params[]=$id_test;
-        $result=$this->db->execute($query,$array_params);
-        if($result){
-            return $result;            
+        try {
+            $query="DELETE FROM interviewees WHERE id_test=$1;";
+            $array_params=array();
+            $array_params[]=$id_test;
+            $result=$this->db->executeAsync($query,$array_params);
+            if($result){
+                return $result;            
+            }
         }
-        else{
-            $this->log->ERROR('Ошибка удаления строки в таблице: interviewees( '.pg_last_error().')');  
-//            throw new Exception('Ошибка удаления строки в таблице: alluser( '.pg_last_error().')'); 
-        }  
+        catch(Exception $e) { 
+        $this->log->ERROR('Ошибка удаления строки из таблицы: interwees '.$e->getMessage().$e->getTraceAsString());
+        }
     }
     public function checkUserInTest($test, $user){
-        $query="select * from interviewees where id_test=$1 and id_user=$2"; 
-        $array_params=array();
-        $array_params[]=$test;
-        $array_params[]=$user;
-        $result=$this->db->execute($query,$array_params);
-        $obj= $this->db->getFetchObject($result);
-        if(isset($obj->id_test)){
-            return $obj->id_test;
+        try {
+            $query="select * from interviewees where id_test=$1 and id_user=$2"; 
+            $array_params=array();
+            $array_params[]=$test;
+            $array_params[]=$user;
+            $result=$this->db->executeAsync($query,$array_params);
+            $obj= $this->db->getFetchObject($result);
+            if(isset($obj->id_test)){
+                return $obj->id_test;
+            } 
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка проверки пользователя в таблице: interwees '.$e->getMessage().$e->getTraceAsString());
         }  
     }
 }

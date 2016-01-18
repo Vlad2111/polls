@@ -61,6 +61,23 @@ include_once 'log4php/Logger.php';
             }           
                  
         }        
+        /* 
+        *   request to db
+        */
+        public function executeAsync($query, $array_params=null){
+            if($array_params==null){
+                pg_send_query($this->db, $query);
+            }
+            else{
+                pg_send_query_params($this->db, $query, $array_params); 
+            } 
+            $return = pg_get_result($this->db);
+            $error = pg_result_error($return);
+            if($error != '' || $error != false)
+                throw new Exception($error);
+            else return $return;
+        }        
+        
         public function getFetchObject($resource_query, $row=0){            
             if(pg_num_rows($resource_query)>0){
                 return pg_fetch_object($resource_query, $row);
