@@ -10,6 +10,7 @@ class MUser {
     private $roles; //array
     private $availableTests;
     private $user_vasibility;
+    private $viewed;
    
     public function getIdUser(){
 	return $this->id_user;
@@ -70,6 +71,12 @@ class MUser {
     }
     public function setUserVasibility($user_vasibility){
         $this->user_vasibility=$user_vasibility;
+    }
+    public function getViewed(){
+        return $this->viewed;
+    }
+    public function setViewed($viewed){
+        $this->viewed=$viewed;
     }
 }
 ?>

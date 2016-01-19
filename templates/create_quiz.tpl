@@ -1115,6 +1115,8 @@
                                 Тип пользователя
                             </th>
                             <th>
+                            </th>
+                            <th>
                                 
                             </th>
                         </thead>
@@ -1134,6 +1136,13 @@
                                         Внутренний пользователь
                                     {elseif $one_user_data->getLdapUser()==1}
                                         Пользователь LDAP
+                                    {/if}
+                                </td>
+                                <td>
+                                    {if $one_user_data->getViewed() == 2}
+                                        <span class="glyphicon glyphicon-ok-circle" aria-hidden="true" title="Тест пройден"></span>
+                                    {elseif $one_user_data->getViewed() == 1}
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true" title="Тест открыт"></span>
                                     {/if}
                                 </td>
                                 <td>

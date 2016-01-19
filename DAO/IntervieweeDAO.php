@@ -466,7 +466,7 @@ class IntervieweeDAO {
             $this->log->ERROR('Ошибка запроса к таблице: testing '.$e->getMessage().$e->getTraceAsString());
         }
     }
-    private function getObjTesting($id_testing){
+    public function getObjTesting($id_testing){
         try {
             $query="select * from testing where id_testing=$1;";
             $array_params=array();

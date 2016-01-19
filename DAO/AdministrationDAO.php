@@ -10,6 +10,7 @@ include_once 'model/MAuthorization.php';
     Logger::configure(CheckOS::getConfigLogger());    
 class AdministrationDAO extends UserDAO{
     protected $nameclass=__CLASS__;
+    private $_id_test;
     //Возращеает массив состоящий из id тестов
     public function getListIdQuiz() {
         try {
@@ -95,6 +96,8 @@ class AdministrationDAO extends UserDAO{
             $result_query=$this->db->executeAsync($query, $array_params);
             $obj_quiz= $this->db->getFetchObject($result_query);
             $obj_data_user=new MUser();
+            $testingDAO = new TestingDAO();
+            $intervieweeDAO = new IntervieweeDAO();
             $obj_data_user->setIdUser($obj_quiz->id_user);
             $obj_data_user->setLastName($obj_quiz->last_name);
             $obj_data_user->setFirstName($obj_quiz->first_name);
@@ -102,6 +105,12 @@ class AdministrationDAO extends UserDAO{
             $obj_data_user->setLogin($obj_quiz->login);
             $obj_data_user->setLdapUser($obj_quiz->ldap_user);
             $obj_data_user->setUserVasibility($obj_quiz->user_vasibility);
+            $testing = $testingDAO->getIdTesting($obj_quiz->id_user, $this->_id_test);
+            if(isset($testing))
+                if($intervieweeDAO->getObjTesting($testing)->id_mark_test == 4)
+                    $obj_data_user->setViewed(2);
+                else $obj_data_user->setViewed(1);
+            else $obj_data_user->setViewed(0);
             $auth= new AuthorizationDAO();
             $mauth=new MAuthorization();
             if($obj_quiz->ldap_user==0){
@@ -126,6 +135,7 @@ class AdministrationDAO extends UserDAO{
             $result=$this->db->executeAsync($query, $array_params);
             $arr = $this->db->getArrayData($result); 
             $array_result=array();
+            $this->_id_test = $id_test;
             for($i=0; $i<count($arr); $i++){
                 if(isset($arr[$i])){
                     $array_result[$i]=$this->getObjDataUser($arr[$i]);
