@@ -65,10 +65,12 @@ class QuestionDAO {
     //Удаляет вопрос
     public function deleteQuestion(MQuestion $questions) {
         try {
-            $query="DELETE FROM questions WHERE id_question=$1;";
+            $query="DELETE FROM answer_users WHERE id_question=$1;";
             $array_params=array();
             $array_params[]=$questions->getIdQuestion();
             $result=$this->db->executeAsync($query,$array_params);
+	    $query="DELETE FROM questions WHERE id_question=$1;";
+	    $result=$this->db->executeAsync($query,$array_params);
             if($result){
                 return $result;            
             }

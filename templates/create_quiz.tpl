@@ -15,7 +15,6 @@
 		<link href="css/highlight.css" rel="stylesheet">
 		<link href="http://getbootstrap.com/assets/css/docs.min.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
-        <script src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/moment-with-locales.min.js"></script>
 		<script type="text/javascript" src="js/autocomplete.js"></script>
@@ -396,20 +395,20 @@
                 }
             }
             function checkEdit(question, isAnswered) {
-                if(isAnswered == null){
+                //if(isAnswered == null){
                      document.getElementById('edit'+question).click();
-                }
-                else {
-                    alert("Изменение либо удаление невозможно! Пользователи уже отвечали на этот вопрос.");
-                }
+               //}
+               // else {
+                //    alert("Изменение либо удаление невозможно! Пользователи уже отвечали на этот вопрос.");
+               // }
             }
             function checkDelete(question, isAnswered) {
-                if(isAnswered == null){
+               if(isAnswered == null){
                      document.getElementById('delete'+question).click();
-                }
-                else {
-                    alert("Изменение либо удаление невозможно! Пользователи уже отвечали на этот вопрос.");
-                }
+               }
+               else {
+                  document.getElementById('deleteModal'+question).click();
+               }
             }
         </script>  
         {include file='header.tpl'}
@@ -813,6 +812,7 @@
                                 <td>
                                     <a class="btn btn-primary btn-xs" onclick="checkDelete({$data_questions[$i]->id_question}, {if isset($data_questions[$i]->isAnswered[0])} 1 {else} null{/if})" id='buttons_disabled[]' {if isset($data_one_quiz->id_status_test)}{if $data_one_quiz->id_status_test != 1}disabled{/if}{/if}><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
                                    <a style="display:none" class="btn btn-primary btn-xs" href="?action=delete&id_quiz={$data_one_quiz->id_test}&id_question={$data_questions[$i]->id_question}" id="delete{$data_questions[$i]->id_question}"><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
+<a style="display:none" class="btn btn-primary btn-xs" data-toggle="modal" data-idquestion="{$data_questions[$i]->id_question}" data-target="#removeModal" id="deleteModal{$data_questions[$i]->id_question}"><span class="glyphicon glyphicon-trash"></span>   Удалить</a>
                                 </td>
                                 <td>
                                 {if $i != 0 }
@@ -830,6 +830,7 @@
                         {/for}
                         </tbody>
                     </table>
+           
                     {else}
                         <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span>   Список вопросов данного теста пуст </div>
                     {/if}
@@ -861,12 +862,34 @@
                 </div>
             </div>
             {/capture}
-                                
+           <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" style="margin: 0 auto;">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="removeModalLabel"></h4>
+								</div>							
+								<form >
+									<div class="modal-body">
+									</div>
+									<div class="modal-footer">
+										<input id="idQuestion" type="hidden" value="">
+										<button id="buttonModalF" type="button" class="btn btn-default pull-left" data-dismiss="modal" style="width: 200px">Отмена</button>
+										<button id="buttonModalS" onclick="checkDelete(document.getElementById('idQuestion').value , null );" type="submit" data-dismiss="modal" class="btn btn-primary" style="width: 200px">Да</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>   
             {capture name=edit_question}
             {include file='menu.tpl'}
             <div id="page-content-wrapper">
                 <div class="container-fluid">
                     <form method="post" id="test_passing">
+										<div id="editDiv"></div>
+										<input class="form-control" id="deleteDataAnswers" type="hidden" name="deleteDataAnswers" form="test_passing" value="FALSE">
                     <input onclick="checkRadio()" class="btn btn-primary" id="create-question" value="Изменить вопрос" disabled> 
                     <button style="display: none" class="btn btn-primary" id="create-question_hide" form="test_passing" name="button_click" value="edit_question"> Изменить вопрос</button>
                         <table class="table">
@@ -892,7 +915,8 @@
                                 </td>
                                 <td>
                                     
-                                    <select class="form-control" name="question_type" id="question_type" onchange ='addAnswerTypeYorn(this.options[this.selectedIndex].value);'>
+                                    <select class="form-control" name="question_type" id="question_type" onchange ="addAnswerTypeYorn(this.options[this.selectedIndex].value);
+$('#editDiv').html('<b>Все ответы пользователей удаляются</b>');$('#deleteDataAnswers').val('TRUE');">
 										<option value="0">--/--</option>
                                         <option value="1" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 1}selected{/if}>Да/Нет</option>
                                         <option value="2" {if isset($data_one_question->id_questions_type) && $data_one_question->id_questions_type == 2}selected{/if}>Один ответа из списка</option>
@@ -907,7 +931,7 @@
                                     <b>Валидация ответа</b>
                                 </td>
                                 <td>
-                                    <input type="checkbox" id="switch" name="switch" data-off-text="Нет" data-on-text="Да" form="test_passing" {if isset($data_one_question->validation) && $data_one_question->validation == 'Y'}checked{/if}>
+                                    <input type="checkbox" id="switch" name="switch" data-off-text="Нет" data-on-text="Да" form="test_passing" {if isset($data_one_question->validation) && $data_one_question->validation == 'Y'}checked{/if} >
                                     <script>
                                         $(function(argument) {
                                           $('[name="switch"]').bootstrapSwitch();
@@ -966,42 +990,37 @@
                                             <div class="foraddradio">
                                             {$vars = 0}
                                             {foreach $data_answer_option as $option_one}
-                                                {if $vars == 0}
-                                                    <div class="row" id="0">
+                                                    <div class="row" id="{$vars}">
                                                         <div class="col-xs-10">
                                                             <div  class="input-group">
                                                                 <span class="input-group-addon" id="radios[]">
-                                                                    <input type="radio" value="0" name="rad[]" aria-label="..." {if $data_one_question->id_questions_type == 2 && $option_one->right_answer == 'Y'}checked{/if}>
+                                                                    <input type="radio" value="{$vars}" name="rad[]" aria-label="..." {if $data_one_question->id_questions_type == 2 && $option_one->right_answer == 'Y'}checked{/if}>
                                                                 </span>
-                                                                <input type="text" name="texting[]" id="texting0" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" size="30" maxlength="1000" value="{if $data_one_question->id_questions_type == 2}{$option_one->answer_the_questions}{/if}">
+                                                                <input type="text" name="texting[]" id="texting{$vars}" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" size="30" maxlength="1000" value="{if $data_one_question->id_questions_type == 2}{$option_one->answer_the_questions}{/if}">
                                                             </div>
                                                         </div>
+							{if $vars != 0}<div class="col-xs-2 padding-top10">
+								<a  onclick="$('[id = {$vars}]').remove(); $('#editDiv').html('<b>Все ответы пользователей удаляются</b>');$('#deleteDataAnswers').val('TRUE');">
+									<span class="glyphicon glyphicon-trash"></span>
+								</a>
+							</div>{/if}
                                                     </div>
-                                                    {$vars=1}
-                                                {else}
-                                                <script type="text/javascript">
-                                                {if $data_one_question->id_questions_type == 2}
-                                                addRadioAnswer(1);
-                                                {/if}
-                                                   function addRadioAnswer(col){
-                                                   if(col==1){
-                                                    var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..." {if $data_one_question->id_questions_type == 2 && $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" aria-label="..." onblur="checkAnswer(this.value)" size="30" maxlength="1000" value="{if $data_one_question->id_questions_type == 2}{$option_one->answer_the_questions}{/if}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
-                                                    }
-                                                    else {
-                                                    var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..."></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" size="30" maxlength="1000" aria-label="..." onblur="checkAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
-                                                    }
-			                                        int++;
-                                                    $(".foraddradio").append(text);
-			                                        document.getElementById("create-question").disabled = true;
-			                                        }
-                                                </script>
-                                                {/if}
+                                                    {$vars=$vars+1}
                                             {/foreach}
+                                                <script type="text/javascript">
+							var int={$vars};
+                                                   function addRadioAnswer(){
+						   var text = '<div class="row" id="'+int+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="radio" value="'+int+'" name="rad[]" aria-label="..."></span><input type="text" name="texting[]" id="texting'+int+'" class="form-control" size="30" maxlength="1000" aria-label="..." onblur="checkAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+int+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
+                                                    int++;
+                                                    $(".foraddradio").append(text);
+			                                 document.getElementById("create-question").disabled = true;
+			                             }
+                                                </script>
                                             <script type="text/javascript">
                                                 checkAnswer(0);
                                             </script>
                                             </div>
-                                            <a href="javascript: void(0);" onclick="addRadioAnswer(0);"><span class="glyphicon glyphicon-plus"></span></a>
+                                            <a href="javascript: void(0);" onclick="addRadioAnswer(0); $('#editDiv').html('<b>Все ответы пользователей удаляются</b>');$('#deleteDataAnswers').val('TRUE');"><span class="glyphicon glyphicon-plus"></span></a>
                                         </form>
                                     </div>
                                     <div id='add_answer_type_many_answers_some' style="display: none">
@@ -1010,43 +1029,38 @@
                                             <div class="foraddcheckbox">
                                             {$vars = 0}
                                             {foreach $data_answer_option as $option_one}
-                                                {if $vars == 0}
-                                                <div class="row" id="0">
+                                                <div class="row" id="{$vars}">
                                                     <div class="col-xs-10">
                                                         <div  class="input-group">
                                                             <span class="input-group-addon">
-                                                                <input type="checkbox" form="test_passing" value="0" name="checkbox[]" aria-label="..." {if $data_one_question->id_questions_type == 3 && $option_one->right_answer == 'Y'}checked{/if}>
+                                                                <input type="checkbox" form="test_passing" value="{$vars}" name="checkbox[]" aria-label="..." {if $data_one_question->id_questions_type == 3 && $option_one->right_answer == 'Y'}checked{/if}>
                                                             </span>
-                                                            <input type="text" form="test_passing" name="textr[]" id="textr0" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" size="30" maxlength="1000" value="{if $data_one_question->id_questions_type == 3}{$option_one->answer_the_questions}{/if}">
+                                                            <input type="text" form="test_passing" name="textr[]" id="textr{$vars}" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)" size="30" maxlength="1000" value="{if $data_one_question->id_questions_type == 3}{$option_one->answer_the_questions}{/if}">
                                                         </div>
                                                     </div>
+							{if $vars != 0}<div class="col-xs-2 padding-top10">
+								<a  onclick="alert(intr);$('[id = {$vars}]').remove(); $('#editDiv').html('<b>Все ответы пользователей удаляются</b>');$('#deleteDataAnswers').val('TRUE');">
+									<span class="glyphicon glyphicon-trash"></span>
+								</a>
+							</div>{/if}
                                                 </div>
-                                                {$vars=1}
-                                                {else}
-                                                
+                                                {$vars=$vars+1}
+                                            {/foreach}
                                                     <script type="text/javascript">
-                                                    {if $data_one_question->id_questions_type == 3}
-                                                    addCheckAnswer(1);
-                                                    {/if}
-                                                       function addCheckAnswer(col){
-                                                       if(col==1){
-                                                        var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..." {if $data_one_question->id_questions_type == 3 && $option_one->right_answer == 'Y'}checked{/if}></span><input type="text" form="test_passing" name="textr[]" id="textr'+intr+'" class="form-control" size="30" maxlength="1000" aria-label="..." onblur="checkSomeAnswer(this.value)" value="{if $data_one_question->id_questions_type == 3}{$option_one->answer_the_questions}{/if}"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
-                                                        }
-                                                        else {
+							var intr={$vars};
+                                                       function addCheckAnswer(){
                                                         var text = '<div class="row" id="'+intr+'"><div class="col-xs-10"><div  class="input-group"><span class="input-group-addon" id="radios[]"><input type="checkbox" form="test_passing" value="'+intr+'" name="checkbox[]" aria-label="..."></span><input type="text" form="test_passing" name="textr[]" size="30" maxlength="1000" id="textr'+intr+'" class="form-control" aria-label="..." onblur="checkSomeAnswer(this.value)"></div></div><div class="col-xs-2 padding-top10"><a  onclick="$(\'[id = '+intr+']\').remove()"><span class="glyphicon glyphicon-trash"></span></a></div></div>';
-                                                        }
+                                                        
                                                         intr++;         
                                                         $(".foraddcheckbox").append(text);
-                                                        document.getElementById("create-question").disabled = true;
+                                                          document.getElementById("create-question").disabled = true;
                                                         }
                                                     </script>
-                                                {/if}
-                                            {/foreach}
                                             <script type="text/javascript">
                                                 checkSomeAnswer(0);
                                             </script>
                                             </div>
-                                            <a href="javascript: void(0);" onclick="addCheckAnswer(0);"><span class="glyphicon glyphicon-plus"></span></a>
+                                            <a href="javascript: void(0);" onclick="addCheckAnswer(); $('#editDiv').html('<b>Все ответы пользователей удаляются</b>');$('#deleteDataAnswers').val('TRUE');"><span class="glyphicon glyphicon-plus"></span></a>
                                         </form>
                                     </div>
                                     <div id='add_rating_type' style="display: none">
@@ -1392,6 +1406,16 @@
                                         {$smarty.capture.showReport}     
                                      {/if}
          </div>
+					
+			<script>
+				$('#removeModal').on('show.bs.modal', function (event) {
+					var button = $(event.relatedTarget);
+					var modal = $(this);
+					var idQuestion = button.data('idquestion');
+					modal.find('.modal-title').html('Вы уверены, что хотите удалить данный вопрос? Ответы пользователей будут удалены.');
+					document.getElementById('idQuestion').value = idQuestion;
+				});
+			</script>
     </body>
 </html>
 

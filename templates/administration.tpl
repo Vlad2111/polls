@@ -308,11 +308,11 @@
                                 <table class="table">
                                     <tr>
                                         <td class='info' width='35%'><b>Фамилия</b></td>
-                                        <td><input class="form-control" type="text" name="last_name" required><td>
+                                        <td><input class="form-control" type="text" name="last_name" pattern="^[А-Яа-яЁё]+$" required><td>
                                     </tr>
                                     <tr>
                                         <td class='info' width='35%'><b>Имя</b></td>
-                                        <td><input class="form-control" type="text" name="first_name" required><td>
+                                        <td><input class="form-control" type="text" name="first_name" pattern="^[А-Яа-яЁё]+$" required><td>
                                     </tr>                                
                                     <tr>
                                         <td class='info' width='35%'><b>Email</b></td>
@@ -508,7 +508,6 @@
                 {elseif {$view_admin} eq 'new_internal_user'}
                     {$smarty.capture.new_internal_user}
                  {/if}  
-             </div>
-			
+             </div>			
     </body>
 </html>

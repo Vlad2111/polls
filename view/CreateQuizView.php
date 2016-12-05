@@ -473,6 +473,8 @@ class CreateQuizView{
         $mark_of_rating = $this->getMarkOfRatingType();
         $mquestion= new MQuestion();
         $question= new QuestionDAO();
+	$answerDAO = new AnswerDAO();
+	$manswer=new MAnswer();
         $mquestion->setIdQuestion($_SESSION['id_question']);
         $mquestion->setTextQuestion($_POST['text_question']);
         $mquestion->setCommentQuestion($_POST['comment_question']);
@@ -500,9 +502,11 @@ class CreateQuizView{
         }
         $mquestion->setQuestionNumber($question->getQuestionNumber($_SESSION['id_question']));
         $_SESSION['id_question'] = $question->updateQuestion($mquestion);
-        $manswer_option=new MAnswerOptions();
-        $manswer_option->setIdQuestion($_SESSION['id_question']);
-        $this->answer_option->deleteAnswerOptions($manswer_option);
+        if($_POST['deleteDataAnswers']=='TRUE'){
+		$manswer_option=new MAnswerOptions();
+		$manswer_option->setIdQuestion($_SESSION['id_question']);
+		$this->answer_option->deleteAnswerOptions($manswer_option);
+	}
         if ($_POST['question_type'] == 1){
             $manswer_option=new MAnswerOptions();
             $manswer_option->setIdQuestion($_SESSION['id_question']);
@@ -515,7 +519,13 @@ class CreateQuizView{
                     $manswer_option->setRightAnswer('N');
                 } 
             }
-            $this->answer_option->createAnswerOptions($manswer_option);
+            if($_POST['deleteDataAnswers']=='TRUE'){
+		$this->answer_option->createAnswerOptions($manswer_option);
+	    }else{
+		$idAnswer = $this->answer_option->getIdAnswerOptionsByIdQuestion($_SESSION['id_question']);
+		$manswer_option->setIdAnswerOption($idAnswer);
+		$this->answer_option->updateAnswerOptions($manswer_option);
+	    }
             $manswer_option=new MAnswerOptions();
             $manswer_option->setIdQuestion($_SESSION['id_question']);
             $manswer_option->setAnswerTheQuestions('Нет');
@@ -527,7 +537,13 @@ class CreateQuizView{
                     $manswer_option->setRightAnswer('N');
                 }
             }
-            $this->answer_option->createAnswerOptions($manswer_option);
+            if($_POST['deleteDataAnswers']=='TRUE'){
+		$this->answer_option->createAnswerOptions($manswer_option);
+	    }else{
+		$idAnswer = $this->answer_option->getIdAnswerOptionsByIdQuestion($_SESSION['id_question']);
+		$manswer_option->setIdAnswerOption($idAnswer);
+		$this->answer_option->updateAnswerOptions($manswer_option);
+	    }
             header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;
         }
@@ -550,7 +566,13 @@ class CreateQuizView{
                         $manswer_option->setRightAnswer('N');
                     }
                 }
-                $this->answer_option->createAnswerOptions($manswer_option);
+	    if($_POST['deleteDataAnswers']=='TRUE'){
+		$this->answer_option->createAnswerOptions($manswer_option);
+	    }else{
+		$idAnswer = $this->answer_option->getIdAnswerOptionsByIdQuestion($_SESSION['id_question']);
+		$manswer_option->setIdAnswerOption($idAnswer);
+		$this->answer_option->updateAnswerOptions($manswer_option);
+	    }
             }
             header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;
@@ -574,7 +596,13 @@ class CreateQuizView{
                         $manswer_option->setRightAnswer('N');
                     }
                 }
-                $this->answer_option->createAnswerOptions($manswer_option);
+	    if($_POST['deleteDataAnswers']=='TRUE'){
+		$this->answer_option->createAnswerOptions($manswer_option);
+	    }else{
+		$idAnswer = $this->answer_option->getIdAnswerOptionsByIdQuestion($_SESSION['id_question']);
+		$manswer_option->setIdAnswerOption($idAnswer);
+		$this->answer_option->updateAnswerOptions($manswer_option);
+	    }
             }
             header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 		    exit;
@@ -589,7 +617,13 @@ class CreateQuizView{
                 $manswer_option=new MAnswerOptions();
                 $manswer_option->setIdQuestion($_SESSION['id_question']);
                 $manswer_option->setAnswerTheQuestions($mrt->text);
-                $this->answer_option->createAnswerOptions($manswer_option);
+	    if($_POST['deleteDataAnswers']=='TRUE'){
+		$this->answer_option->createAnswerOptions($manswer_option);
+	    }else{
+		$idAnswer = $this->answer_option->getIdAnswerOptionsByIdQuestion($_SESSION['id_question']);
+		$manswer_option->setIdAnswerOption($idAnswer);
+		$this->answer_option->updateAnswerOptions($manswer_option);
+	    }
             }
             header("Location: create_quiz.php?link_click=".$this->link_click."edit_quiz&id_quiz=".$_SESSION['id_quiz']);
 			exit;

@@ -199,28 +199,52 @@
 				        </div>
 					    <div class="row quiz-answers">
 					        <div class="col-lg-4">
-							    Правильных ответов: {if isset($countOfAnswers->right_answers)}{$countOfAnswers->right_answers}{/if}
+							    <div id='rightAnswers'></div><!--Правильных ответов: {if isset($countOfAnswers->right_answers)}{$countOfAnswers->right_answers}{/if}-->
 							</div>
 						    <div class="col-lg-4">
-							    Неправильных ответов: {if isset($countOfAnswers->wrong_answers)}{$countOfAnswers->wrong_answers}{/if}
+							    <div id='wrongAnswers'></div><!--Неправильных ответов: {if isset($countOfAnswers->wrong_answers)}{$countOfAnswers->wrong_answers}{/if}-->
 						    </div>
 					        <div class="col-lg-4">
-							    Пропущенных ответов: {if isset($countOfAnswers->skip_answers)}{$countOfAnswers->skip_answers}{/if}
+							    <div id='skipAnswers'></div><!--Пропущенных ответов: {if isset($countOfAnswers->skip_answers)}{$countOfAnswers->skip_answers}{/if}-->
 						    </div>
 						</div>
+						<script> 
+							right=0;document.getElementById('rightAnswers').innerHTML='Правильных ответов: '+right;
+							wrong=0;document.getElementById('wrongAnswers').innerHTML='Неправильных ответов: '+wrong;
+							skip=0;document.getElementById('skipAnswers').innerHTML='Пропущенных ответов: '+skip;
+						function countAnswers(status) {
+								if(status=='right'){
+									right=right+1;
+									document.getElementById('rightAnswers').innerHTML='Правильных ответов: '+right;
+								}
+								if(status=='wrong'){
+									wrong=wrong+1;
+									document.getElementById('wrongAnswers').innerHTML='Неправильных ответов: '+wrong;
+								}
+								if(status=='skip'){
+									skip=skip+1;
+									document.getElementById('skipAnswers').innerHTML='Пропущенных ответов: '+skip;
+								}
+							}							
+						</script>
 											
 					{else}
 					
 					{/if}
 					{if $data_test->getSeeDetails()=='Y'}
 						<table class="table">
-							<tbody>
+							<tbody>{$row=0}
 							    {foreach $data_questions as $one_question}
 							    {if isset($colors[$one_question['data_questions']->getIdQuestion()]['value'])}
 							        
                                     <tr class="{$colors[$one_question['data_questions']->getIdQuestion()]['value']}">
+					{if $colors[$one_question['data_questions']->getIdQuestion()]['value']==success}
+						<script>countAnswers('right');</script>
+					{elseif $colors[$one_question['data_questions']->getIdQuestion()]['value']==danger}
+						<script>countAnswers('wrong');</script>
+					{/if}
 								{else}
-								    <tr>
+								    <tr id="row{$row}">
 								{/if}
 									<td>
 										<div class="row quiz-row">
@@ -228,40 +252,46 @@
 									    </div>
 									    <div class="row quiz-row">
 									        <div class="col-lg-6">
-					                            {capture name='radio'}   
+					                            {capture name='radio'}  {$count='false'}
 					                                {foreach $one_question['data_questions']->getAnswerOption() as $option}                  
 						                               <div class="radio disabled">
-						                                    <input form="test_passing" type="radio" name="{$one_question['data_questions']->getIdQuestion()}" value="{$option->getIdAnswerOption()}" {if isset($listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]) &&  $listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]==$option->getIdAnswerOption()} checked{/if} disabled> {$option->getAnswerTheQuestions()}{if $option->getRightAnswer()=='Y'} <span class="glyphicon glyphicon-ok"></span> {/if}
+						                                    <input form="test_passing" type="radio" name="{$one_question['data_questions']->getIdQuestion()}" value="{$option->getIdAnswerOption()}" {if isset($listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]) &&  $listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]==$option->getIdAnswerOption()} checked{$count='true'}{/if} disabled> {$option->getAnswerTheQuestions()}{if $option->getRightAnswer()=='Y'} <span class="glyphicon glyphicon-ok"></span> {/if}
 						                               </div>
 						                            {/foreach}
+{if ($colors[$one_question['data_questions']->getIdQuestion()]['value']==null) and ($count=='false')}<script>countAnswers('skip');document.getElementById('row{$row}').className += "warning";</script>{/if} 
 					                            {/capture}
-					                            {capture name='radio_list'}
+					                            {capture name='radio_list'}{$count='false'}
 					                                {foreach $one_question['data_questions']->getAnswerOption() as $option}
 					                                  <div class="radio disabled">
-					                                    <input form="test_passing" type="radio" action="quiz.php" name="{$one_question['data_questions']->getIdQuestion()}" value="{$option->getIdAnswerOption()}" {if isset($listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]) && $listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]==$option->getIdAnswerOption()} checked{/if} disabled>{$option->getAnswerTheQuestions()}{if $option->getRightAnswer()=='Y'} <span class="glyphicon glyphicon-ok"></span> {/if}
+					                                    <input form="test_passing" type="radio" action="quiz.php" name="{$one_question['data_questions']->getIdQuestion()}" value="{$option->getIdAnswerOption()}" {if isset($listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]) && $listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]==$option->getIdAnswerOption()} checked{$count='true'}{/if} disabled>{$option->getAnswerTheQuestions()}{if $option->getRightAnswer()=='Y'} <span class="glyphicon glyphicon-ok"></span> {/if}
 					                                  </div>
 					                                {/foreach}
+{if ($colors[$one_question['data_questions']->getIdQuestion()]['value']==null) and ($count=='false')}<script>countAnswers('skip');document.getElementById('row{$row}').className += "warning";</script>{/if}
 					                                <!--$listOfAnswers[$one_question['data_questions']->getIdQuestion()]['value']-->
 					                            {/capture}
-					                            {capture name='checkbox_list'} 
+					                            {capture name='checkbox_list'} {$count='false'}
 						                               {foreach $one_question['data_questions']->getAnswerOption() as $option}
 							                            <div class="checkbox disabled">
-								                            <input form="test_passing" type="checkbox" action="quiz.php" name="answer[]" value="{$option->getIdAnswerOption()}"  {if isset($listOfAnswers[$one_question['data_questions']->getIdQuestion()])}{foreach $listOfAnswers[$one_question['data_questions']->getIdQuestion()] as $Answer}{if $Answer == $option->getIdAnswerOption()} checked{/if}{/foreach} disabled{/if}>{$option->getAnswerTheQuestions()}{if $option->getRightAnswer()=='Y'} <span class="glyphicon glyphicon-ok"></span> {/if}
+								                            <input form="test_passing" type="checkbox" action="quiz.php" name="answer[]" value="{$option->getIdAnswerOption()}"  {if isset($listOfAnswers[$one_question['data_questions']->getIdQuestion()])}{foreach $listOfAnswers[$one_question['data_questions']->getIdQuestion()] as $Answer}{if $Answer == $option->getIdAnswerOption()} checked{$count='true'}{/if}{/foreach} disabled{/if}>{$option->getAnswerTheQuestions()}{if $option->getRightAnswer()=='Y'} <span class="glyphicon glyphicon-ok"></span> {/if}
 							                            </div>  
 						                            {/foreach}
+{if ($colors[$one_question['data_questions']->getIdQuestion()]['value']==null) and ($count=='false')}<script>countAnswers('skip');document.getElementById('row{$row}').className += "warning";</script>{/if}
 					                            {/capture}
 					                            {capture name='textarea'}
+{if $colors[$one_question['data_questions']->getIdQuestion()]['value']==warning}<script>countAnswers('skip');</script>{/if}
 						                            <div class="form-group">
 							                            <textarea class = "form-control" form="test_passing" name="answer[]" action="quiz.php" maxlength="1000" cols="80" rows="10" disabled>{if isset($listOfAnswers[$one_question['data_questions']->getIdQuestion()][0])}{$listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]}{/if}</textarea>
 						                            </div>                          
 					                            {/capture}
 					                            {capture name='rating'}
+{if $colors[$one_question['data_questions']->getIdQuestion()]['value']==warning}<script>countAnswers('skip');</script>{/if}
 						                            {foreach $one_question['data_questions']->getAnswerOption() as $option}
 							                            <div class="radio disabled">
 								                            <input form="test_passing" type="radio" action="quiz.php" name="{$one_question['data_questions']->getIdQuestion()}" value="{$option->getIdAnswerOption()}" {if isset($listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]) && $listOfAnswers[$one_question['data_questions']->getIdQuestion()][0]==$option->getIdAnswerOption()} checked{/if} disabled>{$option->getAnswerTheQuestions()}
 							                            </div>
 							                        {/foreach}
 						                        {/capture}
+																		{$row=$row+1}
 					                            {if {$one_question['data_questions']->getIdQuestionsType()} eq '1'}
 						                            {$smarty.capture.radio}
 					                            {elseif {$one_question['data_questions']->getIdQuestionsType()} eq '2'}
@@ -365,6 +395,7 @@
                 {/if}
             }
             </script>
+		
         {include file='footer.tpl'}
         </div>   
          

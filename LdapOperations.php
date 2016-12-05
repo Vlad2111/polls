@@ -274,8 +274,8 @@ class LdapOperations
 		echo "Groups with names starting with rnd: ";
 		var_dump($ldap->getLDAPGroupNamesByPrefix('Interns.nn'));
 		*/
-		echo "Members of group Employees: ";
-		var_dump($ldap->getGroupLDAPUser('kolchanov_adm'));
+		echo "Members of group Employeess: ";
+		var_dump($ldap->getGroupLDAPUser('arutyunyan.r'));
 		
 		//var_dump($ldap->getSubGroups('Employees'));
 			}

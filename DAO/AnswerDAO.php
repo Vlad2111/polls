@@ -28,6 +28,19 @@ class AnswerDAO {
             $this->log->ERROR('Ошибка установки таблицы answer '.$e->getMessage().$e->getTraceAsString());
         }  
     }
+    public function upateAnswer(MAnswer $manswer){
+        try {
+            $query="UPDATE answers SET answer=$1 WHERE id_answer=$2 ,id_testing=$3;"; 
+            $array_params=array();
+	    $array_params[]=$manswer->getAnswer();
+            $array_params[]=$manswer->getIdAnswer();
+            $array_params[]=$manswer->getIdTesting();
+            $result=$this->db->executeAsync($query,$array_params);
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка установки таблицы answer '.$e->getMessage().$e->getTraceAsString());
+        }  
+    }
     public function getIdAnswer($id_testing) {
         try {
             $query="select max(id_answer) as id_answer from answers where id_testing=$1;";

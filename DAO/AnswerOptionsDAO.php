@@ -76,6 +76,22 @@ class AnswerOptionsDAO {
             $this->log->ERROR('Ошибка удаления строки в таблице: answer_option '.$e->getMessage().$e->getTraceAsString());
         }
     }
+    public function getIdAnswerOptionsByIdQuestion($idQuestion) {
+        try {
+            $query="select id_answer_option from answer_options"
+                    . " where id_question=$1;";
+            $array_params=array();
+            $array_params[]=$idQuestion;
+            $result=$this->db->executeAsync($query,$array_params);
+            $obj=$this->db->getFetchObject($result);
+            if(isset($obj->id_answer_option)){
+                return $obj->id_answer_option;
+            }
+        }          
+        catch(Exception $e) { 
+            $this->log->ERROR('Ошибка установки строки в таблице: answer_option '.$e->getMessage().$e->getTraceAsString());
+        }
+    }
     public function setIdAnswerOptions(MAnswerOptions $answer_options) {
         try {
             $query="select id_answer_option from answer_options"

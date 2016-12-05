@@ -130,13 +130,13 @@ create table testing (
     CONSTRAINT testing_pkeys PRIMARY KEY (id_testing),
     CONSTRAINT mark_test_testing_fkey FOREIGN KEY (id_mark_test)
       REFERENCES mark_test (id_mark_test) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
+      ON UPDATE NO ACTION ON DELETE CASCADE,
     CONSTRAINT test_testing_fkey FOREIGN KEY (id_test)
       REFERENCES test (id_test) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
+      ON UPDATE NO ACTION ON DELETE CASCADE,
     CONSTRAINT user_testing_fkey FOREIGN KEY (id_user)
       REFERENCES alluser (id_user) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
+      ON UPDATE NO ACTION ON DELETE CASCADE,
     CONSTRAINT must_be_different_testing UNIQUE (id_user, id_test)
 );
 create table answer_users (
@@ -151,7 +151,7 @@ create table answer_users (
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT testing_answer_fkey FOREIGN KEY (id_testing)
       REFERENCES testing (id_testing) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+      ON UPDATE NO ACTION ON DELETE CASCADE
 );
 
 CREATE TABLE answers
@@ -162,7 +162,7 @@ CREATE TABLE answers
   CONSTRAINT answers_pkey PRIMARY KEY (id_answer),
   CONSTRAINT testing FOREIGN KEY (id_testing)
       REFERENCES testing (id_testing) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+      ON UPDATE NO ACTION ON DELETE CASCADE
 );
 
 CREATE TABLE answers_answer_user
@@ -172,7 +172,7 @@ CREATE TABLE answers_answer_user
   CONSTRAINT "answers/answer_user_pkey" PRIMARY KEY (id_answer, id_answer_user),
   CONSTRAINT "answer_user->answers" FOREIGN KEY (id_answer_user)
       REFERENCES answer_users (id_answer_users) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
+      ON UPDATE NO ACTION ON DELETE CASCADE,
   CONSTRAINT "answers/answer_user_id_answer_fkey" FOREIGN KEY (id_answer)
       REFERENCES answers (id_answer) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
